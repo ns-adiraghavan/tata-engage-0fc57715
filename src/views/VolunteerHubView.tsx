@@ -1,224 +1,507 @@
+import { useState, useEffect } from "react";
+import { ChevronRight, ArrowRight, RefreshCw, FileText, Mail, MessageSquare } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { COMMUNITY_TESTIMONIALS, IS_PE_SEASON, ROHAN_DESAI_VOLUNTEER } from "@/data/mockData";
-import { FileText, Mail, MessageSquare, Users, HeartHandshake, AlertTriangle } from "lucide-react";
 import RoleToggle from "@/components/shared/RoleToggle";
+import tataLogo from "@/assets/tata-logo.png";
+import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
 
-const TESTIMONIAL_BG = ['bg-tata-blue', 'bg-violet-700', 'bg-emerald-800', 'bg-amber-700'];
-const VIBE_STORIES = [
-  { title: "Mumbai Coastal Cleanup", img: "https://images.unsplash.com/photo-1618477461853-cf6ed80faba5?auto=format&fit=crop&q=80&w=800", date: "2 days ago" },
-  { title: "Teaching Coding in Rural Schools", img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800", date: "4 days ago" },
-  { title: "Sustainable Farming Workshop", img: "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&q=80&w=800", date: "1 week ago" },
-  { title: "Blood Donation Camp - Jamshedpur", img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800", date: "1 week ago" },
-  { title: "Digital Literacy for All", img: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=800", date: "2 weeks ago" },
-  { title: "Green Earth Initiative", img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800", date: "2 weeks ago" },
+// ── Brand tokens ──────────────────────────────────────────────────────────────
+const B_INDIGO = "#333399";
+const B_YELLOW = "#F5A623";
+const B_RED    = "#E8401C";
+const B_TEAL   = "#00A896";
+const B_BLUE   = "#1E6BB8";
+
+// ── Section divider ───────────────────────────────────────────────────────────
+const SectionDivider = () => (
+  <div className="flex items-center justify-center gap-2 py-5">
+    {[B_INDIGO, B_YELLOW, B_RED, B_TEAL, B_BLUE].map((c) => (
+      <span key={c} className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c }} />
+    ))}
+  </div>
+);
+
+const secBg = (i: number) => i % 2 === 0 ? "bg-white" : "bg-[#F0F4FA]";
+
+// ── Shared data (identical to HomeView) ──────────────────────────────────────
+const FLAGSHIP_PROGRAMMES = [
+  { id: "TVW", bg: B_INDIGO, accent: B_YELLOW, label: "Bi-annual · Global", title: "Tata Volunteering Week", desc: "A bi-annual celebration of collective action across every Tata company, worldwide.", stat1: "12 Editions", stat2: "50K+ Volunteers" },
+  { id: "ProEngage", bg: "#3B1E8E", accent: "#C4B5FD", label: "Skill-based", title: "ProEngage", desc: "Match your professional expertise to NGO projects that need it most.", stat1: "1,200+ Projects", stat2: "85 NGO Partners" },
+  { id: "Disaster Response", bg: "#7f1d1d", accent: "#FCA5A5", label: "Rapid Action", title: "Disaster Response", desc: "Volunteers deployed within 48 hours when communities need urgent support.", stat1: "24 Responses", stat2: "8 States" },
+];
+const COMPANY_PROGRAMMES = [
+  { name: "TCS",         desc: "Green Earth — 1,000 trees planted",           dot: B_INDIGO },
+  { name: "Titan",       desc: "Skill India workshops for rural women",         dot: B_YELLOW },
+  { name: "Tata Steel",  desc: "Community health camps — 20K beneficiaries",   dot: "#475569" },
+  { name: "Tata Motors", desc: "Road safety awareness across 12 cities",        dot: B_RED    },
+  { name: "Tata Power",  desc: "Solar literacy programme in Jharkhand",         dot: B_TEAL   },
+  { name: "Taj Hotels",  desc: "Culinary skills for underprivileged youth",     dot: B_BLUE   },
+];
+const JOURNEY_MILESTONES = [
+  { year: "2007", title: "The Seed",     desc: "Founded with 4 Tata companies.",       colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2010", title: "TVW Born",     desc: "8,000 volunteers in Year 1.",           colour: B_YELLOW, photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2015", title: "Digital",      desc: "Platform launched for NGO matching.",   colour: B_RED,    photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2018", title: "ProEngage",    desc: "Skill-based volunteering introduced.",  colour: B_TEAL,   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2020", title: "COVID Relief", desc: "15,000 volunteers in 72 hrs.",          colour: B_BLUE,   photo: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2024", title: "50K Strong",   desc: "50K+ volunteers, 100+ companies.",      colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=120&h=120" },
+];
+const FUN_FACTS = [
+  "Tata volunteers have collectively logged over 2.5 million hours of service since 2007.",
+  "1 in 4 ProEngage projects directly benefits children's education in rural India.",
+  "85% of volunteers say their professional skills grew through ProEngage.",
+  "Tata companies have planted 1.2 million trees through volunteering drives.",
+  "NGOs report 3× faster project delivery when paired with skilled Tata volunteers.",
+];
+const HERO_STATS = [
+  { num: "50,000+", label: "Active Volunteers",  sub: "Across 100+ Tata companies", colour: B_INDIGO },
+  { num: "85",      label: "NGO Partners",        sub: "Across 15 states in India",   colour: B_TEAL   },
+  { num: "2.5M+",   label: "Volunteer Hours",     sub: "Logged since 2007",           colour: B_YELLOW },
+];
+const SOCIAL_POSTS = [
+  { handle: "@TataEngage",  platform: "Twitter",   text: "Proud to announce 50,000 volunteers on the platform! Thank you for making a difference. #TataEngage",              likes: "1.2K", time: "2h ago",  Icon: Twitter,   iconBg: "#0EA5E9" },
+  { handle: "@tata_engage", platform: "Instagram", text: "TVW 2026 is almost here! Tag a colleague you'd love to volunteer with. #TVW2026 #TataVolunteers",                  likes: "3.4K", time: "1d ago",  Icon: Instagram, iconBg: "#EC4899" },
+  { handle: "Tata Engage",  platform: "LinkedIn",  text: "ProEngage Edition 2026 is now open — 400+ skill-based projects waiting for the right volunteers.",                 likes: "892",  time: "3d ago",  Icon: Linkedin,  iconBg: "#1D4ED8" },
+];
+const TICKER_ITEMS = [
+  "🟢  ProEngage 2026 is OPEN — 400+ projects live",
+  "📅  TVW 2026 registration opens in 14 days",
+  "🏅  1,240 volunteers matched this edition — a record",
+  "🌿  TCS: 1,000 trees planted across 8 campuses",
+  "🚨  Disaster Response deployed to Assam floods",
+  "🎓  Finance Mentorship projects now accepting applications",
 ];
 
-const PROGRAMME_DESCRIPTIONS: Record<string, string> = {
-  "TVW": "Events, volunteering week, team activities",
-  "ProEngage": "Skill-based projects matched to you",
-  "Disaster Response": "Emergency deployment & relief",
-};
-
+// ── Component ─────────────────────────────────────────────────────────────────
 const VolunteerHubView = () => {
   const { user: authUser } = useAuth();
   const navigate = useAppNavigate();
   const { referralCount, triggerToast } = useAppContext();
 
-  // When a corporate SPOC toggles to volunteer view, use their volunteer persona
   const user = authUser?.role === "corporate_spoc" ? ROHAN_DESAI_VOLUNTEER : authUser;
-  const isProEngageActive = true;
+
+  const [flagshipIdx, setFlagshipIdx] = useState(0);
+  const [factIdx, setFactIdx]         = useState(0);
+  const [factFading, setFactFading]   = useState(false);
+  const [socialIdx, setSocialIdx]     = useState(0);
+
+  const prog = FLAGSHIP_PROGRAMMES[flagshipIdx];
+
+  // Auto-rotate programme spotlight
+  useEffect(() => {
+    const t = setInterval(() => setFlagshipIdx((p) => (p + 1) % FLAGSHIP_PROGRAMMES.length), 4200);
+    return () => clearInterval(t);
+  }, []);
+
+  // Auto-rotate social
+  useEffect(() => {
+    const t = setInterval(() => setSocialIdx((p) => (p + 1) % SOCIAL_POSTS.length), 4000);
+    return () => clearInterval(t);
+  }, []);
+
+  const cycleFact = () => {
+    setFactFading(true);
+    setTimeout(() => { setFactIdx((p) => (p + 1) % FUN_FACTS.length); setFactFading(false); }, 280);
+  };
 
   const copyReferralLink = () => {
     navigator.clipboard.writeText("https://tataengage.com/refer/priya123");
     triggerToast("Referral link copied to clipboard!");
   };
 
-  const programmes = [
-    { label: "TVW", nav: "tvw", bgClass: "bg-tata-cyan/20", iconClass: "text-tata-blue", Icon: Users },
-    { label: "ProEngage", nav: "proengage", bgClass: "bg-violet-100", iconClass: "text-violet-600", Icon: HeartHandshake },
-    { label: "Disaster Response", nav: "disaster-response", bgClass: "bg-red-100", iconClass: "text-red-600", Icon: AlertTriangle },
-  ];
-
-  const stats = [
-    { num: user.history?.length ?? 0, label: "Projects completed", sub: "All time", border: "border-tata-cyan", dot: "bg-cyan-100 text-tata-cyan" },
-    { num: (user.hoursVolunteered != null ? `${user.hoursVolunteered}h` : "48h"), label: "Hours volunteered", sub: "This edition", border: "border-violet-400", dot: "bg-violet-100 text-violet-500" },
-    { num: user.badges?.length ?? 0, label: "Badges earned", sub: "All time", border: "border-amber-400", dot: "bg-amber-100 text-amber-500" },
-    { num: user.history?.length ?? 1, label: "Applications", sub: "This edition", border: "border-red-400", dot: "bg-red-100 text-red-500" },
-  ];
+  const tickerDouble = [...TICKER_ITEMS, ...TICKER_ITEMS];
 
   return (
-    <div className="pt-20 pb-20 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <div className="pt-20 min-h-screen bg-white">
 
-        {/* ═══ HERO ═══ */}
-        <div className="relative min-h-[420px] md:min-h-[480px] bg-zinc-950 rounded-3xl overflow-hidden mb-10 flex items-end">
-          <img src="https://images.unsplash.com/photo-1593113616828-6f22bca04804?auto=format&fit=crop&q=80&w=1600" alt="" className="absolute inset-0 w-full h-full object-cover opacity-25" referrerPolicy="no-referrer" />
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/95 via-zinc-950/60 to-transparent" />
-          <div className="relative z-10 p-8 md:p-12 w-full">
-            <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-tata-cyan inline-block" />
-              Tata Group · Volunteering
-            </span>
-            <h1 className="font-sans font-black text-5xl md:text-7xl text-white leading-[0.9] tracking-tight mb-2">
-              Welcome, {user.firstName}!
-            </h1>
-            <p className="text-white/50 text-sm mt-1 mb-6">{user.company} · {user.designation}</p>
+      {/* ══════════════════════════════════════════════════════════════════
+          HERO — banner image + gradient + quote + welcome top-left
+      ══════════════════════════════════════════════════════════════════ */}
+      <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
+        <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: 420 }}>
+          {/* Banner image */}
+          <img
+            src="https://images.unsplash.com/photo-1593113616828-6f22bca04804?auto=format&fit=crop&q=80&w=1600"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+          {/* Gradient overlay — dark left + bottom, slightly open top-right */}
+          <div className="absolute inset-0" style={{
+            background: "linear-gradient(135deg, rgba(10,10,30,0.92) 0%, rgba(10,10,30,0.75) 45%, rgba(10,10,30,0.45) 100%)"
+          }} />
+
+          {/* Welcome — top left */}
+          <div className="absolute top-6 left-8 z-10">
             {(user?.role?.includes("spoc") || user?.role === "corporate_spoc") && (
-              <RoleToggle activeView="volunteer" className="mb-6" />
+              <RoleToggle activeView="volunteer" className="mb-3" />
             )}
-            <p className="text-sm text-white/70 mt-0 mb-6">
-              {IS_PE_SEASON
-                ? "ProEngage is open — browse projects matched to your skills."
-                : "Stay connected — TVW is coming soon."}
+            <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide">
+              <span className="w-1.5 h-1.5 rounded-full bg-tata-cyan inline-block" />
+              Volunteer Hub
+            </span>
+            <p className="text-white/50 text-sm mt-2">
+              Welcome back, <span className="text-white font-semibold">{user?.firstName ?? "there"}</span>
             </p>
-            <div className="flex flex-wrap gap-3">
-              <button onClick={() => navigate("dashboard")} className="bg-white/10 border border-white/20 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-white/20 transition-all cursor-pointer">My Activity</button>
-              <button onClick={() => navigate("profile")} className="bg-white/10 border border-white/20 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-white/20 transition-all cursor-pointer">Profile</button>
-              <button onClick={() => navigate("dashboard")} className="bg-white/10 border border-white/20 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-white/20 transition-all cursor-pointer">My Dashboard →</button>
-              {isProEngageActive && (
-                <button onClick={() => navigate("proengage")} className="bg-white text-zinc-900 px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-zinc-100 transition-all cursor-pointer">Find Projects</button>
-              )}
+            <p className="text-white/35 text-xs mt-0.5">{user?.company} · {user?.designation}</p>
+          </div>
+
+          {/* Motivational quote — centred vertically */}
+          <div className="relative z-10 flex flex-col items-start justify-center px-8 md:px-16" style={{ minHeight: 420 }}>
+            <div className="max-w-xl mt-16">
+              <p className="text-white/35 text-4xl font-black leading-none mb-3 select-none">"</p>
+              <h2 className="text-white font-bold text-2xl md:text-3xl leading-snug tracking-tight mb-4">
+                The smallest act of kindness is worth more than the grandest intention.
+              </h2>
+              <p className="text-white/45 text-xs font-semibold uppercase tracking-widest">
+                — Oscar Wilde
+              </p>
+            </div>
+          </div>
+
+          {/* Dashboard CTA — bottom right */}
+          <div className="absolute bottom-6 right-8 z-10">
+            <button
+              onClick={() => navigate("dashboard")}
+              className="flex items-center gap-2 text-zinc-900 text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-105 transition-all cursor-pointer shadow-lg"
+              style={{ backgroundColor: B_YELLOW }}
+            >
+              My Dashboard <ArrowRight size={15} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <SectionDivider />
+
+      {/* ══════════════════════════════════════════════════════════════════
+          PROGRAMME SPOTLIGHT — 70/30 (identical to HomeView)
+      ══════════════════════════════════════════════════════════════════ */}
+      <section id="programmes" className={`${secBg(1)} py-10 px-6 md:px-12`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-7">
+            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Our Programmes</p>
+            <h2 className="text-2xl font-bold text-slate-900">Ways to make a difference</h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-10 gap-4">
+            {/* LEFT 70% */}
+            <div className="lg:col-span-7 relative rounded-2xl overflow-hidden min-h-[340px] flex flex-col justify-between p-8 transition-all duration-700"
+              style={{ backgroundColor: prog.bg }}>
+              <div className="absolute top-0 left-0 w-1 h-full transition-colors duration-700"
+                style={{ backgroundColor: prog.accent }} />
+              <div className="relative z-10">
+                <div className="flex gap-2 mb-5">
+                  {FLAGSHIP_PROGRAMMES.map((p, i) => (
+                    <button key={p.id} onClick={() => setFlagshipIdx(i)}
+                      className="text-xs font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer"
+                      style={{ backgroundColor: i === flagshipIdx ? prog.accent : "rgba(255,255,255,0.1)", color: i === flagshipIdx ? "#111" : "rgba(255,255,255,0.6)" }}>
+                      {p.id}
+                    </button>
+                  ))}
+                </div>
+                <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-4 border border-white/20 text-white/65">
+                  {prog.label}
+                </span>
+                <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">
+                  Join the Volunteer Tribe
+                </h3>
+                <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-sm">{prog.desc}</p>
+                <div className="flex gap-3">
+                  {[prog.stat1, prog.stat2].map((s) => (
+                    <div key={s} className="bg-white/10 border border-white/15 rounded-xl px-4 py-1.5">
+                      <p className="text-white font-bold text-sm">{s}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="relative z-10 flex gap-3 mt-6">
+                <button onClick={() => navigate("proengage")}
+                  className="flex-1 bg-white text-zinc-900 py-2.5 rounded-xl text-sm font-bold hover:bg-zinc-100 transition-all cursor-pointer">
+                  Find Projects
+                </button>
+                <button onClick={() => triggerToast("Exploring programme...")}
+                  className="flex-1 bg-white/10 border border-white/20 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-white/20 transition-all cursor-pointer">
+                  Learn More →
+                </button>
+              </div>
+            </div>
+
+            {/* RIGHT 30% */}
+            <div className="lg:col-span-3 bg-white border border-slate-100 rounded-2xl p-5 flex flex-col shadow-sm">
+              <div className="mb-4">
+                <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-0.5">By company</p>
+                <h3 className="text-sm font-bold text-slate-900">Explore Company Volunteering</h3>
+              </div>
+              <div className="flex-1 space-y-1.5">
+                {COMPANY_PROGRAMMES.map((co) => (
+                  <button key={co.name}
+                    onClick={() => triggerToast(`Viewing ${co.name} volunteering programme...`)}
+                    className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer group text-left">
+                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: co.dot }} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold text-slate-900 leading-none mb-0.5">{co.name}</p>
+                      <p className="text-xs text-slate-400 truncate">{co.desc}</p>
+                    </div>
+                    <ChevronRight size={11} className="text-slate-300 group-hover:text-slate-500 shrink-0" />
+                  </button>
+                ))}
+              </div>
+              <button onClick={() => triggerToast("Viewing all company programmes...")}
+                className="mt-4 w-full flex items-center justify-center gap-1.5 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">
+                View All Companies <ArrowRight size={11} />
+              </button>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* ═══ STAT TILES ═══ */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          {stats.map((stat, i) => {
-            const configs = [
-              { bg: "bg-cyan-50", border: "border-cyan-200", num: "text-tata-blue", label: "text-cyan-700" },
-              { bg: "bg-violet-50", border: "border-violet-200", num: "text-violet-700", label: "text-violet-600" },
-              { bg: "bg-amber-50", border: "border-amber-200", num: "text-amber-700", label: "text-amber-600" },
-              { bg: "bg-rose-50", border: "border-rose-200", num: "text-rose-700", label: "text-rose-600" },
-            ];
-            const c = configs[i];
-            return (
-              <div key={stat.label} className={`${c.bg} border ${c.border} rounded-2xl p-5 shadow-sm`}>
-                <p className={`text-3xl font-black tracking-tighter ${c.num}`}>{stat.num}</p>
-                <p className={`text-xs font-bold uppercase tracking-widest mt-1 ${c.label}`}>{stat.label}</p>
-                {stat.sub && <p className="text-xs text-slate-400 mt-0.5">{stat.sub}</p>}
-              </div>
-            );
-          })}
-        </div>
+      <SectionDivider />
 
-        {/* ═══ PROGRAMME TILES ═══ */}
-        <h3 className="text-[13px] uppercase text-muted-foreground tracking-[0.08em] font-semibold mb-4">Programmes</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-          {programmes.map((p, i) => {
-            const cardBg = ["bg-cyan-50 border-cyan-100", "bg-violet-50 border-violet-100", "bg-red-50 border-red-100"][i];
-            return (
-              <button
-                key={p.label}
-                onClick={() => navigate(p.nav)}
-                className={`${cardBg} border rounded-2xl p-6 shadow-sm text-left hover:shadow-md transition-all cursor-pointer`}
-              >
-                <div className={`w-14 h-14 rounded-full flex items-center justify-center ${p.bgClass} mb-4`}>
-                  <p.Icon size={22} className={p.iconClass} />
-                </div>
-                <p className="text-sm font-bold text-slate-900">{p.label}</p>
-                <p className="text-xs text-slate-400 mt-1">{PROGRAMME_DESCRIPTIONS[p.label]}</p>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ═══ FEATURED TESTIMONIAL ═══ */}
-        <h3 className="text-[13px] uppercase text-muted-foreground tracking-[0.08em] font-semibold mb-4">From the community</h3>
-        {COMMUNITY_TESTIMONIALS[0] && (() => {
-          const ft = COMMUNITY_TESTIMONIALS[0];
-          return (
-            <div className="bg-white border border-zinc-100 rounded-2xl shadow-sm p-6 flex gap-6 items-start mb-12">
-              <span className="text-5xl font-black text-tata-cyan leading-none">"</span>
-              <div>
-                <span className="bg-green-50 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Verified story</span>
-                <p className="text-sm text-slate-700 italic mb-3 mt-2">"{ft.quote}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-tata-blue/10 text-tata-blue text-xs font-bold flex items-center justify-center">{ft.avatar}</div>
-                  <div>
-                    <p className="font-semibold text-sm text-slate-900">{ft.author}</p>
-                    <p className="text-xs text-slate-400">{ft.role}</p>
+      {/* ══════════════════════════════════════════════════════════════════
+          OUR JOURNEY — dotted timeline
+      ══════════════════════════════════════════════════════════════════ */}
+      <section id="journey" className={`${secBg(2)} py-10 px-6 md:px-12`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-8">
+            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Our Journey</p>
+            <h2 className="text-2xl font-bold text-slate-900">Two decades of giving back</h2>
+          </div>
+          <div className="relative">
+            <div className="absolute top-[36px] left-10 right-10 hidden lg:block"
+              style={{ borderTop: "2px dashed #CBD5E1" }} />
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+              {JOURNEY_MILESTONES.map((m) => (
+                <div key={m.year} className="flex flex-col items-center text-center group">
+                  <div className="relative z-10 mb-3">
+                    <div className="w-[72px] h-[72px] rounded-full overflow-hidden border-[3px] shadow-md transition-transform duration-200 group-hover:-translate-y-1"
+                      style={{ borderColor: m.colour }}>
+                      <img src={m.photo} alt={m.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    </div>
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
+                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-white whitespace-nowrap"
+                        style={{ backgroundColor: m.colour }}>
+                        {m.year}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <p className="text-xs font-bold text-slate-800 mb-0.5">{m.title}</p>
+                    <p className="text-xs text-slate-500 leading-snug">{m.desc}</p>
                   </div>
                 </div>
-              </div>
-            </div>
-          );
-        })()}
-
-        {/* ═══ TESTIMONIAL SEPARATOR ═══ */}
-        <div className="flex items-center gap-4 mb-6 mt-2">
-          <div className="w-full h-px bg-slate-200" />
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap px-3">More voices</span>
-          <div className="w-full h-px bg-slate-200" />
-        </div>
-
-        {/* ═══ TESTIMONIALS SCROLL ═══ */}
-        <div className="flex gap-6 overflow-x-auto pb-4 mb-12">
-          {COMMUNITY_TESTIMONIALS.map((t, i) => (
-            <div key={t.id} className={`min-w-[320px] max-w-sm p-6 rounded-2xl flex-shrink-0 shadow-sm ${TESTIMONIAL_BG[i % TESTIMONIAL_BG.length]}`}>
-              <p className="text-sm text-white/90 italic mb-4">"{t.quote}"</p>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-white/20 text-white flex items-center justify-center text-xs font-bold">{t.avatar}</div>
-                <div>
-                  <p className="text-sm font-semibold text-white">{t.author}</p>
-                  <p className="text-xs text-white/60">{t.role}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ═══ TVW VIBE ═══ */}
-        <div className="mb-12">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-[13px] uppercase text-muted-foreground tracking-[0.08em] font-semibold">TVW Vibe</h3>
-            <div className="flex gap-3">
-              <button className="border border-slate-200 text-slate-600 rounded-lg px-4 py-2 text-xs font-semibold cursor-pointer hover:bg-slate-50">Past Editions</button>
-              <button onClick={() => triggerToast("Story submitted for Admin review!")} className="bg-tata-blue text-white rounded-lg px-4 py-2 text-xs font-semibold cursor-pointer hover:bg-tata-blue/90">Submit Your Story</button>
+              ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {VIBE_STORIES.map((story) => (
-              <div key={story.title} className="group cursor-pointer">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-3">
-                  <img src={story.img} alt={story.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                </div>
-                <h3 className="text-sm font-bold text-zinc-900 group-hover:text-tata-blue transition-colors">{story.title}</h3>
-                <p className="text-xs text-slate-400 uppercase tracking-wider mt-1">{story.date}</p>
-              </div>
-            ))}
+          <div className="mt-10 flex justify-center">
+            <button onClick={() => triggerToast("Full journey coming soon...")}
+              className="inline-flex items-center gap-2 text-sm font-bold hover:underline cursor-pointer"
+              style={{ color: B_INDIGO }}>
+              Read our full story <ArrowRight size={13} />
+            </button>
           </div>
         </div>
+      </section>
 
-        {/* ═══ REFER A COLLEAGUE ═══ */}
-        <h3 className="text-[13px] uppercase text-muted-foreground tracking-[0.08em] font-semibold mb-4">Refer a Colleague</h3>
-        <section className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 overflow-hidden relative max-w-xl mb-8">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-tata-cyan/5 rounded-full -mr-12 -mt-12" />
-          <p className="text-sm text-slate-500 mb-6">Invite someone to Tata Engage and help grow our community.</p>
-          <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 mb-6">
-            <div className="text-xs font-bold text-slate-400 uppercase mb-2">Your Referral Link</div>
-            <div className="flex items-center justify-between gap-2">
-              <code className="text-xs text-tata-blue font-mono truncate">tataengage.com/refer/priya123</code>
-              <button onClick={copyReferralLink} className="p-2 hover:bg-white rounded-lg text-slate-400 hover:text-tata-blue transition-colors cursor-pointer">
-                <FileText size={16} />
+      <SectionDivider />
+
+      {/* ══════════════════════════════════════════════════════════════════
+          FACTS + 3 STATS + SOCIAL
+      ══════════════════════════════════════════════════════════════════ */}
+      <section id="numbers" className={`${secBg(3)} py-10 px-6 md:px-12`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-7">
+            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">By the numbers</p>
+            <h2 className="text-2xl font-bold text-slate-900">The scale of our community</h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {/* Did You Know */}
+            <div className="rounded-2xl p-7 flex flex-col justify-between min-h-[240px]"
+              style={{ backgroundColor: B_INDIGO }}>
+              <div>
+                <span className="inline-block text-xs font-bold px-3 py-1 rounded-full mb-4"
+                  style={{ backgroundColor: B_YELLOW, color: "#111" }}>
+                  Did You Know?
+                </span>
+                <p className="text-white text-sm leading-relaxed font-medium transition-opacity duration-300"
+                  style={{ opacity: factFading ? 0 : 1 }}>
+                  {FUN_FACTS[factIdx]}
+                </p>
+              </div>
+              <div className="flex items-center justify-between mt-6">
+                <div className="flex gap-1.5">
+                  {FUN_FACTS.map((_, i) => (
+                    <button key={i}
+                      onClick={() => { setFactFading(true); setTimeout(() => { setFactIdx(i); setFactFading(false); }, 280); }}
+                      className="rounded-full transition-all cursor-pointer"
+                      style={{ width: i === factIdx ? 16 : 7, height: 6, backgroundColor: i === factIdx ? B_YELLOW : "rgba(255,255,255,0.3)" }} />
+                  ))}
+                </div>
+                <button onClick={cycleFact}
+                  className="flex items-center gap-1 text-xs text-white/50 hover:text-white/80 transition-colors cursor-pointer font-semibold">
+                  <RefreshCw size={11} /> Next
+                </button>
+              </div>
+            </div>
+
+            {/* 3 Stats */}
+            <div className="flex flex-col gap-3">
+              {HERO_STATS.map((s) => (
+                <div key={s.label} className="flex items-center gap-5 rounded-2xl p-5 bg-white border border-slate-100 shadow-sm"
+                  style={{ borderLeft: `4px solid ${s.colour}` }}>
+                  <div>
+                    <p className="font-black tracking-tighter leading-none mb-0.5 text-4xl" style={{ color: s.colour }}>
+                      {s.num}
+                    </p>
+                    <p className="text-sm font-bold text-slate-800">{s.label}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{s.sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Social */}
+            <div className="bg-white border border-slate-100 rounded-2xl p-7 flex flex-col shadow-sm">
+              <div className="flex items-center justify-between mb-5">
+                <p className="text-xs font-bold tracking-widest uppercase text-slate-400">Social Spotlight</p>
+                <div className="flex gap-2.5">
+                  {[{ Icon: Facebook, c: "#2563EB" }, { Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }, { Icon: Youtube, c: "#DC2626" }].map(({ Icon, c }) => (
+                    <Icon key={c} size={14} className="text-slate-400 cursor-pointer transition-colors"
+                      onMouseEnter={(e) => (e.currentTarget.style.color = c)}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = "")} />
+                  ))}
+                </div>
+              </div>
+              <div className="flex-1">
+                {SOCIAL_POSTS.map((post, i) => (
+                  <div key={i} className={i === socialIdx ? "block" : "hidden"}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-white shrink-0"
+                        style={{ backgroundColor: post.iconBg }}>
+                        <post.Icon size={13} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-slate-900 leading-none">{post.handle}</p>
+                        <p className="text-xs text-slate-400">{post.time} · {post.platform}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-slate-600 leading-relaxed mb-3">{post.text}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-slate-400">❤️ {post.likes} likes</span>
+                      <button onClick={() => triggerToast("Opening social post...")}
+                        className="text-xs font-bold hover:underline cursor-pointer" style={{ color: B_INDIGO }}>
+                        View post →
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-1.5 justify-center mt-4 mb-4">
+                {SOCIAL_POSTS.map((_, i) => (
+                  <button key={i} onClick={() => setSocialIdx(i)}
+                    className="rounded-full transition-all cursor-pointer"
+                    style={{ width: i === socialIdx ? 16 : 7, height: 6, backgroundColor: i === socialIdx ? B_INDIGO : "#E2E8F0" }} />
+                ))}
+              </div>
+              <button onClick={() => triggerToast("Opening social media...")}
+                className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">
+                Follow TataEngage
               </button>
             </div>
           </div>
-          <div className="flex items-center justify-between">
-            <div className="text-xs text-slate-500">
-              You've referred <span className="font-bold text-zinc-900">{referralCount} person</span> so far
-            </div>
-            <div className="flex gap-2">
-              <button className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-tata-blue hover:text-white transition-all cursor-pointer"><Mail size={14} /></button>
-              <button className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-green-500 hover:text-white transition-all cursor-pointer"><MessageSquare size={14} /></button>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          TICKER
+      ══════════════════════════════════════════════════════════════════ */}
+      <div id="ticker" className="py-3.5 overflow-hidden" style={{ backgroundColor: B_INDIGO }}>
+        <div className="flex items-center gap-4">
+          <div className="shrink-0 pl-6 md:pl-12">
+            <span className="text-xs font-black px-3 py-1.5 rounded-full whitespace-nowrap"
+              style={{ backgroundColor: B_YELLOW, color: "#111" }}>
+              LIVE
+            </span>
+          </div>
+          <div className="flex-1 overflow-hidden">
+            <div className="flex gap-16 animate-marquee whitespace-nowrap">
+              {tickerDouble.map((item, i) => (
+                <span key={i} className="text-white/75 text-sm font-medium shrink-0 hover:text-white cursor-pointer transition-colors">
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
-        </section>
-
+        </div>
       </div>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          FOOTER (shared)
+      ══════════════════════════════════════════════════════════════════ */}
+      <footer className="bg-zinc-950 text-white pt-10 pb-7 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div>
+              <img src={tataEngageLogo} alt="TataEngage" className="h-9 object-contain brightness-0 invert mb-3" />
+              <p className="text-slate-400 text-sm leading-relaxed">Tata Group's platform for volunteering — connecting employees, families, and retirees with meaningful opportunities across India.</p>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4 text-sm">Quick Links</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                {["About Us", "Volunteering Policy", "FAQs", "Contact Us"].map((l) => (
+                  <li key={l}><span className="hover:text-white transition-colors cursor-pointer">{l}</span></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-4 text-sm">Programmes</h4>
+              <ul className="space-y-2 text-slate-400 text-sm">
+                {["TVW — Tata Volunteering Week", "ProEngage", "Disaster Response"].map((l) => (
+                  <li key={l}><span className="hover:text-white transition-colors cursor-pointer">{l}</span></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold mb-3 text-sm">Connect With Us</h4>
+              <div className="flex gap-3.5 mb-5">
+                {[{ Icon: Facebook, c: "hover:text-blue-400" }, { Icon: Twitter, c: "hover:text-sky-400" }, { Icon: Instagram, c: "hover:text-pink-400" }, { Icon: Linkedin, c: "hover:text-blue-400" }, { Icon: Youtube, c: "hover:text-red-500" }].map(({ Icon, c }) => (
+                  <Icon key={c} size={17} className={`text-slate-500 ${c} cursor-pointer transition-colors`} />
+                ))}
+              </div>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Newsletter</p>
+              <div className="flex flex-col gap-2">
+                <input type="text" placeholder="Your name" className="bg-white/5 border border-white/10 text-white placeholder:text-white/25 text-xs rounded-xl px-3 py-2 outline-none focus:border-white/30 transition-colors" />
+                <input type="email" placeholder="Your email" className="bg-white/5 border border-white/10 text-white placeholder:text-white/25 text-xs rounded-xl px-3 py-2 outline-none focus:border-white/30 transition-colors" />
+                <button onClick={() => triggerToast("Subscribed! Welcome to TataEngage updates.")}
+                  className="text-xs font-bold px-4 py-2 rounded-xl hover:brightness-110 transition-all cursor-pointer"
+                  style={{ backgroundColor: B_YELLOW, color: "#111" }}>
+                  Subscribe
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-slate-800 pt-5 flex flex-col md:flex-row justify-between items-center gap-3">
+            <p className="text-xs text-slate-600">© 2026 Tata Sons Private Limited. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <div className="flex gap-5 text-xs text-slate-500">
+                {["Privacy Policy", "Terms of Use", "Cookie Policy"].map((l) => (
+                  <span key={l} className="hover:text-white cursor-pointer">{l}</span>
+                ))}
+              </div>
+              <img src={tataLogo} alt="Tata" className="h-6 object-contain brightness-0 invert opacity-40" />
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <style>{`
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { animation: marquee 32s linear infinite; }
+        .animate-marquee:hover { animation-play-state: paused; }
+      `}</style>
     </div>
   );
 };
