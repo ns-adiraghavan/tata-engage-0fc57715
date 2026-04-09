@@ -1,0 +1,130 @@
+import { motion, AnimatePresence } from "framer-motion";
+import tataEngageLogoNoBg from "@/assets/tata-engage-logo-nobg.png";
+import { X, ChevronRight, LayoutDashboard, Briefcase, Calendar, ClipboardList, User, Shield, Compass } from "lucide-react";
+import type { View } from "@/types";
+
+const MegaMenu = ({ isOpen, onClose, isLoggedIn, onNavigate, onLogout, user }: { 
+  isOpen: boolean, 
+  onClose: () => void,
+  isLoggedIn: boolean,
+  onNavigate: (view: View) => void,
+  onLogout: () => void,
+  user: any
+}) => (
+  <AnimatePresence>
+    {isOpen && (
+      <>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60]"
+        />
+        <motion.div 
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-[70] shadow-2xl overflow-y-auto"
+        >
+          <div className="p-8">
+            <div className="flex justify-between items-center mb-12">
+              <div>
+                <img 
+                  src={tataEngageLogoNoBg} 
+                  alt="TATA engage" 
+                  className="h-14 md:h-16 object-contain"
+                />
+              </div>
+              <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full cursor-pointer"><X size={24} /></button>
+            </div>
+
+            <div className="space-y-8">
+              <section>
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Main Menu</h3>
+                <ul className="space-y-4 text-xl font-medium">
+                  <li 
+                    onClick={() => { onNavigate(user?.role === 'ngo' ? 'ngo-dashboard' : (isLoggedIn ? "dashboard" : "home")); onClose(); }}
+                    className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
+                  >
+                    <span className="flex items-center gap-3"><LayoutDashboard size={16} /> {isLoggedIn ? (user?.role === 'ngo' ? "NGO Dashboard" : "Dashboard") : "Home"}</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                  </li>
+                  {isLoggedIn && (
+                    <>
+                      <li 
+                        onClick={() => { onNavigate("proengage"); onClose(); }}
+                        className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
+                      >
+                        <span className="flex items-center gap-3"><Briefcase size={16} /> ProEngage Projects</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                      </li>
+                      <li 
+                        onClick={() => { onNavigate("tvw"); onClose(); }}
+                        className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
+                      >
+                        <span className="flex items-center gap-3"><Calendar size={16} /> TVW Hub</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                      </li>
+                      <li 
+                        onClick={() => { onNavigate("my-applications"); onClose(); }}
+                        className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
+                      >
+                        <span className="flex items-center gap-3"><ClipboardList size={16} /> My Applications</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                      </li>
+                      <li 
+                        onClick={() => { onNavigate("profile"); onClose(); }}
+                        className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
+                      >
+                        <span className="flex items-center gap-3"><User size={16} /> My Profile</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                      </li>
+                      <li 
+                        onClick={() => { onNavigate("tvw-vibe"); onClose(); }}
+                        className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
+                      >
+                        <span className="flex items-center gap-3"><Compass size={16} /> TVW Vibe Highlights</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                      </li>
+                      <li 
+                        onClick={() => { onNavigate("disaster-response"); onClose(); }}
+                        className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
+                      >
+                        <span className="flex items-center gap-3"><Shield size={16} /> Disaster Response</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                      </li>
+                    </>
+                  )}
+                  <li className="hover:text-tata-blue cursor-pointer flex items-center justify-between group">
+                    Our Programmes <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                  </li>
+                  <li className="hover:text-tata-blue cursor-pointer flex items-center justify-between group">
+                    Impact Stories <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
+                  </li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Resources</h3>
+                <ul className="space-y-3 text-slate-600">
+                  <li className="hover:text-tata-blue cursor-pointer">NGO Partners</li>
+                  <li className="hover:text-tata-blue cursor-pointer">Corporate Volunteering</li>
+                  <li className="hover:text-tata-blue cursor-pointer">Media Toolkit</li>
+                  <li className="hover:text-tata-blue cursor-pointer">Annual Reports</li>
+                </ul>
+              </section>
+
+              <div className="pt-8 border-t border-slate-100">
+                {isLoggedIn ? (
+                  <button onClick={onLogout} className="w-full btn-outline border-red-200 text-red-500 hover:bg-red-50 cursor-pointer">Logout</button>
+                ) : (
+                  <>
+                    <button onClick={() => { onNavigate("register-role"); onClose(); }} className="w-full btn-black mb-4 cursor-pointer">Register Now</button>
+                    <button onClick={() => { onNavigate("login"); onClose(); }} className="w-full btn-outline cursor-pointer">Login to your account</button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </>
+    )}
+  </AnimatePresence>
+);
+
+export default MegaMenu;
