@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronRight, ChevronLeft, Play, BookOpen, ArrowRight, RefreshCw, ExternalLink } from "lucide-react";
+import { ChevronRight, ChevronLeft, Play, BookOpen, ArrowRight, RefreshCw } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { useAppContext } from "@/context/AppContext";
@@ -13,22 +13,17 @@ const B_RED    = "#E8401C";
 const B_TEAL   = "#00A896";
 const B_BLUE   = "#1E6BB8";
 
-// ── Pastel surface palette (used consistently across all cards/sections) ──────
-// These are the ONLY background fills used on cards and section containers.
-// Do not introduce ad-hoc bg-* classes anywhere in this file.
-const P_INDIGO = "#EEF0FF"; // pastel indigo
-const P_YELLOW = "#FEF6E4"; // pastel amber
-const P_RED    = "#FFF0EE"; // pastel red
-const P_TEAL   = "#E6F8F5"; // pastel teal
-const P_BLUE   = "#EBF4FF"; // pastel blue
+// ── Ink doodle SVGs — sparse, hand-drawn feel ────────────────────────────────
 
-// ── Ink doodle SVGs ───────────────────────────────────────────────────────────
+// Loose spiral
 const InkSpiral = ({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) => (
   <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} style={style}>
     <path d="M30 30 C30 22, 38 18, 42 24 C46 30, 42 40, 34 42 C26 44, 18 38, 18 30 C18 20, 26 12, 36 12 C48 12, 56 22, 54 34 C52 46, 42 54, 28 52"
       stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none" />
   </svg>
 );
+
+// Small scattered dots — hand-stamped feel
 const InkDots = ({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) => (
   <svg viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} style={style}>
     <circle cx="6"  cy="8"  r="2.5" fill="currentColor" opacity="0.55" />
@@ -38,12 +33,16 @@ const InkDots = ({ className = "", style = {} }: { className?: string; style?: R
     <circle cx="48" cy="10" r="2"   fill="currentColor" opacity="0.4"  />
   </svg>
 );
+
+// Star burst — 4-point
 const InkStar = ({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) => (
   <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} style={style}>
     <path d="M16 2 L17.5 14 L28 8 L18.5 16 L28 24 L17.5 18 L16 30 L14.5 18 L4 24 L13.5 16 L4 8 L14.5 14 Z"
       stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" fill="none" />
   </svg>
 );
+
+// Small arc / swish
 const InkSwish = ({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) => (
   <svg viewBox="0 0 70 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} style={style}>
     <path d="M4 32 C10 16, 28 6, 50 14 C60 18, 65 26, 66 34"
@@ -62,20 +61,22 @@ const SectionDivider = () => (
   </div>
 );
 
-// ── Data ──────────────────────────────────────────────────────────────────────
+// ── Data ─────────────────────────────────────────────────────────────────────
 
 const HERO_SLIDES = [
   {
+    // Portrait-heavy photo — face on right third, bg fades to white left
     photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1400",
     accent: B_YELLOW,
     tag: "Education",
     headline: "Teaching skills that change what young people think is possible",
     sub: "Tata volunteers are in classrooms, training centres, and communities — every day.",
+    // Which doodles appear and where — positioned relative to section
     doodles: {
-      spiral:  { top: "12%",    right: "36%",  size: 52, opacity: 0.18 },
-      dots:    { top: "60%",    right: "42%",  size: 60, opacity: 0.20 },
-      star:    { top: "20%",    right: "28%",  size: 28, opacity: 0.22 },
-      swish:   { bottom: "18%", right: "30%",  size: 72, opacity: 0.16 },
+      spiral:  { top: "12%",  right: "36%",  size: 52, opacity: 0.18 },
+      dots:    { top: "60%",  right: "42%",  size: 60, opacity: 0.20 },
+      star:    { top: "20%",  right: "28%",  size: 28, opacity: 0.22 },
+      swish:   { bottom: "18%", right: "30%", size: 72, opacity: 0.16 },
     },
   },
   {
@@ -85,10 +86,10 @@ const HERO_SLIDES = [
     headline: "10,000 rural families reached through free health camps",
     sub: "When professionals volunteer their expertise, communities transform.",
     doodles: {
-      spiral:  { top: "8%",     right: "38%",  size: 48, opacity: 0.16 },
-      dots:    { bottom: "22%", right: "44%",  size: 56, opacity: 0.18 },
-      star:    { top: "55%",    right: "32%",  size: 24, opacity: 0.20 },
-      swish:   { top: "30%",    right: "26%",  size: 68, opacity: 0.14 },
+      spiral:  { top: "8%",   right: "38%", size: 48, opacity: 0.16 },
+      dots:    { bottom: "22%",right: "44%", size: 56, opacity: 0.18 },
+      star:    { top: "55%",  right: "32%", size: 24, opacity: 0.20 },
+      swish:   { top: "30%",  right: "26%", size: 68, opacity: 0.14 },
     },
   },
   {
@@ -98,10 +99,10 @@ const HERO_SLIDES = [
     headline: "1 million trees planted across Tata campuses nationwide",
     sub: "A greener legacy, growing branch by branch.",
     doodles: {
-      spiral:  { top: "15%",    right: "40%",  size: 50, opacity: 0.18 },
-      dots:    { top: "65%",    right: "34%",  size: 58, opacity: 0.20 },
-      star:    { bottom: "25%", right: "28%",  size: 26, opacity: 0.22 },
-      swish:   { top: "42%",    right: "22%",  size: 70, opacity: 0.15 },
+      spiral:  { top: "15%",  right: "40%", size: 50, opacity: 0.18 },
+      dots:    { top: "65%",  right: "34%", size: 58, opacity: 0.20 },
+      star:    { bottom: "25%",right: "28%",size: 26, opacity: 0.22 },
+      swish:   { top: "42%",  right: "22%", size: 70, opacity: 0.15 },
     },
   },
   {
@@ -111,74 +112,43 @@ const HERO_SLIDES = [
     headline: "Volunteers on-ground within 48 hours of the Kerala floods",
     sub: "Organised, rapid, human — Tata's fastest ever humanitarian response.",
     doodles: {
-      spiral:  { top: "10%",    right: "36%",  size: 52, opacity: 0.16 },
-      dots:    { bottom: "20%", right: "40%",  size: 60, opacity: 0.18 },
-      star:    { top: "48%",    right: "30%",  size: 28, opacity: 0.20 },
-      swish:   { top: "28%",    right: "24%",  size: 72, opacity: 0.14 },
+      spiral:  { top: "10%",  right: "36%", size: 52, opacity: 0.16 },
+      dots:    { bottom: "20%",right: "40%",size: 60, opacity: 0.18 },
+      star:    { top: "48%",  right: "30%", size: 28, opacity: 0.20 },
+      swish:   { top: "28%",  right: "24%", size: 72, opacity: 0.14 },
     },
   },
 ];
 
-// Programme cards — each with its own banner photo + tint colour
 const FLAGSHIP_PROGRAMMES = [
   {
-    id: "TVW",
-    label: "Bi-annual · Global",
+    id: "TVW", bg: B_INDIGO, accent: B_YELLOW, label: "Bi-annual · Global",
     title: "Tata Volunteering Week",
     desc: "A bi-annual celebration of collective action across every Tata company, worldwide.",
     stat1: "12 Editions", stat2: "50K+ Volunteers",
-    // Banner image
-    photo: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=900",
-    // Tint: semi-transparent overlay colour on the image
-    tint: "rgba(51,51,153,0.72)",
-    // Accent for tab pill + stats
-    accent: B_YELLOW,
-    // Pastel surface for tab button when active
-    pastelBg: P_INDIGO,
-    accentText: B_INDIGO,
   },
   {
-    id: "ProEngage",
-    label: "Skill-based",
+    id: "ProEngage", bg: "#3B1E8E", accent: "#C4B5FD", label: "Skill-based",
     title: "ProEngage",
     desc: "Match your professional expertise to NGO projects that need it most.",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
-    photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=900",
-    tint: "rgba(59,30,142,0.70)",
-    accent: "#C4B5FD",
-    pastelBg: "#F5F3FF",
-    accentText: "#5b21b6",
   },
   {
-    id: "Disaster Response",
-    label: "Rapid Action",
+    id: "Disaster Response", bg: "#7f1d1d", accent: "#FCA5A5", label: "Rapid Action",
     title: "Disaster Response",
     desc: "Volunteers deployed within 48 hours when communities need urgent support.",
     stat1: "24 Responses", stat2: "8 States",
-    photo: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&q=80&w=900",
-    tint: "rgba(127,29,29,0.72)",
-    accent: "#FCA5A5",
-    pastelBg: P_RED,
-    accentText: B_RED,
   },
 ];
 
-// EOEO showcase — replaces the old company list
-const EOEO = {
-  tag: "Each One Empowers One",
-  tagColour: B_TEAL,
-  tagPastel: P_TEAL,
-  headline: "Become a TCS Literacy Champion",
-  body: "TCS's intuitive digital literacy platform enables any Tata employee to empower another — with financial, digital, and functional literacy. Available in 9 Indian languages. Your cook, driver, security guard, or neighbour could be your beneficiary.",
-  steps: [
-    { num: "01", label: "Identify your beneficiary" },
-    { num: "02", label: "Enroll them in the system" },
-    { num: "03", label: "Teach at your own pace" },
-    { num: "04", label: "Get rewarded + certificates" },
-  ],
-  cta: "Sign Up Now",
-  ctaUrl: "https://tcsempowers.tcsapps.com/apac2/alp/",
-};
+const COMPANY_PROGRAMMES = [
+  { name: "TCS",         desc: "Green Earth — 1,000 trees planted",           dot: B_INDIGO },
+  { name: "Titan",       desc: "Skill India workshops for rural women",         dot: B_YELLOW },
+  { name: "Tata Steel",  desc: "Community health camps — 20K beneficiaries",   dot: "#475569" },
+  { name: "Tata Motors", desc: "Road safety awareness across 12 cities",        dot: B_RED    },
+  { name: "Tata Power",  desc: "Solar literacy programme in Jharkhand",         dot: B_TEAL   },
+  { name: "Taj Hotels",  desc: "Culinary skills for underprivileged youth",     dot: B_BLUE   },
+];
 
 const JOURNEY_MILESTONES = [
   { year: "2007", title: "The Seed",     desc: "Founded with 4 Tata companies.",       colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&q=80&w=120&h=120" },
@@ -198,15 +168,24 @@ const FUN_FACTS = [
 ];
 
 const HERO_STATS = [
-  { num: "50,000+", label: "Active Volunteers",  sub: "Across 100+ Tata companies", colour: B_INDIGO, pastel: P_INDIGO },
-  { num: "85",      label: "NGO Partners",        sub: "Across 15 states in India",   colour: B_TEAL,   pastel: P_TEAL  },
-  { num: "2.5M+",   label: "Volunteer Hours",     sub: "Logged since 2007",           colour: B_YELLOW, pastel: P_YELLOW},
+  { num: "50,000+", label: "Active Volunteers",  sub: "Across 100+ Tata companies", colour: B_INDIGO },
+  { num: "85",      label: "NGO Partners",        sub: "Across 15 states in India",   colour: B_TEAL   },
+  { num: "2.5M+",   label: "Volunteer Hours",     sub: "Logged since 2007",           colour: B_YELLOW },
 ];
 
 const SOCIAL_POSTS = [
-  { handle: "@TataEngage",  platform: "Twitter",   text: "Proud to announce 50,000 volunteers on the platform! Thank you for making a difference. #TataEngage",    likes: "1.2K", time: "2h ago",  Icon: Twitter,   iconBg: "#0EA5E9" },
-  { handle: "@tata_engage", platform: "Instagram", text: "TVW 2026 is almost here! Tag a colleague you'd love to volunteer with. #TVW2026 #TataVolunteers",          likes: "3.4K", time: "1d ago",  Icon: Instagram, iconBg: "#EC4899" },
-  { handle: "Tata Engage",  platform: "LinkedIn",  text: "ProEngage Edition 2026 is now open — 400+ skill-based projects waiting for the right volunteers.",         likes: "892",  time: "3d ago",  Icon: Linkedin,  iconBg: "#1D4ED8" },
+  { handle: "@TataEngage",  platform: "Twitter",   text: "Proud to announce 50,000 volunteers on the platform! Thank you for making a difference. #TataEngage",              likes: "1.2K", time: "2h ago",  Icon: Twitter,   iconBg: "#0EA5E9" },
+  { handle: "@tata_engage", platform: "Instagram", text: "TVW 2026 is almost here! Tag a colleague you'd love to volunteer with. #TVW2026 #TataVolunteers",                  likes: "3.4K", time: "1d ago",  Icon: Instagram, iconBg: "#EC4899" },
+  { handle: "Tata Engage",  platform: "LinkedIn",  text: "ProEngage Edition 2026 is now open — 400+ skill-based projects waiting for the right volunteers.",                 likes: "892",  time: "3d ago",  Icon: Linkedin,  iconBg: "#1D4ED8" },
+];
+
+const TICKER_ITEMS = [
+  "🟢  ProEngage 2026 is OPEN — 400+ projects live",
+  "📅  TVW 2026 registration opens in 14 days",
+  "🏅  1,240 volunteers matched this edition — a record",
+  "🌿  TCS: 1,000 trees planted across 8 campuses",
+  "🚨  Disaster Response deployed to Assam floods",
+  "🎓  Finance Mentorship projects now accepting applications",
 ];
 
 const SECTION_IDS    = ["hero", "programmes", "journey", "numbers"];
@@ -214,6 +193,7 @@ const SECTION_LABELS = ["Home", "Programmes", "Journey", "Numbers"];
 const secBg = (i: number) => i % 2 === 0 ? "bg-white" : "bg-[#F0F4FA]";
 
 // ── Component ─────────────────────────────────────────────────────────────────
+
 const HomeView = () => {
   const navigate         = useAppNavigate();
   const { triggerToast } = useAppContext();
@@ -243,15 +223,15 @@ const HomeView = () => {
   useEffect(() => { const t = setInterval(cycleFact, 5200); return () => clearInterval(t); }, []);
   useEffect(() => { const t = setInterval(() => setSocialIdx((p) => (p + 1) % SOCIAL_POSTS.length), 4200); return () => clearInterval(t); }, []);
 
-  const slide = HERO_SLIDES[heroSlide];
-  const prog  = FLAGSHIP_PROGRAMMES[flagshipIdx];
-  const d     = slide.doodles;
+  const slide        = HERO_SLIDES[heroSlide];
+  const prog         = FLAGSHIP_PROGRAMMES[flagshipIdx];
+  const tickerDouble = [...TICKER_ITEMS, ...TICKER_ITEMS];
+  const d            = slide.doodles;
 
   return (
-    // pt-28 = 64px nav bar + ~44px ticker bar below it = 108px total fixed header
-    <div className="relative font-sans pt-28">
+    <div className="relative font-sans">
 
-      {/* ── Section dot rail ─────────────────────────────────────────────────── */}
+      {/* ── Section dot rail ─────────────────────────────────────────────── */}
       <div className="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-40">
         {SECTION_IDS.map((id, i) => {
           const active = activeSection === i;
@@ -271,27 +251,30 @@ const HomeView = () => {
       </div>
 
       {/* ════════════════════════════════════════════════════════════════════
-          1. HERO
+          1. HERO — white bg, photo vignetted to white on left, doodles float
       ════════════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="relative min-h-[560px] flex items-center overflow-hidden bg-white">
+      <section id="hero" className="relative min-h-[560px] flex items-center overflow-hidden pt-16 bg-white">
 
-        {/* Thin accent bar at very top of section */}
-        <div className="absolute top-0 left-0 right-0 h-0.5 z-20 transition-colors duration-700"
+        {/* Thin accent bar just below navbar */}
+        <div className="absolute top-16 left-0 right-0 h-0.5 z-20 transition-colors duration-700"
           style={{ backgroundColor: slide.accent }} />
 
-        {/* Photo layer — right-anchored with vignette */}
+        {/* ── Photo layer — right-anchored, fades to white on left ── */}
         <div className="absolute inset-0 flex justify-end">
           {HERO_SLIDES.map((s, i) => (
             <div key={i}
               className={`absolute inset-0 transition-opacity duration-1000 ${heroSlide === i ? "opacity-100" : "opacity-0"}`}>
+              {/* The photo itself */}
               <img src={s.photo} alt={s.tag}
                 className="absolute right-0 top-0 h-full w-[65%] object-cover object-center"
                 referrerPolicy="no-referrer"
                 style={{ transition: "transform 6s ease-out", transform: heroSlide === i ? "scale(1.04)" : "scale(1)" }}
               />
+              {/* Radial vignette — white from left, fading right — simulates cutout effect */}
               <div className="absolute inset-0" style={{
                 background: "linear-gradient(to right, #ffffff 0%, #ffffff 28%, rgba(255,255,255,0.85) 42%, rgba(255,255,255,0.35) 58%, rgba(255,255,255,0) 72%)"
               }} />
+              {/* Soft top + bottom white fade so person doesn't look cropped */}
               <div className="absolute inset-0" style={{
                 background: "linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 18%, rgba(255,255,255,0) 80%, rgba(255,255,255,0.6) 100%)"
               }} />
@@ -299,31 +282,48 @@ const HomeView = () => {
           ))}
         </div>
 
-        {/* Ink doodles */}
+        {/* ── Ink doodles — positioned in the transition zone between text and photo ── */}
         <div className="absolute inset-0 pointer-events-none z-10">
-          <InkSpiral className="absolute transition-all duration-700"
-            style={{ top: d.spiral.top, right: d.spiral.right, width: d.spiral.size, height: d.spiral.size, color: slide.accent, opacity: d.spiral.opacity }} />
-          <InkDots className="absolute transition-all duration-700"
-            style={{ top: d.dots.top, bottom: (d.dots as any).bottom, right: d.dots.right, width: d.dots.size, color: slide.accent, opacity: d.dots.opacity }} />
-          <InkStar className="absolute transition-all duration-700"
-            style={{ top: d.star.top, bottom: (d.star as any).bottom, right: d.star.right, width: d.star.size, height: d.star.size, color: slide.accent, opacity: d.star.opacity }} />
-          <InkSwish className="absolute transition-all duration-700"
-            style={{ top: (d.swish as any).top, bottom: (d.swish as any).bottom, right: d.swish.right, width: d.swish.size, color: slide.accent, opacity: d.swish.opacity }} />
+          {/* Spiral — top area of transition zone */}
+          <InkSpiral
+            className="absolute transition-all duration-700"
+            style={{ top: d.spiral.top, right: d.spiral.right, width: d.spiral.size, height: d.spiral.size, color: slide.accent, opacity: d.spiral.opacity }}
+          />
+          {/* Scattered dots */}
+          <InkDots
+            className="absolute transition-all duration-700"
+            style={{ top: d.dots.top, bottom: (d.dots as any).bottom, right: d.dots.right, width: d.dots.size, color: slide.accent, opacity: d.dots.opacity }}
+          />
+          {/* Star burst */}
+          <InkStar
+            className="absolute transition-all duration-700"
+            style={{ top: d.star.top, bottom: (d.star as any).bottom, right: d.star.right, width: d.star.size, height: d.star.size, color: slide.accent, opacity: d.star.opacity }}
+          />
+          {/* Swish arrow */}
+          <InkSwish
+            className="absolute transition-all duration-700"
+            style={{ top: (d.swish as any).top, bottom: (d.swish as any).bottom, right: d.swish.right, width: d.swish.size, color: slide.accent, opacity: d.swish.opacity }}
+          />
         </div>
 
-        {/* Text content */}
+        {/* ── Text content — left column ── */}
         <div className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 w-full py-12">
           <div className="max-w-[480px]">
+            {/* Tag */}
             <span className="inline-flex items-center text-xs font-bold px-3 py-1.5 rounded-full mb-5 tracking-wide text-white"
               style={{ backgroundColor: slide.accent }}>
               {slide.tag}
             </span>
+
+            {/* Headline */}
             <h1 className="text-3xl md:text-[2.5rem] font-bold text-slate-900 leading-[1.2] mb-4 tracking-tight">
               {slide.headline}
             </h1>
+
             <p className="text-base text-slate-500 leading-relaxed mb-8 max-w-md">
               {slide.sub}
             </p>
+
             <div className="flex flex-wrap gap-3 mb-8">
               <button onClick={() => triggerToast("Opening full story...")}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
@@ -335,6 +335,7 @@ const HomeView = () => {
                 <Play size={14} /> Watch More
               </button>
             </div>
+
             {/* Slide controls */}
             <div className="flex items-center gap-3">
               <button onClick={() => setHeroSlide((p) => (p - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
@@ -363,9 +364,7 @@ const HomeView = () => {
       <SectionDivider />
 
       {/* ════════════════════════════════════════════════════════════════════
-          2. PROGRAMME SPOTLIGHT
-          LEFT 70%: photo-backed programme card (image-led, text overlaid)
-          RIGHT 30%: EOEO showcase panel
+          2. PROGRAMME SPOTLIGHT — 70/30
       ════════════════════════════════════════════════════════════════════ */}
       <section id="programmes" className={`${secBg(1)} py-10 px-6 md:px-12`}>
         <div className="max-w-7xl mx-auto">
@@ -374,121 +373,80 @@ const HomeView = () => {
             <h2 className="text-2xl font-bold text-slate-900">Ways to make a difference</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-10 gap-4">
 
-            {/* ── LEFT 70% — image-led card like the reference screenshot ── */}
-            <div className="lg:col-span-7">
+            {/* LEFT 70% */}
+            <div className="lg:col-span-7 relative rounded-2xl overflow-hidden min-h-[340px] flex flex-col justify-between p-8 transition-all duration-700"
+              style={{ backgroundColor: prog.bg }}>
+              <div className="absolute top-0 left-0 w-1 h-full transition-colors duration-700"
+                style={{ backgroundColor: prog.accent }} />
 
-              {/* Tab row */}
-              <div className="flex gap-2 mb-4">
-                {FLAGSHIP_PROGRAMMES.map((p, i) => (
-                  <button key={p.id} onClick={() => setFlagshipIdx(i)}
-                    className="text-xs font-bold px-4 py-1.5 rounded-full transition-all cursor-pointer border"
-                    style={
-                      i === flagshipIdx
-                        ? { backgroundColor: prog.pastelBg, color: prog.accentText, borderColor: "transparent" }
-                        : { backgroundColor: "white", color: "#94a3b8", borderColor: "#e2e8f0" }
-                    }>
-                    {p.id}
-                  </button>
-                ))}
-              </div>
-
-              {/* Card — image on left (~45%), text on right (~55%), separated by gap. Like reference. */}
-              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm min-h-[320px] flex flex-col md:flex-row">
-
-                {/* Image panel — with colour tint overlay */}
-                <div className="relative md:w-[45%] min-h-[220px] md:min-h-[320px] shrink-0 overflow-hidden">
-                  <img
-                    src={prog.photo}
-                    alt={prog.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
-                    referrerPolicy="no-referrer"
-                  />
-                  {/* Slight colour tint — programme-specific */}
-                  <div className="absolute inset-0 transition-all duration-700" style={{ backgroundColor: prog.tint }} />
-                  {/* Programme label pill over image */}
-                  <div className="absolute bottom-4 left-4 z-10">
-                    <span className="text-xs font-bold px-3 py-1 rounded-full text-white/90"
-                      style={{ backgroundColor: "rgba(0,0,0,0.35)" }}>
-                      {prog.label}
-                    </span>
-                  </div>
+              <div className="relative z-10">
+                <div className="flex gap-2 mb-5">
+                  {FLAGSHIP_PROGRAMMES.map((p, i) => (
+                    <button key={p.id} onClick={() => setFlagshipIdx(i)}
+                      className="text-xs font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer"
+                      style={{ backgroundColor: i === flagshipIdx ? prog.accent : "rgba(255,255,255,0.1)", color: i === flagshipIdx ? "#111" : "rgba(255,255,255,0.6)" }}>
+                      {p.id}
+                    </button>
+                  ))}
                 </div>
 
-                {/* Text panel */}
-                <div className="flex-1 p-7 flex flex-col justify-between">
-                  <div>
-                    {/* Eyebrow — pastel tag */}
-                    <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mb-3"
-                      style={{ backgroundColor: prog.pastelBg, color: prog.accentText }}>
-                      {prog.id}
-                    </span>
-                    <h3 className="text-xl font-bold text-slate-900 leading-snug mb-2">{prog.title}</h3>
-                    <p className="text-sm text-slate-500 leading-relaxed mb-5">{prog.desc}</p>
-                    {/* Stats row */}
-                    <div className="flex gap-3 mb-6">
-                      {[prog.stat1, prog.stat2].map((s) => (
-                        <div key={s} className="rounded-xl px-4 py-2 text-center"
-                          style={{ backgroundColor: prog.pastelBg }}>
-                          <p className="text-xs font-black" style={{ color: prog.accentText }}>{s}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  {/* CTAs */}
-                  <div className="flex gap-3">
-                    <button onClick={() => triggerToast("Opening story...")}
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
-                      style={{ backgroundColor: B_INDIGO }}>
-                      <BookOpen size={13} /> Read Story
-                    </button>
-                    <button onClick={() => triggerToast("Opening video...")}
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all cursor-pointer">
-                      <Play size={13} /> Watch More
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ── RIGHT 30% — EOEO Showcase ── */}
-            <div className="lg:col-span-3 flex flex-col gap-0 bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden">
-              {/* Header strip */}
-              <div className="px-5 pt-5 pb-4" style={{ backgroundColor: EOEO.tagPastel }}>
-                <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mb-2"
-                  style={{ backgroundColor: "white", color: EOEO.tagColour }}>
-                  {EOEO.tag}
+                <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-4 border border-white/20 text-white/65">
+                  {prog.label}
                 </span>
-                <h3 className="text-sm font-bold text-slate-900 leading-snug">{EOEO.headline}</h3>
-              </div>
 
-              {/* Body */}
-              <div className="flex-1 px-5 py-4">
-                <p className="text-xs text-slate-500 leading-relaxed mb-4">{EOEO.body}</p>
+                <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">
+                  Join the Volunteer Tribe
+                </h3>
 
-                {/* 4-step journey — compact */}
-                <div className="space-y-2.5">
-                  {EOEO.steps.map((step) => (
-                    <div key={step.num} className="flex items-center gap-3">
-                      <span className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-black shrink-0"
-                        style={{ backgroundColor: EOEO.tagColour }}>
-                        {step.num}
-                      </span>
-                      <p className="text-xs font-semibold text-slate-700">{step.label}</p>
+                <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-sm">{prog.desc}</p>
+
+                <div className="flex gap-3">
+                  {[prog.stat1, prog.stat2].map((s) => (
+                    <div key={s} className="bg-white/10 border border-white/15 rounded-xl px-4 py-1.5">
+                      <p className="text-white font-bold text-sm">{s}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* CTA */}
-              <div className="px-5 pb-5">
-                <a href={EOEO.ctaUrl} target="_blank" rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold text-white transition-all cursor-pointer hover:brightness-110"
-                  style={{ backgroundColor: EOEO.tagColour }}>
-                  {EOEO.cta} <ExternalLink size={11} />
-                </a>
+              <div className="relative z-10 flex gap-3 mt-6">
+                <button onClick={() => navigate("register-role")}
+                  className="flex-1 bg-white text-zinc-900 py-2.5 rounded-xl text-sm font-bold hover:bg-zinc-100 transition-all cursor-pointer">
+                  Start Volunteering
+                </button>
+                <button onClick={() => triggerToast("Exploring programme...")}
+                  className="flex-1 bg-white/10 border border-white/20 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-white/20 transition-all cursor-pointer">
+                  Learn More →
+                </button>
               </div>
+            </div>
+
+            {/* RIGHT 30% */}
+            <div className="lg:col-span-3 bg-white border border-slate-100 rounded-2xl p-5 flex flex-col shadow-sm">
+              <div className="mb-4">
+                <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-0.5">By company</p>
+                <h3 className="text-sm font-bold text-slate-900">Explore Company Volunteering</h3>
+              </div>
+              <div className="flex-1 space-y-1.5">
+                {COMPANY_PROGRAMMES.map((co) => (
+                  <button key={co.name}
+                    onClick={() => triggerToast(`Viewing ${co.name} volunteering programme...`)}
+                    className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer group text-left">
+                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: co.dot }} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold text-slate-900 leading-none mb-0.5">{co.name}</p>
+                      <p className="text-xs text-slate-400 truncate">{co.desc}</p>
+                    </div>
+                    <ChevronRight size={11} className="text-slate-300 group-hover:text-slate-500 shrink-0" />
+                  </button>
+                ))}
+              </div>
+              <button onClick={() => triggerToast("Viewing all company programmes...")}
+                className="mt-4 w-full flex items-center justify-center gap-1.5 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">
+                View All Companies <ArrowRight size={11} />
+              </button>
             </div>
           </div>
         </div>
@@ -505,9 +463,11 @@ const HomeView = () => {
             <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Our Journey</p>
             <h2 className="text-2xl font-bold text-slate-900">Two decades of giving back</h2>
           </div>
+
           <div className="relative">
             <div className="absolute top-[36px] left-10 right-10 hidden lg:block"
               style={{ borderTop: "2px dashed #CBD5E1" }} />
+
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
               {JOURNEY_MILESTONES.map((m) => (
                 <div key={m.year} className="flex flex-col items-center text-center group">
@@ -531,6 +491,7 @@ const HomeView = () => {
               ))}
             </div>
           </div>
+
           <div className="mt-10 flex justify-center">
             <button onClick={() => triggerToast("Full journey coming soon...")}
               className="inline-flex items-center gap-2 text-sm font-bold hover:underline cursor-pointer"
@@ -545,7 +506,6 @@ const HomeView = () => {
 
       {/* ════════════════════════════════════════════════════════════════════
           4. FACTS + 3 STATS + SOCIAL
-          Stats use pastel fills consistently.
       ════════════════════════════════════════════════════════════════════ */}
       <section id="numbers" className={`${secBg(3)} py-10 px-6 md:px-12`}>
         <div className="max-w-7xl mx-auto">
@@ -556,7 +516,7 @@ const HomeView = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-            {/* Did You Know — pastel indigo surface instead of solid B_INDIGO for consistency */}
+            {/* Did You Know */}
             <div className="rounded-2xl p-7 flex flex-col justify-between min-h-[240px]"
               style={{ backgroundColor: B_INDIGO }}>
               <div>
@@ -585,17 +545,17 @@ const HomeView = () => {
               </div>
             </div>
 
-            {/* 3 Stats — pastel surface + strong left border */}
+            {/* 3 Stats — left-border colour distinction */}
             <div className="flex flex-col gap-3">
               {HERO_STATS.map((s) => (
-                <div key={s.label} className="flex items-center gap-5 rounded-2xl p-5 border border-slate-100 shadow-sm"
-                  style={{ backgroundColor: s.pastel, borderLeft: `4px solid ${s.colour}` }}>
+                <div key={s.label} className="flex items-center gap-5 rounded-2xl p-5 bg-white border border-slate-100 shadow-sm"
+                  style={{ borderLeft: `4px solid ${s.colour}` }}>
                   <div>
                     <p className="font-black tracking-tighter leading-none mb-0.5 text-4xl" style={{ color: s.colour }}>
                       {s.num}
                     </p>
                     <p className="text-sm font-bold text-slate-800">{s.label}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">{s.sub}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{s.sub}</p>
                   </div>
                 </div>
               ))}
@@ -656,7 +616,7 @@ const HomeView = () => {
       {/* ════════════════════════════════════════════════════════════════════
           FOOTER
       ════════════════════════════════════════════════════════════════════ */}
-      <footer className="bg-zinc-950 text-white pt-10 pb-7 px-6 md:px-12">
+      <footer className="bg-zinc-950 text-white pt-10 pb-12 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             <div>
@@ -713,6 +673,36 @@ const HomeView = () => {
           </div>
         </div>
       </footer>
+
+      {/* ════════════════════════════════════════════════════════════════════
+          FIXED BOTTOM TICKER — persists as you scroll, HomeView only
+      ════════════════════════════════════════════════════════════════════ */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 py-2.5 overflow-hidden"
+        style={{ backgroundColor: B_INDIGO }}>
+        <div className="flex items-center gap-4">
+          <div className="shrink-0 pl-6 md:pl-12">
+            <span className="text-xs font-black px-3 py-1.5 rounded-full whitespace-nowrap"
+              style={{ backgroundColor: B_YELLOW, color: "#111" }}>
+              LIVE
+            </span>
+          </div>
+          <div className="flex-1 overflow-hidden">
+            <div className="flex gap-16 animate-marquee whitespace-nowrap">
+              {tickerDouble.map((item, i) => (
+                <span key={i} className="text-white/75 text-sm font-medium shrink-0 hover:text-white cursor-pointer transition-colors">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-marquee { animation: marquee 32s linear infinite; }
+        .animate-marquee:hover { animation-play-state: paused; }
+      `}</style>
     </div>
   );
 };
