@@ -26,6 +26,14 @@ const Navbar = ({
     return NOTIFICATIONS_VOLUNTEER;
   };
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState(getRoleNotifications());
@@ -93,7 +101,7 @@ const Navbar = ({
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className="h-16 bg-white border-b border-zinc-100 flex items-center justify-between px-6 md:px-12">
+      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${scrolled ? "bg-white border-b border-zinc-100 shadow-sm" : "bg-transparent border-b border-transparent"}`}>
 
         {/* ── LEFT: TataEngage logo (public) OR TataEngage logo (logged-in) ── */}
         <div className="flex-shrink-0">
