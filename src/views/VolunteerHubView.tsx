@@ -121,7 +121,7 @@ const VolunteerHubView = () => {
           HERO — banner image + gradient + quote + welcome top-left
       ══════════════════════════════════════════════════════════════════ */}
       <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: 420 }}>
+        <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: 560 }}>
           {/* Banner image */}
           <img
             src="https://images.unsplash.com/photo-1593113616828-6f22bca04804?auto=format&fit=crop&q=80&w=1600"
@@ -139,18 +139,18 @@ const VolunteerHubView = () => {
             {(user?.role?.includes("spoc") || user?.role === "corporate_spoc") && (
               <RoleToggle activeView="volunteer" className="mb-3" />
             )}
-            <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide">
+            <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-sm font-semibold px-3 py-1.5 rounded-full tracking-wide">
               <span className="w-1.5 h-1.5 rounded-full bg-tata-cyan inline-block" />
               Volunteer Hub
             </span>
-            <p className="text-white/50 text-sm mt-2">
+            <p className="text-white/50 text-base mt-2">
               Welcome back, <span className="text-white font-semibold">{user?.firstName ?? "there"}</span>
             </p>
-            <p className="text-white/35 text-xs mt-0.5">{user?.company} · {user?.designation}</p>
+            <p className="text-white/35 text-sm mt-0.5">{user?.company} · {user?.designation}</p>
           </div>
 
           {/* Motivational quote — centred vertically */}
-          <div className="relative z-10 flex flex-col items-start justify-center px-8 md:px-16" style={{ minHeight: 420 }}>
+          <div className="relative z-10 flex flex-col items-start justify-center px-8 md:px-16" style={{ minHeight: 560 }}>
             <div className="max-w-xl mt-16">
               <p className="text-white/35 text-4xl font-black leading-none mb-3 select-none">"</p>
               <h2 className="text-white font-bold text-2xl md:text-3xl leading-snug tracking-tight mb-4">
@@ -169,7 +169,7 @@ const VolunteerHubView = () => {
               className="flex items-center gap-2 text-zinc-900 text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-105 transition-all cursor-pointer shadow-lg"
               style={{ backgroundColor: B_YELLOW }}
             >
-              My Dashboard <ArrowRight size={15} />
+              My Space <ArrowRight size={15} />
             </button>
           </div>
         </div>

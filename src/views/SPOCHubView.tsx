@@ -114,7 +114,7 @@ const SPOCHubView = () => {
           HERO — SPOC: professional / leadership image + quote on leadership
       ══════════════════════════════════════════════════════════════════ */}
       <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: 420 }}>
+        <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: 560 }}>
           {/* SPOC-appropriate image — professional team leadership */}
           <img
             src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1600"
@@ -130,18 +130,18 @@ const SPOCHubView = () => {
           {/* Welcome — top left */}
           <div className="absolute top-6 left-8 z-10">
             {showToggle && <RoleToggle activeView="spoc" className="mb-3" />}
-            <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide">
+            <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-sm font-semibold px-3 py-1.5 rounded-full tracking-wide">
               <span className="w-1.5 h-1.5 rounded-full bg-tata-cyan inline-block" />
               SPOC Hub · {spoc.company}
             </span>
-            <p className="text-white/50 text-sm mt-2">
+            <p className="text-white/50 text-base mt-2">
               Welcome back, <span className="text-white font-semibold">{spoc.firstName}</span>
             </p>
-            <p className="text-white/35 text-xs mt-0.5">{spoc.company} · Corporate SPOC</p>
+            <p className="text-white/35 text-sm mt-0.5">{spoc.company} · Corporate SPOC</p>
           </div>
 
           {/* Motivational quote — leadership-flavoured */}
-          <div className="relative z-10 flex flex-col items-start justify-center px-8 md:px-16" style={{ minHeight: 420 }}>
+          <div className="relative z-10 flex flex-col items-start justify-center px-8 md:px-16" style={{ minHeight: 560 }}>
             <div className="max-w-xl mt-16">
               <p className="text-white/35 text-4xl font-black leading-none mb-3 select-none">"</p>
               <h2 className="text-white font-bold text-2xl md:text-3xl leading-snug tracking-tight mb-4">
@@ -160,7 +160,7 @@ const SPOCHubView = () => {
               className="flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-110 transition-all cursor-pointer shadow-lg"
               style={{ backgroundColor: B_INDIGO }}
             >
-              SPOC Dashboard <ArrowRight size={15} />
+              My Space <ArrowRight size={15} />
             </button>
           </div>
         </div>
