@@ -551,7 +551,7 @@ const HomeView = () => {
                 <div key={s.label} className="flex items-center gap-5 rounded-2xl p-5 bg-white border border-slate-100 shadow-sm"
                   style={{ borderLeft: `4px solid ${s.colour}` }}>
                   <div>
-                    <p className="text-3xl font-black tracking-tighter leading-none mb-0.5" style={{ color: s.colour }}>
+                    <p className="font-black tracking-tighter leading-none mb-0.5 text-4xl" style={{ color: s.colour }}>
                       {s.num}
                     </p>
                     <p className="text-sm font-bold text-slate-800">{s.label}</p>
