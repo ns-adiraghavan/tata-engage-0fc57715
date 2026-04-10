@@ -2,6 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { IS_PE_SEASON, PRIYA_SHARMA, TVW_EVENTS, PROENGAGE_PROJECTS, MOCK_APPLICANTS, VOLUNTEER_CERTIFICATES } from "@/data/mockData";
 
+// ─── Colour tokens (matching KNOWLEDGE_v9 system) ───────────────────────────
+const TATA_BLUE   = "#003580";
+const TATA_CYAN   = "#00b4d8";
+const ACCENT_NAVY = "#0D1B3E";
+
 // ─── Mock data — grounded in real Tata Engage programme details ──────────────
 const VOLUNTEER = {
   firstName: "Priya",
