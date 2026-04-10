@@ -118,6 +118,7 @@ const FLAGSHIP_PROGRAMMES = [
     title: "Tata Volunteering Week",
     desc: "A bi-annual celebration of collective action across every Tata company, worldwide.",
     stat1: "12 Editions", stat2: "50K+ Volunteers",
+    ctaType: "story" as const,
     photo: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=900",
     tint: "rgba(51,51,153,0.68)",
     pastelBg: P_INDIGO, accentText: B_INDIGO,
@@ -127,6 +128,7 @@ const FLAGSHIP_PROGRAMMES = [
     title: "ProEngage",
     desc: "Match your professional expertise to NGO projects that need it most.",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
+    ctaType: "video" as const,
     photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=900",
     tint: "rgba(59,30,142,0.68)",
     pastelBg: "#F5F3FF", accentText: "#5b21b6",
@@ -136,6 +138,7 @@ const FLAGSHIP_PROGRAMMES = [
     title: "Disaster Response",
     desc: "Volunteers deployed within 48 hours when communities need urgent support.",
     stat1: "24 Responses", stat2: "8 States",
+    ctaType: "story" as const,
     photo: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&q=80&w=900",
     tint: "rgba(127,29,29,0.68)",
     pastelBg: P_RED, accentText: B_RED,
@@ -360,7 +363,7 @@ const HomeView = () => {
           <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
 
             {/* LEFT 70% */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-7 min-h-[360px]">
               {/* Pastel tab pills */}
               <div className="flex gap-2 mb-4">
                 {FLAGSHIP_PROGRAMMES.map((p, i) => (
@@ -377,7 +380,7 @@ const HomeView = () => {
               </div>
 
               {/* Card: image left, text right — clean split like reference screenshot */}
-              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[300px]">
+              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row flex-1">
                 {/* Image panel with tint */}
                 <div className="relative md:w-[45%] min-h-[200px] md:min-h-0 shrink-0 overflow-hidden">
                   <img src={prog.photo} alt={prog.title}
@@ -400,34 +403,30 @@ const HomeView = () => {
                       style={{ backgroundColor: prog.pastelBg, color: prog.accentText }}>
                       {prog.id}
                     </span>
-                    <h3 className="text-xl font-bold text-slate-900 leading-snug mb-2">{prog.title}</h3>
-                    <p className="text-sm text-slate-500 leading-relaxed mb-5">{prog.desc}</p>
-                    <div className="flex gap-3 mb-6">
-                      {[prog.stat1, prog.stat2].map((s) => (
-                        <div key={s} className="rounded-xl px-4 py-2"
-                          style={{ backgroundColor: prog.pastelBg }}>
-                          <p className="text-xs font-black" style={{ color: prog.accentText }}>{s}</p>
-                        </div>
-                      ))}
-                    </div>
+                    <h3 className="text-lg font-bold text-slate-900 leading-snug mb-2">{prog.title}</h3>
+                    <p className="text-xs text-slate-500 leading-relaxed mb-5 line-clamp-2">{prog.desc}</p>
                   </div>
                   <div className="flex gap-3">
-                    <button onClick={() => triggerToast("Opening story...")}
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
-                      style={{ backgroundColor: B_INDIGO }}>
-                      <BookOpen size={13} /> Read Story
-                    </button>
-                    <button onClick={() => triggerToast("Opening video...")}
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all cursor-pointer">
-                      <Play size={13} /> Watch More
-                    </button>
+                    {prog.ctaType === "story" ? (
+                      <button onClick={() => triggerToast("Opening story...")}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
+                        style={{ backgroundColor: B_INDIGO }}>
+                        <BookOpen size={13} /> Read Story
+                      </button>
+                    ) : (
+                      <button onClick={() => triggerToast("Opening video...")}
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
+                        style={{ backgroundColor: B_INDIGO }}>
+                        <Play size={13} /> Watch More
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
 
             {/* RIGHT 30% — EOEO showcase */}
-            <div className="lg:col-span-3 bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+            <div className="lg:col-span-3 min-h-[360px] bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col h-full">
               <div className="px-5 pt-5 pb-4" style={{ backgroundColor: EOEO.tagPastel }}>
                 <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mb-2"
                   style={{ backgroundColor: "white", color: EOEO.tagColour }}>
@@ -521,14 +520,14 @@ const HomeView = () => {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-            <div className="rounded-2xl p-7 flex flex-col justify-between min-h-[240px]"
+            <div className="rounded-2xl p-7 flex flex-col justify-between min-h-[280px]"
               style={{ backgroundColor: B_INDIGO }}>
               <div>
-                <span className="inline-block text-xs font-bold px-3 py-1 rounded-full mb-4"
+                <span className="inline-block text-xs font-bold px-4 py-1.5 rounded-full mb-4"
                   style={{ backgroundColor: B_YELLOW, color: "#111" }}>
                   Did You Know?
                 </span>
-                <p className="text-white text-sm leading-relaxed font-medium transition-opacity duration-300"
+                <p className="text-white text-lg leading-snug font-semibold transition-opacity duration-300"
                   style={{ opacity: factFading ? 0 : 1 }}>
                   {FUN_FACTS[factIdx]}
                 </p>
@@ -702,6 +701,33 @@ const HomeView = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Floating social cluster */}
+      <div className="fixed bottom-24 right-5 z-40 flex flex-col gap-2 items-center">
+        {[
+          { icon: <Linkedin size={15} />, label: "LinkedIn" },
+          { icon: <Instagram size={15} />, label: "Instagram" },
+          { icon: <Twitter size={15} />, label: "X (Twitter)" },
+        ].map(({ icon, label }) => (
+          <button
+            key={label}
+            onClick={() => triggerToast(`Opening ${label}...`)}
+            title={label}
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #e2e8f0",
+              color: B_INDIGO,
+              boxShadow: "0 1px 6px rgba(0,0,0,0.10)",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#EEF0FF")}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = "white")}
+          >
+            {icon}
+          </button>
+        ))}
+        <div className="w-px h-5" style={{ backgroundColor: "#e2e8f0" }} />
       </div>
 
       <style>{`
