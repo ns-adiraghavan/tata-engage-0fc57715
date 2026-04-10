@@ -1111,7 +1111,7 @@ export default function DashboardView() {
           <div style={{ marginTop: 28, padding: "14px", background: "#f5f5fa", borderRadius: 12 }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: "#9999aa", marginBottom: 8 }}>QUICK ACTIONS</div>
             {[
-              { label: "Edit Profile", icon: "✏️", path: "/profile" },
+              { label: "Edit Profile", icon: "✏️", path: "profile" },
               { label: "View Notifications", icon: "🔔", path: "#" },
               { label: "Raise Grievance", icon: "🚩", path: "#" },
             ].map(a => (
