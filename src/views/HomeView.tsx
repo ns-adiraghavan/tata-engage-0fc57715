@@ -12,6 +12,7 @@ const B_YELLOW = "#F5A623";
 const B_RED    = "#E8401C";
 const B_TEAL   = "#00A896";
 const B_BLUE   = "#1E6BB8";
+const ACCENT_NAVY = "#0D1B3E";
 
 // ── Pastel surface palette — used consistently on all cards ───────────────────
 const P_INDIGO = "#EEF0FF";
@@ -151,7 +152,7 @@ const EOEO = {
   tagColour: B_TEAL,
   tagPastel: P_TEAL,
   headline: "Become a TCS Literacy Champion",
-  body: "TCS's digital literacy platform lets any Tata employee empower another — with financial, digital, and functional literacy across 9 Indian languages. Your cook, driver, or security guard could be your beneficiary.",
+  body: "Empower another Tata family member — teach financial, digital, or functional literacy in any of 9 Indian languages.",
   steps: [
     { num: "01", label: "Identify your beneficiary" },
     { num: "02", label: "Enroll them in the system" },
@@ -360,10 +361,10 @@ const HomeView = () => {
             <h2 className="text-2xl font-bold text-slate-900">Ways to make a difference</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 items-stretch">
 
             {/* LEFT 70% */}
-            <div className="lg:col-span-7 min-h-[360px]">
+            <div className="lg:col-span-7 flex flex-col h-full">
               {/* Pastel tab pills */}
               <div className="flex gap-2 mb-4">
                 {FLAGSHIP_PROGRAMMES.map((p, i) => (
@@ -426,7 +427,7 @@ const HomeView = () => {
             </div>
 
             {/* RIGHT 30% — EOEO showcase */}
-            <div className="lg:col-span-3 min-h-[360px] bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col h-full">
+            <div className="lg:col-span-3 bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col h-full">
               <div className="px-5 pt-5 pb-4" style={{ backgroundColor: EOEO.tagPastel }}>
                 <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mb-2"
                   style={{ backgroundColor: "white", color: EOEO.tagColour }}>
@@ -434,8 +435,7 @@ const HomeView = () => {
                 </span>
                 <h3 className="text-sm font-bold text-slate-900 leading-snug">{EOEO.headline}</h3>
               </div>
-              <div className="flex-1 px-5 py-4">
-                <p className="text-xs text-slate-500 leading-relaxed mb-4">{EOEO.body}</p>
+              <div className="flex-1 px-5 py-5">
                 <div className="space-y-2.5">
                   {EOEO.steps.map((step) => (
                     <div key={step.num} className="flex items-center gap-3">
@@ -520,31 +520,39 @@ const HomeView = () => {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-            <div className="rounded-2xl p-7 flex flex-col justify-between min-h-[280px]"
-              style={{ backgroundColor: B_INDIGO }}>
-              <div>
-                <span className="inline-block text-xs font-bold px-4 py-1.5 rounded-full mb-4"
-                  style={{ backgroundColor: B_YELLOW, color: "#111" }}>
-                  Did You Know?
-                </span>
-                <p className="text-white text-lg leading-snug font-semibold transition-opacity duration-300"
-                  style={{ opacity: factFading ? 0 : 1 }}>
-                  {FUN_FACTS[factIdx]}
-                </p>
-              </div>
-              <div className="flex items-center justify-between mt-6">
-                <div className="flex gap-1.5">
-                  {FUN_FACTS.map((_, i) => (
-                    <button key={i}
-                      onClick={() => { setFactFading(true); setTimeout(() => { setFactIdx(i); setFactFading(false); }, 280); }}
-                      className="rounded-full transition-all cursor-pointer"
-                      style={{ width: i === factIdx ? 16 : 7, height: 6, backgroundColor: i === factIdx ? B_YELLOW : "rgba(255,255,255,0.3)" }} />
-                  ))}
+            <div className="rounded-2xl flex flex-col justify-between min-h-[280px] relative overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800"
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0" style={{ backgroundColor: "rgba(51,51,153,0.82)" }} />
+              <div className="relative z-10 p-7 flex flex-col justify-between h-full min-h-[280px]">
+                <div>
+                  <span className="inline-block text-xs font-bold px-4 py-1.5 rounded-full mb-4"
+                    style={{ backgroundColor: B_YELLOW, color: "#111" }}>
+                    Did You Know?
+                  </span>
+                  <p className="text-white text-xl font-bold leading-snug transition-opacity duration-300"
+                    style={{ opacity: factFading ? 0 : 1 }}>
+                    {FUN_FACTS[factIdx]}
+                  </p>
                 </div>
-                <button onClick={cycleFact}
-                  className="flex items-center gap-1 text-xs text-white/50 hover:text-white/80 transition-colors cursor-pointer font-semibold">
-                  <RefreshCw size={11} /> Next
-                </button>
+                <div className="flex items-center justify-between mt-6">
+                  <div className="flex gap-1.5">
+                    {FUN_FACTS.map((_, i) => (
+                      <button key={i}
+                        onClick={() => { setFactFading(true); setTimeout(() => { setFactIdx(i); setFactFading(false); }, 280); }}
+                        className="rounded-full transition-all cursor-pointer"
+                        style={{ width: i === factIdx ? 16 : 7, height: 6, backgroundColor: i === factIdx ? B_YELLOW : "rgba(255,255,255,0.3)" }} />
+                    ))}
+                  </div>
+                  <button onClick={cycleFact}
+                    className="flex items-center gap-1 text-xs text-white/50 hover:text-white/80 transition-colors cursor-pointer font-semibold">
+                    <RefreshCw size={11} /> Next
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -564,14 +572,15 @@ const HomeView = () => {
               ))}
             </div>
 
-            <div className="bg-white border border-slate-100 rounded-2xl p-7 flex flex-col shadow-sm">
+            <div className="rounded-2xl p-7 flex flex-col shadow-sm" style={{ background: P_INDIGO, border: "1px solid #d4d8f5" }}>
               <div className="flex items-center justify-between mb-5">
-                <p className="text-xs font-bold tracking-widest uppercase text-slate-400">Social Spotlight</p>
+                <p className="text-xs font-bold tracking-widest uppercase" style={{ color: B_INDIGO, opacity: 0.5 }}>Social Spotlight</p>
                 <div className="flex gap-2.5">
                   {[{ Icon: Facebook, c: "#2563EB" }, { Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }, { Icon: Youtube, c: "#DC2626" }].map(({ Icon, c }) => (
-                    <Icon key={c} size={14} className="text-slate-400 cursor-pointer transition-colors"
-                      onMouseEnter={(e) => (e.currentTarget.style.color = c)}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "")} />
+                    <Icon key={c} size={14} className="cursor-pointer transition-colors"
+                      style={{ color: B_INDIGO, opacity: 0.35 }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = c; e.currentTarget.style.opacity = "1"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = B_INDIGO; e.currentTarget.style.opacity = "0.35"; }} />
                   ))}
                 </div>
               </div>
@@ -584,11 +593,11 @@ const HomeView = () => {
                         <post.Icon size={13} />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-slate-900 leading-none">{post.handle}</p>
+                        <p className="text-sm font-bold leading-none" style={{ color: ACCENT_NAVY }}>{post.handle}</p>
                         <p className="text-xs text-slate-400">{post.time} · {post.platform}</p>
                       </div>
                     </div>
-                    <p className="text-sm text-slate-600 leading-relaxed mb-3">{post.text}</p>
+                    <p className="text-sm leading-relaxed mb-3" style={{ color: ACCENT_NAVY }}>{post.text}</p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-slate-400">❤️ {post.likes} likes</span>
                       <button onClick={() => triggerToast("Opening social post...")}
@@ -603,11 +612,14 @@ const HomeView = () => {
                 {SOCIAL_POSTS.map((_, i) => (
                   <button key={i} onClick={() => setSocialIdx(i)}
                     className="rounded-full transition-all cursor-pointer"
-                    style={{ width: i === socialIdx ? 16 : 7, height: 6, backgroundColor: i === socialIdx ? B_INDIGO : "#E2E8F0" }} />
+                    style={{ width: i === socialIdx ? 16 : 7, height: 6, backgroundColor: i === socialIdx ? B_INDIGO : "#c5c8f0" }} />
                 ))}
               </div>
               <button onClick={() => triggerToast("Opening social media...")}
-                className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">
+                className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-bold cursor-pointer"
+                style={{ border: "1px solid #c5c8f0", color: B_INDIGO, background: "transparent" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.5)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
                 Follow TataEngage
               </button>
             </div>

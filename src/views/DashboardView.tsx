@@ -341,17 +341,40 @@ function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: {
 
   return (
     <>
-      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(13,27,62,0.3)", zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", transition: "opacity 0.22s" }} />
+      {/* Backdrop */}
+      <div
+        onClick={onClose}
+        style={{
+          position: "fixed", inset: 0,
+          background: "rgba(13,27,62,0.45)",
+          zIndex: 200,
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
+          transition: "opacity 0.22s",
+          backdropFilter: "blur(2px)",
+        }}
+      />
+      {/* Centred modal */}
       <div style={{
-        position: "fixed", top: 0, right: 0, bottom: 0, width: 440,
-        background: "#fff", zIndex: 201,
-        boxShadow: "-6px 0 40px rgba(13,27,62,0.12)",
-        transform: open ? "translateX(0)" : "translateX(100%)",
-        transition: "transform 0.28s cubic-bezier(0.4,0,0.2,1)",
+        position: "fixed",
+        top: "50%", left: "50%",
+        transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)",
+        transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s",
+        opacity: open ? 1 : 0,
+        pointerEvents: open ? "auto" : "none",
+        width: 520,
+        maxWidth: "calc(100vw - 40px)",
+        maxHeight: "calc(100vh - 80px)",
+        background: "#fff",
+        borderRadius: 16,
+        zIndex: 201,
+        boxShadow: "0 24px 64px rgba(13,27,62,0.22)",
         display: "flex", flexDirection: "column",
-        fontFamily: "'Noto Sans', sans-serif", overflowY: "auto",
+        fontFamily: "'Noto Sans', sans-serif",
+        overflowY: "auto",
       }}>
-        <div style={{ background: ACCENT_NAVY, padding: "24px 28px" }}>
+        {/* ACCENT_NAVY header */}
+        <div style={{ background: ACCENT_NAVY, padding: "24px 28px", borderRadius: "16px 16px 0 0" }}>
           <button onClick={onClose} style={{ background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 7, color: "rgba(255,255,255,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>
             ← Close
           </button>
