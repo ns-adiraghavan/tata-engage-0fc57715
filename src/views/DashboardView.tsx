@@ -1,13 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-
-// ─── Colour tokens (matching KNOWLEDGE_v9 system) ───────────────────────────
-const TATA_BLUE   = "#003580";
-const TATA_CYAN   = "#00b4d8";
-const ACCENT_NAVY = "#0D1B3E";
-
-// ─── IS_PE_SEASON mock (import from mockData in real integration) ────────────
-const IS_PE_SEASON = true; // toggle to false to see TVW view
+import { useAppNavigate } from "@/hooks/useAppNavigate";
+import { IS_PE_SEASON, PRIYA_SHARMA, TVW_EVENTS, PROENGAGE_PROJECTS, MOCK_APPLICANTS, VOLUNTEER_CERTIFICATES } from "@/data/mockData";
 
 // ─── Mock data — grounded in real Tata Engage programme details ──────────────
 const VOLUNTEER = {
@@ -330,7 +323,7 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function DashboardView() {
-  const navigate = useNavigate();
+  const navigate = useAppNavigate();
   const [activeSection, setActiveSection] = useState("engagement");
   const [statsStarted, setStatsStarted] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
@@ -634,7 +627,7 @@ export default function DashboardView() {
                     </div>
                   ))}
                 </div>
-                <button onClick={() => navigate("/tvw")} style={{
+                <button onClick={() => navigate("tvw")} style={{
                   marginTop: 14, display: "flex", alignItems: "center", gap: 6,
                   fontSize: 13, color: TATA_BLUE, fontWeight: 600,
                   background: "none", border: "none", cursor: "pointer", padding: 0,
@@ -773,7 +766,7 @@ export default function DashboardView() {
                         ))}
                       </div>
                     )}
-                    <button onClick={() => navigate("/proengage")} style={{
+                    <button onClick={() => navigate("proengage")} style={{
                       marginTop: 14, display: "flex", alignItems: "center", gap: 6,
                       fontSize: 13, color: TATA_BLUE, fontWeight: 600,
                       background: "none", border: "none", cursor: "pointer", padding: 0,
@@ -1117,7 +1110,7 @@ export default function DashboardView() {
               { label: "View Notifications", icon: "🔔", path: "#" },
               { label: "Raise Grievance", icon: "🚩", path: "#" },
             ].map(a => (
-              <button key={a.label} onClick={() => a.path !== "#" && navigate(a.path)} style={{
+              <button key={a.label} onClick={() => a.path !== "#" && navigate(a.path as any)} style={{
                 display: "flex", alignItems: "center", gap: 7,
                 width: "100%", background: "none", border: "none",
                 padding: "6px 0", fontSize: 12.5, color: "#555", cursor: "pointer",
