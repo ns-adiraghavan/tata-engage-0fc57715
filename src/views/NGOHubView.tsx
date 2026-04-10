@@ -128,7 +128,7 @@ const NGOHubView = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-tata-cyan inline-block" />
               Partner NGO Hub
             </span>
-            <p className="text-white/50 text-base mt-2">
+            <p className="text-white/50 text-lg mt-2">
               Welcome back, <span className="text-white font-semibold">{ngoData.firstName ?? "Anjali"}</span>
             </p>
             <p className="text-white/35 text-sm mt-0.5">{ngoData.organization} · {ngoData.tier}</p>
@@ -138,7 +138,7 @@ const NGOHubView = () => {
           <div className="relative z-10 flex flex-col items-start justify-center px-8 md:px-16" style={{ minHeight: 560 }}>
             <div className="max-w-xl mt-16">
               <p className="text-white/35 text-4xl font-black leading-none mb-3 select-none">"</p>
-              <h2 className="text-white font-bold text-2xl md:text-3xl leading-snug tracking-tight mb-4">
+              <h2 className="text-white font-bold text-xl md:text-2xl leading-snug tracking-tight mb-4">
                 Alone we can do so little; together we can do so much.
               </h2>
               <p className="text-white/45 text-xs font-semibold uppercase tracking-widest">
