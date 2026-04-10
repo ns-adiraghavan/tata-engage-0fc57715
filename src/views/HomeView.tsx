@@ -12,6 +12,7 @@ const B_YELLOW = "#F5A623";
 const B_RED    = "#E8401C";
 const B_TEAL   = "#00A896";
 const B_BLUE   = "#1E6BB8";
+const ACCENT_NAVY = "#0D1B3E";
 
 // ── Pastel surface palette — used consistently on all cards ───────────────────
 const P_INDIGO = "#EEF0FF";
