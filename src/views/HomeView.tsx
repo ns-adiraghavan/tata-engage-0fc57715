@@ -5,20 +5,13 @@ import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { useAppContext } from "@/context/AppContext";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
-
-// ── Brand tokens ──────────────────────────────────────────────────────────────
-const B_INDIGO = "#333399";
-const B_YELLOW = "#F5A623";
-const B_RED    = "#E8401C";
-const B_TEAL   = "#00A896";
-const B_BLUE   = "#1E6BB8";
-const ACCENT_NAVY = "#0D1B3E";
-
-// ── Pastel surface palette — used consistently on all cards ───────────────────
-const P_INDIGO = "#EEF0FF";
-const P_YELLOW = "#FEF6E4";
-const P_RED    = "#FFF0EE";
-const P_TEAL   = "#E6F8F5";
+import {
+  B_INDIGO, B_YELLOW, B_RED, B_TEAL, B_BLUE, ACCENT_NAVY,
+  P_INDIGO, P_YELLOW, P_RED, P_TEAL,
+  SectionDivider, secBg,
+  FLAGSHIP_PROGRAMMES, JOURNEY_MILESTONES, FUN_FACTS,
+  HERO_STATS, SOCIAL_POSTS, TICKER_ITEMS, EOEO,
+} from "@/data/homeSharedData";
 
 // ── Ink doodle SVGs ───────────────────────────────────────────────────────────
 const InkSpiral = ({ className = "", style = {} }: { className?: string; style?: React.CSSProperties }) => (
@@ -51,15 +44,7 @@ const InkSwish = ({ className = "", style = {} }: { className?: string; style?: 
   </svg>
 );
 
-const SectionDivider = () => (
-  <div className="flex items-center justify-center gap-2 py-5">
-    {[B_INDIGO, B_YELLOW, B_RED, B_TEAL, B_BLUE].map((c) => (
-      <span key={c} className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c }} />
-    ))}
-  </div>
-);
-
-// ── Data ──────────────────────────────────────────────────────────────────────
+// ── HomeView-only data ────────────────────────────────────────────────────────
 
 const HERO_SLIDES = [
   {
@@ -112,101 +97,8 @@ const HERO_SLIDES = [
   },
 ];
 
-// Programme cards — real banner photo + colour tint overlay + pastel accents
-const FLAGSHIP_PROGRAMMES = [
-  {
-    id: "TVW", label: "Bi-annual · Global",
-    title: "Tata Volunteering Week",
-    desc: "A bi-annual celebration of collective action across every Tata company, worldwide.",
-    stat1: "12 Editions", stat2: "50K+ Volunteers",
-    ctaType: "story" as const,
-    photo: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=900",
-    tint: "rgba(51,51,153,0.68)",
-    pastelBg: P_INDIGO, accentText: B_INDIGO,
-  },
-  {
-    id: "ProEngage", label: "Skill-based",
-    title: "ProEngage",
-    desc: "Match your professional expertise to NGO projects that need it most.",
-    stat1: "1,200+ Projects", stat2: "85 NGO Partners",
-    ctaType: "video" as const,
-    photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=900",
-    tint: "rgba(59,30,142,0.68)",
-    pastelBg: "#F5F3FF", accentText: "#5b21b6",
-  },
-  {
-    id: "Disaster Response", label: "Rapid Action",
-    title: "Disaster Response",
-    desc: "Volunteers deployed within 48 hours when communities need urgent support.",
-    stat1: "24 Responses", stat2: "8 States",
-    ctaType: "story" as const,
-    photo: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&q=80&w=900",
-    tint: "rgba(127,29,29,0.68)",
-    pastelBg: P_RED, accentText: B_RED,
-  },
-];
-
-// EOEO showcase replaces the old company list in the right 30% panel
-const EOEO = {
-  tag: "Each One Empowers One",
-  tagColour: B_TEAL,
-  tagPastel: P_TEAL,
-  headline: "Become a TCS Literacy Champion",
-  body: "Empower another Tata family member — teach financial, digital, or functional literacy in any of 9 Indian languages.",
-  steps: [
-    { num: "01", label: "Identify your beneficiary" },
-    { num: "02", label: "Enroll them in the system" },
-    { num: "03", label: "Teach at your own pace" },
-    { num: "04", label: "Get rewarded + certificate" },
-  ],
-  cta: "Sign Up Now",
-  ctaUrl: "https://tcsempowers.tcsapps.com/apac2/alp/",
-};
-
-const JOURNEY_MILESTONES = [
-  { year: "2007", title: "The Seed",     desc: "Founded with 4 Tata companies.",      colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2010", title: "TVW Born",     desc: "8,000 volunteers in Year 1.",          colour: B_YELLOW, photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2015", title: "Digital",      desc: "Platform launched for NGO matching.",  colour: B_RED,    photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2018", title: "ProEngage",    desc: "Skill-based volunteering introduced.", colour: B_TEAL,   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2020", title: "COVID Relief", desc: "15,000 volunteers in 72 hrs.",         colour: B_BLUE,   photo: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2024", title: "50K Strong",   desc: "50K+ volunteers, 100+ companies.",     colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=120&h=120" },
-];
-
-const FUN_FACTS = [
-  "Tata volunteers have collectively logged over 2.5 million hours of service since 2007.",
-  "1 in 4 ProEngage projects directly benefits children's education in rural India.",
-  "85% of volunteers say their professional skills grew through ProEngage.",
-  "Tata companies have planted 1.2 million trees through volunteering drives.",
-  "NGOs report 3× faster project delivery when paired with skilled Tata volunteers.",
-];
-
-// Stats with pastel fills — consistent with programme card palette
-const HERO_STATS = [
-  { num: "50,000+", label: "Active Volunteers", sub: "Across 100+ Tata companies", colour: B_INDIGO, pastel: P_INDIGO },
-  { num: "85",      label: "NGO Partners",       sub: "Across 15 states in India",  colour: B_TEAL,   pastel: P_TEAL   },
-  { num: "2.5M+",   label: "Volunteer Hours",    sub: "Logged since 2007",           colour: B_YELLOW, pastel: P_YELLOW },
-];
-
-const SOCIAL_POSTS = [
-  { handle: "@TataEngage",  platform: "Twitter",   text: "Proud to announce 50,000 volunteers on the platform! Thank you for making a difference. #TataEngage", likes: "1.2K", time: "2h ago",  Icon: Twitter,   iconBg: "#0EA5E9" },
-  { handle: "@tata_engage", platform: "Instagram", text: "TVW 2026 is almost here! Tag a colleague you'd love to volunteer with. #TVW2026 #TataVolunteers",      likes: "3.4K", time: "1d ago",  Icon: Instagram, iconBg: "#EC4899" },
-  { handle: "Tata Engage",  platform: "LinkedIn",  text: "ProEngage Edition 2026 is now open — 400+ skill-based projects waiting for the right volunteers.",      likes: "892",  time: "3d ago",  Icon: Linkedin,  iconBg: "#1D4ED8" },
-];
-
-// Ticker is now a fixed bottom bar — removed from SECTION_IDS
-const TICKER_ITEMS = [
-  "🟢  ProEngage 2026 is OPEN — 400+ projects live",
-  "📅  TVW 2026 registration opens in 14 days",
-  "🏅  1,240 volunteers matched this edition — a record",
-  "🌿  TCS: 1,000 trees planted across 8 campuses",
-  "🚨  Disaster Response deployed to Assam floods",
-  "🎓  Finance Mentorship projects now accepting applications",
-  "🤝  85 NGO partners and counting across 15 states",
-];
-
 const SECTION_IDS    = ["hero", "programmes", "journey", "numbers"];
 const SECTION_LABELS = ["Home", "Programmes", "Journey", "Numbers"];
-const secBg = (i: number) => i % 2 === 0 ? "bg-white" : "bg-[#F0F4FA]";
 
 // ── Component ─────────────────────────────────────────────────────────────────
 const HomeView = () => {
