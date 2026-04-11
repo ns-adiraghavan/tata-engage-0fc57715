@@ -358,11 +358,11 @@ const HomeView = () => {
           LEFT 70%: photo card — image left / text right (reference layout)
           RIGHT 30%: EOEO showcase
       ════════════════════════════════════════════════════════════════════ */}
-      <section id="programmes" className={`${secBg(1)} py-10 px-6 md:px-12`}>
+      <section id="programmes" className={`${secBg(1)} py-16 px-6 md:px-12`}>
         <div className="max-w-7xl mx-auto">
-          <div className="mb-7">
-            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Our Programmes</p>
-            <h2 className="text-2xl font-bold text-slate-900">Ways to make a difference</h2>
+          <div className="mb-10">
+            <p className="text-xs font-extrabold tracking-widest uppercase text-slate-400 mb-2">Our Programmes</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Ways to make a difference</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 items-stretch">
@@ -373,7 +373,7 @@ const HomeView = () => {
               <div className="flex gap-2 mb-4">
                 {FLAGSHIP_PROGRAMMES.map((p, i) => (
                   <button key={p.id} onClick={() => setFlagshipIdx(i)}
-                    className="text-xs font-bold px-4 py-1.5 rounded-full transition-all cursor-pointer border"
+                    className="text-sm font-bold px-5 py-2 rounded-full transition-all cursor-pointer border"
                     style={
                       i === flagshipIdx
                         ? { backgroundColor: prog.pastelBg, color: prog.accentText, borderColor: "transparent" }
@@ -402,15 +402,15 @@ const HomeView = () => {
                 </div>
 
                 {/* Text panel */}
-                <div className="flex-1 p-7 flex flex-col justify-between"
+                <div className="flex-1 p-9 flex flex-col justify-between"
                   style={{ background: `linear-gradient(135deg, ${prog.pastelBg} 0%, #ffffff 60%)` }}>
                   <div>
                     <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mb-3"
                       style={{ backgroundColor: prog.pastelBg, color: prog.accentText }}>
                       {prog.id}
                     </span>
-                    <h3 className="text-lg font-bold text-slate-900 leading-snug mb-2">{prog.title}</h3>
-                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{prog.desc}</p>
+                    <h3 className="text-2xl font-bold text-slate-900 leading-snug mb-2">{prog.title}</h3>
+                    <p className="text-base text-slate-500 leading-relaxed line-clamp-2">{prog.desc}</p>
                   </div>
                 </div>
               </div>
@@ -418,12 +418,12 @@ const HomeView = () => {
 
             {/* RIGHT 30% — EOEO showcase */}
             <div className="lg:col-span-3 bg-white border border-slate-100 rounded-2xl shadow-sm overflow-hidden flex flex-col h-full">
-              <div className="px-5 pt-5 pb-4" style={{ backgroundColor: EOEO.tagPastel }}>
+              <div className="px-6 pt-6 pb-5" style={{ backgroundColor: EOEO.tagPastel }}>
                 <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mb-2"
                   style={{ backgroundColor: "white", color: EOEO.tagColour }}>
                   {EOEO.tag}
                 </span>
-                <h3 className="text-sm font-bold text-slate-900 leading-snug">{EOEO.headline}</h3>
+                <h3 className="text-base font-bold text-slate-900 leading-snug">{EOEO.headline}</h3>
               </div>
               <div className="flex-1 px-5 py-5">
                 <div className="space-y-2.5">
@@ -455,11 +455,11 @@ const HomeView = () => {
       {/* ════════════════════════════════════════════════════════════════════
           3. JOURNEY — dotted timeline
       ════════════════════════════════════════════════════════════════════ */}
-      <section id="journey" className={`${secBg(2)} py-10 px-6 md:px-12`}>
+      <section id="journey" className={`${secBg(2)} py-16 px-6 md:px-12`}>
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Our Journey</p>
-            <h2 className="text-2xl font-bold text-slate-900">Two decades of giving back</h2>
+          <div className="mb-10">
+            <p className="text-xs font-extrabold tracking-widest uppercase text-slate-400 mb-2">Our Journey</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Two decades of giving back</h2>
           </div>
           <div className="relative mt-10 mb-6">
             {/* Central spine line */}
@@ -521,11 +521,11 @@ const HomeView = () => {
       {/* ════════════════════════════════════════════════════════════════════
           4. FACTS + STATS (pastel) + SOCIAL
       ════════════════════════════════════════════════════════════════════ */}
-      <section id="numbers" className={`${secBg(3)} py-10 px-6 md:px-12`}>
+      <section id="numbers" className={`${secBg(3)} py-16 px-6 md:px-12`}>
         <div className="max-w-7xl mx-auto">
-          <div className="mb-7">
-            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">By the numbers</p>
-            <h2 className="text-2xl font-bold text-slate-900">The scale of our community</h2>
+          <div className="mb-10">
+            <p className="text-xs font-extrabold tracking-widest uppercase text-slate-400 mb-2">By the numbers</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">The scale of our community</h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
@@ -725,7 +725,7 @@ const HomeView = () => {
       </div>
 
       {/* Floating social cluster */}
-      <div className="fixed bottom-24 right-5 z-40 flex flex-col gap-2 items-center">
+      <div className="fixed bottom-24 left-5 z-40 flex flex-col gap-2 items-center">
         {[
           { icon: <Linkedin size={15} />, label: "LinkedIn" },
           { icon: <Instagram size={15} />, label: "Instagram" },
