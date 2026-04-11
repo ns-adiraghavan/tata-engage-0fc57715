@@ -591,6 +591,7 @@ const HomeView = () => {
                       onMouseLeave={(e) => { e.currentTarget.style.color = B_INDIGO; e.currentTarget.style.opacity = "0.35"; }} />
                   ))}
                 </div>
+                <p className="text-xs font-bold tracking-widest uppercase" style={{ color: B_INDIGO, opacity: 0.5 }}>Social Spotlight</p>
               </div>
               <div className="flex-1">
                 {SOCIAL_POSTS.map((post, i) => (
