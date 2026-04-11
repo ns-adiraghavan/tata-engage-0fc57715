@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { ArrowRight, FileText, Mail, MessageSquare } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import { COMMUNITY_TESTIMONIALS, IS_PE_SEASON, ROHAN_DESAI_VOLUNTEER } from "@/data/mockData";
+import { ROHAN_DESAI_VOLUNTEER } from "@/data/mockData";
 import RoleToggle from "@/components/shared/RoleToggle";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
-import { B_INDIGO, B_YELLOW, COMPANY_PROGRAMMES } from "@/data/homeSharedData";
+import { B_INDIGO, B_YELLOW } from "@/data/homeSharedData";
+import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
 // ── Component ─────────────────────────────────────────────────────────────────
