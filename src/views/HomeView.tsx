@@ -64,7 +64,7 @@ const SectionDivider = () => (
 const HERO_SLIDES = [
   {
     photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1400",
-    accent: B_YELLOW, tag: "Education",
+    accent: B_YELLOW, tag: "Education", cta: "story" as const,
     headline: "Teaching skills that change what young people think is possible",
     sub: "Tata volunteers are in classrooms, training centres, and communities — every day.",
     doodles: {
@@ -76,7 +76,7 @@ const HERO_SLIDES = [
   },
   {
     photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&q=80&w=1400",
-    accent: B_RED, tag: "Community",
+    accent: B_RED, tag: "Community", cta: "video" as const,
     headline: "10,000 rural families reached through free health camps",
     sub: "When professionals volunteer their expertise, communities transform.",
     doodles: {
@@ -88,7 +88,7 @@ const HERO_SLIDES = [
   },
   {
     photo: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=1400",
-    accent: B_TEAL, tag: "Environment",
+    accent: B_TEAL, tag: "Environment", cta: "story" as const,
     headline: "1 million trees planted across Tata campuses nationwide",
     sub: "A greener legacy, growing branch by branch.",
     doodles: {
@@ -100,7 +100,7 @@ const HERO_SLIDES = [
   },
   {
     photo: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&q=80&w=1400",
-    accent: B_BLUE, tag: "Disaster Response",
+    accent: B_BLUE, tag: "Disaster Response", cta: "video" as const,
     headline: "Volunteers on-ground within 48 hours of the Kerala floods",
     sub: "Organised, rapid, human — Tata's fastest ever humanitarian response.",
     doodles: {
@@ -313,15 +313,19 @@ const HomeView = () => {
             </h1>
             <p className="text-base text-slate-500 leading-relaxed mb-8 max-w-md">{slide.sub}</p>
             <div className="flex flex-wrap gap-3 mb-8">
-              <button onClick={() => triggerToast("Opening full story...")}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
-                style={{ backgroundColor: B_INDIGO }}>
-                <BookOpen size={14} /> Read Story
-              </button>
-              <button onClick={() => triggerToast("Opening video...")}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50 transition-all cursor-pointer">
-                <Play size={14} /> Watch More
-              </button>
+              {slide.cta === "story" ? (
+                <button onClick={() => triggerToast("Opening full story...")}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
+                  style={{ backgroundColor: B_INDIGO }}>
+                  <BookOpen size={14} /> Read Story
+                </button>
+              ) : (
+                <button onClick={() => triggerToast("Opening video...")}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
+                  style={{ backgroundColor: B_INDIGO }}>
+                  <Play size={14} /> Watch More
+                </button>
+              )}
             </div>
             <div className="flex items-center gap-3">
               <button onClick={() => setHeroSlide((p) => (p - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
@@ -381,7 +385,7 @@ const HomeView = () => {
               </div>
 
               {/* Card: image left, text right — clean split like reference screenshot */}
-              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row flex-1">
+              <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[420px] flex-1">
                 {/* Image panel with tint */}
                 <div className="relative md:w-[45%] min-h-[200px] md:min-h-0 shrink-0 overflow-hidden">
                   <img src={prog.photo} alt={prog.title}
@@ -398,29 +402,15 @@ const HomeView = () => {
                 </div>
 
                 {/* Text panel */}
-                <div className="flex-1 p-7 flex flex-col justify-between">
+                <div className="flex-1 p-7 flex flex-col justify-between"
+                  style={{ background: `linear-gradient(135deg, ${prog.pastelBg} 0%, #ffffff 60%)` }}>
                   <div>
                     <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mb-3"
                       style={{ backgroundColor: prog.pastelBg, color: prog.accentText }}>
                       {prog.id}
                     </span>
                     <h3 className="text-lg font-bold text-slate-900 leading-snug mb-2">{prog.title}</h3>
-                    <p className="text-xs text-slate-500 leading-relaxed mb-5 line-clamp-2">{prog.desc}</p>
-                  </div>
-                  <div className="flex gap-3">
-                    {prog.ctaType === "story" ? (
-                      <button onClick={() => triggerToast("Opening story...")}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
-                        style={{ backgroundColor: B_INDIGO }}>
-                        <BookOpen size={13} /> Read Story
-                      </button>
-                    ) : (
-                      <button onClick={() => triggerToast("Opening video...")}
-                        className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
-                        style={{ backgroundColor: B_INDIGO }}>
-                        <Play size={13} /> Watch More
-                      </button>
-                    )}
+                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{prog.desc}</p>
                   </div>
                 </div>
               </div>
@@ -471,30 +461,49 @@ const HomeView = () => {
             <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Our Journey</p>
             <h2 className="text-2xl font-bold text-slate-900">Two decades of giving back</h2>
           </div>
-          <div className="relative">
-            <div className="absolute top-[36px] left-10 right-10 hidden lg:block"
-              style={{ borderTop: "2px dashed #CBD5E1" }} />
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {JOURNEY_MILESTONES.map((m) => (
-                <div key={m.year} className="flex flex-col items-center text-center group">
-                  <div className="relative z-10 mb-3">
-                    <div className="w-[72px] h-[72px] rounded-full overflow-hidden border-[3px] shadow-md transition-transform duration-200 group-hover:-translate-y-1"
-                      style={{ borderColor: m.colour }}>
-                      <img src={m.photo} alt={m.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+          <div className="relative mt-10 mb-6">
+            {/* Central spine line */}
+            <div className="absolute left-0 right-0 hidden lg:block"
+              style={{ top: "50%", height: 2, background: `linear-gradient(to right, ${B_INDIGO}, ${B_TEAL}, ${B_YELLOW})`, opacity: 0.25 }} />
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0 relative">
+              {JOURNEY_MILESTONES.map((m, i) => {
+                const above = i % 2 === 0;
+                return (
+                  <div key={m.year}
+                    className="flex flex-col items-center relative group cursor-default"
+                    style={{ paddingTop: above ? 0 : 72, paddingBottom: above ? 72 : 0 }}>
+                    
+                    {/* Year label — above for even */}
+                    {above && (
+                      <div className="mb-3 text-center">
+                        <div className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: m.colour }}>{m.year}</div>
+                        <div className="text-xs font-bold text-slate-800 leading-snug">{m.title}</div>
+                        <div className="text-xs text-slate-400 leading-snug mt-0.5">{m.desc}</div>
+                      </div>
+                    )}
+
+                    {/* Node on the spine */}
+                    <div className="relative z-10 flex flex-col items-center">
+                      {above && <div style={{ width: 1, height: 24, background: m.colour, opacity: 0.4 }} />}
+                      <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
+                        style={{ backgroundColor: m.colour, borderColor: m.colour }}>
+                        <div className="w-2 h-2 rounded-full bg-white" />
+                      </div>
+                      {!above && <div style={{ width: 1, height: 24, background: m.colour, opacity: 0.4 }} />}
                     </div>
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-white whitespace-nowrap"
-                        style={{ backgroundColor: m.colour }}>
-                        {m.year}
-                      </span>
-                    </div>
+
+                    {/* Year label — below for odd */}
+                    {!above && (
+                      <div className="mt-3 text-center">
+                        <div className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: m.colour }}>{m.year}</div>
+                        <div className="text-xs font-bold text-slate-800 leading-snug">{m.title}</div>
+                        <div className="text-xs text-slate-400 leading-snug mt-0.5">{m.desc}</div>
+                      </div>
+                    )}
                   </div>
-                  <div className="mt-4">
-                    <p className="text-xs font-bold text-slate-800 mb-0.5">{m.title}</p>
-                    <p className="text-xs text-slate-500 leading-snug">{m.desc}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           <div className="mt-10 flex justify-center">
@@ -574,7 +583,6 @@ const HomeView = () => {
 
             <div className="rounded-2xl p-7 flex flex-col shadow-sm" style={{ background: P_INDIGO, border: "1px solid #d4d8f5" }}>
               <div className="flex items-center justify-between mb-5">
-                <p className="text-xs font-bold tracking-widest uppercase" style={{ color: B_INDIGO, opacity: 0.5 }}>Social Spotlight</p>
                 <div className="flex gap-2.5">
                   {[{ Icon: Facebook, c: "#2563EB" }, { Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }, { Icon: Youtube, c: "#DC2626" }].map(({ Icon, c }) => (
                     <Icon key={c} size={14} className="cursor-pointer transition-colors"
@@ -583,6 +591,7 @@ const HomeView = () => {
                       onMouseLeave={(e) => { e.currentTarget.style.color = B_INDIGO; e.currentTarget.style.opacity = "0.35"; }} />
                   ))}
                 </div>
+                <p className="text-xs font-bold tracking-widest uppercase" style={{ color: B_INDIGO, opacity: 0.5 }}>Social Spotlight</p>
               </div>
               <div className="flex-1">
                 {SOCIAL_POSTS.map((post, i) => (
