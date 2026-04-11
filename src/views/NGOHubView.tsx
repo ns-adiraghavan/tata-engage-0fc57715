@@ -1,68 +1,33 @@
-import { useState, useEffect } from "react";
-import { ChevronRight, ArrowRight, RefreshCw } from "lucide-react";
-import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import { COMMUNITY_TESTIMONIALS } from "@/data/mockData";
+import { ArrowRight } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
-import {
-  B_INDIGO, B_YELLOW, B_RED, B_TEAL, B_BLUE,
-  SectionDivider, secBg,
-  FLAGSHIP_PROGRAMMES, COMPANY_PROGRAMMES, JOURNEY_MILESTONES,
-  FUN_FACTS, HERO_STATS, SOCIAL_POSTS, TICKER_ITEMS,
-} from "@/data/homeSharedData";
+import { B_INDIGO, B_YELLOW, B_TEAL } from "@/data/homeSharedData";
+import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
 // ── Component ─────────────────────────────────────────────────────────────────
 const NGOHubView = () => {
   const { ngoData, triggerToast } = useAppContext();
   const navigate = useAppNavigate();
 
-  const [flagshipIdx, setFlagshipIdx] = useState(0);
-  const [factIdx, setFactIdx]         = useState(0);
-  const [factFading, setFactFading]   = useState(false);
-  const [socialIdx, setSocialIdx]     = useState(0);
-
-  const prog = FLAGSHIP_PROGRAMMES[flagshipIdx];
-
-  useEffect(() => {
-    const t = setInterval(() => setFlagshipIdx((p) => (p + 1) % FLAGSHIP_PROGRAMMES.length), 4200);
-    return () => clearInterval(t);
-  }, []);
-
-  useEffect(() => {
-    const t = setInterval(() => setSocialIdx((p) => (p + 1) % SOCIAL_POSTS.length), 4000);
-    return () => clearInterval(t);
-  }, []);
-
-  const cycleFact = () => {
-    setFactFading(true);
-    setTimeout(() => { setFactIdx((p) => (p + 1) % FUN_FACTS.length); setFactFading(false); }, 280);
-  };
-
-  const tickerDouble = [...TICKER_ITEMS, ...TICKER_ITEMS];
-
   return (
     <div className="pt-20 min-h-screen bg-white">
 
-      {/* ══════════════════════════════════════════════════════════════════
-          HERO — NGO-specific: community/impact image + quote on purpose
-      ══════════════════════════════════════════════════════════════════ */}
+      {/* HERO */}
       <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
         <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: 560 }}>
-          {/* NGO-appropriate banner — community hands / group work */}
           <img
             src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1600"
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          {/* Warmer gradient — teal-tinted to reflect NGO partnership colour */}
           <div className="absolute inset-0" style={{
             background: "linear-gradient(135deg, rgba(5,30,25,0.93) 0%, rgba(5,30,25,0.72) 48%, rgba(5,30,25,0.40) 100%)"
           }} />
 
-          {/* Welcome — top left */}
           <div className="absolute top-6 left-8 z-10">
             <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-sm font-semibold px-3 py-1.5 rounded-full tracking-wide">
               <span className="w-1.5 h-1.5 rounded-full bg-tata-cyan inline-block" />
@@ -74,7 +39,6 @@ const NGOHubView = () => {
             <p className="text-white/35 text-sm mt-0.5">{ngoData.organization} · {ngoData.tier}</p>
           </div>
 
-          {/* Motivational quote */}
           <div className="relative z-10 flex flex-col items-start justify-center px-8 md:px-16" style={{ minHeight: 560 }}>
             <div className="max-w-xl mt-16">
               <p className="text-white/35 text-4xl font-black leading-none mb-3 select-none">"</p>
@@ -87,7 +51,6 @@ const NGOHubView = () => {
             </div>
           </div>
 
-          {/* Dashboard CTA — bottom right, teal accent for NGO */}
           <div className="absolute bottom-6 right-8 z-10">
             <button
               onClick={() => navigate("ngo-dashboard")}
@@ -102,227 +65,18 @@ const NGOHubView = () => {
 
       <SectionDivider />
 
-      {/* ══════════════════════════════════════════════════════════════════
-          PROGRAMME SPOTLIGHT — 70/30
-      ══════════════════════════════════════════════════════════════════ */}
-      <section className={`${secBg(1)} py-10 px-6 md:px-12`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-7">
-            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Our Programmes</p>
-            <h2 className="text-2xl font-bold text-slate-900">Ways to make a difference</h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-10 gap-4">
-            <div className="lg:col-span-7 relative rounded-2xl overflow-hidden min-h-[340px] flex flex-col justify-between p-8 transition-all duration-700"
-              style={{ backgroundColor: prog.bg }}>
-              <div className="absolute top-0 left-0 w-1 h-full transition-colors duration-700"
-                style={{ backgroundColor: prog.accent }} />
-              <div className="relative z-10">
-                <div className="flex gap-2 mb-5">
-                  {FLAGSHIP_PROGRAMMES.map((p, i) => (
-                    <button key={p.id} onClick={() => setFlagshipIdx(i)}
-                      className="text-xs font-bold px-3 py-1.5 rounded-lg transition-all cursor-pointer"
-                      style={{ backgroundColor: i === flagshipIdx ? prog.accent : "rgba(255,255,255,0.1)", color: i === flagshipIdx ? "#111" : "rgba(255,255,255,0.6)" }}>
-                      {p.id}
-                    </button>
-                  ))}
-                </div>
-                <span className="inline-block text-xs font-semibold px-3 py-1 rounded-full mb-4 border border-white/20 text-white/65">{prog.label}</span>
-                <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-3">Join the Volunteer Tribe</h3>
-                <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-sm">{prog.desc}</p>
-                <div className="flex gap-3">
-                  {[prog.stat1, prog.stat2].map((s) => (
-                    <div key={s} className="bg-white/10 border border-white/15 rounded-xl px-4 py-1.5">
-                      <p className="text-white font-bold text-sm">{s}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="relative z-10 flex gap-3 mt-6">
-                <button onClick={() => triggerToast("Exploring programme...")}
-                  className="flex-1 bg-white text-zinc-900 py-2.5 rounded-xl text-sm font-bold hover:bg-zinc-100 transition-all cursor-pointer">
-                  Learn More
-                </button>
-                <button onClick={() => navigate("create-project")}
-                  className="flex-1 bg-white/10 border border-white/20 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-white/20 transition-all cursor-pointer">
-                  Post a Project →
-                </button>
-              </div>
-            </div>
-            <div className="lg:col-span-3 bg-white border border-slate-100 rounded-2xl p-5 flex flex-col shadow-sm">
-              <div className="mb-4">
-                <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-0.5">By company</p>
-                <h3 className="text-sm font-bold text-slate-900">Explore Company Volunteering</h3>
-              </div>
-              <div className="flex-1 space-y-1.5">
-                {COMPANY_PROGRAMMES.map((co) => (
-                  <button key={co.name}
-                    onClick={() => triggerToast(`Viewing ${co.name} volunteering programme...`)}
-                    className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-all cursor-pointer group text-left">
-                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: co.dot }} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-bold text-slate-900 leading-none mb-0.5">{co.name}</p>
-                      <p className="text-xs text-slate-400 truncate">{co.desc}</p>
-                    </div>
-                    <ChevronRight size={11} className="text-slate-300 group-hover:text-slate-500 shrink-0" />
-                  </button>
-                ))}
-              </div>
-              <button onClick={() => triggerToast("Viewing all company programmes...")}
-                className="mt-4 w-full flex items-center justify-center gap-1.5 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">
-                View All Companies <ArrowRight size={11} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ProgrammeSpotlight />
 
       <SectionDivider />
 
-      {/* ══════════════════════════════════════════════════════════════════
-          OUR JOURNEY — dotted timeline
-      ══════════════════════════════════════════════════════════════════ */}
-      <section className={`${secBg(2)} py-10 px-6 md:px-12`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">Our Journey</p>
-            <h2 className="text-2xl font-bold text-slate-900">Two decades of giving back</h2>
-          </div>
-          <div className="relative">
-            <div className="absolute top-[36px] left-10 right-10 hidden lg:block"
-              style={{ borderTop: "2px dashed #CBD5E1" }} />
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {JOURNEY_MILESTONES.map((m) => (
-                <div key={m.year} className="flex flex-col items-center text-center group">
-                  <div className="relative z-10 mb-3">
-                    <div className="w-[72px] h-[72px] rounded-full overflow-hidden border-[3px] shadow-md transition-transform duration-200 group-hover:-translate-y-1"
-                      style={{ borderColor: m.colour }}>
-                      <img src={m.photo} alt={m.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                    </div>
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-white whitespace-nowrap"
-                        style={{ backgroundColor: m.colour }}>{m.year}</span>
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <p className="text-xs font-bold text-slate-800 mb-0.5">{m.title}</p>
-                    <p className="text-xs text-slate-500 leading-snug">{m.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="mt-10 flex justify-center">
-            <button onClick={() => triggerToast("Full journey coming soon...")}
-              className="inline-flex items-center gap-2 text-sm font-bold hover:underline cursor-pointer"
-              style={{ color: B_INDIGO }}>
-              Read our full story <ArrowRight size={13} />
-            </button>
-          </div>
-        </div>
-      </section>
+      <JourneySection />
 
       <SectionDivider />
 
-      {/* ══════════════════════════════════════════════════════════════════
-          FACTS + 3 STATS + SOCIAL
-      ══════════════════════════════════════════════════════════════════ */}
-      <section className={`${secBg(3)} py-10 px-6 md:px-12`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-7">
-            <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-1">By the numbers</p>
-            <h2 className="text-2xl font-bold text-slate-900">The scale of our community</h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="rounded-2xl p-7 flex flex-col justify-between min-h-[240px]" style={{ backgroundColor: B_INDIGO }}>
-              <div>
-                <span className="inline-block text-xs font-bold px-3 py-1 rounded-full mb-4" style={{ backgroundColor: B_YELLOW, color: "#111" }}>Did You Know?</span>
-                <p className="text-white text-sm leading-relaxed font-medium transition-opacity duration-300" style={{ opacity: factFading ? 0 : 1 }}>{FUN_FACTS[factIdx]}</p>
-              </div>
-              <div className="flex items-center justify-between mt-6">
-                <div className="flex gap-1.5">
-                  {FUN_FACTS.map((_, i) => (
-                    <button key={i} onClick={() => { setFactFading(true); setTimeout(() => { setFactIdx(i); setFactFading(false); }, 280); }}
-                      className="rounded-full transition-all cursor-pointer"
-                      style={{ width: i === factIdx ? 16 : 7, height: 6, backgroundColor: i === factIdx ? B_YELLOW : "rgba(255,255,255,0.3)" }} />
-                  ))}
-                </div>
-                <button onClick={cycleFact} className="flex items-center gap-1 text-xs text-white/50 hover:text-white/80 transition-colors cursor-pointer font-semibold">
-                  <RefreshCw size={11} /> Next
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-col gap-3">
-              {HERO_STATS.map((s) => (
-                <div key={s.label} className="flex items-center gap-5 rounded-2xl p-5 bg-white border border-slate-100 shadow-sm" style={{ borderLeft: `4px solid ${s.colour}` }}>
-                  <div>
-                    <p className="font-black tracking-tighter leading-none mb-0.5 text-4xl" style={{ color: s.colour }}>{s.num}</p>
-                    <p className="text-sm font-bold text-slate-800">{s.label}</p>
-                    <p className="text-xs text-slate-400 mt-0.5">{s.sub}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="bg-white border border-slate-100 rounded-2xl p-7 flex flex-col shadow-sm">
-              <div className="flex items-center justify-between mb-5">
-                <p className="text-xs font-bold tracking-widest uppercase text-slate-400">Social Spotlight</p>
-                <div className="flex gap-2.5">
-                  {[{ Icon: Facebook, c: "#2563EB" }, { Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }, { Icon: Youtube, c: "#DC2626" }].map(({ Icon, c }) => (
-                    <Icon key={c} size={14} className="text-slate-400 cursor-pointer transition-colors"
-                      onMouseEnter={(e) => (e.currentTarget.style.color = c)}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "")} />
-                  ))}
-                </div>
-              </div>
-              <div className="flex-1">
-                {SOCIAL_POSTS.map((post, i) => (
-                  <div key={i} className={i === socialIdx ? "block" : "hidden"}>
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-white shrink-0" style={{ backgroundColor: post.iconBg }}>
-                        <post.Icon size={13} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-slate-900 leading-none">{post.handle}</p>
-                        <p className="text-xs text-slate-400">{post.time} · {post.platform}</p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-slate-600 leading-relaxed mb-3">{post.text}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-slate-400">❤️ {post.likes} likes</span>
-                      <button onClick={() => triggerToast("Opening social post...")} className="text-xs font-bold hover:underline cursor-pointer" style={{ color: B_INDIGO }}>View post →</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="flex gap-1.5 justify-center mt-4 mb-4">
-                {SOCIAL_POSTS.map((_, i) => (
-                  <button key={i} onClick={() => setSocialIdx(i)} className="rounded-full transition-all cursor-pointer"
-                    style={{ width: i === socialIdx ? 16 : 7, height: 6, backgroundColor: i === socialIdx ? B_INDIGO : "#E2E8F0" }} />
-                ))}
-              </div>
-              <button onClick={() => triggerToast("Opening social media...")}
-                className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">
-                Follow TataEngage
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <NumbersSection />
 
       {/* TICKER */}
-      <div className="py-3.5 overflow-hidden" style={{ backgroundColor: B_INDIGO }}>
-        <div className="flex items-center gap-4">
-          <div className="shrink-0 pl-6 md:pl-12">
-            <span className="text-xs font-black px-3 py-1.5 rounded-full whitespace-nowrap" style={{ backgroundColor: B_YELLOW, color: "#111" }}>LIVE</span>
-          </div>
-          <div className="flex-1 overflow-hidden">
-            <div className="flex gap-16 animate-marquee whitespace-nowrap">
-              {tickerDouble.map((item, i) => (
-                <span key={i} className="text-white/75 text-sm font-medium shrink-0 hover:text-white cursor-pointer transition-colors">{item}</span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      <TickerBar />
 
       {/* FOOTER */}
       <footer className="bg-zinc-950 text-white pt-10 pb-7 px-6 md:px-12">
@@ -361,7 +115,9 @@ const NGOHubView = () => {
                 <input type="email" placeholder="Your email" className="bg-white/5 border border-white/10 text-white placeholder:text-white/25 text-xs rounded-xl px-3 py-2 outline-none focus:border-white/30 transition-colors" />
                 <button onClick={() => triggerToast("Subscribed! Welcome to TataEngage updates.")}
                   className="text-xs font-bold px-4 py-2 rounded-xl hover:brightness-110 transition-all cursor-pointer"
-                  style={{ backgroundColor: B_YELLOW, color: "#111" }}>Subscribe</button>
+                  style={{ backgroundColor: B_YELLOW, color: "#111" }}>
+                  Subscribe
+                </button>
               </div>
             </div>
           </div>
@@ -378,12 +134,6 @@ const NGOHubView = () => {
           </div>
         </div>
       </footer>
-
-      <style>{`
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-marquee { animation: marquee 32s linear infinite; }
-        .animate-marquee:hover { animation-play-state: paused; }
-      `}</style>
     </div>
   );
 };
