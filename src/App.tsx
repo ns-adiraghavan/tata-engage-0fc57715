@@ -221,7 +221,7 @@ export default function App() {
           </AnimatePresence>
         </main>
 
-        {isLoggedIn && <Chatbot />}
+        <Chatbot />
         {showOrientationModal && <OrientationModal />}
         <FeedbackModal />
         <SupportModal />
