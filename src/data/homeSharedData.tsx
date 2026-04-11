@@ -1,5 +1,4 @@
-import { Twitter, Instagram, Linkedin } from "lucide-react";
-import type { ComponentType } from "react";
+import { Twitter, Instagram, Linkedin, type LucideIcon } from "lucide-react";
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 export const B_INDIGO = "#333399";
@@ -98,7 +97,7 @@ export const HERO_STATS = [
 export interface SocialPost {
   handle: string; platform: string; text: string;
   likes: string; time: string;
-  Icon: ComponentType<{ size?: number; className?: string }>;
+  Icon: LucideIcon;
   iconBg: string;
 }
 
