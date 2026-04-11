@@ -1,14 +1,13 @@
-import { useState } from "react";
-import { ArrowRight, FileText, Mail, MessageSquare } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import { COMMUNITY_TESTIMONIALS, IS_PE_SEASON, ROHAN_DESAI_VOLUNTEER } from "@/data/mockData";
+import { ROHAN_DESAI_VOLUNTEER } from "@/data/mockData";
 import RoleToggle from "@/components/shared/RoleToggle";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
-import { B_INDIGO, B_YELLOW, COMPANY_PROGRAMMES } from "@/data/homeSharedData";
+import { B_INDIGO, B_YELLOW } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -25,7 +24,7 @@ const VolunteerHubView = () => {
   };
 
   return (
-    <div className="pt-20 min-h-screen bg-white">
+    <div className="pt-20 min-h-screen bg-white pb-12">
 
       {/* ══════════════════════════════════════════════════════════════════
           HERO
@@ -96,7 +95,34 @@ const VolunteerHubView = () => {
       <NumbersSection />
 
       {/* TICKER */}
-      <TickerBar />
+      <TickerBar fixed />
+
+      {/* Floating social cluster */}
+      <div className="fixed bottom-24 left-5 z-40 flex flex-col gap-2 items-center">
+        {[
+          { icon: <Linkedin size={15} />, label: "LinkedIn" },
+          { icon: <Instagram size={15} />, label: "Instagram" },
+          { icon: <Twitter size={15} />, label: "X (Twitter)" },
+        ].map(({ icon, label }) => (
+          <button
+            key={label}
+            onClick={() => triggerToast(`Opening ${label}...`)}
+            title={label}
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer"
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #e2e8f0",
+              color: B_INDIGO,
+              boxShadow: "0 1px 6px rgba(0,0,0,0.10)",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#EEF0FF")}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = "white")}
+          >
+            {icon}
+          </button>
+        ))}
+        <div className="w-px h-5" style={{ backgroundColor: "#e2e8f0" }} />
+      </div>
 
       {/* FOOTER */}
       <footer className="bg-zinc-950 text-white pt-10 pb-7 px-6 md:px-12">
