@@ -405,11 +405,10 @@ const HomeView = () => {
                 <div className="flex-1 p-9 flex flex-col justify-between"
                   style={{ background: `linear-gradient(135deg, ${prog.pastelBg} 0%, #ffffff 60%)` }}>
                   <div>
-                    <span className="inline-block text-xs font-bold px-2.5 py-0.5 rounded-full mb-3"
-                      style={{ backgroundColor: prog.pastelBg, color: prog.accentText }}>
-                      {prog.id}
-                    </span>
-                    <h3 className="text-2xl font-bold text-slate-900 leading-snug mb-2">{prog.title}</h3>
+                    <h3 className="text-2xl font-extrabold leading-snug mb-2 tracking-tight"
+                      style={{ color: prog.accentText }}>
+                      {prog.title}
+                    </h3>
                     <p className="text-base text-slate-500 leading-relaxed line-clamp-2">{prog.desc}</p>
                   </div>
                 </div>
