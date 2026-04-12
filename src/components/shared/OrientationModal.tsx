@@ -3,37 +3,48 @@ import { X, Lock, Check } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAuth } from "@/context/AuthContext";
 
+const SPOC_MODULES = [
+  { id: 1, title: "Platform Overview",     status: "Completed" },
+  { id: 2, title: "TVW Coordinator Guide", status: "Completed" },
+  { id: 3, title: "ProEngage Monitoring",  status: "Locked"    },
+  { id: 4, title: "Data Privacy",          status: "Locked"    },
+  { id: 5, title: "SPOC Code of Conduct",  status: "Locked"    },
+];
+
+const VOLUNTEER_MODULES = [
+  { id: 1, title: "Welcome to ProEngage",    status: "Completed" },
+  { id: 2, title: "Working with Your NGO",   status: "Completed" },
+  { id: 3, title: "Mid-Project Check-in",    status: "Locked"    },
+  { id: 4, title: "Feedback & Certificate",  status: "Locked"    },
+  { id: 5, title: "Volunteer Code of Conduct", status: "Locked"  },
+];
+
 const OrientationModal = () => {
   const { setShowOrientationModal } = useAppContext();
   const { user } = useAuth();
-  const isSPOC = user?.role === "corporate_spoc" || user?.role === "regional_spoc";
 
-  const modules = isSPOC
-    ? [
-        { id: 1, title: "Platform Overview", status: "Completed" },
-        { id: 2, title: "TVW Coordinator Guide", status: "Completed" },
-        { id: 3, title: "ProEngage Monitoring", status: "Locked" },
-        { id: 4, title: "Data Privacy", status: "Locked" },
-        { id: 5, title: "SPOC Code of Conduct", status: "Locked" }
-      ]
-    : [
-        { id: 1, title: "Welcome to ProEngage", status: "Completed" },
-        { id: 2, title: "Working with Your NGO", status: "Completed" },
-        { id: 3, title: "Mid-Project Check-in", status: "Locked" },
-        { id: 4, title: "Feedback & Certificate", status: "Locked" },
-        { id: 5, title: "Volunteer Code of Conduct", status: "Locked" }
-      ];
+  const isSPOC = user?.role === "corporate_spoc" || user?.role === "regional_spoc";
+  const modules = isSPOC ? SPOC_MODULES : VOLUNTEER_MODULES;
+
+  const title    = isSPOC ? "SPOC Orientation" : "Volunteer E-Module";
+  const subtitle = isSPOC
+    ? "Master the platform to effectively manage your company's volunteering impact."
+    : "Complete your orientation to unlock your project certificate and access NGO contact details.";
+  const nextLabel = isSPOC ? "Next: ProEngage Monitoring" : "Next: Mid-Project Check-in";
+  const nextDesc  = isSPOC
+    ? "Learn how to track and approve ProEngage applications for your company."
+    : "Complete the mid-project module to stay on track with your NGO.";
 
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center p-6">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="absolute inset-0 bg-zinc-900/80 backdrop-blur-md"
         onClick={() => setShowOrientationModal(false)}
       />
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -42,8 +53,8 @@ const OrientationModal = () => {
         <div className="p-10 md:p-16">
           <div className="flex justify-between items-start mb-12">
             <div>
-              <h2 className="text-3xl font-bold text-tata-blue mb-2">{isSPOC ? "SPOC Orientation" : "Volunteer E-Module"}</h2>
-              <p className="text-slate-500">{isSPOC ? "Master the platform to effectively manage your company's volunteering impact." : "Complete your orientation to unlock your project certificate and access NGO contact details."}</p>
+              <h2 className="text-3xl font-bold text-tata-blue mb-2">{title}</h2>
+              <p className="text-slate-500">{subtitle}</p>
             </div>
             <button onClick={() => setShowOrientationModal(false)} className="p-3 hover:bg-slate-100 rounded-full transition-colors cursor-pointer">
               <X size={24} />
@@ -72,8 +83,8 @@ const OrientationModal = () => {
                 40%
               </div>
               <div>
-                <h4 className="font-bold text-tata-blue">{isSPOC ? "Next: ProEngage Monitoring" : "Next: Mid-Project Check-in"}</h4>
-                <p className="text-xs text-slate-500">{isSPOC ? "Learn how to track and approve ProEngage applications." : "Complete the mid-project module to stay on track with your NGO."}</p>
+                <h4 className="font-bold text-tata-blue">{nextLabel}</h4>
+                <p className="text-xs text-slate-500">{nextDesc}</p>
               </div>
             </div>
             <button className="btn-black py-4 px-10 whitespace-nowrap cursor-pointer">Resume Orientation</button>
