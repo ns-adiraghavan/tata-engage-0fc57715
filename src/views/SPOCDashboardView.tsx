@@ -1005,6 +1005,238 @@ export default function SPOCDashboardView() {
           </div>
         </Modal>
       )}
+
+      {/* Project Update Modal */}
+      {modal === "projectUpdate" && (
+        <Modal onClose={() => setModal(null)} title="Post a Project Update">
+          {updateSubmitted ? (
+            <div style={{ textAlign: "center", padding: "24px 0" }}>
+              <div style={{ width: 56, height: 56, borderRadius: "50%", background: P_TEAL, border: `2px solid ${B_TEAL}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+                <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke={B_TEAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </div>
+              <div style={{ fontSize: 16, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 8 }}>Update posted</div>
+              <div style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6 }}>Your update has been shared with TSG and your NGO partner at {volData.activeApplication?.ngo}.</div>
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              <p style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6, margin: 0 }}>Share a brief progress note with TSG and your NGO partner. This helps track the health of your project.</p>
+              <div>
+                <FieldLabel>Update</FieldLabel>
+                <Textarea value={updateText} onChange={setUpdateText} placeholder="What progress have you made this week? Any blockers or next steps?" rows={6} />
+              </div>
+              <div>
+                <FieldLabel>Attachment (optional)</FieldLabel>
+                <div style={{ border: "1.5px dashed #dddde8", borderRadius: 10, padding: "16px", textAlign: "center", fontSize: 13, color: "#aaaabc", cursor: "pointer" }}>Drop a file here or click to browse</div>
+              </div>
+              <button disabled={!updateText.trim()} onClick={() => { setUpdateSubmitted(true); triggerToast("Project update posted successfully."); }}
+                style={{ width: "100%", background: updateText.trim() ? B_INDIGO : "#e0e0e8", color: updateText.trim() ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: updateText.trim() ? "pointer" : "not-allowed", fontFamily: "'Noto Sans', sans-serif", transition: "background 0.2s" }}>
+                Post Update
+              </button>
+            </div>
+          )}
+        </Modal>
+      )}
+
+      {/* Feedback Modal */}
+      {modal === "feedback" && (() => {
+        const fbCanSubmit = fbCompleted === "yes"
+          ? fbMonths && fbHoursWeek && fbSupportRatings.every(r => r > 0) && fbAttrRatings.every(r => r > 0) && fbNps > 0
+          : fbCompleted === "no" && fbDropoutReason !== "";
+        const fbLabel: React.CSSProperties = { fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 };
+        const fbInp: React.CSSProperties = { width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" as const };
+        const fbSel: React.CSSProperties = { ...fbInp, appearance: "none" as const, cursor: "pointer" };
+        const supportItems = ["Easily accessible", "Resolved queries", "Liaising with NGO partners"];
+        const attrItems = [
+          "Enhanced critical thinking, problem-solving, and adaptability through navigating project challenges",
+          "Developed strong communication, interpersonal, and networking skills while collaborating with diverse stakeholders",
+          "Gained deep understanding of NGO sector values and behaviours, applying gained knowledge to daily work",
+          "Motivated and inspired others through effective leadership and management of ambiguity",
+          "Cultivated empathy and confidence, fostering innovation and professional growth",
+        ];
+        const dropoutReasons = [
+          "Change in project scope by NGO / NGO Unresponsive",
+          "Personal and professional transitions, including relocation and increased workload, hindered project engagement",
+          "I didn't feel motivated to do the project / I lost interest",
+        ];
+        const FbStarRow = ({ count = 5, value, hover, onHov, onSet }: { count?: number; value: number; hover: number; onHov: (v: number) => void; onSet: (v: number) => void }) => (
+          <div style={{ display: "flex", gap: 4 }}>
+            {Array.from({ length: count }, (_, i) => i + 1).map(i => (
+              <span key={i} onMouseEnter={() => onHov(i)} onMouseLeave={() => onHov(0)} onClick={() => onSet(i)}
+                style={{ fontSize: count === 10 ? 22 : 26, cursor: "pointer", color: i <= (hover || value) ? B_YELLOW : "#e0e0e8", transition: "color 0.1s", lineHeight: 1 }}>★</span>
+            ))}
+          </div>
+        );
+
+        return (
+          <Modal onClose={() => setModal(null)} title="ProEngage Volunteer Feedback">
+            {fbSubmitted ? (
+              <div style={{ textAlign: "center", padding: "24px 0" }}>
+                <div style={{ width: 56, height: 56, borderRadius: "50%", background: P_TEAL, border: `2px solid ${B_TEAL}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+                  <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke={B_TEAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 8 }}>Feedback submitted</div>
+                <div style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6 }}>Thank you. Once the NGO also submits feedback, your certificate will be generated within 24 hours.</div>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+                <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 10, padding: "12px 16px", marginBottom: 24, fontSize: 13, color: B_INDIGO, lineHeight: 1.6 }}>
+                  We request you to fill in this feedback form to help us understand about your ProEngage volunteering journey and experience. All fields marked * are mandatory.
+                </div>
+
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 4 }}>Overall Experience</div>
+                  <label style={{ ...fbLabel, marginBottom: 12 }}>1. Were you able to successfully complete the project? *</label>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {[["yes", "Yes"], ["no", "No"]].map(([val, lbl]) => (
+                      <label key={val} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 13.5, color: fbCompleted === val ? B_INDIGO : ACCENT_NAVY, fontWeight: fbCompleted === val ? 600 : 400 }}>
+                        <div onClick={() => setFbCompleted(val as "yes" | "no")} style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${fbCompleted === val ? B_INDIGO : "#dddde8"}`, background: fbCompleted === val ? B_INDIGO : "#fff", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer" }}>
+                          {fbCompleted === val && <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff" }} />}
+                        </div>
+                        {lbl}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {fbCompleted === "yes" && (
+                  <>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 16, paddingTop: 4, borderTop: "1px solid #e8e8f0" }}>ProEngage Experience</div>
+                    <p style={{ fontSize: 12.5, color: "#8888a0", marginBottom: 20, marginTop: 0 }}>(We would like to know more about your journey.)</p>
+                    <div style={{ marginBottom: 18 }}>
+                      <label style={fbLabel}>2. How many months, in total, have you dedicated to completing this project? *</label>
+                      <select value={fbMonths} onChange={e => setFbMonths(e.target.value)} style={fbSel}>
+                        <option value="">Select</option>
+                        {[1,2,3,4,5,6,7,8,9,10,11,12].map(n => <option key={n} value={n}>{n}</option>)}
+                      </select>
+                    </div>
+                    <div style={{ marginBottom: 18 }}>
+                      <label style={fbLabel}>3. How many hours per week have you dedicated to completing this project? *</label>
+                      <select value={fbHoursWeek} onChange={e => setFbHoursWeek(e.target.value)} style={fbSel}>
+                        <option value="">Select</option>
+                        {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n}</option>)}
+                      </select>
+                    </div>
+                    <div style={{ marginBottom: 20 }}>
+                      <label style={fbLabel}>4. How would you rate the support received from the ProEngage team? *</label>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                        {supportItems.map((item, i) => (
+                          <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                            <span style={{ fontSize: 12.5, color: "#555", lineHeight: 1.4, flex: 1 }}>{String.fromCharCode(65 + i)}. {item}</span>
+                            <FbStarRow value={fbSupportRatings[i]} hover={fbSupportHov[i]} onHov={v => { const a = [...fbSupportHov]; a[i] = v; setFbSupportHov(a); }} onSet={v => { const a = [...fbSupportRatings]; a[i] = v; setFbSupportRatings(a); }} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: 20 }}>
+                      <label style={fbLabel}>5. Which of the following attributes did ProEngage help you improve? *</label>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                        {attrItems.map((item, i) => (
+                          <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+                            <span style={{ fontSize: 12.5, color: "#555", lineHeight: 1.4, flex: 1 }}>{String.fromCharCode(65 + i)}. {item}</span>
+                            <FbStarRow value={fbAttrRatings[i]} hover={fbAttrHov[i]} onHov={v => { const a = [...fbAttrHov]; a[i] = v; setFbAttrHov(a); }} onSet={v => { const a = [...fbAttrRatings]; a[i] = v; setFbAttrRatings(a); }} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: 18 }}>
+                      <label style={fbLabel}>6. Please provide your current residential or office address *</label>
+                      <div style={{ background: P_YELLOW, border: `1px solid ${B_YELLOW}33`, borderRadius: 8, padding: "10px 12px", fontSize: 12, color: "#78350f", lineHeight: 1.5, marginBottom: 10 }}>
+                        Tata Engage Team will send the token to this address. If you live abroad, please provide your India address or Indian office address.
+                      </div>
+                      <input type="text" value={fbAddress} onChange={e => setFbAddress(e.target.value)} placeholder="Flat / Floor, House No., Building, Company, Apartment" style={{ ...fbInp, marginBottom: 8 }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+                    </div>
+                    <div style={{ marginBottom: 18 }}>
+                      <label style={fbLabel}>7. How likely are you to recommend us to a friend or colleague? *</label>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ fontSize: 11.5, color: "#8888a0", whiteSpace: "nowrap" }}>Unlikely</span>
+                        <FbStarRow count={10} value={fbNps} hover={fbNpsHov} onHov={setFbNpsHov} onSet={setFbNps} />
+                        <span style={{ fontSize: 11.5, color: "#8888a0", whiteSpace: "nowrap" }}>Likely</span>
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: 22 }}>
+                      <label style={fbLabel}>8. Do you have any suggestions for the Tata Engage Team regarding the way ProEngage is conducted?</label>
+                      <textarea value={fbSuggestions} onChange={e => setFbSuggestions(e.target.value)} rows={3} placeholder="Suggestions if any" style={{ ...fbInp, resize: "none" as const }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+                    </div>
+                  </>
+                )}
+
+                {fbCompleted === "no" && (
+                  <>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: B_RED, marginBottom: 12, paddingTop: 4, borderTop: "1px solid #e8e8f0" }}>No Completion</div>
+                    <p style={{ fontSize: 12.5, color: "#8888a0", marginBottom: 16, marginTop: 0 }}>(Let us know why you were unable to complete this project.)</p>
+                    <div style={{ marginBottom: 22 }}>
+                      <label style={fbLabel}>2. Reason of no completion *</label>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                        {dropoutReasons.map((r, i) => (
+                          <label key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer", fontSize: 13, color: fbDropoutReason === r ? B_INDIGO : ACCENT_NAVY, fontWeight: fbDropoutReason === r ? 600 : 400, lineHeight: 1.5 }}>
+                            <div onClick={() => setFbDropoutReason(r)} style={{ width: 18, height: 18, minWidth: 18, borderRadius: "50%", border: `2px solid ${fbDropoutReason === r ? B_INDIGO : "#dddde8"}`, background: fbDropoutReason === r ? B_INDIGO : "#fff", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer", marginTop: 2 }}>
+                              {fbDropoutReason === r && <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff" }} />}
+                            </div>
+                            {r}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                <button disabled={!fbCanSubmit} onClick={() => { setFbSubmitted(true); triggerToast("Feedback submitted successfully."); }}
+                  style={{ width: "100%", background: fbCanSubmit ? B_INDIGO : "#e0e0e8", color: fbCanSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: fbCanSubmit ? "pointer" : "not-allowed", fontFamily: "'Noto Sans', sans-serif", marginTop: 8, transition: "background 0.2s" }}>
+                  Submit Feedback
+                </button>
+              </div>
+            )}
+          </Modal>
+        );
+      })()}
+
+      {/* Application Detail Modal */}
+      {modal === "applicationDetail" && drawerApp && (
+        <Modal onClose={() => { setModal(null); setDrawerApp(null); }} title={`${drawerApp.project} — Application`}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <StatusBadge status="Completed" />
+            <div>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 20 }}>Application Timeline</div>
+              <div style={{ position: "relative" }}>
+                <div style={{ position: "absolute", left: 11, top: 0, bottom: 0, width: 2, background: "#e8e8f0" }} />
+                {[
+                  { label: "Applied", date: drawerApp.date || drawerApp.year, done: true },
+                  { label: "Under Review", date: "", done: true },
+                  { label: "Matched", date: "", done: true },
+                  { label: "Project Complete", date: drawerApp.date || drawerApp.year, done: true },
+                ].map((step, i) => (
+                  <div key={i} style={{ display: "flex", gap: 18, marginBottom: 24, position: "relative" }}>
+                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: step.done ? B_INDIGO : "#fff", border: `2.5px solid ${step.done ? B_INDIGO : "#dddde8"}`, flexShrink: 0, zIndex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {step.done && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                    </div>
+                    <div style={{ paddingTop: 2 }}>
+                      <div style={{ fontSize: 13.5, fontWeight: step.done ? 600 : 400, color: step.done ? ACCENT_NAVY : "#aaaabc" }}>{step.label}</div>
+                      {step.date && <div style={{ fontSize: 12, color: "#aaaabc", marginTop: 2 }}>{step.date}</div>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 12 }}>Details</div>
+              <div style={{ background: "#f8f8fc", borderRadius: 10, padding: "14px 16px", display: "flex", flexDirection: "column", gap: 10 }}>
+                {[
+                  ["Project", drawerApp.project],
+                  ["NGO", drawerApp.ngo],
+                  ["Year", drawerApp.year],
+                  ["Hours", `${drawerApp.hours}h`],
+                  ["Status", "Completed"],
+                ].map(([k, v]) => (
+                  <div key={k} style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                    <span style={{ fontSize: 12.5, color: "#8888a0" }}>{k}</span>
+                    <span style={{ fontSize: 12.5, color: ACCENT_NAVY, fontWeight: 600, textAlign: "right" }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
