@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Users, Search, Globe, Calendar, MapPin, Filter, CalendarDays, List, Check, Download, FileText, Camera, BookOpen } from "lucide-react";
-import type { View } from "@/types";
+
 import { TVW_EVENTS } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 import PageShell from "@/components/shared/PageShell";
