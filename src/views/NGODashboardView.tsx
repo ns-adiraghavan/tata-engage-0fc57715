@@ -628,7 +628,10 @@ const NGODashboardView = () => {
 
           {/* ─── III. Application Queue (inline) ─── */}
           <div id="applications" ref={applicationsRef} style={card}>
-            <SectionHeading eyebrow="III · Application Queue" title="Review Applications" />
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 4 }}>III · Application Queue</div>
+              <div style={{ fontSize: 20, fontWeight: 900, color: ACCENT_NAVY, position: "relative", display: "inline-flex" }}>Review Applications{NOTIFICATIONS.applications && <span style={notifDot} />}</div>
+            </div>
             <div style={{ display: "flex", gap: 6, padding: "4px", background: "#f0f0f4", borderRadius: 9, marginBottom: 14, width: "fit-content" }}>
               {(["shortlist","all"] as const).map(t => (
                 <button key={t} onClick={() => setAppTab(t)} style={{ ...tabBtn(appTab === t), minWidth: 120 }}>
