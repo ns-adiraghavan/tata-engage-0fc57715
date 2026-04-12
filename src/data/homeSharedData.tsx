@@ -119,8 +119,8 @@ export const TICKER_ITEMS = [
 
 export const EOEO = {
   tag: "Each One Empowers One",
-  tagColour: B_TEAL,
-  tagPastel: P_TEAL,
+  tagColour: B_INDIGO,
+  tagPastel: P_INDIGO,
   headline: "Become a TCS Literacy Champion",
   steps: [
     { num: "01", label: "Identify your beneficiary" },
