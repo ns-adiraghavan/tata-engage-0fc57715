@@ -24,6 +24,9 @@ const SPOCHubView = () => {
       {/* HERO */}
       <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
         <div className="relative rounded-2xl overflow-hidden" style={{ minHeight: 480 }}>
+          {/* Accent line */}
+          <div className="absolute top-0 left-0 right-0 h-0.5 z-20" style={{ backgroundColor: B_INDIGO }} />
+
           <img
             src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1600"
             alt=""
@@ -41,16 +44,17 @@ const SPOCHubView = () => {
             {/* Top row */}
             <div>
               
-              <span className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-white/60 text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+              <span className="inline-flex items-center gap-2 text-white text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide mb-3" style={{ background: "rgba(51,51,153,0.25)", border: "1px solid rgba(51,51,153,0.3)" }}>
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                </span>
                 SPOC Hub · {spoc.company}
               </span>
-              <p className="text-white/55 mt-1 text-5xl font-sans">
+              <p className="text-white/55 mt-1 text-5xl md:text-6xl font-sans">
                 Welcome back, <span className="text-white font-bold">{spoc.firstName}!</span>
               </p>
               <p className="text-white/30 text-xs mt-0.5 font-medium">{spoc.company} · Corporate SPOC</p>
-            </div>
-
             {/* Centre — quote */}
             <div className="max-w-lg">
               <svg width="24" height="20" viewBox="0 0 28 22" fill="none" className="mb-3 opacity-25">
