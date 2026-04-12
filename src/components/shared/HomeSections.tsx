@@ -63,7 +63,16 @@ export function ProgrammeSpotlight() {
             {/* Card: image left, text right */}
             <div
               onClick={() => { const r = PROGRAMME_ROUTE[prog.id]; if (r) navigate(r); }}
-              className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[420px] flex-1 cursor-pointer hover:shadow-md transition-shadow">
+              className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[420px] flex-1 cursor-pointer transition-all duration-300"
+              style={{ transition: "box-shadow 0.3s, transform 0.3s" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = `0 0 0 2px ${prog.accentText}, 0 8px 32px rgba(0,0,0,0.1)`;
+                e.currentTarget.style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.06)";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}>
               {/* Image panel with tint */}
               <div className="relative md:w-[45%] min-h-[200px] md:min-h-0 shrink-0 overflow-hidden">
                 <img src={prog.photo} alt={prog.title}
@@ -201,6 +210,7 @@ export function NumbersSection() {
   const [factIdx, setFactIdx]       = useState(0);
   const [factFading, setFactFading] = useState(false);
   const [socialIdx, setSocialIdx]   = useState(0);
+  const [shimmer, setShimmer]       = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -283,7 +293,19 @@ export function NumbersSection() {
           </div>
 
           {/* Social Spotlight */}
-          <div className="rounded-2xl p-7 flex flex-col shadow-sm" style={{ background: P_INDIGO, border: "1px solid #d4d8f5" }}>
+          <div className="rounded-2xl p-7 flex flex-col shadow-sm relative overflow-hidden"
+            style={{ background: P_INDIGO, border: "1px solid #d4d8f5" }}
+            onMouseEnter={() => setShimmer(true)}
+            onMouseLeave={() => setShimmer(false)}
+          >
+            {shimmer && (
+              <div style={{
+                position: "absolute", top: 0, bottom: 0, width: "40%",
+                background: "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.15) 45%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 55%, transparent 100%)",
+                animation: "te-shimmer 0.6s ease-out forwards",
+                pointerEvents: "none", zIndex: 5,
+              }} />
+            )}
             <div className="flex items-center justify-between mb-5">
               <div className="flex gap-2.5">
                 {[{ Icon: Facebook, c: "#2563EB" }, { Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }, { Icon: Youtube, c: "#DC2626" }].map(({ Icon, c }) => (
