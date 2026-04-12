@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Heart, Globe, Award, LayoutGrid, ArrowRight, Zap, Activity, ShieldAlert } from "lucide-react";
+import { Heart, Globe, Award, LayoutGrid, ArrowRight, Zap, Activity } from "lucide-react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import SubPageDotRail from "@/components/shared/SubPageDotRail";
 import { B_RED, ACCENT_NAVY } from "@/data/homeSharedData";
