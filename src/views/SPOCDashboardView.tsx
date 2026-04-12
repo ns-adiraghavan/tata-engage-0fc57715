@@ -511,67 +511,106 @@ export default function SPOCDashboardView() {
       {/* III — Manage & Oversight (PE — all year) */}
       <div id="spoc-oversight" style={spocCard}>
         <SectionHeading eyebrow="SPOC Corner · III · All Year" title="Manage & Oversight" spocMode />
-        <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap", alignItems: "center" }}>
-          <input value={pipeSearch} onChange={e => setPipeSearch(e.target.value)} placeholder="Search volunteer or project…"
-            style={{ flex: "1 1 180px", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "7px 12px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none" }} />
-          {["All", "Active", "Matched", "Applied", "Completed", "Dropped", "At Risk"].map(f => (
-            <button key={f} onClick={() => setPipeFilter(f)}
-              style={{ fontSize: 11.5, fontWeight: pipeFilter === f ? 700 : 400, padding: "5px 12px", borderRadius: 100, border: `1.5px solid ${pipeFilter === f ? B_INDIGO : "#dddde8"}`, background: pipeFilter === f ? B_INDIGO : "transparent", color: pipeFilter === f ? "#fff" : "#666", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
-              {f}
-            </button>
-          ))}
-        </div>
-
-        <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden", marginBottom: 14 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1fr 80px", gap: 12, padding: "10px 16px", background: "#f8f8fc", borderBottom: "1px solid #e8e8f0" }}>
-            {["Volunteer", "Project", "NGO", "Status", ""].map(h => (
-              <div key={h} style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px" }}>{h}</div>
-            ))}
+        {/* Sub-panel: Volunteer Pipeline */}
+        <div style={{ marginBottom: 14 }}>
+          <div onClick={() => setPipelineOpen(o => !o)}
+            style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", padding: "10px 0", borderBottom: "1px solid #e8e8f0", userSelect: "none" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>Volunteer Pipeline</div>
+              <span style={{ background: P_SPOC, color: B_INDIGO, fontSize: 10.5, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>{filteredPipeline.length}</span>
+            </div>
+            <span style={{ fontSize: 14, color: "#aaaabc", transition: "transform 0.2s", transform: pipelineOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
           </div>
-          {filteredPipeline.length === 0 && (
-            <div style={{ padding: "20px", color: "#aaaabc", fontSize: 13, textAlign: "center" }}>No volunteers match this filter.</div>
-          )}
-          {filteredPipeline.map((v, i) => {
-            const isAtRisk = atRiskNames.has(v.name);
-            return (
-              <div key={v.id} style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1fr 80px", gap: 12, padding: "11px 16px", borderBottom: i < filteredPipeline.length - 1 ? "1px solid #f0f0f8" : "none", background: isAtRisk ? `${B_RED}06` : "#fff", alignItems: "center" }}>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY, display: "flex", alignItems: "center", gap: 5 }}>
-                    {isAtRisk && <RiskDot severity="high" />}{v.name}
-                  </div>
-                  <div style={{ fontSize: 11, color: "#aaaabc" }}>{v.email}</div>
-                </div>
-                <div style={{ fontSize: 12.5, color: "#555" }}>{v.project}</div>
-                <div style={{ fontSize: 12, color: "#6b6b7a" }}>{v.ngo}</div>
-                <StatusBadge status={v.status} />
-                <button onClick={() => { setSelectedVol(v); setModal("volunteerProfile"); }}
-                  style={{ fontSize: 11, fontWeight: 600, color: B_INDIGO, background: P_SPOC, border: "1px solid #c8c6f0", borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
-                  View →
-                </button>
+          <div style={{ overflow: "hidden", maxHeight: pipelineOpen ? 2000 : 0, transition: "max-height 0.35s ease-in-out" }}>
+            <div style={{ paddingTop: 14 }}>
+              <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap", alignItems: "center" }}>
+                <input value={pipeSearch} onChange={e => setPipeSearch(e.target.value)} placeholder="Search volunteer or project…"
+                  style={{ flex: "1 1 180px", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "7px 12px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none" }} />
+                {["All", "Active", "Matched", "Applied", "Completed", "Dropped", "At Risk"].map(f => (
+                  <button key={f} onClick={() => setPipeFilter(f)}
+                    style={{ fontSize: 11.5, fontWeight: pipeFilter === f ? 700 : 400, padding: "5px 12px", borderRadius: 100, border: `1.5px solid ${pipeFilter === f ? B_INDIGO : "#dddde8"}`, background: pipeFilter === f ? B_INDIGO : "transparent", color: pipeFilter === f ? "#fff" : "#666", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
+                    {f}
+                  </button>
+                ))}
               </div>
-            );
-          })}
+              <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1fr 80px", gap: 12, padding: "10px 16px", background: "#f8f8fc", borderBottom: "1px solid #e8e8f0" }}>
+                  {["Volunteer", "Project", "NGO", "Status", ""].map(h => (
+                    <div key={h} style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px" }}>{h}</div>
+                  ))}
+                </div>
+                {filteredPipeline.length === 0 && (
+                  <div style={{ padding: "20px", color: "#aaaabc", fontSize: 13, textAlign: "center" }}>No volunteers match this filter.</div>
+                )}
+                {filteredPipeline.map((v, i) => {
+                  const isAtRisk = atRiskNames.has(v.name);
+                  return (
+                    <div key={v.id} style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1fr 80px", gap: 12, padding: "11px 16px", borderBottom: i < filteredPipeline.length - 1 ? "1px solid #f0f0f8" : "none", background: isAtRisk ? `${B_RED}06` : "#fff", alignItems: "center" }}>
+                      <div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY, display: "flex", alignItems: "center", gap: 5 }}>
+                          {isAtRisk && <RiskDot severity="high" />}{v.name}
+                        </div>
+                        <div style={{ fontSize: 11, color: "#aaaabc" }}>{v.email}</div>
+                      </div>
+                      <div style={{ fontSize: 12.5, color: "#555" }}>{v.project}</div>
+                      <div style={{ fontSize: 12, color: "#6b6b7a" }}>{v.ngo}</div>
+                      <StatusBadge status={v.status} />
+                      <button onClick={() => { setSelectedVol(v); setModal("volunteerProfile"); }}
+                        style={{ fontSize: 11, fontWeight: 600, color: B_INDIGO, background: P_SPOC, border: "1px solid #c8c6f0", borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
+                        View →
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
 
+        {/* Sub-panel: Feedback Monitor */}
         {FEEDBACK_MONITOR_DATA.length > 0 && (
           <div style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: ACCENT_NAVY, textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: 10 }}>Feedback pending</div>
-            {FEEDBACK_MONITOR_DATA.map((f, i) => (
-              <div key={f.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0", borderBottom: i < FEEDBACK_MONITOR_DATA.length - 1 ? "1px solid #f0f0f8" : "none" }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{f.name}</div>
-                  <div style={{ fontSize: 11, color: "#6b6b7a" }}>{f.project} · Due {f.dueDate} · {f.daysOverdue}d overdue</div>
-                </div>
-                <span style={{ background: P_RED, color: B_RED, fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 100 }}>{f.reminders.length} reminder{f.reminders.length !== 1 ? "s" : ""} sent</span>
+            <div onClick={() => setFeedbackPanelOpen(o => !o)}
+              style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", padding: "10px 0", borderBottom: "1px solid #e8e8f0", userSelect: "none" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>Feedback Monitor</div>
+                <span style={{ background: P_RED, color: B_RED, fontSize: 10.5, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>{FEEDBACK_MONITOR_DATA.length} overdue</span>
               </div>
-            ))}
+              <span style={{ fontSize: 14, color: "#aaaabc", transition: "transform 0.2s", transform: feedbackPanelOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+            </div>
+            <div style={{ overflow: "hidden", maxHeight: feedbackPanelOpen ? 1000 : 0, transition: "max-height 0.35s ease-in-out" }}>
+              <div style={{ paddingTop: 10 }}>
+                {FEEDBACK_MONITOR_DATA.map((f, i) => (
+                  <div key={f.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0", borderBottom: i < FEEDBACK_MONITOR_DATA.length - 1 ? "1px solid #f0f0f8" : "none" }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{f.name}</div>
+                      <div style={{ fontSize: 11, color: "#6b6b7a" }}>{f.project} · Due {f.dueDate} · {f.daysOverdue}d overdue</div>
+                    </div>
+                    <span style={{ background: P_RED, color: B_RED, fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 100 }}>{f.reminders.length} reminder{f.reminders.length !== 1 ? "s" : ""} sent</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Volunteer list downloading as Excel…")}>⬇ Download Volunteer List</GhostBtn>
-          <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Preparing ZIP of all certificates…")}>🏅 Bulk Download Certs</GhostBtn>
-          <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Downloading open PE projects list…")}>📋 Open PE Projects List</GhostBtn>
+        {/* Sub-panel: Downloads */}
+        <div>
+          <div onClick={() => setDownloadsPanelOpen(o => !o)}
+            style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", padding: "10px 0", borderBottom: "1px solid #e8e8f0", userSelect: "none" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>Downloads</div>
+              <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 10.5, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>3 actions</span>
+            </div>
+            <span style={{ fontSize: 14, color: "#aaaabc", transition: "transform 0.2s", transform: downloadsPanelOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+          </div>
+          <div style={{ overflow: "hidden", maxHeight: downloadsPanelOpen ? 200 : 0, transition: "max-height 0.35s ease-in-out" }}>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", paddingTop: 14 }}>
+              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Volunteer list downloading as Excel…")}>⬇ Download Volunteer List</GhostBtn>
+              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Preparing ZIP of all certificates…")}>🏅 Bulk Download Certs</GhostBtn>
+              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Downloading open PE projects list…")}>📋 Open PE Projects List</GhostBtn>
+            </div>
+          </div>
         </div>
       </div>
 
