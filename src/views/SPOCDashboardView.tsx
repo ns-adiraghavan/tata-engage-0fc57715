@@ -268,6 +268,11 @@ export default function SPOCDashboardView() {
   // Application detail
   const [drawerApp, setDrawerApp] = useState<any>(null);
 
+  // Collapsible sub-panels for Manage & Oversight
+  const [pipelineOpen, setPipelineOpen] = useState(true);
+  const [feedbackPanelOpen, setFeedbackPanelOpen] = useState(false);
+  const [downloadsPanelOpen, setDownloadsPanelOpen] = useState(false);
+
   // Create event form
   const [newEvent, setNewEvent] = useState({ title: "", type: "Community Service", date: "", time: "", venue: "", mode: "In-Person", capacity: "", hours: "", openToAll: false });
   const setNE = (k: string, v: any) => setNewEvent(p => ({ ...p, [k]: v }));
