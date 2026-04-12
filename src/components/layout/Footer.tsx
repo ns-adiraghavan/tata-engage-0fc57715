@@ -35,9 +35,9 @@ const Footer = () => {
       <div>
         <h4 className="font-bold mb-6">Programmes</h4>
         <ul className="space-y-3 text-slate-400 text-sm">
-          <li><span onClick={() => window.location.href = '/about/tvw'} className="hover:text-white transition-colors cursor-pointer">TVW (Tata Volunteering Week)</span></li>
-          <li><span onClick={() => window.location.href = '/about/proengage'} className="hover:text-white transition-colors cursor-pointer">ProEngage</span></li>
-          <li><span onClick={() => window.location.href = '/disaster-response'} className="hover:text-white transition-colors cursor-pointer">Disaster Response</span></li>
+          <li><span onClick={() => navigate("about-tvw")} className="hover:text-white transition-colors cursor-pointer">TVW (Tata Volunteering Week)</span></li>
+          <li><span onClick={() => navigate("about-proengage")} className="hover:text-white transition-colors cursor-pointer">ProEngage</span></li>
+          <li><span onClick={() => navigate("disaster-response")} className="hover:text-white transition-colors cursor-pointer">Disaster Response</span></li>
         </ul>
       </div>
       <div>
