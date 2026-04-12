@@ -72,12 +72,12 @@ export const COMPANY_PROGRAMMES = [
 ];
 
 export const JOURNEY_MILESTONES = [
-  { year: "2007", title: "The Seed",     desc: "Founded with 4 Tata companies.",      colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2010", title: "TVW Born",     desc: "8,000 volunteers in Year 1.",          colour: B_YELLOW, photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2015", title: "Digital",      desc: "Platform launched for NGO matching.",  colour: B_RED,    photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2018", title: "ProEngage",    desc: "Skill-based volunteering introduced.", colour: B_TEAL,   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2020", title: "COVID Relief", desc: "15,000 volunteers in 72 hrs.",         colour: B_BLUE,   photo: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?auto=format&fit=crop&q=80&w=120&h=120" },
-  { year: "2024", title: "50K Strong",   desc: "50K+ volunteers, 100+ companies.",     colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2014", title: "Tata Engage Launches", desc: "TVW1 on Jamsetji Tata's 175th anniversary. 100,000+ sign-ups.", colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2014", title: "ProEngage Is Born", desc: "Skill-based volunteering launches on International Volunteer Day.", colour: B_YELLOW, photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2019", title: "425+ Projects", desc: "ProEngage13 — 120+ NGO partners, delivered remotely worldwide.", colour: B_TEAL, photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2020", title: "First Virtual TVW", desc: "TVW14 'Work from Heart' — 35,000 volunteers, 125,000 hours from home.", colour: B_RED, photo: "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?auto=format&fit=crop&q=80&w=120&h=120" },
+  { year: "2021", title: "App & TVW16 Record", desc: "Volunteering app launches. TVW16: 47,000 volunteers, 190,000 hours.", colour: B_BLUE, photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=120&h=500" },
+  { year: "FY24", title: "4 PCVH Achieved", desc: "8.02M hours. 4 per capita volunteering hours met a year early.", colour: B_INDIGO, photo: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=120&h=120" },
 ];
 
 export const FUN_FACTS = [
