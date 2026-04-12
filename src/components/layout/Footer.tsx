@@ -1,9 +1,11 @@
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataEngageLogoNoBg from "@/assets/tata-engage-logo-nobg.png";
 import { useAppContext } from "@/context/AppContext";
+import { useAppNavigate } from "@/hooks/useAppNavigate";
 
 const Footer = () => {
   const { triggerToast } = useAppContext();
+  const navigate = useAppNavigate();
   return (
   <footer className="bg-zinc-950 text-white pt-16 pb-8 px-6 md:px-12">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
@@ -23,19 +25,19 @@ const Footer = () => {
       <div>
         <h4 className="font-bold mb-6">Quick Links</h4>
         <ul className="space-y-3 text-slate-400 text-sm">
-          <li><span onClick={() => window.location.href = '/about'} className="hover:text-white transition-colors cursor-pointer">About Us</span></li>
+          <li><span onClick={() => navigate("about")} className="hover:text-white transition-colors cursor-pointer">About Us</span></li>
           <li><span onClick={() => triggerToast("Volunteering Policy document coming soon")} className="hover:text-white transition-colors cursor-pointer">Volunteering Policy</span></li>
           <li><span onClick={() => triggerToast("FAQs coming soon")} className="hover:text-white transition-colors cursor-pointer">FAQs</span></li>
           <li><span onClick={() => triggerToast("Contact: tataengage@tata.com")} className="hover:text-white transition-colors cursor-pointer">Contact Us</span></li>
-          <li><a href="/login" className="hover:text-white transition-colors">Login</a></li>
+          <li><span onClick={() => navigate("login")} className="hover:text-white transition-colors cursor-pointer">Login</span></li>
         </ul>
       </div>
       <div>
         <h4 className="font-bold mb-6">Programmes</h4>
         <ul className="space-y-3 text-slate-400 text-sm">
-          <li><span onClick={() => window.location.href = '/about/tvw'} className="hover:text-white transition-colors cursor-pointer">TVW (Tata Volunteering Week)</span></li>
-          <li><span onClick={() => window.location.href = '/about/proengage'} className="hover:text-white transition-colors cursor-pointer">ProEngage</span></li>
-          <li><span onClick={() => window.location.href = '/disaster-response'} className="hover:text-white transition-colors cursor-pointer">Disaster Response</span></li>
+          <li><span onClick={() => navigate("about-tvw")} className="hover:text-white transition-colors cursor-pointer">TVW (Tata Volunteering Week)</span></li>
+          <li><span onClick={() => navigate("about-proengage")} className="hover:text-white transition-colors cursor-pointer">ProEngage</span></li>
+          <li><span onClick={() => navigate("disaster-response")} className="hover:text-white transition-colors cursor-pointer">Disaster Response</span></li>
         </ul>
       </div>
       <div>
