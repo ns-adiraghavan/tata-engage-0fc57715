@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { IS_PE_SEASON } from "@/data/mockData";
+import { useAppContext } from "@/context/AppContext";
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
 const B_INDIGO    = "#333399";
@@ -279,10 +280,10 @@ function HistoryFilters({ edition, setEdition, year, setYear }: { edition: strin
 }
 
 // ─── Resource card ────────────────────────────────────────────────────────────
-function ResourceCard({ r }: { r: typeof RESOURCES[0] }) {
+function ResourceCard({ r, onClick }: { r: typeof RESOURCES[0]; onClick?: () => void }) {
   const [hov, setHov] = useState(false);
   return (
-    <div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    <div onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, overflow: "hidden", cursor: "pointer", transform: hov ? "translateY(-3px)" : "translateY(0)", boxShadow: hov ? `0 8px 24px ${r.accentColor}18` : "none", transition: "transform 0.18s, box-shadow 0.18s" }}
     >
       <div style={{ height: 90, background: `url(${r.photo}) center/cover`, position: "relative" }}>
@@ -899,6 +900,7 @@ function ShareDrawer({ open, onClose }: { open: boolean; onClose: () => void }) 
 // ═══════════════════════════════════════════════════════════════════════════════
 export default function DashboardView() {
   const navigate = useNavigate();
+  const { setShowOrientationModal, triggerToast: ctxToast } = useAppContext();
 
   // Section tracking
   const statsRef = useRef<HTMLDivElement>(null);
@@ -1344,7 +1346,10 @@ export default function DashboardView() {
             <section id="resources" style={{ scrollMarginTop: 108 }}>
               <SectionHeading eyebrow="Learning and inspiration" title="Resource Library" />
               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
-                {RESOURCES.map(r => <ResourceCard key={r.id} r={r} />)}
+                {RESOURCES.map(r => <ResourceCard key={r.id} r={r} onClick={() => {
+                  if (r.id === "emodule") { setShowOrientationModal(true); }
+                  else { window.location.href = "/media"; }
+                }} />)}
               </div>
             </section>
 

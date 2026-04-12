@@ -391,7 +391,7 @@ function FeedbackForm({ project, onClose, onSubmit }: { project: any; onClose: (
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 const NGODashboardView = () => {
-  const { setActiveProject, setClonedProject, ngoData, triggerToast } = useAppContext();
+  const { setActiveProject, setClonedProject, ngoData, triggerToast, setShowOrientationModal, setShowSupportModal } = useAppContext();
   const navigate = useAppNavigate();
 
   // Section refs + scroll tracking
@@ -962,6 +962,10 @@ const NGODashboardView = () => {
               ].map(r => (
                 <ResourceCard key={r.label} {...r} onClick={() => {
                   if (r.label === "Grievance Redressal") { setModal("grievance"); }
+                  else if (r.label === "E-Module / Orientation") { setShowOrientationModal(true); }
+                  else if (r.label === "NGO Project Guide") { triggerToast("NGO Project Guide downloading..."); }
+                  else if (r.label === "Media Library") { window.location.href = "/media"; }
+                  else if (r.label === "Help & Support") { setShowSupportModal(true); }
                   else { triggerToast(`Opening ${r.label}…`); }
                 }} />
               ))}

@@ -127,31 +127,31 @@ const Navbar = ({
               {
                 label: "About",
                 items: [
-                  { label: "TE Vision",      action: () => triggerToast("Coming soon") },
-                  { label: "Our Journey",    action: () => triggerToast("Coming soon") },
-                  { label: "Impact & Reach", action: () => triggerToast("Coming soon") },
-                  { label: "Team",           action: () => triggerToast("Coming soon") },
-                  { label: "Contact Us",     action: () => triggerToast("Coming soon") },
+                  { label: "TE Vision",      action: () => onNavigate("about") },
+                  { label: "Our Journey",    action: () => onNavigate("about") },
+                  { label: "Impact & Reach", action: () => onNavigate("about") },
+                  { label: "Team",           action: () => onNavigate("about") },
+                  { label: "Contact Us",     action: () => triggerToast("Contact: tataengage@tata.com") },
                 ],
               },
               {
                 label: "Programmes",
                 items: [
-                  { label: "ProEngage",              action: () => triggerToast("Coming soon") },
-                  { label: "TVW (Tata Volunteering Week)", action: () => triggerToast("Coming soon") },
-                  { label: "Disaster Response",      action: () => triggerToast("Coming soon") },
-                  { label: "CVP",                    action: () => triggerToast("Coming soon") },
-                  { label: "DIY",                    action: () => triggerToast("Coming soon") },
+                  { label: "ProEngage",              action: () => onNavigate("about-proengage") },
+                  { label: "TVW (Tata Volunteering Week)", action: () => onNavigate("about-tvw") },
+                  { label: "Disaster Response",      action: () => onNavigate("disaster-response") },
+                  { label: "CVP",                    action: () => triggerToast("CVP information coming soon") },
+                  { label: "DIY",                    action: () => triggerToast("DIY kit available in the Resource Library after login") },
                 ],
               },
               {
                 label: "Media & Resources",
                 items: [
-                  { label: "Photos",         action: () => triggerToast("Coming soon") },
-                  { label: "Videos",         action: () => triggerToast("Coming soon") },
-                  { label: "Impact Stories", action: () => triggerToast("Coming soon") },
-                  { label: "Social Media",   action: () => triggerToast("Coming soon") },
-                  { label: "Events",         action: () => triggerToast("Coming soon") },
+                  { label: "Photos",         action: () => onNavigate("media") },
+                  { label: "Videos",         action: () => onNavigate("media") },
+                  { label: "Impact Stories", action: () => onNavigate("media") },
+                  { label: "Social Media",   action: () => onNavigate("media") },
+                  { label: "Events",         action: () => onNavigate("media") },
                 ],
               },
               {
@@ -159,8 +159,8 @@ const Navbar = ({
                 items: [
                   { label: "Register as NGO",           action: () => onNavigate("register-role") },
                   { label: "Register as Volunteer",      action: () => onNavigate("register-role") },
-                  { label: "How & Where to Volunteer",   action: () => triggerToast("Coming soon") },
-                  { label: "Refer an NGO",               action: () => triggerToast("Coming soon") },
+                  { label: "How & Where to Volunteer",   action: () => onNavigate("partner") },
+                  { label: "Refer an NGO",               action: () => onNavigate("partner") },
                 ],
               },
             ].map((nav) => (
