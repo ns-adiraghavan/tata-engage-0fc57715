@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowRight, RefreshCw, ExternalLink } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
+import { useAppNavigate } from "@/hooks/useAppNavigate";
 import {
   B_INDIGO, B_YELLOW, B_RED, B_TEAL, B_BLUE,
   P_INDIGO, P_TEAL, P_RED,
@@ -122,6 +123,7 @@ export function ProgrammeSpotlight() {
 // ── Journey section ───────────────────────────────────────────────────────────
 export function JourneySection() {
   const { triggerToast } = useAppContext();
+  const navigate = useAppNavigate();
 
   return (
     <section className={`${secBg(2)} py-16 px-6 md:px-12`}>
@@ -173,7 +175,7 @@ export function JourneySection() {
           </div>
         </div>
         <div className="mt-10 flex justify-center">
-          <button onClick={() => triggerToast("Full journey coming soon...")}
+          <button onClick={() => navigate("journey")}
             className="inline-flex items-center gap-2 text-sm font-bold hover:underline cursor-pointer"
             style={{ color: B_INDIGO }}>
             Read our full story <ArrowRight size={13} />
