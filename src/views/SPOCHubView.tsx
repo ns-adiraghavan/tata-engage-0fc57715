@@ -1,14 +1,23 @@
-import { ROHAN_DESAI, PENDING_APPROVALS_DATA } from "@/data/mockData";
+import { ROHAN_DESAI } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { useAuth } from "@/context/AuthContext";
+import RoleToggle from "@/components/shared/RoleToggle";
 
 import { ArrowRight } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
-import { B_INDIGO, B_YELLOW } from "@/data/homeSharedData";
+import { B_INDIGO, B_YELLOW, ACCENT_NAVY } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
+
+const DIAG_TEXTURE: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  backgroundImage: "repeating-linear-gradient(45deg, rgba(51,51,153,0.07) 0px, rgba(51,51,153,0.07) 1px, transparent 1px, transparent 22px)",
+  backgroundSize: "22px 22px",
+  pointerEvents: "none",
+};
 
 // ── Component ─────────────────────────────────────────────────────────────────
 const SPOCHubView = () => {
