@@ -284,16 +284,20 @@ export default function AboutView() {
           </div>
           <div style={{
             background: ACCENT_NAVY, borderRadius: 16, padding: 28,
+            position: "relative", overflow: "hidden",
           }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", margin: "0 0 12px" }}>
-              by Tata Sustainability Group
-            </p>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", lineHeight: 1.75, margin: "0 0 12px" }}>
-              The Tata Sustainability Group (TSG) guides Tata companies on sustainability and social responsibility, embedding the ethos of giving into everyday business.
-            </p>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", lineHeight: 1.75, margin: 0 }}>
-              TSG conceptualised TataEngage as the unified digital vehicle for volunteering — connecting employees, NGOs, and communities on a single platform.
-            </p>
+            <div style={DIAG_TEXTURE} />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", margin: "0 0 12px" }}>
+                by Tata Sustainability Group
+              </p>
+              <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", lineHeight: 1.75, margin: "0 0 12px" }}>
+                The Tata Sustainability Group (TSG) guides Tata companies on sustainability and social responsibility, embedding the ethos of giving into everyday business.
+              </p>
+              <p style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", lineHeight: 1.75, margin: 0 }}>
+                TSG conceptualised TataEngage as the unified digital vehicle for volunteering — connecting employees, NGOs, and communities on a single platform.
+              </p>
+            </div>
           </div>
         </div>
       </section>
