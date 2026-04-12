@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Building2, Eye, Award, Check, Sparkles, Star, ChevronLeft, ChevronDown, Download, Upload, FileCheck } from "lucide-react";
+import { X, Building2, Eye, Award, Sparkles, Star, ChevronLeft, ChevronDown, Download, Upload, FileCheck } from "lucide-react";
 import { MOCK_APPLICANTS, ANJALI_MEHTA } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
