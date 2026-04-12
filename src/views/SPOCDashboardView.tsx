@@ -218,6 +218,10 @@ export default function SPOCDashboardView() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (spocMode) setSpocStarted(true);
+  }, [spocMode]);
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
     setActiveSection(id);
