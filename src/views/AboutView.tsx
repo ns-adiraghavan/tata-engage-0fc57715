@@ -1,7 +1,20 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, Users, Lightbulb, Target, Heart, BookOpen } from "lucide-react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
+import { SectionDivider } from "@/components/shared/HomeSections";
 import Footer from "@/components/layout/Footer";
+
+const DIAG_TEXTURE = {
+  position: "absolute" as const, inset: 0,
+  backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
+  backgroundSize: "22px 22px",
+  pointerEvents: "none" as const,
+};
+
+const cardHover = {
+  onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)"; },
+  onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; },
+};
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 const ACCENT_NAVY = "#0D1B3E";
