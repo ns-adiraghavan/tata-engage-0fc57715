@@ -292,7 +292,19 @@ export function NumbersSection() {
           </div>
 
           {/* Social Spotlight */}
-          <div className="rounded-2xl p-7 flex flex-col shadow-sm" style={{ background: P_INDIGO, border: "1px solid #d4d8f5" }}>
+          <div className="rounded-2xl p-7 flex flex-col shadow-sm relative overflow-hidden"
+            style={{ background: P_INDIGO, border: "1px solid #d4d8f5" }}
+            onMouseEnter={() => setShimmer(true)}
+            onMouseLeave={() => setShimmer(false)}
+          >
+            {shimmer && (
+              <div style={{
+                position: "absolute", top: 0, bottom: 0, width: "40%",
+                background: "linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.15) 45%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0.15) 55%, transparent 100%)",
+                animation: "te-shimmer 0.6s ease-out forwards",
+                pointerEvents: "none", zIndex: 5,
+              }} />
+            )}
             <div className="flex items-center justify-between mb-5">
               <div className="flex gap-2.5">
                 {[{ Icon: Facebook, c: "#2563EB" }, { Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }, { Icon: Youtube, c: "#DC2626" }].map(({ Icon, c }) => (
