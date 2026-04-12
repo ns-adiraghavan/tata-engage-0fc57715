@@ -24,6 +24,9 @@ const SPOCHubView = () => {
       {/* HERO */}
       <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
         <div className="relative rounded-2xl overflow-hidden" style={{ minHeight: 480 }}>
+          {/* Accent line */}
+          <div className="absolute top-0 left-0 right-0 h-0.5 z-20" style={{ backgroundColor: B_INDIGO }} />
+
           <img
             src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1600"
             alt=""
@@ -41,11 +44,14 @@ const SPOCHubView = () => {
             {/* Top row */}
             <div>
               
-              <span className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-white/60 text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+              <span className="inline-flex items-center gap-2 text-white text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide mb-3" style={{ background: "rgba(51,51,153,0.25)", border: "1px solid rgba(51,51,153,0.3)" }}>
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                </span>
                 SPOC Hub · {spoc.company}
               </span>
-              <p className="text-white/55 mt-1 text-5xl font-sans">
+              <p className="text-white/55 mt-1 text-5xl md:text-6xl font-sans">
                 Welcome back, <span className="text-white font-bold">{spoc.firstName}!</span>
               </p>
               <p className="text-white/30 text-xs mt-0.5 font-medium">{spoc.company} · Corporate SPOC</p>
@@ -66,7 +72,7 @@ const SPOCHubView = () => {
             <div className="flex justify-end">
               <button
                 onClick={() => navigate("spoc-dashboard")}
-                className="flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-110 transition-all cursor-pointer shadow-lg"
+                className="flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-110 hover:ring-2 hover:ring-white/20 hover:ring-offset-2 hover:ring-offset-transparent transition-all cursor-pointer shadow-lg"
                 style={{ backgroundColor: B_INDIGO }}
               >
                 My Space <ArrowRight size={15} />
@@ -77,6 +83,22 @@ const SPOCHubView = () => {
       </div>
 
       <SectionDivider />
+
+      {/* Stats strip */}
+      <div className="bg-white border-b border-slate-100 py-5">
+        <div className="max-w-7xl mx-auto px-12 flex items-center justify-center gap-12 md:gap-20">
+          {[
+            { num: "18", label: "Events Coordinated" },
+            { num: "2,340", label: "Volunteers Mobilised" },
+            { num: "4", label: "Active Editions" },
+          ].map((s, i) => (
+            <div key={i} className="text-center">
+              <div className="text-2xl font-black" style={{ color: B_INDIGO }}>{s.num}</div>
+              <div className="text-xs uppercase tracking-widest text-slate-400 mt-0.5">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <ProgrammeSpotlight />
 
@@ -117,6 +139,8 @@ const SPOCHubView = () => {
         ))}
         <div className="w-px h-5" style={{ backgroundColor: "#e2e8f0" }} />
       </div>
+
+      <SectionDivider />
 
       {/* FOOTER */}
       <footer className="bg-zinc-950 text-white pt-10 pb-7 px-6 md:px-12">
