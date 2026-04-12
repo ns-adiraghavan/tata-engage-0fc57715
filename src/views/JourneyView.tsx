@@ -197,7 +197,11 @@ function MilestoneCard({ m, index }: { m: typeof MILESTONES[0]; index: number })
         border: "1px solid #e8e8f0",
         borderRadius: 16, overflow: "hidden",
         boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
-      }}>
+        transition: "transform 0.2s, box-shadow 0.2s",
+      }}
+        onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 16px rgba(0,0,0,0.05)"; }}
+      >
         {/* Photo strip */}
         <div style={{ position: "relative", height: 180, overflow: "hidden" }}>
           <img
@@ -383,25 +387,33 @@ export default function JourneyView() {
           </p>
 
           {/* Era pills */}
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            {ERAS.map(({ id, label }, i) => {
-              const meta = ERA_META[id];
-              return (
-                <button
-                  key={id}
-                  onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
-                  style={{
-                    background: i === activeEra ? meta.colour : "rgba(255,255,255,0.08)",
-                    border: `1px solid ${i === activeEra ? meta.colour : "rgba(255,255,255,0.15)"}`,
-                    color: "#fff", borderRadius: 100, padding: "7px 16px",
-                    fontSize: 13, fontWeight: 600, cursor: "pointer",
-                    transition: "all 0.2s",
-                  }}
-                >
-                  {label} · {meta.range}
-                </button>
-              );
-            })}
+          <div style={{ position: "relative" }}>
+            {/* Radial glow behind pills */}
+            <div style={{
+              position: "absolute", left: "50%", bottom: 0, transform: "translateX(-50%)",
+              width: 600, height: 300, pointerEvents: "none",
+              background: "radial-gradient(ellipse 600px 300px at 50% 100%, rgba(51,51,153,0.15), transparent)",
+            }} />
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", position: "relative", zIndex: 1 }}>
+              {ERAS.map(({ id, label }, i) => {
+                const meta = ERA_META[id];
+                return (
+                  <button
+                    key={id}
+                    onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
+                    style={{
+                      background: i === activeEra ? meta.colour : "rgba(255,255,255,0.08)",
+                      border: `1px solid ${i === activeEra ? meta.colour : "rgba(255,255,255,0.15)"}`,
+                      color: "#fff", borderRadius: 100, padding: "7px 16px",
+                      fontSize: 13, fontWeight: 600, cursor: "pointer",
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    {label} · {meta.range}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

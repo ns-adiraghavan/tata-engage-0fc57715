@@ -1,13 +1,33 @@
 import { useState } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { SOCIAL_POSTS } from "@/data/homeSharedData";
+import SubPageDotRail from "@/components/shared/SubPageDotRail";
 import Footer from "@/components/layout/Footer";
 
 const B_INDIGO = "#333399";
 const B_YELLOW = "#E8A817";
 const B_TEAL = "#0D9488";
+const B_BLUE = "#1E6BB8";
+const ACCENT_NAVY = "#0D1B3E";
 
 const TABS = ["Photos", "Videos", "Impact Stories", "Social Media", "Events"] as const;
+
+const SECTIONS = [
+  { id: "media-hero", label: "Overview" },
+  { id: "media-content", label: "Content" },
+];
+
+const DIAG_TEXTURE = {
+  position: "absolute" as const, inset: 0,
+  backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
+  backgroundSize: "22px 22px",
+  pointerEvents: "none" as const,
+};
+
+const cardHover = {
+  onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)"; },
+  onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; },
+};
 
 const PHOTOS = [
   { src: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=400&q=80", caption: "Blood Donation — TCS" },
@@ -62,14 +82,23 @@ export default function MediaView() {
   return (
     <div style={{ paddingTop: 0, paddingBottom: 0, background: "#fff", minHeight: "100vh" }}>
 
+      {/* 2px accent line */}
+      <div style={{ height: 2, background: B_BLUE, width: "100%" }} />
+
+      {/* Dot rail */}
+      <SubPageDotRail sections={SECTIONS} accentColor={B_BLUE} />
+
       {/* 1 — Hero */}
-      <div style={{ background: "#0D1B3E", padding: "100px 24px 48px", textAlign: "center" }}>
-        <h1 style={{ fontFamily: "'Noto Sans', sans-serif", fontWeight: 900, fontSize: 36, color: "#fff", margin: 0 }}>Media &amp; Resources</h1>
-        <p style={{ fontSize: 16, color: "rgba(255,255,255,0.65)", marginTop: 10 }}>Stories, photos, videos and moments from across the Tata Engage community</p>
+      <div id="media-hero" style={{ background: ACCENT_NAVY, padding: "100px 24px 48px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div style={DIAG_TEXTURE} />
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <h1 style={{ fontFamily: "'Noto Sans', sans-serif", fontWeight: 900, fontSize: 36, color: "#fff", margin: 0 }}>Media &amp; Resources</h1>
+          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.65)", marginTop: 10 }}>Stories, photos, videos and moments from across the Tata Engage community</p>
+        </div>
       </div>
 
       {/* 2 — Tabs */}
-      <div style={{ display: "flex", justifyContent: "center", gap: 8, padding: "20px 24px", flexWrap: "wrap" }}>
+      <div id="media-content" style={{ display: "flex", justifyContent: "center", gap: 8, padding: "20px 24px", flexWrap: "wrap" }}>
         {TABS.map((t) => (
           <button
             key={t}
@@ -117,7 +146,8 @@ export default function MediaView() {
               <div
                 key={i}
                 onClick={() => triggerToast("Opening video player...")}
-                style={{ background: "#0D1B3E", borderRadius: 12, overflow: "hidden", cursor: "pointer", position: "relative" }}
+                style={{ background: ACCENT_NAVY, borderRadius: 12, overflow: "hidden", cursor: "pointer", position: "relative", transition: "transform 0.2s, box-shadow 0.2s" }}
+                {...cardHover}
               >
                 <div style={{ height: 180, display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -126,7 +156,7 @@ export default function MediaView() {
                 </div>
                 <span style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,0.6)", color: "#fff", fontSize: 11, fontWeight: 600, padding: "3px 8px", borderRadius: 4 }}>{v.duration}</span>
                 <div style={{ padding: "12px 16px", background: "#fff" }}>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "#0D1B3E" }}>{v.title}</div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: ACCENT_NAVY }}>{v.title}</div>
                 </div>
               </div>
             ))}
@@ -140,12 +170,13 @@ export default function MediaView() {
               <div
                 key={i}
                 onClick={() => triggerToast("Opening story...")}
-                style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, overflow: "hidden", cursor: "pointer" }}
+                style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, overflow: "hidden", cursor: "pointer", transition: "transform 0.2s, box-shadow 0.2s" }}
+                {...cardHover}
               >
                 <div style={{ height: 140, background: "#e2e8f0" }} />
                 <div style={{ padding: 20 }}>
                   <span style={{ display: "inline-block", background: B_TEAL, color: "#fff", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 4, marginBottom: 10 }}>{s.category}</span>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: "#0D1B3E", marginBottom: 8, lineHeight: 1.4 }}>{s.title}</div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 8, lineHeight: 1.4 }}>{s.title}</div>
                   <p style={{ fontSize: 13, color: "#64748B", lineHeight: 1.6, marginBottom: 12 }}>{s.excerpt}</p>
                   <span style={{ fontSize: 13, fontWeight: 600, color: B_INDIGO }}>Read more →</span>
                 </div>
@@ -160,13 +191,13 @@ export default function MediaView() {
             {SOCIAL_POSTS.map((post, i) => {
               const IconComp = post.Icon;
               return (
-                <div key={i} style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, padding: 20 }}>
+                <div key={i} style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, padding: 20, transition: "transform 0.2s, box-shadow 0.2s" }} {...cardHover}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                     <div style={{ width: 32, height: 32, borderRadius: "50%", background: post.iconBg, display: "flex", alignItems: "center", justifyContent: "center" }}>
                       <IconComp size={16} color="#fff" />
                     </div>
                     <div>
-                      <div style={{ fontSize: 13, fontWeight: 700, color: "#0D1B3E" }}>{post.handle}</div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>{post.handle}</div>
                       <div style={{ fontSize: 11, color: "#94A3B8" }}>{post.platform} · {post.time}</div>
                     </div>
                   </div>
@@ -184,9 +215,9 @@ export default function MediaView() {
             <h2 style={{ color: B_INDIGO, fontSize: 22, fontWeight: 700, marginBottom: 20 }}>Upcoming</h2>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginBottom: 36 }}>
               {UPCOMING_EVENTS.map((e, i) => (
-                <div key={i} style={{ border: "1px solid #e8e8f0", borderRadius: 14, padding: 20 }}>
+                <div key={i} style={{ border: "1px solid #e8e8f0", borderRadius: 14, padding: 20, transition: "transform 0.2s, box-shadow 0.2s" }} {...cardHover}>
                   <span style={{ display: "inline-block", background: B_YELLOW, color: "#fff", fontSize: 12, fontWeight: 700, padding: "4px 12px", borderRadius: 4, marginBottom: 12 }}>{e.date}</span>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: "#0D1B3E", marginBottom: 4 }}>{e.title}</div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 4 }}>{e.title}</div>
                   <div style={{ fontSize: 13, color: "#64748B" }}>{e.location}</div>
                   <span style={{ display: "inline-block", marginTop: 10, fontSize: 11, fontWeight: 600, color: B_INDIGO, background: "#eef0ff", padding: "3px 10px", borderRadius: 4 }}>{e.status}</span>
                 </div>
@@ -195,9 +226,9 @@ export default function MediaView() {
             <h2 style={{ color: B_INDIGO, fontSize: 22, fontWeight: 700, marginBottom: 20 }}>Past</h2>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
               {PAST_EVENTS.map((e, i) => (
-                <div key={i} style={{ border: "1px solid #e8e8f0", borderRadius: 14, padding: 20 }}>
+                <div key={i} style={{ border: "1px solid #e8e8f0", borderRadius: 14, padding: 20, transition: "transform 0.2s, box-shadow 0.2s" }} {...cardHover}>
                   <span style={{ display: "inline-block", background: "#e2e8f0", color: "#475569", fontSize: 12, fontWeight: 700, padding: "4px 12px", borderRadius: 4, marginBottom: 12 }}>{e.date}</span>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: "#0D1B3E", marginBottom: 4 }}>{e.title}</div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 4 }}>{e.title}</div>
                   <div style={{ fontSize: 13, color: "#64748B" }}>{e.location}</div>
                   <span style={{ display: "inline-block", marginTop: 10, fontSize: 11, fontWeight: 600, color: "#64748B", background: "#f5f5fa", padding: "3px 10px", borderRadius: 4 }}>Past</span>
                 </div>

@@ -1,7 +1,20 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, Users, Lightbulb, Target, Heart, BookOpen } from "lucide-react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
+import { SectionDivider } from "@/components/shared/HomeSections";
 import Footer from "@/components/layout/Footer";
+
+const DIAG_TEXTURE = {
+  position: "absolute" as const, inset: 0,
+  backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
+  backgroundSize: "22px 22px",
+  pointerEvents: "none" as const,
+};
+
+const cardHover = {
+  onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)"; },
+  onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; },
+};
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 const ACCENT_NAVY = "#0D1B3E";
@@ -271,19 +284,25 @@ export default function AboutView() {
           </div>
           <div style={{
             background: ACCENT_NAVY, borderRadius: 16, padding: 28,
+            position: "relative", overflow: "hidden",
           }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", margin: "0 0 12px" }}>
-              by Tata Sustainability Group
-            </p>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", lineHeight: 1.75, margin: "0 0 12px" }}>
-              The Tata Sustainability Group (TSG) guides Tata companies on sustainability and social responsibility, embedding the ethos of giving into everyday business.
-            </p>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", lineHeight: 1.75, margin: 0 }}>
-              TSG conceptualised TataEngage as the unified digital vehicle for volunteering — connecting employees, NGOs, and communities on a single platform.
-            </p>
+            <div style={DIAG_TEXTURE} />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", margin: "0 0 12px" }}>
+                by Tata Sustainability Group
+              </p>
+              <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", lineHeight: 1.75, margin: "0 0 12px" }}>
+                The Tata Sustainability Group (TSG) guides Tata companies on sustainability and social responsibility, embedding the ethos of giving into everyday business.
+              </p>
+              <p style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", lineHeight: 1.75, margin: 0 }}>
+                TSG conceptualised TataEngage as the unified digital vehicle for volunteering — connecting employees, NGOs, and communities on a single platform.
+              </p>
+            </div>
           </div>
         </div>
       </section>
+
+      <SectionDivider />
 
       {/* ════════════════════════════════════════
           WHAT WE DO
@@ -301,7 +320,8 @@ export default function AboutView() {
                 border: "1px solid #e8e8f0",
                 borderLeft: `4px solid ${f.colour}`,
                 display: "flex", gap: 16, alignItems: "flex-start",
-              }}>
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }} {...cardHover}>
                 <div style={{
                   width: 40, height: 40, borderRadius: 10, flexShrink: 0,
                   background: `${f.colour}14`,
@@ -344,10 +364,13 @@ export default function AboutView() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ════════════════════════════════════════
           IMPACT — dark section
       ════════════════════════════════════════ */}
-      <section id="about-impact" style={{ background: ACCENT_NAVY, padding: "72px 40px" }}>
+      <section id="about-impact" style={{ background: ACCENT_NAVY, padding: "72px 40px", position: "relative", overflow: "hidden" }}>
+        <div style={DIAG_TEXTURE} />
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", margin: "0 0 10px" }}>
             Impact & Reach
@@ -399,6 +422,8 @@ export default function AboutView() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ════════════════════════════════════════
           PROGRAMMES
       ════════════════════════════════════════ */}
@@ -412,7 +437,8 @@ export default function AboutView() {
             {PROGRAMMES.map((pr) => (
               <div key={pr.name} style={{
                 border: "1px solid #e8e8f0", borderRadius: 16, overflow: "hidden",
-              }}>
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }} {...cardHover}>
                 <div style={{ background: pr.pastel, padding: "20px 24px 16px" }}>
                   <div style={{
                     fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
@@ -469,6 +495,8 @@ export default function AboutView() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ════════════════════════════════════════
           TEAM
       ════════════════════════════════════════ */}
@@ -483,7 +511,8 @@ export default function AboutView() {
               <div key={t.name} style={{
                 background: "#fff", border: "1px solid #e8e8f0",
                 borderRadius: 16, padding: 28, textAlign: "center",
-              }}>
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }} {...cardHover}>
                 {/* Avatar with initials */}
                 <div style={{
                   width: 56, height: 56, borderRadius: "50%",
