@@ -1,7 +1,7 @@
 import { ROHAN_DESAI } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import { useAuth } from "@/context/AuthContext";
+
 import RoleToggle from "@/components/shared/RoleToggle";
 
 import { ArrowRight } from "lucide-react";
