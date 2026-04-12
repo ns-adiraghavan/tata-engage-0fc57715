@@ -192,7 +192,7 @@ function GhostBtn({ children, onClick, color = B_INDIGO }: { children: React.Rea
 export default function SPOCDashboardView() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { triggerToast } = useAppContext();
+  const { triggerToast, setShowOrientationModal } = useAppContext();
 
   const isRegionalSPOC = user?.role === "regional_spoc";
   const spoc    = isRegionalSPOC ? ANJALI_GUPTA_REGIONAL : ROHAN_DESAI;
@@ -239,12 +239,34 @@ export default function SPOCDashboardView() {
   const [histTab, setHistTab] = useState("applications");
 
   // Modals
-  type ModalType = null | "createEvent" | "vibeSubmit" | "volunteerProfile" | "rejectReason";
+  type ModalType = null | "createEvent" | "vibeSubmit" | "volunteerProfile" | "rejectReason" | "projectUpdate" | "feedback" | "applicationDetail";
   const [modal,         setModal]         = useState<ModalType>(null);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [selectedVol,   setSelectedVol]   = useState<any>(null);
   const [rejectTarget,  setRejectTarget]  = useState<any>(null);
   const [rejectReason,  setRejectReason]  = useState("");
+
+  // Project update form
+  const [updateText, setUpdateText] = useState("");
+  const [updateSubmitted, setUpdateSubmitted] = useState(false);
+
+  // Feedback form
+  const [fbCompleted, setFbCompleted] = useState<"" | "yes" | "no">("");
+  const [fbMonths, setFbMonths] = useState("");
+  const [fbHoursWeek, setFbHoursWeek] = useState("");
+  const [fbSupportRatings, setFbSupportRatings] = useState([0, 0, 0]);
+  const [fbAttrRatings, setFbAttrRatings] = useState([0, 0, 0, 0, 0]);
+  const [fbAddress, setFbAddress] = useState("");
+  const [fbNps, setFbNps] = useState(0);
+  const [fbNpsHov, setFbNpsHov] = useState(0);
+  const [fbSuggestions, setFbSuggestions] = useState("");
+  const [fbDropoutReason, setFbDropoutReason] = useState("");
+  const [fbSubmitted, setFbSubmitted] = useState(false);
+  const [fbSupportHov, setFbSupportHov] = useState([0, 0, 0]);
+  const [fbAttrHov, setFbAttrHov] = useState([0, 0, 0, 0, 0]);
+
+  // Application detail
+  const [drawerApp, setDrawerApp] = useState<any>(null);
 
   // Create event form
   const [newEvent, setNewEvent] = useState({ title: "", type: "Community Service", date: "", time: "", venue: "", mode: "In-Person", capacity: "", hours: "", openToAll: false });
