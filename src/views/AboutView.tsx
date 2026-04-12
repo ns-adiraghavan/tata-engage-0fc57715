@@ -364,10 +364,13 @@ export default function AboutView() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ════════════════════════════════════════
           IMPACT — dark section
       ════════════════════════════════════════ */}
-      <section id="about-impact" style={{ background: ACCENT_NAVY, padding: "72px 40px" }}>
+      <section id="about-impact" style={{ background: ACCENT_NAVY, padding: "72px 40px", position: "relative", overflow: "hidden" }}>
+        <div style={DIAG_TEXTURE} />
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", margin: "0 0 10px" }}>
             Impact & Reach
