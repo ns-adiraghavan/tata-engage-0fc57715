@@ -210,6 +210,7 @@ export function NumbersSection() {
   const [factIdx, setFactIdx]       = useState(0);
   const [factFading, setFactFading] = useState(false);
   const [socialIdx, setSocialIdx]   = useState(0);
+  const [shimmer, setShimmer]       = useState(false);
 
   useEffect(() => {
     const t = setInterval(() => {
