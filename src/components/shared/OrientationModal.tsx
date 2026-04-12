@@ -42,8 +42,8 @@ const OrientationModal = () => {
         <div className="p-10 md:p-16">
           <div className="flex justify-between items-start mb-12">
             <div>
-              <h2 className="text-3xl font-bold text-tata-blue mb-2">SPOC Orientation</h2>
-              <p className="text-slate-500">Master the platform to effectively manage your company's volunteering impact.</p>
+              <h2 className="text-3xl font-bold text-tata-blue mb-2">{isSPOC ? "SPOC Orientation" : "Volunteer E-Module"}</h2>
+              <p className="text-slate-500">{isSPOC ? "Master the platform to effectively manage your company's volunteering impact." : "Complete your orientation to unlock your project certificate and access NGO contact details."}</p>
             </div>
             <button onClick={() => setShowOrientationModal(false)} className="p-3 hover:bg-slate-100 rounded-full transition-colors cursor-pointer">
               <X size={24} />
@@ -72,8 +72,8 @@ const OrientationModal = () => {
                 40%
               </div>
               <div>
-                <h4 className="font-bold text-tata-blue">Next: ProEngage Monitoring</h4>
-                <p className="text-xs text-slate-500">Learn how to track and approve ProEngage applications for your company.</p>
+                <h4 className="font-bold text-tata-blue">{isSPOC ? "Next: ProEngage Monitoring" : "Next: Mid-Project Check-in"}</h4>
+                <p className="text-xs text-slate-500">{isSPOC ? "Learn how to track and approve ProEngage applications." : "Complete the mid-project module to stay on track with your NGO."}</p>
               </div>
             </div>
             <button className="btn-black py-4 px-10 whitespace-nowrap cursor-pointer">Resume Orientation</button>
