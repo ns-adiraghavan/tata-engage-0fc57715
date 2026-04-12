@@ -4,6 +4,14 @@ import { Info, Clock } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import ConsentModal from "@/components/shared/ConsentModal";
+import { ACCENT_NAVY, B_YELLOW, B_INDIGO } from "@/data/homeSharedData";
+
+const LEFT_TEXTURE = {
+  backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 24px)`,
+  backgroundSize: "24px 24px",
+};
+
+const STEPPER = ["Your Details", "Skills & Interests", "Verify"];
 
 const RegisterFormView = () => {
   const { selectedRole, formData, setFormData, handleConsentAccept, triggerToast } = useAppContext();
@@ -33,10 +41,16 @@ const RegisterFormView = () => {
     handleConsentAccept();
   };
 
+  const roleLabel = selectedRole === "tata_employee" ? "Tata Employee"
+    : selectedRole === "retired_employee" ? "Retired Employee"
+    : selectedRole === "ngo" ? "Partner Organisation"
+    : selectedRole === "family_member" ? "Family Member"
+    : selectedRole?.replace("-", " ");
+
   if (ngoSubmitted) {
     return (
-      <div className="min-h-screen pt-32 pb-20 px-6 md:px-12 bg-white">
-        <div className="max-w-lg mx-auto text-center">
+      <div className="min-h-screen flex items-center justify-center bg-white px-6">
+        <div className="max-w-lg text-center">
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
             <div className="w-20 h-20 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-8">
               <Clock size={40} />
@@ -115,10 +129,10 @@ const RegisterFormView = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="form-label">Email Address*</label>
-                <input 
-                  type="email" 
-                  required 
-                  placeholder="Enter work or personal email" 
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter work or personal email"
                   className="form-input"
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -165,10 +179,10 @@ const RegisterFormView = () => {
       case "retired_employee":
         return (
           <>
-            <div className="mb-6 p-5 bg-tata-purple/5 border border-tata-purple/15 rounded-2xl flex items-start gap-4">
-              <Info size={20} className="text-tata-purple mt-0.5 shrink-0" />
+            <div className="mb-6 p-5 border rounded-2xl flex items-start gap-4" style={{ backgroundColor: `${B_INDIGO}08`, borderColor: `${B_INDIGO}15` }}>
+              <Info size={20} className="mt-0.5 shrink-0" style={{ color: B_INDIGO }} />
               <div>
-                <p className="text-sm text-tata-purple font-semibold mb-1">Retired Employee Registration</p>
+                <p className="text-sm font-semibold mb-1" style={{ color: B_INDIGO }}>Retired Employee Registration</p>
                 <p className="text-xs text-zinc-600 leading-relaxed">
                   Welcome back to the Tata family! As a retiree, you'll need to provide a personal email and the email of a SPOC from your last Tata company who can confirm your service history.
                 </p>
@@ -206,10 +220,10 @@ const RegisterFormView = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="form-label">Personal Email*</label>
-                <input 
-                  type="email" 
-                  required 
-                  placeholder="Enter personal email" 
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter personal email"
                   className="form-input"
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
@@ -355,45 +369,82 @@ const RegisterFormView = () => {
     }
   };
 
-  const roleLabel = selectedRole === "tata_employee" ? "Tata Employee" 
-    : selectedRole === "retired_employee" ? "Retired Employee"
-    : selectedRole === "ngo" ? "Partner Organisation" 
-    : selectedRole === "family_member" ? "Family Member"
-    : selectedRole?.replace("-", " ");
-
   return (
-    <div className="min-h-screen pt-32 pb-20 px-6 md:px-12 bg-white">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h2 className="text-4xl font-bold text-zinc-900 mb-2">Create Your Account</h2>
-            <p className="text-zinc-500 text-lg">Join our volunteering platform</p>
-          </motion.div>
+    <div className="flex min-h-screen">
+      {/* ── Left panel ── */}
+      <div
+        className="hidden md:flex w-1/2 flex-col justify-between relative"
+        style={{ backgroundColor: ACCENT_NAVY, padding: "60px 48px", ...LEFT_TEXTURE }}
+      >
+        <div>
+          <button
+            onClick={() => navigate("register-role")}
+            className="text-xs font-medium cursor-pointer hover:opacity-80 transition-opacity"
+            style={{ color: "rgba(255,255,255,0.4)" }}
+          >
+            ← Back to Role Selection
+          </button>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white border border-zinc-100 rounded-3xl p-8 md:p-12 shadow-sm"
-        >
+        <div className="flex-1 flex flex-col justify-center">
+          <p style={{ fontSize: 28, fontWeight: 900, color: "white", marginBottom: 16 }}>
+            You're almost there.
+          </p>
+          {roleLabel && (
+            <span
+              className="inline-block self-start px-4 py-1.5 rounded-full mb-10"
+              style={{ backgroundColor: B_YELLOW, color: "#111", fontSize: 12, textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.08em" }}
+            >
+              {roleLabel}
+            </span>
+          )}
+
+          {/* Stepper */}
+          <div className="flex items-center gap-0">
+            {STEPPER.map((label, i) => (
+              <div key={label} className="flex items-center">
+                <div className="flex flex-col items-center">
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{
+                      backgroundColor: i === 0 ? B_YELLOW : "rgba(255,255,255,0.2)",
+                      border: i === 0 ? "none" : "none",
+                    }}
+                  />
+                  <span className="mt-2" style={{ fontSize: 10, color: i === 0 ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.35)", whiteSpace: "nowrap" }}>
+                    {label}
+                  </span>
+                </div>
+                {i < STEPPER.length - 1 && (
+                  <div className="mx-3" style={{ width: 40, height: 1, backgroundColor: "rgba(255,255,255,0.1)", marginBottom: 18 }} />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Right panel ── */}
+      <div className="w-full md:w-1/2 bg-white overflow-y-auto" style={{ padding: "60px 48px" }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-10">
             <h3 className="text-xl font-bold text-zinc-900 mb-2">Register as {roleLabel}</h3>
-            <div className="h-1 w-12 bg-tata-purple rounded-full" />
+            <div className="h-1 w-12 rounded-full" style={{ backgroundColor: B_INDIGO }} />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {renderFields()}
 
             <div className="pt-8 flex flex-col sm:flex-row gap-4">
-              <button 
-                type="button" 
-                onClick={() => navigate("register-role")} 
+              <button
+                type="button"
+                onClick={() => navigate("register-role")}
                 className="flex-1 btn-outline cursor-pointer"
               >
                 Back
               </button>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="flex-1 btn-black cursor-pointer"
               >
                 Create Account
