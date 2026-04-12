@@ -24,8 +24,8 @@ const SPOCHubView = () => {
   const spoc = ROHAN_DESAI;
   const navigate = useAppNavigate();
   const { triggerToast } = useAppContext();
-  const { user } = useAuth();
-  
+
+
 
   return (
     <div className="pt-20 min-h-screen bg-white pb-12">
