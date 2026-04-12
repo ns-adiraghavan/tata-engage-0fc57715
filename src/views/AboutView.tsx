@@ -513,7 +513,6 @@ export default function AboutView() {
                 borderRadius: 16, padding: 28, textAlign: "center",
                 transition: "transform 0.2s, box-shadow 0.2s",
               }} {...cardHover}>
-              }}>
                 {/* Avatar with initials */}
                 <div style={{
                   width: 56, height: 56, borderRadius: "50%",
