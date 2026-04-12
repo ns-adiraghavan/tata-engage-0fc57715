@@ -140,7 +140,6 @@ export function ProgrammeSpotlight() {
 
 // ── Journey section ───────────────────────────────────────────────────────────
 export function JourneySection() {
-  const { triggerToast } = useAppContext();
   const navigate = useAppNavigate();
 
   return (
@@ -148,50 +147,75 @@ export function JourneySection() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-10">
           <p className="text-xs font-extrabold tracking-widest uppercase text-slate-400 mb-2">Our Journey</p>
-          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Two decades of giving back</h2>
+          <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">A decade of giving back</h2>
         </div>
-        <div className="relative mt-10 mb-6">
-          {/* Central spine line */}
-          <div className="absolute left-0 right-0 hidden lg:block"
-            style={{ top: "50%", height: 2, background: `linear-gradient(to right, ${B_INDIGO}, ${B_TEAL}, ${B_YELLOW})`, opacity: 0.25 }} />
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0 relative">
+        {/* Desktop horizontal alternating timeline */}
+        <div className="hidden lg:block">
+          <div className="relative" style={{ height: 280 }}>
+            {/* Spine line at vertical center */}
+            <div className="absolute left-0 right-0" style={{ top: 140, height: 2, background: `linear-gradient(to right, ${B_INDIGO}, ${B_TEAL}, ${B_YELLOW})`, opacity: 0.3 }} />
+
             {JOURNEY_MILESTONES.map((m, i) => {
               const above = i % 2 === 0;
-              return (
-                <div key={m.year}
-                  className="flex flex-col items-center relative group cursor-default"
-                  style={{ paddingTop: above ? 0 : 72, paddingBottom: above ? 72 : 0 }}>
-                  
-                  {above && (
-                    <div className="mb-3 text-center">
-                      <div className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: m.colour }}>{m.year}</div>
-                      <div className="text-xs font-bold text-slate-800 leading-snug">{m.title}</div>
-                      <div className="text-xs text-slate-400 leading-snug mt-0.5">{m.desc}</div>
-                    </div>
-                  )}
+              const leftPct = `${(i / (JOURNEY_MILESTONES.length - 1)) * 100}%`;
 
-                  <div className="relative z-10 flex flex-col items-center">
-                    {above && <div style={{ width: 1, height: 24, background: m.colour, opacity: 0.4 }} />}
-                    <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
-                      style={{ backgroundColor: m.colour, borderColor: m.colour }}>
-                      <div className="w-2 h-2 rounded-full bg-white" />
+              return (
+                <div key={`${m.year}-${i}`} className="absolute" style={{ left: leftPct, transform: "translateX(-50%)", top: 0, bottom: 0, width: 120 }}>
+                  {/* Dot on spine */}
+                  <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 134 }}>
+                    <div className="w-3 h-3 rounded-full flex items-center justify-center" style={{ backgroundColor: m.colour }}>
+                      <div className="w-1 h-1 rounded-full bg-white" />
                     </div>
-                    {!above && <div style={{ width: 1, height: 24, background: m.colour, opacity: 0.4 }} />}
                   </div>
 
-                  {!above && (
-                    <div className="mt-3 text-center">
-                      <div className="text-xs font-black tracking-widest uppercase mb-1" style={{ color: m.colour }}>{m.year}</div>
-                      <div className="text-xs font-bold text-slate-800 leading-snug">{m.title}</div>
-                      <div className="text-xs text-slate-400 leading-snug mt-0.5">{m.desc}</div>
-                    </div>
+                  {above ? (
+                    <>
+                      {/* Card above */}
+                      <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ bottom: 156, width: 120 }}>
+                        <div className="flex justify-center mb-2">
+                          <img src={m.photo} alt={m.title} className="rounded-full object-cover" style={{ width: 80, height: 80, border: `2px solid ${m.colour}` }} referrerPolicy="no-referrer" />
+                        </div>
+                        <div className="font-extrabold tracking-widest uppercase mb-0.5" style={{ color: m.colour, fontSize: 11 }}>{m.year}</div>
+                        <div className="font-bold text-slate-900 leading-snug" style={{ fontSize: 13 }}>{m.title}</div>
+                        <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 11 }}>{m.desc}</div>
+                      </div>
+                      {/* Connector line down to dot */}
+                      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 124, width: 1, height: 10, background: m.colour, opacity: 0.35 }} />
+                    </>
+                  ) : (
+                    <>
+                      {/* Connector line up from dot */}
+                      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 147, width: 1, height: 10, background: m.colour, opacity: 0.35 }} />
+                      {/* Card below */}
+                      <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ top: 160, width: 120 }}>
+                        <div className="font-extrabold tracking-widest uppercase mb-0.5" style={{ color: m.colour, fontSize: 11 }}>{m.year}</div>
+                        <div className="font-bold text-slate-900 leading-snug" style={{ fontSize: 13 }}>{m.title}</div>
+                        <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 11 }}>{m.desc}</div>
+                        <div className="flex justify-center mt-2">
+                          <img src={m.photo} alt={m.title} className="rounded-full object-cover" style={{ width: 80, height: 80, border: `2px solid ${m.colour}` }} referrerPolicy="no-referrer" />
+                        </div>
+                      </div>
+                    </>
                   )}
                 </div>
               );
             })}
           </div>
         </div>
+
+        {/* Mobile fallback: vertical list */}
+        <div className="lg:hidden grid grid-cols-2 md:grid-cols-3 gap-6">
+          {JOURNEY_MILESTONES.map((m, i) => (
+            <div key={`${m.year}-${i}`} className="flex flex-col items-center text-center">
+              <img src={m.photo} alt={m.title} className="rounded-full object-cover mb-2" style={{ width: 64, height: 64, border: `2px solid ${m.colour}` }} referrerPolicy="no-referrer" />
+              <div className="font-extrabold tracking-widest uppercase mb-0.5" style={{ color: m.colour, fontSize: 11 }}>{m.year}</div>
+              <div className="font-bold text-slate-900 leading-snug" style={{ fontSize: 13 }}>{m.title}</div>
+              <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 11 }}>{m.desc}</div>
+            </div>
+          ))}
+        </div>
+
         <div className="mt-10 flex justify-center">
           <button onClick={() => navigate("journey")}
             className="inline-flex items-center gap-2 text-sm font-bold hover:underline cursor-pointer"
