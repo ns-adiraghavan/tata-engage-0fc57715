@@ -84,21 +84,6 @@ const SPOCHubView = () => {
 
       <SectionDivider />
 
-      {/* Stats strip */}
-      <div className="bg-white border-b border-slate-100 py-5">
-        <div className="max-w-7xl mx-auto px-12 flex items-center justify-center gap-12 md:gap-20">
-          {[
-            { num: "18", label: "Events Coordinated" },
-            { num: "2,340", label: "Volunteers Mobilised" },
-            { num: "4", label: "Active Editions" },
-          ].map((s, i) => (
-            <div key={i} className="text-center">
-              <div className="text-2xl font-black" style={{ color: B_INDIGO }}>{s.num}</div>
-              <div className="text-xs uppercase tracking-widest text-slate-400 mt-0.5">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
 
       <ProgrammeSpotlight />
 
