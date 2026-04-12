@@ -197,7 +197,11 @@ function MilestoneCard({ m, index }: { m: typeof MILESTONES[0]; index: number })
         border: "1px solid #e8e8f0",
         borderRadius: 16, overflow: "hidden",
         boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
-      }}>
+        transition: "transform 0.2s, box-shadow 0.2s",
+      }}
+        onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 16px rgba(0,0,0,0.05)"; }}
+      >
         {/* Photo strip */}
         <div style={{ position: "relative", height: 180, overflow: "hidden" }}>
           <img
