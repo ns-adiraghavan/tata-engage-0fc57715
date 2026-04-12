@@ -27,6 +27,14 @@ const VIEW_TO_PATH: Record<string, string> = {
   "dr-confirmation": "/disaster-response/confirmation",
   "spoc-dashboard": "/spoc/dashboard",
   "admin-dashboard": "/admin/dashboard",
+  "about": "/about",
+  "about-tvw": "/about/tvw",
+  "about-proengage": "/about/proengage",
+  "partner": "/partner",
+  "media": "/media",
+  "contact": "/contact",
+  "faq": "/faq",
+  "policy": "/policy",
 };
 
 export const useAppNavigate = () => {
