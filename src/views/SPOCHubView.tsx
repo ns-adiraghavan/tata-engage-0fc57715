@@ -55,6 +55,8 @@ const SPOCHubView = () => {
                 Welcome back, <span className="text-white font-bold">{spoc.firstName}!</span>
               </p>
               <p className="text-white/30 text-xs mt-0.5 font-medium">{spoc.company} · Corporate SPOC</p>
+            </div>
+
             {/* Centre — quote */}
             <div className="max-w-lg">
               <svg width="24" height="20" viewBox="0 0 28 22" fill="none" className="mb-3 opacity-25">
@@ -70,7 +72,7 @@ const SPOCHubView = () => {
             <div className="flex justify-end">
               <button
                 onClick={() => navigate("spoc-dashboard")}
-                className="flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-110 transition-all cursor-pointer shadow-lg"
+                className="flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-110 hover:ring-2 hover:ring-white/20 hover:ring-offset-2 hover:ring-offset-transparent transition-all cursor-pointer shadow-lg"
                 style={{ backgroundColor: B_INDIGO }}
               >
                 My Space <ArrowRight size={15} />
@@ -81,6 +83,22 @@ const SPOCHubView = () => {
       </div>
 
       <SectionDivider />
+
+      {/* Stats strip */}
+      <div className="bg-white border-b border-slate-100 py-5">
+        <div className="max-w-7xl mx-auto px-12 flex items-center justify-center gap-12 md:gap-20">
+          {[
+            { num: "18", label: "Events Coordinated" },
+            { num: "2,340", label: "Volunteers Mobilised" },
+            { num: "4", label: "Active Editions" },
+          ].map((s, i) => (
+            <div key={i} className="text-center">
+              <div className="text-2xl font-black" style={{ color: B_INDIGO }}>{s.num}</div>
+              <div className="text-xs uppercase tracking-widest text-slate-400 mt-0.5">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <ProgrammeSpotlight />
 
