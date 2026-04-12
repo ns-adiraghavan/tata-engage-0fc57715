@@ -195,6 +195,18 @@ const HomeView = () => {
             style={{ top: (d.swish as any).top, bottom: (d.swish as any).bottom, right: d.swish.right, width: d.swish.size, color: slide.accent, opacity: d.swish.opacity }} />
         </div>
 
+        {/* Floating ink-dot particles */}
+        <div className="absolute inset-0 pointer-events-none z-10">
+          {HERO_PARTICLES.map((p, i) => (
+            <div key={i} style={{
+              position: "absolute", top: p.top, left: p.left,
+              width: p.size, height: p.size, borderRadius: "50%",
+              background: "#fff", opacity: p.opacity,
+              animation: `te-float ${p.dur} ease-in-out ${p.delay} infinite`,
+            }} />
+          ))}
+        </div>
+
         <div className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 w-full py-12">
           <div className="max-w-[480px]">
             <span className="inline-flex items-center text-xs font-bold px-3 py-1.5 rounded-full mb-5 tracking-wide text-white"
