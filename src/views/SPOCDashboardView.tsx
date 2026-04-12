@@ -767,10 +767,10 @@ export default function SPOCDashboardView() {
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                 {[
-                  { label: "Post Project Update", icon: "📝", fn: () => triggerToast("Opening project update form…") },
-                  { label: "Access E-Module",     icon: "📖", fn: () => triggerToast("Opening orientation module…") },
-                  { label: "Submit Feedback",     icon: "⭐", fn: () => triggerToast("Opening feedback form…") },
-                  { label: "Download Certificate",icon: "🏅", fn: () => triggerToast("Certificate unlocks after both parties submit feedback.") },
+                 { label: "Post Project Update", icon: "📝", fn: () => { setUpdateText(""); setUpdateSubmitted(false); setModal("projectUpdate"); } },
+                 { label: "Access E-Module",     icon: "📖", fn: () => setShowOrientationModal(true) },
+                 { label: "Submit Feedback",     icon: "⭐", fn: () => { setFbCompleted(""); setFbMonths(""); setFbHoursWeek(""); setFbSupportRatings([0,0,0]); setFbAttrRatings([0,0,0,0,0]); setFbAddress(""); setFbNps(0); setFbSuggestions(""); setFbDropoutReason(""); setFbSubmitted(false); setFbSupportHov([0,0,0]); setFbAttrHov([0,0,0,0,0]); setModal("feedback"); } },
+                 { label: "Download Certificate",icon: "🏅", fn: () => triggerToast("Certificate unlocks after both parties submit feedback.") },
                 ].map(a => (
                   <div key={a.label} style={{ background: "#fafafa", border: "1px solid #e8e8f0", borderRadius: 12, padding: "14px" }}>
                     <div style={{ fontSize: 16, marginBottom: 6 }}>{a.icon}</div>
