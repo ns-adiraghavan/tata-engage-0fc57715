@@ -44,6 +44,11 @@ import AdminDashboardView from "@/views/AdminDashboardView";
 import VolunteerHubView from "@/views/VolunteerHubView";
 import NGOHubView from "@/views/NGOHubView";
 import SPOCHubView from "@/views/SPOCHubView";
+import AboutView from "@/views/AboutView";
+import AboutTVWView from "@/views/AboutTVWView";
+import AboutProEngageView from "@/views/AboutProEngageView";
+import PartnerWithUsView from "@/views/PartnerWithUsView";
+import MediaView from "@/views/MediaView";
 import NotFound from "@/pages/NotFound";
 
 export default function App() {
@@ -215,6 +220,11 @@ export default function App() {
                 <Route path="/hub" element={<ProtectedRoute><VolunteerHubView /></ProtectedRoute>} />
                 <Route path="/ngo/hub" element={<ProtectedRoute><NGOHubView /></ProtectedRoute>} />
                 <Route path="/spoc/hub" element={<ProtectedRoute><SPOCHubView /></ProtectedRoute>} />
+                <Route path="/about" element={<AboutView />} />
+                <Route path="/about/tvw" element={<AboutTVWView />} />
+                <Route path="/about/proengage" element={<AboutProEngageView />} />
+                <Route path="/partner" element={<PartnerWithUsView />} />
+                <Route path="/media" element={<MediaView />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </motion.div>

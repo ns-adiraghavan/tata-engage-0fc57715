@@ -5,6 +5,8 @@ export type View = "home" | "login" | "register-role" | "register-form" | "otp" 
   | "admin-dashboard"
   | "create-project" | "active-project-management" | "project-feedback"
   | "profile" | "tvw" | "proengage" | "my-applications" | "tvw-vibe"
-  | "disaster-response" | "dr-availability-form" | "dr-confirmation";
+  | "disaster-response" | "dr-availability-form" | "dr-confirmation"
+  | "about" | "about-tvw" | "about-proengage" | "partner" | "media"
+  | "contact" | "faq" | "policy";
 
 export type Role = "volunteer" | "ngo" | "tata_employee" | "family_member" | "corporate_spoc" | "platform_admin" | "retired_employee";
