@@ -1,9 +1,11 @@
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataEngageLogoNoBg from "@/assets/tata-engage-logo-nobg.png";
 import { useAppContext } from "@/context/AppContext";
+import { useAppNavigate } from "@/hooks/useAppNavigate";
 
 const Footer = () => {
   const { triggerToast } = useAppContext();
+  const navigate = useAppNavigate();
   return (
   <footer className="bg-zinc-950 text-white pt-16 pb-8 px-6 md:px-12">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
