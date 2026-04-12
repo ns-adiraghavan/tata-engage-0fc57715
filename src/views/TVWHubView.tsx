@@ -6,14 +6,8 @@ import { TVW_EVENTS } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 import { B_INDIGO, B_YELLOW, B_RED, B_TEAL, ACCENT_NAVY } from "@/data/homeSharedData";
 import { TickerBar } from "@/components/shared/HomeSections";
-import { useAppNavigate } from "@/hooks/useAppNavigate";
 
-const SECTIONS = [
-  { id: "tvw-hero", label: "Overview" },
-  { id: "tvw-events", label: "Events" },
-  { id: "tvw-vibe", label: "TVW Vibe" },
-  { id: "tvw-collateral", label: "Resources" },
-];
+
 
 const VIBE_STORIES = [
   { location: "Mumbai", caption: "Teaching digital literacy to senior citizens at a local community centre.", status: "Published" },
