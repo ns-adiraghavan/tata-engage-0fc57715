@@ -298,6 +298,8 @@ export default function AboutView() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ════════════════════════════════════════
           WHAT WE DO
       ════════════════════════════════════════ */}
@@ -314,7 +316,8 @@ export default function AboutView() {
                 border: "1px solid #e8e8f0",
                 borderLeft: `4px solid ${f.colour}`,
                 display: "flex", gap: 16, alignItems: "flex-start",
-              }}>
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }} {...cardHover}>
                 <div style={{
                   width: 40, height: 40, borderRadius: 10, flexShrink: 0,
                   background: `${f.colour}14`,
