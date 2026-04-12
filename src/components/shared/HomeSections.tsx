@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, RefreshCw, ExternalLink } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
@@ -63,7 +63,16 @@ export function ProgrammeSpotlight() {
             {/* Card: image left, text right */}
             <div
               onClick={() => { const r = PROGRAMME_ROUTE[prog.id]; if (r) navigate(r); }}
-              className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[420px] flex-1 cursor-pointer hover:shadow-md transition-shadow">
+              className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[420px] flex-1 cursor-pointer transition-all duration-300"
+              style={{ transition: "box-shadow 0.3s, transform 0.3s" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = `0 0 0 2px ${prog.accentText}, 0 8px 32px rgba(0,0,0,0.1)`;
+                e.currentTarget.style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.06)";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}>
               {/* Image panel with tint */}
               <div className="relative md:w-[45%] min-h-[200px] md:min-h-0 shrink-0 overflow-hidden">
                 <img src={prog.photo} alt={prog.title}
