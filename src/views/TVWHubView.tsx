@@ -1,23 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Search, Globe, Calendar, MapPin, Filter, CalendarDays, List, Check, Download, FileText, Camera, BookOpen } from "lucide-react";
+import { Users, Search, Globe, Calendar, MapPin, Filter, CalendarDays, List, Check, Download, FileText, Camera, BookOpen, ArrowRight } from "lucide-react";
 
 import { TVW_EVENTS } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
-import PageShell from "@/components/shared/PageShell";
 import { B_INDIGO, B_YELLOW, B_RED, B_TEAL, ACCENT_NAVY } from "@/data/homeSharedData";
+import { TickerBar } from "@/components/shared/HomeSections";
+import { useAppNavigate } from "@/hooks/useAppNavigate";
 
 const SECTIONS = [
   { id: "tvw-hero", label: "Overview" },
   { id: "tvw-events", label: "Events" },
   { id: "tvw-vibe", label: "TVW Vibe" },
   { id: "tvw-collateral", label: "Resources" },
-];
-
-const KEY_DATES = [
-  { date: "June 1, 2025", event: "TVW Kickoff" },
-  { date: "June 15, 2025", event: "Global Impact Day" },
-  { date: "June 30, 2025", event: "Closing Ceremony" },
 ];
 
 const VIBE_STORIES = [
@@ -32,8 +27,17 @@ const RESOURCES = [
   { title: "Photo Submission Guide", desc: "How to capture, tag and submit your volunteering photos.", icon: Camera, photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80" },
 ];
 
+const DIAG_TEXTURE: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  backgroundImage: "repeating-linear-gradient(45deg, rgba(245,166,35,0.06) 0px, rgba(245,166,35,0.06) 1px, transparent 1px, transparent 22px)",
+  backgroundSize: "22px 22px",
+  pointerEvents: "none",
+};
+
 const TVWHubView = () => {
   const { registeredEvents, setRegisteredEvents, triggerToast } = useAppContext();
+  const navigate = useAppNavigate();
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [filters, setFilters] = useState({ location: "All", theme: "All", mode: "All" });
   const [searchQuery, setSearchQuery] = useState("");
@@ -62,70 +66,62 @@ const TVWHubView = () => {
   });
 
   return (
-    <PageShell
-      accentColor={B_INDIGO}
-      sections={SECTIONS}
-      pageEyebrow="TVW 2025 · Bi-Annual Edition"
-      pageTitle="Tata Volunteering Week"
-      pageDesc="A global movement of Tata volunteers coming together to create impact."
-    >
-      {/* ═══ HERO ═══ */}
-      <section id="tvw-hero" className="relative overflow-hidden" style={{ minHeight: 480 }}>
-        <img
-          src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&q=80&w=2000"
-          className="absolute inset-0 w-full h-full object-cover"
-          alt="TVW Banner"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0" style={{ background: `linear-gradient(120deg, ${ACCENT_NAVY}ee 40%, ${B_INDIGO}aa 100%)` }} />
+    <div style={{ paddingTop: 80, paddingBottom: 48 }} className="min-h-screen bg-white">
+      {/* 2px accent line */}
+      <div style={{ background: B_YELLOW, height: 2, width: "100%" }} />
 
-        <div className="relative z-10 flex flex-col justify-between h-full px-8 md:px-16 py-12" style={{ minHeight: 480 }}>
+      {/* ═══ HERO ═══ */}
+      <section id="tvw-hero" className="relative overflow-hidden" style={{ minHeight: 420, backgroundColor: ACCENT_NAVY, padding: 64 }}>
+        <div style={DIAG_TEXTURE} />
+
+        <div className="relative z-10 flex flex-col justify-between h-full" style={{ minHeight: 292 }}>
           {/* Top */}
           <div>
-            <span
-              className="inline-flex items-center px-4 py-1.5 rounded-md text-white uppercase font-bold"
-              style={{ fontSize: 10, letterSpacing: "1.8px", backgroundColor: B_INDIGO }}
-            >
-              TVW 2025
-            </span>
-            <h2 className="text-4xl md:text-5xl font-black text-white mt-4 tracking-tight">Be The Change</h2>
-            <p className="text-white/70 max-w-xl text-lg mt-2">Join the global movement of Tata volunteers making an impact across the world.</p>
+            <p style={{ fontSize: 11, letterSpacing: "2px", color: "rgba(255,255,255,0.45)" }} className="uppercase font-semibold mb-4">
+              Tata Volunteering Week · Edition 2025
+            </p>
+            <h1 style={{ fontSize: 48, fontWeight: 900 }} className="text-white tracking-tight mb-3">
+              Make Every Hour Count
+            </h1>
+            <p style={{ color: "rgba(255,255,255,0.65)", fontWeight: 300 }} className="text-lg max-w-xl">
+              One week. Every Tata company. Thousands of acts of service.
+            </p>
           </div>
 
-          {/* Center — GCSO quote */}
-          <div className="max-w-2xl py-6">
-            <svg width="32" height="24" viewBox="0 0 32 24" fill="none" className="mb-2 opacity-40">
-              <path d="M0 24V14.4C0 6.4 4.8 1.6 14.4 0l1.6 3.2C10.4 4.8 8 8 8 12h6v12H0Zm18 0V14.4C18 6.4 22.8 1.6 32 0l1.6 3.2C28.4 4.8 26 8 26 12h6v12H18Z" fill="white" />
-            </svg>
-            <p className="text-white text-lg md:text-xl italic font-light leading-relaxed">
-              "Volunteering is at the heart of our culture. TVW is a time for us to celebrate our commitment to the community."
-            </p>
-            <div className="flex items-center gap-3 mt-4">
-              <div className="w-8 h-8 rounded-full bg-white/20" />
-              <div>
-                <div className="text-xs font-bold text-white">Siddharth Sharma</div>
-                <div className="text-xs text-white/50 uppercase">Group CEO, Tata Trusts</div>
-              </div>
+          {/* Key dates pills */}
+          <div className="flex flex-wrap gap-3 mt-10">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ background: "rgba(255,255,255,0.10)" }}>
+              <CalendarDays size={14} className="text-white/60" />
+              22 Sep — 4 Oct 2025
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ background: "rgba(255,255,255,0.10)" }}>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              Active Now
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white" style={{ background: "rgba(255,255,255,0.10)" }}>
+              <Users size={14} className="text-white/60" />
+              47 Events Registered
             </div>
           </div>
 
-          {/* Bottom — Key dates */}
-          <div className="flex flex-wrap gap-3">
-            {KEY_DATES.map((d, i) => (
-              <div key={i} className="flex items-center gap-3 px-5 py-3 rounded-xl" style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(4px)" }}>
-                <CalendarDays size={16} className="text-white/60" />
-                <div>
-                  <div className="text-[10px] font-bold text-white/60 uppercase tracking-widest">{d.date}</div>
-                  <div className="text-sm font-semibold text-white">{d.event}</div>
-                </div>
-              </div>
-            ))}
+          {/* Bottom-right CTA */}
+          <div className="flex justify-end mt-8">
+            <button
+              onClick={() => {
+                const el = document.getElementById("tvw-events");
+                el?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="flex items-center gap-2 text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-105 transition-all cursor-pointer shadow-lg"
+              style={{ backgroundColor: B_YELLOW, color: "#111" }}
+            >
+              Browse Events <ArrowRight size={15} />
+            </button>
           </div>
         </div>
       </section>
 
       {/* ═══ EVENTS ═══ */}
-      <section id="tvw-events" className="px-6 md:px-16 py-16 max-w-7xl mx-auto">
+      <section id="tvw-events" className="px-6 md:px-16 py-16 max-w-7xl mx-auto" style={{ paddingTop: 48 }}>
         <h2 className="text-3xl font-black tracking-tight mb-8" style={{ color: ACCENT_NAVY }}>Events</h2>
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
@@ -190,9 +186,7 @@ const TVWHubView = () => {
                   onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 1px 2px rgba(0,0,0,0.04)"; }}
                 >
-                  {/* Left accent bar */}
                   <div className="w-[3px] rounded-l-full flex-shrink-0" style={{ backgroundColor: B_INDIGO }} />
-
                   <div className="flex-1 p-8">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex items-center gap-2">
@@ -209,7 +203,6 @@ const TVWHubView = () => {
                     </div>
                     <h3 className="text-xl font-bold text-zinc-900 mb-2 group-hover:text-[#333399] transition-colors">{event.title}</h3>
                     <p className="text-sm text-slate-500 line-clamp-2 mb-6">{event.description}</p>
-
                     <div className="space-y-2 mb-6 text-sm text-slate-600">
                       <div className="flex items-center gap-3"><Calendar size={16} className="text-slate-400" /> {event.date}</div>
                       <div className="flex items-center gap-3"><MapPin size={16} className="text-slate-400" /> {event.location}</div>
@@ -222,7 +215,6 @@ const TVWHubView = () => {
                         )}
                       </div>
                     </div>
-
                     <button
                       disabled={event.capacity === "Full" || isRegistered}
                       onClick={() => handleRegisterClick(event)}
@@ -273,8 +265,9 @@ const TVWHubView = () => {
       </section>
 
       {/* ═══ VIBE ═══ */}
-      <section id="tvw-vibe" className="py-16 px-6 md:px-16" style={{ backgroundColor: ACCENT_NAVY }}>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <section id="tvw-vibe" className="relative overflow-hidden py-16 px-6 md:px-16" style={{ backgroundColor: ACCENT_NAVY }}>
+        <div style={DIAG_TEXTURE} />
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
             <h2 className="text-3xl font-black text-white tracking-tight mb-3">TVW Vibe · Live Stories</h2>
             <p className="text-white/60 mb-8">Share your volunteering moments with the Tata Engage community.</p>
@@ -335,6 +328,9 @@ const TVWHubView = () => {
         </div>
       </section>
 
+      {/* ═══ TICKER ═══ */}
+      <TickerBar fixed />
+
       {/* ═══ REGISTRATION MODAL ═══ */}
       <AnimatePresence>
         {isRegistering && selectedEvent && (
@@ -373,7 +369,7 @@ const TVWHubView = () => {
           </div>
         )}
       </AnimatePresence>
-    </PageShell>
+    </div>
   );
 };
 
