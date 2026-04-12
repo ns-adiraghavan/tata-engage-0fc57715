@@ -422,6 +422,8 @@ export default function AboutView() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ════════════════════════════════════════
           PROGRAMMES
       ════════════════════════════════════════ */}
@@ -435,7 +437,8 @@ export default function AboutView() {
             {PROGRAMMES.map((pr) => (
               <div key={pr.name} style={{
                 border: "1px solid #e8e8f0", borderRadius: 16, overflow: "hidden",
-              }}>
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }} {...cardHover}>
                 <div style={{ background: pr.pastel, padding: "20px 24px 16px" }}>
                   <div style={{
                     fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
