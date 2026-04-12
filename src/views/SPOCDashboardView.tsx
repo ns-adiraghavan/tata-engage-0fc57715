@@ -802,12 +802,16 @@ export default function SPOCDashboardView() {
         {histTab === "applications" && (
           <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden" }}>
             {volData.history.map((a: any, i: number) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "13px 16px", borderBottom: i < volData.history.length - 1 ? "1px solid #f0f0f8" : "none" }}>
+              <div key={i} onClick={() => { setDrawerApp(a); setModal("applicationDetail"); }}
+                style={{ display: "flex", alignItems: "center", gap: 14, padding: "13px 16px", borderBottom: i < volData.history.length - 1 ? "1px solid #f0f0f8" : "none", cursor: "pointer", transition: "background 0.15s" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#f8f8fc")}
+                onMouseLeave={e => (e.currentTarget.style.background = "")}>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{a.project}</div>
                   <div style={{ fontSize: 11, color: "#6b6b7a", marginTop: 2 }}>{a.ngo} · {a.year} · {a.hours}h</div>
                 </div>
                 <StatusBadge status="Completed" />
+                <span style={{ fontSize: 11, color: B_BLUE, fontWeight: 600 }}>View →</span>
               </div>
             ))}
           </div>
