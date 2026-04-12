@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { Users, Briefcase, Heart, ShieldCheck, Bell, ExternalLink, Activity, Download, Plus, X } from "lucide-react";
+import { Users, Briefcase, Heart, ShieldCheck, Bell, ExternalLink, Activity, Download, Plus, X, TrendingUp, TrendingDown } from "lucide-react";
 import type { View } from "@/types";
 import { MOCK_NGO_APPLICATIONS } from "@/constants";
 import { MOCK_PROJECT_SUBMISSIONS, MOCK_BULK_EMAILS, MOCK_TESTIMONIALS } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
+
+const activityRows = [
+  { metric: "ProEngage Applications (this week)", value: "147", delta: "+23 vs last week", up: true },
+  { metric: "New Volunteer Registrations", value: "38", delta: "+5 vs last week", up: true },
+  { metric: "NGO Projects Submitted", value: "12", delta: "-2 vs last week", up: false },
+  { metric: "Feedback Forms Submitted", value: "94", delta: "+18 vs last week", up: true },
+  { metric: "Certificates Issued", value: "71", delta: "Same as last week", up: true },
+];
 
 export const AdminCommandCentre = () => {
   const { setAdminActiveTab, auditLogs, triggerToast } = useAppContext();
@@ -18,9 +26,9 @@ export const AdminCommandCentre = () => {
   const [newReportName, setNewReportName] = useState("");
   const [newReportDesc, setNewReportDesc] = useState("");
   const stats = [
-    { label: "Total Registered Users", value: "12,540", icon: Users, color: "text-tata-blue", trend: "+12.5%", trendUp: true },
+    { label: "Total Registered Users", value: "12,540", icon: Users, color: "text-slate-600", trend: "+12.5%", trendUp: true },
     { label: "Active NGOs", value: "450", icon: Heart, color: "text-red-500", trend: "+3.2%", trendUp: true },
-    { label: "Open ProEngage Projects", value: "85", icon: Briefcase, color: "text-tata-cyan", trend: "-2.1%", trendUp: false },
+    { label: "Open ProEngage Projects", value: "85", icon: Briefcase, color: "text-slate-600", trend: "-2.1%", trendUp: false },
     { label: "Pending Admin Actions", value: (MOCK_NGO_APPLICATIONS.filter(n => n.status === "Pending" || n.status === "Flagged").length + MOCK_PROJECT_SUBMISSIONS.filter(p => p.status === "Under Review").length + MOCK_BULK_EMAILS.filter(e => e.status === "Awaiting approval").length + MOCK_TESTIMONIALS.filter(t => t.status === "Pending").length).toString(), icon: Bell, color: "text-red-600", badge: true, trend: "Requires Action", trendUp: false },
   ];
 
@@ -51,7 +59,7 @@ export const AdminCommandCentre = () => {
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">{stat.label}</div>
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-black text-slate-900 tracking-tight">{stat.value}</span>
-                {stat.badge && <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />}
+                {stat.badge && <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: "#E8401C" }} />}
               </div>
             </div>
           </div>
@@ -61,36 +69,40 @@ export const AdminCommandCentre = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Feed */}
         <div className="lg:col-span-2 space-y-6">
+          {/* Activity Table */}
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-            <div className="p-6 border-b border-slate-50 flex justify-between items-center">
+            <div className="p-6 border-b border-slate-50">
               <h3 className="font-semibold text-slate-900 uppercase tracking-widest text-xs">Platform Activity Overview</h3>
-              <div className="flex gap-2">
-                <button className="px-3 py-1 text-xs font-bold bg-slate-50 text-slate-600 rounded-lg hover:bg-slate-100 transition-colors">Daily</button>
-                <button className="px-3 py-1 text-xs font-bold bg-tata-blue text-white rounded-lg">Weekly</button>
-                <button className="px-3 py-1 text-xs font-bold bg-slate-50 text-slate-600 rounded-lg hover:bg-slate-100 transition-colors">Monthly</button>
-              </div>
             </div>
-            <div className="p-8 h-80 flex flex-col bg-slate-50/30">
-              <div className="w-full flex-1 flex items-end justify-around gap-4 px-4">
-                {[40, 70, 45, 90, 65, 85, 50].map((h, i) => (
-                  <div key={i} className="flex-1 flex items-end h-full">
-                    <div 
-                      className="w-full bg-tata-blue rounded-t-lg transition-all duration-1000 ease-out hover:bg-tata-cyan" 
-                      style={{ height: `${h}%` }}
-                    />
+            <div style={{ minHeight: 320 }}>
+              {activityRows.map((row, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between px-6"
+                  style={{ padding: "16px 24px", backgroundColor: i % 2 === 0 ? "#fff" : "#f8f9ff" }}
+                >
+                  <span style={{ fontSize: 13 }} className="text-slate-600 font-medium">{row.metric}</span>
+                  <div className="flex items-center gap-4">
+                    <span style={{ fontSize: 20 }} className="font-black text-slate-900">{row.value}</span>
+                    <span
+                      className="text-xs font-semibold px-2.5 py-1 rounded-full"
+                      style={{
+                        backgroundColor: row.up ? "#ECFDF5" : "#FEF2F2",
+                        color: row.up ? "#059669" : "#DC2626",
+                      }}
+                    >
+                      {row.delta}
+                    </span>
                   </div>
-                ))}
-              </div>
-              <div className="mt-4 w-full flex justify-around text-xs font-bold text-slate-400 uppercase tracking-widest">
-                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-              </div>
+                </div>
+              ))}
             </div>
           </div>
 
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-50 flex justify-between items-center">
               <h3 className="font-semibold text-slate-900 uppercase tracking-widest text-xs">Recent System Events</h3>
-              <button className="text-xs font-semibold text-tata-blue uppercase tracking-widest hover:underline">View All</button>
+              <button className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#333399" }}>View All</button>
             </div>
             <div className="divide-y divide-slate-50">
               {auditLogs.slice(0, 5).map((log) => (
@@ -119,16 +131,19 @@ export const AdminCommandCentre = () => {
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div className="p-6 border-b border-slate-50 flex items-center justify-between">
               <h3 className="font-semibold text-slate-900 uppercase tracking-widest text-xs">Pending Actions</h3>
-              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full uppercase tracking-widest">12 Alerts</span>
+              <span className="text-white text-xs font-semibold px-2 py-0.5 rounded-full uppercase tracking-widest" style={{ backgroundColor: "#E8401C" }}>12 Alerts</span>
             </div>
             <div className="p-4 space-y-3">
               {pendingActions.map((action) => (
                 <button 
                   key={action.id} 
                   onClick={() => setAdminActiveTab(action.type)}
-                  className="w-full text-left p-4 rounded-lg border border-slate-50 hover:border-tata-blue/20 hover:bg-slate-50/50 transition-all group relative overflow-hidden"
+                  className="w-full text-left p-4 rounded-lg border border-slate-50 hover:bg-slate-50/50 transition-all group relative overflow-hidden"
+                  style={{ borderColor: undefined }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(51,51,153,0.2)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = ""; }}
                 >
-                  <div className="absolute top-0 left-0 w-1 h-full bg-tata-blue opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-0 left-0 w-1 h-full opacity-0 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: "#333399" }} />
                   <div className="flex justify-between items-start mb-2">
                     <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded uppercase tracking-widest ${
                       action.priority === "High" ? "bg-red-100 text-red-600" : 
@@ -138,13 +153,13 @@ export const AdminCommandCentre = () => {
                     </span>
                     <span className="text-xs font-mono text-slate-400">{action.time}</span>
                   </div>
-                  <div className="text-xs font-bold text-slate-900 group-hover:text-tata-blue transition-colors">{action.title}</div>
+                  <div className="text-xs font-bold text-slate-900 transition-colors group-hover:text-[#333399]">{action.title}</div>
                   <div className="text-xs text-slate-400 mt-1 uppercase tracking-widest">{action.type}</div>
                 </button>
               ))}
             </div>
             <div className="p-4 border-t border-slate-50">
-              <button className="w-full py-3 text-xs font-semibold text-slate-400 uppercase tracking-widest hover:text-tata-blue transition-colors">
+              <button className="w-full py-3 text-xs font-semibold text-slate-400 uppercase tracking-widest transition-colors hover:text-[#333399]">
                 View All Actions
               </button>
             </div>
@@ -153,13 +168,13 @@ export const AdminCommandCentre = () => {
           <div className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm">
             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Admin Quick Links</h4>
             <div className="space-y-3">
-              <button className="w-full flex items-center justify-between text-xs font-bold text-slate-600 hover:text-tata-blue transition-colors group">
+              <button className="w-full flex items-center justify-between text-xs font-bold text-slate-600 transition-colors group hover:text-[#333399]">
                 Generate Edition Report <ExternalLink size={12} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="w-full flex items-center justify-between text-xs font-bold text-slate-600 hover:text-tata-blue transition-colors group">
+              <button className="w-full flex items-center justify-between text-xs font-bold text-slate-600 transition-colors group hover:text-[#333399]">
                 Bulk NGO Export <ExternalLink size={12} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="w-full flex items-center justify-between text-xs font-bold text-slate-600 hover:text-tata-blue transition-colors group">
+              <button className="w-full flex items-center justify-between text-xs font-bold text-slate-600 transition-colors group hover:text-[#333399]">
                 Platform Settings <ShieldCheck size={12} className="group-hover:rotate-12 transition-transform" />
               </button>
             </div>
@@ -173,7 +188,9 @@ export const AdminCommandCentre = () => {
             </div>
             <button
               onClick={() => triggerToast("Annual reporting portal link — to be configured by TSG.")}
-              className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-600 hover:bg-tata-blue hover:text-white hover:border-tata-blue transition-all cursor-pointer"
+              className="px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-600 transition-all cursor-pointer hover:text-white"
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#333399"; e.currentTarget.style.borderColor = "#333399"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ""; e.currentTarget.style.borderColor = ""; }}
             >
               Open →
             </button>
@@ -191,7 +208,7 @@ export const AdminCommandCentre = () => {
               <p className="text-[13px] text-muted-foreground mb-3">{report.description}</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-muted-foreground">Last generated: {report.lastGenerated}</span>
-                <button className="px-4 py-1.5 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 hover:border-tata-blue hover:text-tata-blue transition-colors cursor-pointer flex items-center gap-1.5">
+                <button className="px-4 py-1.5 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition-colors cursor-pointer flex items-center gap-1.5 hover:text-[#333399] hover:border-[#333399]">
                   <Download size={13} /> Generate &amp; download
                 </button>
               </div>
@@ -201,7 +218,7 @@ export const AdminCommandCentre = () => {
           {/* Add report type card */}
           <button
             onClick={() => setShowAddModal(true)}
-            className="border-2 border-dashed border-slate-200 rounded-2xl p-6 flex items-center justify-center gap-2 text-sm font-semibold text-slate-400 hover:border-tata-blue hover:text-tata-blue transition-colors cursor-pointer min-h-[140px]"
+            className="border-2 border-dashed border-slate-200 rounded-2xl p-6 flex items-center justify-center gap-2 text-sm font-semibold text-slate-400 transition-colors cursor-pointer min-h-[140px] hover:text-[#333399] hover:border-[#333399]"
           >
             <Plus size={16} /> Add report type
           </button>
@@ -225,7 +242,7 @@ export const AdminCommandCentre = () => {
                   value={newReportName}
                   onChange={(e) => setNewReportName(e.target.value)}
                   placeholder="e.g. Monthly impact summary"
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tata-blue/20"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#333399]/20"
                 />
               </div>
               <div>
@@ -235,7 +252,7 @@ export const AdminCommandCentre = () => {
                   value={newReportDesc}
                   onChange={(e) => setNewReportDesc(e.target.value)}
                   placeholder="One-line description of the report"
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tata-blue/20"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#333399]/20"
                 />
               </div>
             </div>
@@ -252,7 +269,8 @@ export const AdminCommandCentre = () => {
                 setNewReportDesc("");
                 setShowAddModal(false);
               }}
-              className="w-full py-3 bg-tata-blue text-white rounded-lg text-sm font-bold hover:bg-tata-blue/90 transition-colors cursor-pointer"
+              className="w-full py-3 text-white rounded-lg text-sm font-bold transition-colors cursor-pointer hover:opacity-90"
+              style={{ backgroundColor: "#333399" }}
             >
               Save
             </button>

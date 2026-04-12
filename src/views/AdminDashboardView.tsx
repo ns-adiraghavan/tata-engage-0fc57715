@@ -38,10 +38,10 @@ const AdminDashboardView = () => {
         {/* Logo / brand */}
         <div className="p-6 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-tata-blue rounded-xl flex items-center justify-center font-bold text-white text-sm">T</div>
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-white text-sm" style={{ backgroundColor: "#0D1B3E" }}>T</div>
             <div>
               <p className="font-bold text-slate-900 text-sm leading-none">TataEngage</p>
-              <p className="text-xs text-tata-blue font-semibold uppercase tracking-widest mt-0.5">Admin Portal</p>
+              <p className="text-xs font-semibold uppercase tracking-widest mt-0.5" style={{ color: "#333399" }}>Admin Portal</p>
             </div>
           </div>
         </div>
@@ -55,9 +55,10 @@ const AdminDashboardView = () => {
               onClick={() => setAdminActiveTab(item.id)}
               className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer mb-0.5 ${
                 adminActiveTab === item.id
-                  ? "bg-blue-50 text-tata-blue border-l-2 border-tata-blue"
+                  ? ""
                   : "text-slate-500 hover:bg-slate-50 hover:text-slate-900 border-l-2 border-transparent"
               }`}
+              style={adminActiveTab === item.id ? { backgroundColor: "#EEF0FF", color: "#333399", borderLeft: "3px solid #333399" } : undefined}
             >
               <item.icon size={16} className="flex-shrink-0" />
               <span className="truncate text-left">{item.id}</span>
@@ -68,7 +69,7 @@ const AdminDashboardView = () => {
         {/* Footer */}
         <div className="p-4 border-t border-slate-100">
           <div className="flex items-center gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-100 mb-3">
-            <div className="w-8 h-8 rounded-lg bg-tata-blue flex items-center justify-center font-bold text-white text-xs">VN</div>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-white text-xs" style={{ backgroundColor: "#333399" }}>VN</div>
             <div className="min-w-0">
               <p className="text-xs font-semibold text-slate-900 truncate">Vikram Nair</p>
               <p className="text-xs text-slate-400">TSG Admin</p>
@@ -82,12 +83,25 @@ const AdminDashboardView = () => {
 
       {/* Main Content */}
       <main className="flex-1 ml-64 min-h-screen flex flex-col">
+        {/* DR Emergency Banner */}
+        {isDRActive && (
+          <div style={{ backgroundColor: "#E8401C", padding: "10px 40px", display: "flex", alignItems: "center", gap: 12 }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: "#fff", display: "inline-block", animation: "te-ping 1s ease-in-out infinite" }} />
+            <span style={{ fontSize: 12, fontWeight: 700, color: "#fff", letterSpacing: "1px", textTransform: "uppercase" as const }}>
+              Disaster Response Active — volunteer alerts have been sent
+            </span>
+            <button onClick={() => setAdminActiveTab("Disaster Response")} style={{ marginLeft: "auto", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.8)", background: "none", border: "1px solid rgba(255,255,255,0.3)", borderRadius: 6, padding: "4px 12px", cursor: "pointer" }}>
+              Go to DR Panel →
+            </button>
+          </div>
+        )}
+
         {/* Top Bar */}
         <header className="h-20 bg-white border-b border-slate-100 flex items-center justify-between px-10 sticky top-0 z-40 shadow-sm">
           <div className="flex items-center gap-8">
             <h2 className="font-black text-slate-900 uppercase tracking-[0.15em] text-sm">{adminActiveTab}</h2>
-            <div className="hidden md:flex items-center bg-slate-50 border border-slate-100 rounded-2xl px-4 py-2 w-80 group focus-within:border-tata-blue/30 transition-all">
-              <Search size={16} className="text-slate-400 group-focus-within:text-tata-blue transition-colors" />
+            <div className="hidden md:flex items-center bg-slate-50 border border-slate-100 rounded-2xl px-4 py-2 w-80 group focus-within:border-[#333399]/30 transition-all">
+              <Search size={16} className="text-slate-400 group-focus-within:text-slate-600 transition-colors" />
               <input 
                 type="text" 
                 placeholder="Search projects, users, or logs..." 
@@ -98,12 +112,12 @@ const AdminDashboardView = () => {
           <div className="flex items-center gap-8">
             <div className="flex items-center gap-4">
               <div className="relative cursor-pointer p-2 hover:bg-slate-50 rounded-lg transition-colors group">
-                <Bell size={20} className="text-slate-400 group-hover:text-tata-blue transition-colors" />
-                <div className="absolute top-1 right-1 w-5 h-5 bg-red-600 text-white text-xs font-semibold rounded-full flex items-center justify-center border-2 border-white shadow-lg shadow-red-600/20">12</div>
+                <Bell size={20} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
+                <div className="absolute top-1 right-1 w-5 h-5 text-white text-xs font-semibold rounded-full flex items-center justify-center border-2 border-white shadow-lg" style={{ backgroundColor: "#E8401C" }}>12</div>
               </div>
               <div className="relative cursor-pointer p-2 hover:bg-slate-50 rounded-lg transition-colors group">
-                <Mail size={20} className="text-slate-400 group-hover:text-tata-blue transition-colors" />
-                <div className="absolute top-1 right-1 w-2 h-2 bg-tata-cyan rounded-full border-2 border-white shadow-lg shadow-tata-cyan/20" />
+                <Mail size={20} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
+                <div className="absolute top-1 right-1 w-2 h-2 rounded-full border-2 border-white shadow-lg" style={{ backgroundColor: "#F5A623" }} />
               </div>
             </div>
             <div className="h-10 w-px bg-slate-100" />
