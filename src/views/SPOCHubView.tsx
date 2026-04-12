@@ -23,7 +23,7 @@ const SPOCHubView = () => {
 
       {/* HERO */}
       <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden" style={{ minHeight: 560 }}>
+        <div className="relative rounded-2xl overflow-hidden" style={{ minHeight: 480 }}>
           <img
             src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1600"
             alt=""
@@ -31,41 +31,47 @@ const SPOCHubView = () => {
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0" style={{
-            background: "linear-gradient(135deg, rgba(10,12,45,0.94) 0%, rgba(10,12,45,0.74) 48%, rgba(10,12,45,0.38) 100%)"
+            background: "linear-gradient(120deg, rgba(10,12,45,0.88) 0%, rgba(10,12,45,0.72) 40%, rgba(10,12,45,0.35) 70%, rgba(10,12,45,0.15) 100%)"
+          }} />
+          <div className="absolute inset-0" style={{
+            background: "linear-gradient(to top, rgba(10,12,45,0.6) 0%, transparent 35%)"
           }} />
 
-          <div className="absolute top-6 left-8 z-10">
-            {showToggle && <RoleToggle activeView="spoc" className="mb-3" />}
-            <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/70 text-sm font-semibold px-3 py-1.5 rounded-full tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-tata-cyan inline-block" />
-              SPOC Hub · {spoc.company}
-            </span>
-            <p className="text-white/50 text-lg mt-2">
-              Welcome back, <span className="text-white font-semibold">{spoc.firstName}</span>
-            </p>
-            <p className="text-white/35 text-sm mt-0.5">{spoc.company} · Corporate SPOC</p>
-          </div>
+          <div className="relative z-10 flex flex-col justify-between px-8 md:px-12 py-8" style={{ minHeight: 480 }}>
+            {/* Top row */}
+            <div>
+              {showToggle && <RoleToggle activeView="spoc" className="mb-3" />}
+              <span className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-white/60 text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
+                SPOC Hub · {spoc.company}
+              </span>
+              <p className="text-white/55 mt-1 text-5xl font-sans">
+                Welcome back, <span className="text-white font-bold">{spoc.firstName}!</span>
+              </p>
+              <p className="text-white/30 text-xs mt-0.5 font-medium">{spoc.company} · Corporate SPOC</p>
+            </div>
 
-          <div className="relative z-10 flex flex-col items-start justify-center px-8 md:px-16" style={{ minHeight: 560 }}>
-            <div className="max-w-xl mt-16">
-              <p className="text-white/35 text-4xl font-black leading-none mb-3 select-none">"</p>
-              <h2 className="text-white font-bold text-xl md:text-2xl leading-snug tracking-tight mb-4">
+            {/* Centre — quote */}
+            <div className="max-w-lg">
+              <svg width="24" height="20" viewBox="0 0 28 22" fill="none" className="mb-3 opacity-25">
+                <path d="M0 22V13.5C0 5.8 4.5 1.5 13.5 0L15 3C10.5 4.2 8 7 7.5 11H12V22H0ZM16 22V13.5C16 5.8 20.5 1.5 29.5 0L31 3C26.5 4.2 24 7 23.5 11H28V22H16Z" fill="white"/>
+              </svg>
+              <h2 className="text-white font-bold text-xl md:text-2xl leading-snug tracking-tight mb-3">
                 The function of leadership is to produce more leaders, not more followers.
               </h2>
-              <p className="text-white/45 text-xs font-semibold uppercase tracking-widest">
-                — Ralph Nader
-              </p>
+              <p className="text-white/40 text-xs font-bold uppercase tracking-widest">— Ralph Nader</p>
             </div>
-          </div>
 
-          <div className="absolute bottom-6 right-8 z-10">
-            <button
-              onClick={() => navigate("spoc-dashboard")}
-              className="flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-110 transition-all cursor-pointer shadow-lg"
-              style={{ backgroundColor: B_INDIGO }}
-            >
-              My Space <ArrowRight size={15} />
-            </button>
+            {/* Bottom row — CTA */}
+            <div className="flex justify-end">
+              <button
+                onClick={() => navigate("spoc-dashboard")}
+                className="flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-110 transition-all cursor-pointer shadow-lg"
+                style={{ backgroundColor: B_INDIGO }}
+              >
+                My Space <ArrowRight size={15} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
