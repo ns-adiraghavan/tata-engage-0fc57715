@@ -1,16 +1,28 @@
 import { motion } from "framer-motion";
 import { X, Lock, Check } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
+import { useAuth } from "@/context/AuthContext";
 
 const OrientationModal = () => {
   const { setShowOrientationModal } = useAppContext();
-  const modules = [
-    { id: 1, title: "Platform Overview", status: "Completed" },
-    { id: 2, title: "TVW Coordinator Guide", status: "Completed" },
-    { id: 3, title: "ProEngage Monitoring", status: "Locked" },
-    { id: 4, title: "Data Privacy", status: "Locked" },
-    { id: 5, title: "SPOC Code of Conduct", status: "Locked" }
-  ];
+  const { user } = useAuth();
+  const isSPOC = user?.role === "corporate_spoc" || user?.role === "regional_spoc";
+
+  const modules = isSPOC
+    ? [
+        { id: 1, title: "Platform Overview", status: "Completed" },
+        { id: 2, title: "TVW Coordinator Guide", status: "Completed" },
+        { id: 3, title: "ProEngage Monitoring", status: "Locked" },
+        { id: 4, title: "Data Privacy", status: "Locked" },
+        { id: 5, title: "SPOC Code of Conduct", status: "Locked" }
+      ]
+    : [
+        { id: 1, title: "Welcome to ProEngage", status: "Completed" },
+        { id: 2, title: "Working with Your NGO", status: "Completed" },
+        { id: 3, title: "Mid-Project Check-in", status: "Locked" },
+        { id: 4, title: "Feedback & Certificate", status: "Locked" },
+        { id: 5, title: "Volunteer Code of Conduct", status: "Locked" }
+      ];
 
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center p-6">
