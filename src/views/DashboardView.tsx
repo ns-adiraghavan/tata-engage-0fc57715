@@ -279,10 +279,10 @@ function HistoryFilters({ edition, setEdition, year, setYear }: { edition: strin
 }
 
 // ─── Resource card ────────────────────────────────────────────────────────────
-function ResourceCard({ r }: { r: typeof RESOURCES[0] }) {
+function ResourceCard({ r, onClick }: { r: typeof RESOURCES[0]; onClick?: () => void }) {
   const [hov, setHov] = useState(false);
   return (
-    <div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+    <div onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, overflow: "hidden", cursor: "pointer", transform: hov ? "translateY(-3px)" : "translateY(0)", boxShadow: hov ? `0 8px 24px ${r.accentColor}18` : "none", transition: "transform 0.18s, box-shadow 0.18s" }}
     >
       <div style={{ height: 90, background: `url(${r.photo}) center/cover`, position: "relative" }}>
