@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { IS_PE_SEASON } from "@/data/mockData";
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
 const B_INDIGO    = "#333399";
@@ -14,8 +15,6 @@ const P_YELLOW    = "#FEF6E4";
 const P_RED       = "#FFF0EE";
 const P_TEAL      = "#E6F8F5";
 const P_BLUE      = "#EBF4FF";
-
-const IS_PE_SEASON = true;
 const IS_NEW_VOLUNTEER = false;
 
 const VOLUNTEER = {
