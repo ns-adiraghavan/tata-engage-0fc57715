@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { IS_PE_SEASON } from "@/data/mockData";
+import { useAppContext } from "@/context/AppContext";
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
 const B_INDIGO    = "#333399";
@@ -899,6 +900,7 @@ function ShareDrawer({ open, onClose }: { open: boolean; onClose: () => void }) 
 // ═══════════════════════════════════════════════════════════════════════════════
 export default function DashboardView() {
   const navigate = useNavigate();
+  const { setShowOrientationModal, triggerToast: ctxToast } = useAppContext();
 
   // Section tracking
   const statsRef = useRef<HTMLDivElement>(null);
@@ -1344,7 +1346,10 @@ export default function DashboardView() {
             <section id="resources" style={{ scrollMarginTop: 108 }}>
               <SectionHeading eyebrow="Learning and inspiration" title="Resource Library" />
               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
-                {RESOURCES.map(r => <ResourceCard key={r.id} r={r} />)}
+                {RESOURCES.map(r => <ResourceCard key={r.id} r={r} onClick={() => {
+                  if (r.id === "emodule") { setShowOrientationModal(true); }
+                  else { window.location.href = "/media"; }
+                }} />)}
               </div>
             </section>
 
