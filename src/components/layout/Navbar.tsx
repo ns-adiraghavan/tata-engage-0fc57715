@@ -152,7 +152,6 @@ const Navbar = ({
                       setTimeout(() => document.getElementById("about-team")?.scrollIntoView({ behavior: "smooth" }), 120);
                     }
                   },
-                  { label: "Contact Us", action: () => triggerToast("Contact: tataengage@tata.com") },
                 ],
               },
               {
