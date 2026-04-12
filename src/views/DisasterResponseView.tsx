@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Heart, Globe, Award, LayoutGrid, ArrowRight, Zap, Activity, ShieldAlert } from "lucide-react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import PageShell from "@/components/shared/PageShell";
+import SubPageDotRail from "@/components/shared/SubPageDotRail";
 import { B_RED, ACCENT_NAVY } from "@/data/homeSharedData";
 
 const SECTIONS = [
@@ -13,7 +13,7 @@ const SECTIONS = [
 ];
 
 const STRIPE_BG = {
-  backgroundImage: `repeating-linear-gradient(45deg, rgba(232,64,28,0.06) 0px, rgba(232,64,28,0.06) 1px, transparent 1px, transparent 20px)`,
+  backgroundImage: `repeating-linear-gradient(45deg, rgba(232,64,28,0.05) 0px, rgba(232,64,28,0.05) 1px, transparent 1px, transparent 20px)`,
   backgroundSize: "20px 20px",
 };
 
@@ -46,57 +46,86 @@ const CASES = [
   { title: "Assam Flood Restoration (2023)", impact: "12 Schools Rebuilt", desc: "Long-term rehabilitation project focusing on restoring educational infrastructure and sanitation in flood-hit districts.", img: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80" },
 ];
 
+const HERO_STATS = [
+  { label: "48h Deployment" },
+  { label: "3 Response Phases" },
+  { label: "50,000+ Lives Touched" },
+];
+
 const DisasterResponseView = () => {
   const navigate = useAppNavigate();
 
   return (
-    <PageShell
-      accentColor={B_RED}
-      sections={SECTIONS}
-      pageEyebrow="One Tata Response Framework"
-      pageTitle="Disaster Response"
-      pageDesc="Organised, rapid, human — deployed within 48 hours when communities need us most."
-    >
+    <div style={{ paddingTop: 80 }}>
+      {/* Accent line */}
+      <div style={{ background: B_RED, height: 2, width: "100%" }} />
+
+      {/* Dot rail */}
+      <SubPageDotRail sections={SECTIONS} accentColor={B_RED} />
+
       {/* ═══ HERO ═══ */}
-      <section id="dr-hero" className="text-center py-20 px-6 md:px-16" style={STRIPE_BG}>
+      <section
+        id="dr-hero"
+        className="text-center py-20 px-6 md:px-16 relative overflow-hidden"
+        style={{ backgroundColor: ACCENT_NAVY, ...STRIPE_BG }}
+      >
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-widest mb-6 border" style={{ backgroundColor: `${B_RED}0d`, color: B_RED, borderColor: `${B_RED}22` }}>
-            <ShieldAlert size={14} /> One Tata Response Framework
+          <div
+            className="mb-6"
+            style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 2, color: "rgba(255,255,255,0.5)" }}
+          >
+            ONE TATA RESPONSE FRAMEWORK
+          </div>
+
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: B_RED }} />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ backgroundColor: B_RED }} />
+            </span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: B_RED }}>Response Ready</span>
+          </div>
+
+          <h1 style={{ fontSize: 52, fontWeight: 900, color: "white", letterSpacing: -1, lineHeight: 1.1 }} className="mb-6">
+            Disaster Response
+          </h1>
+
+          <p className="max-w-3xl mx-auto text-lg md:text-xl leading-relaxed mb-10" style={{ color: "rgba(255,255,255,0.65)", fontWeight: 300 }}>
+            The Tata Group's disaster response mechanism leverages our collective resources,
+            expertise, and volunteer spirit to provide immediate relief and long-term rehabilitation
+            to communities affected by natural calamities.
+          </p>
+
+          {/* Stat pills */}
+          <div className="flex items-center justify-center gap-3 mb-10 flex-wrap">
+            {HERO_STATS.map((s) => (
+              <span
+                key={s.label}
+                className="px-5 py-2 rounded-full text-xs font-semibold tracking-wide"
+                style={{ background: "rgba(255,255,255,0.1)", color: "white" }}
+              >
+                {s.label}
+              </span>
+            ))}
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+              onClick={() => navigate("register-role")}
+              className="w-full sm:w-auto px-10 py-5 rounded-2xl font-semibold uppercase tracking-widest hover:opacity-90 transition-all flex items-center justify-center gap-2 group cursor-pointer"
+              style={{ backgroundColor: B_RED, color: "white" }}
+            >
+              Register as Volunteer <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button
+              onClick={() => document.getElementById("dr-framework")?.scrollIntoView({ behavior: "smooth" })}
+              className="w-full sm:w-auto px-10 py-5 rounded-2xl font-semibold uppercase tracking-widest hover:opacity-90 transition-all cursor-pointer"
+              style={{ background: "rgba(255,255,255,0.1)", color: "white", border: "1px solid rgba(255,255,255,0.2)" }}
+            >
+              View Framework
+            </button>
           </div>
         </motion.div>
-
-        <div className="flex items-center justify-center gap-2 mb-8">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: B_RED }} />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ backgroundColor: B_RED }} />
-          </span>
-          <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: B_RED }}>Response Ready</span>
-        </div>
-
-        <h1 className="text-5xl md:text-6xl font-black mb-6 tracking-tighter leading-none" style={{ color: ACCENT_NAVY }}>
-          Standing Together <br />
-          <span className="underline underline-offset-8" style={{ color: B_RED, textDecorationColor: `${B_RED}33` }}>In Times of Crisis</span>
-        </h1>
-        <p className="text-slate-500 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed mb-10">
-          The Tata Group's disaster response mechanism leverages our collective resources,
-          expertise, and volunteer spirit to provide immediate relief and long-term rehabilitation
-          to communities affected by natural calamities.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button
-            onClick={() => navigate("register-role")}
-            className="w-full sm:w-auto px-10 py-5 text-white rounded-2xl font-semibold uppercase tracking-widest hover:opacity-90 transition-all shadow-xl shadow-black/10 flex items-center justify-center gap-2 group cursor-pointer"
-            style={{ backgroundColor: ACCENT_NAVY }}
-          >
-            Register as Volunteer <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-          <button
-            onClick={() => document.getElementById("dr-framework")?.scrollIntoView({ behavior: "smooth" })}
-            className="w-full sm:w-auto px-10 py-5 bg-white text-slate-900 border border-slate-200 rounded-2xl font-semibold uppercase tracking-widest hover:bg-slate-50 transition-all cursor-pointer"
-          >
-            View Framework
-          </button>
-        </div>
       </section>
 
       {/* ═══ FRAMEWORK ═══ */}
@@ -125,7 +154,6 @@ const DisasterResponseView = () => {
             </div>
           </div>
           <div className="relative">
-            {/* Offset card behind image */}
             <div className="absolute top-4 left-4 right-[-16px] bottom-[-16px] rounded-2xl" style={{ backgroundColor: ACCENT_NAVY }} />
             <div className="aspect-square rounded-2xl overflow-hidden border-4 border-white shadow-2xl relative z-10">
               <img
@@ -236,7 +264,7 @@ const DisasterResponseView = () => {
           </div>
         </div>
       </section>
-    </PageShell>
+    </div>
   );
 };
 
