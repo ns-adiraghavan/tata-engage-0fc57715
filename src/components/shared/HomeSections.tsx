@@ -15,8 +15,15 @@ import {
 export { SectionDivider };
 
 // ── Programme Spotlight section ───────────────────────────────────────────────
+const PROGRAMME_ROUTE: Record<string, string> = {
+  "TVW": "about-tvw",
+  "ProEngage": "about-proengage",
+  "Disaster Response": "disaster-response",
+};
+
 export function ProgrammeSpotlight() {
   const { triggerToast } = useAppContext();
+  const navigate = useAppNavigate();
   const [flagshipIdx, setFlagshipIdx] = useState(0);
 
   useEffect(() => {
