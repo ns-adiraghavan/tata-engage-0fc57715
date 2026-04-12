@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Mail, CheckCircle2, Sparkles, StopCircle, AlertTriangle, Activity, ChevronLeft, Clock, Pause, ArrowRight } from "lucide-react";
+import { Mail, Sparkles, StopCircle, AlertTriangle, Activity, ChevronLeft, Clock, Pause, ArrowRight } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAuth } from "@/context/AuthContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
@@ -23,7 +23,7 @@ const MOCK_VOLUNTEERS = [
 ];
 
 const ActiveProjectManagementView = ({ project }: { project: any }) => {
-  const { user } = useAuth();
+  const _auth = useAuth();
   const navigate = useAppNavigate();
   const { triggerToast } = useAppContext();
 

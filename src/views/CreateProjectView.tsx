@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2, ArrowLeft, CheckCircle2, MapPin, Info, Send, FileText, Check, Sparkles, ArrowRight, Save, Copy } from "lucide-react";
+import { ArrowLeft, CheckCircle2, MapPin, Info, Send, Check, Sparkles, ArrowRight, Save, Copy } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import PageShell from "@/components/shared/PageShell";
