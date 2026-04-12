@@ -25,10 +25,10 @@ const Footer = () => {
       <div>
         <h4 className="font-bold mb-6">Quick Links</h4>
         <ul className="space-y-3 text-slate-400 text-sm">
-          <li><span onClick={() => navigate("about")} className="hover:text-white transition-colors cursor-pointer">About Us</span></li>
-          <li><span onClick={() => triggerToast("Volunteering Policy document coming soon")} className="hover:text-white transition-colors cursor-pointer">Volunteering Policy</span></li>
-          <li><span onClick={() => triggerToast("FAQs coming soon")} className="hover:text-white transition-colors cursor-pointer">FAQs</span></li>
-          <li><span onClick={() => triggerToast("Contact: tataengage@tata.com")} className="hover:text-white transition-colors cursor-pointer">Contact Us</span></li>
+          <li><span onClick={() => { navigate("about"); setTimeout(() => document.getElementById("about-vision")?.scrollIntoView({ behavior: "smooth" }), 120); }} className="hover:text-white transition-colors cursor-pointer">TE Vision</span></li>
+          <li><span onClick={() => navigate("journey")} className="hover:text-white transition-colors cursor-pointer">Our Journey</span></li>
+          <li><span onClick={() => navigate("partner")} className="hover:text-white transition-colors cursor-pointer">Partner With Us</span></li>
+          <li><span onClick={() => navigate("media")} className="hover:text-white transition-colors cursor-pointer">Media & Impact Stories</span></li>
           <li><span onClick={() => navigate("login")} className="hover:text-white transition-colors cursor-pointer">Login</span></li>
         </ul>
       </div>
