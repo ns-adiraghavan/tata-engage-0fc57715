@@ -383,25 +383,33 @@ export default function JourneyView() {
           </p>
 
           {/* Era pills */}
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            {ERAS.map(({ id, label }, i) => {
-              const meta = ERA_META[id];
-              return (
-                <button
-                  key={id}
-                  onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
-                  style={{
-                    background: i === activeEra ? meta.colour : "rgba(255,255,255,0.08)",
-                    border: `1px solid ${i === activeEra ? meta.colour : "rgba(255,255,255,0.15)"}`,
-                    color: "#fff", borderRadius: 100, padding: "7px 16px",
-                    fontSize: 13, fontWeight: 600, cursor: "pointer",
-                    transition: "all 0.2s",
-                  }}
-                >
-                  {label} · {meta.range}
-                </button>
-              );
-            })}
+          <div style={{ position: "relative" }}>
+            {/* Radial glow behind pills */}
+            <div style={{
+              position: "absolute", left: "50%", bottom: 0, transform: "translateX(-50%)",
+              width: 600, height: 300, pointerEvents: "none",
+              background: "radial-gradient(ellipse 600px 300px at 50% 100%, rgba(51,51,153,0.15), transparent)",
+            }} />
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", position: "relative", zIndex: 1 }}>
+              {ERAS.map(({ id, label }, i) => {
+                const meta = ERA_META[id];
+                return (
+                  <button
+                    key={id}
+                    onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
+                    style={{
+                      background: i === activeEra ? meta.colour : "rgba(255,255,255,0.08)",
+                      border: `1px solid ${i === activeEra ? meta.colour : "rgba(255,255,255,0.15)"}`,
+                      color: "#fff", borderRadius: 100, padding: "7px 16px",
+                      fontSize: 13, fontWeight: 600, cursor: "pointer",
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    {label} · {meta.range}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
