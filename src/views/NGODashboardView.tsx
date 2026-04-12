@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   X, ChevronRight, User, Users, Mail, Search, MapPin, Clock,
   Check, Sparkles, MessageSquare, Plus, Edit2, Trash2,
