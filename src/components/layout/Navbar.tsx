@@ -127,11 +127,32 @@ const Navbar = ({
               {
                 label: "About",
                 items: [
-                  { label: "TE Vision",      action: () => onNavigate("about") },
-                  { label: "Our Journey",    action: () => onNavigate("about") },
-                  { label: "Impact & Reach", action: () => onNavigate("about") },
-                  { label: "Team",           action: () => onNavigate("about") },
-                  { label: "Contact Us",     action: () => triggerToast("Contact: tataengage@tata.com") },
+                  {
+                    label: "TE Vision",
+                    action: () => {
+                      onNavigate("about");
+                      setTimeout(() => document.getElementById("about-vision")?.scrollIntoView({ behavior: "smooth" }), 120);
+                    }
+                  },
+                  {
+                    label: "Our Journey",
+                    action: () => onNavigate("journey"),
+                  },
+                  {
+                    label: "Impact & Reach",
+                    action: () => {
+                      onNavigate("about");
+                      setTimeout(() => document.getElementById("about-impact")?.scrollIntoView({ behavior: "smooth" }), 120);
+                    }
+                  },
+                  {
+                    label: "Team",
+                    action: () => {
+                      onNavigate("about");
+                      setTimeout(() => document.getElementById("about-team")?.scrollIntoView({ behavior: "smooth" }), 120);
+                    }
+                  },
+                  { label: "Contact Us", action: () => triggerToast("Contact: tataengage@tata.com") },
                 ],
               },
               {

@@ -49,6 +49,7 @@ import AboutTVWView from "@/views/AboutTVWView";
 import AboutProEngageView from "@/views/AboutProEngageView";
 import PartnerWithUsView from "@/views/PartnerWithUsView";
 import MediaView from "@/views/MediaView";
+import JourneyView from "@/views/JourneyView";
 import NotFound from "@/pages/NotFound";
 
 export default function App() {
@@ -220,6 +221,7 @@ export default function App() {
                 <Route path="/hub" element={<ProtectedRoute><VolunteerHubView /></ProtectedRoute>} />
                 <Route path="/ngo/hub" element={<ProtectedRoute><NGOHubView /></ProtectedRoute>} />
                 <Route path="/spoc/hub" element={<ProtectedRoute><SPOCHubView /></ProtectedRoute>} />
+                <Route path="/journey" element={<JourneyView />} />
                 <Route path="/about" element={<AboutView />} />
                 <Route path="/about/tvw" element={<AboutTVWView />} />
                 <Route path="/about/proengage" element={<AboutProEngageView />} />
