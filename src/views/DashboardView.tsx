@@ -1348,7 +1348,7 @@ export default function DashboardView() {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
                 {RESOURCES.map(r => <ResourceCard key={r.id} r={r} onClick={() => {
                   if (r.id === "emodule") { setShowOrientationModal(true); }
-                  else { window.location.href = "/media"; }
+                  else { navigate("/media"); }
                 }} />)}
               </div>
             </section>
