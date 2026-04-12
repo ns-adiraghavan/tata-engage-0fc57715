@@ -1,491 +1,552 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Linkedin, Award, Info, Star, Save, History, Download, X, Plus } from "lucide-react";
-import type { View } from "@/types";
-import { MOCK_FAMILY_MEMBERS } from "@/data/mockData";
+import { PRIYA_SHARMA, MOCK_FAMILY_MEMBERS } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
-import { useAuth } from "@/context/AuthContext";
 
-const TagInput = ({ tags, onChange, placeholder, disabled }: { tags: string[]; onChange: (t: string[]) => void; placeholder?: string; disabled?: boolean }) => {
-  const [input, setInput] = useState("");
-  const addTag = () => {
-    const val = input.trim();
-    if (val && !tags.includes(val)) { onChange([...tags, val]); }
-    setInput("");
-  };
+// ─── Brand tokens ──────────────────────────────────────────────────────────────
+const B_INDIGO    = "#333399";
+const B_YELLOW    = "#F5A623";
+const B_TEAL      = "#00A896";
+const B_RED       = "#E8401C";
+const B_BLUE      = "#1E6BB8";
+const ACCENT_NAVY = "#0D1B3E";
+const P_INDIGO    = "#EEF0FF";
+const P_TEAL      = "#E6F8F5";
+const P_BLUE      = "#EBF4FF";
+
+// ─── Dropdown data ─────────────────────────────────────────────────────────────
+const TITLES         = ["Mr","Ms","Mrs","Dr","Prof"];
+const GENDERS        = ["Male","Female","Non-binary","Prefer not to say"];
+const COMPANIES      = ["Tata Consultancy Services","Tata Steel","Tata Motors","Titan","Tata Power","IHCL (Taj Hotels)","Tata Chemicals","Tata Consumer Products","Tata Communications","Trent","Other Tata Company"];
+const DESIGNATIONS   = ["Manager","Senior Manager","Director","Vice President","Senior Vice President","Associate","Senior Associate","Analyst","Senior Analyst","Consultant","Senior Consultant","Project Manager","Senior Project Manager","Others"];
+const FUNCTIONS      = ["Technology","Finance","HR & People","Marketing","Operations","Legal","Strategy","Research & Development","Product Management","Others"];
+const EDU_QUALS      = ["MBA","B.Tech / B.E.","CA","LLB","MBBS","M.Tech","BA / B.Com / B.Sc","Ph.D","Others"];
+const COUNTRIES      = ["India","United States","United Kingdom","Singapore","Australia","Canada","UAE","Others"];
+const CITIES_INDIA   = ["Mumbai","Delhi","Bangalore","Chennai","Hyderabad","Pune","Kolkata","Ahmedabad","Jamshedpur","Noida","Gurgaon","Other City"];
+const SKILLS_LIST    = ["Accounting and Finance","Administration","Coaching and Training","Content Writing / Documentation","Fundraising","IT Enabled Services","Legal","Management and Strategy","Marketing and Communications","Operations and Logistics","Project Management","Research","Strategic Planning","Translation","Others"];
+const INTERESTS_LIST = ["Adult Literacy","Advocacy","Animals","Architecture and Heritage","Children","Community Development","Disability Support","Disaster Response","Education","Environment and Sustainability","Health Safety and Wellness","Persons with Disabilities","Women Empowerment","Youth","Others"];
+const LANGUAGES_LIST = ["English","Hindi","Marathi","Tamil","Telugu","Kannada","Bengali","Gujarati","Malayalam","Punjabi","Odia","Urdu","Others"];
+
+// ─── Mini shared components ────────────────────────────────────────────────────
+const sectionLabel: React.CSSProperties = { fontSize:10.5, fontWeight:700, letterSpacing:"1.8px", textTransform:"uppercase", color:"#aaaabc", marginBottom:14, paddingBottom:10, borderBottom:"1px solid #e8e8f0", display:"block" };
+
+function FieldLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
-    <div className="flex flex-wrap gap-2 items-center">
-      {tags.map(tag => (
-        <span key={tag} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 text-xs font-bold">
-          {tag}
-          {!disabled && (
-            <button type="button" onClick={() => onChange(tags.filter(t => t !== tag))} className="text-slate-400 hover:text-red-500 cursor-pointer"><X size={12} /></button>
-          )}
-        </span>
-      ))}
-      {!disabled && (
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); addTag(); } }}
-          onBlur={addTag}
-          placeholder={placeholder}
-          className="text-sm py-1 px-2 border-b border-slate-200 focus:border-tata-blue outline-none min-w-[120px]"
-        />
-      )}
+    <div style={{ fontSize:10.5, fontWeight:700, color:"#aaaabc", textTransform:"uppercase", letterSpacing:"0.8px", marginBottom:7 }}>
+      {children}{required && <span style={{ color:B_RED, marginLeft:3 }}>*</span>}
     </div>
   );
+}
+
+function ReadOnly({ value }: { value: string }) {
+  return <div style={{ fontSize:14, fontWeight:600, color:ACCENT_NAVY, padding:"10px 0", borderBottom:"1px solid #f0f0f8" }}>{value || "—"}</div>;
+}
+
+function TextInput({ value, onChange, placeholder, type="text" }: { value:string; onChange:(v:string)=>void; placeholder?:string; type?:string }) {
+  return (
+    <input type={type} value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder}
+      style={{ width:"100%", border:"1.5px solid #e0e0e8", borderRadius:9, padding:"10px 13px", fontSize:13.5, fontFamily:"'Noto Sans', sans-serif", color:ACCENT_NAVY, outline:"none", boxSizing:"border-box" }}
+      onFocus={e=>(e.target.style.borderColor=B_INDIGO)} onBlur={e=>(e.target.style.borderColor="#e0e0e8")}/>
+  );
+}
+
+function SelectInput({ value, onChange, options }: { value:string; onChange:(v:string)=>void; options:string[] }) {
+  return (
+    <select value={value} onChange={e=>onChange(e.target.value)}
+      style={{ width:"100%", border:"1.5px solid #e0e0e8", borderRadius:9, padding:"10px 13px", fontSize:13.5, fontFamily:"'Noto Sans', sans-serif", color:ACCENT_NAVY, outline:"none", appearance:"none", background:"#fff", cursor:"pointer", boxSizing:"border-box" }}
+      onFocus={e=>(e.target.style.borderColor=B_INDIGO)} onBlur={e=>(e.target.style.borderColor="#e0e0e8")}>
+      {options.map(o=><option key={o}>{o}</option>)}
+    </select>
+  );
+}
+
+function MultiSelectList({ selected, onChange, options, maxH=160 }: { selected:string[]; onChange:(v:string[])=>void; options:string[]; maxH?:number }) {
+  const toggle = (val:string) => onChange(selected.includes(val)?selected.filter(x=>x!==val):[...selected,val]);
+  return (
+    <div>
+      <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginBottom:10, minHeight:32 }}>
+        {selected.map(s=>(
+          <span key={s} style={{ background:P_INDIGO, color:B_INDIGO, fontSize:12.5, fontWeight:600, padding:"4px 12px", borderRadius:100, display:"flex", alignItems:"center", gap:6 }}>
+            {s}<span onClick={()=>toggle(s)} style={{ cursor:"pointer", opacity:0.6, fontSize:13, lineHeight:1 }}>×</span>
+          </span>
+        ))}
+        {selected.length===0&&<span style={{ fontSize:13, color:"#aaaabc" }}>None selected</span>}
+      </div>
+      <div style={{ border:"1.5px solid #e0e0e8", borderRadius:9, maxHeight:maxH, overflowY:"auto" }}>
+        {options.map(o=>(
+          <div key={o} onClick={()=>toggle(o)}
+            style={{ padding:"9px 14px", fontSize:13, cursor:"pointer", color:ACCENT_NAVY, display:"flex", alignItems:"center", gap:10, background:selected.includes(o)?P_INDIGO:"transparent", transition:"background 0.1s" }}>
+            <div style={{ width:15, height:15, borderRadius:4, border:`2px solid ${selected.includes(o)?B_INDIGO:"#dddde8"}`, background:selected.includes(o)?B_INDIGO:"#fff", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center" }}>
+              {selected.includes(o)&&<svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5l2.5 2.5L8 1" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+            </div>
+            {o}
+          </div>
+        ))}
+      </div>
+      <div style={{ fontSize:11, color:"#aaaabc", marginTop:5 }}>Press to select / deselect. Multiple selections allowed.</div>
+    </div>
+  );
+}
+
+function SectionHeading({ label }: { label: string }) {
+  return (
+    <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:18, marginTop:30 }}>
+      <div style={{ width:3, height:18, borderRadius:2, background:B_INDIGO }} />
+      <div style={{ fontSize:14, fontWeight:700, color:ACCENT_NAVY }}>{label}</div>
+    </div>
+  );
+}
+
+// ─── Tab nav ──────────────────────────────────────────────────────────────────
+type NavTab = "personal"|"professional"|"volunteering"|"notification";
+const NAV_TABS: {id:NavTab; label:string}[] = [
+  { id:"personal",      label:"Personal Information" },
+  { id:"professional",  label:"Professional Details"  },
+  { id:"volunteering",  label:"Volunteering Preferences"},
+  { id:"notification",  label:"Notification Settings" },
+];
+
+// ─── Data state ────────────────────────────────────────────────────────────────
+type ProfileState = {
+  title: string; firstName: string; lastName: string; gender: string;
+  birthDate: string; officialEmail: boolean; email: string;
+  company: string; designation: string; designationDetail: string;
+  function_: string; functionDetail: string; eduQual: string; eduQualDetail: string;
+  country: string; city: string; cityDetail: string;
+  phoneCountryCode: string; phoneArea: string; phoneNum: string;
+  mobileCountryCode: string; mobileNum: string;
+  skills: string[]; interests: string[]; languages: string[];
+  preferredMode: string; disasterResponseInterest: boolean;
+  linkedinUrl: string;
+  notifyProEngage: boolean; notifyTVW: boolean; notifyEmail: boolean;
 };
 
-const ProfileView = () => {
-  const { user, setUser, userRole } = useAuth();
-  const { projectStatus, feedbackSubmitted, supportHistory, ngoData, triggerToast } = useAppContext();
+function initProfile(): ProfileState {
+  return {
+    title: "Ms",
+    firstName: PRIYA_SHARMA.firstName,
+    lastName:  PRIYA_SHARMA.lastName,
+    gender:    "Female",
+    birthDate: "1990-06-15",
+    officialEmail: true,
+    email:     PRIYA_SHARMA.email,
+    company:   PRIYA_SHARMA.company,
+    designation: PRIYA_SHARMA.designation.split(" ").slice(-1)[0]==="Manager"?"Senior Project Manager":"Others",
+    designationDetail: PRIYA_SHARMA.designation,
+    function_: "Product Management",
+    functionDetail: "",
+    eduQual: "MBA",
+    eduQualDetail: "Indian Institute of Management, Ahmedabad",
+    country: PRIYA_SHARMA.country,
+    city:    PRIYA_SHARMA.city,
+    cityDetail: "",
+    phoneCountryCode: "91", phoneArea: "022", phoneNum: "00000000",
+    mobileCountryCode: "91", mobileNum: "9876543210",
+    skills:    [...PRIYA_SHARMA.skills],
+    interests: [...PRIYA_SHARMA.interests],
+    languages: [...PRIYA_SHARMA.languages],
+    preferredMode: PRIYA_SHARMA.preferredMode,
+    disasterResponseInterest: PRIYA_SHARMA.disasterResponseInterest,
+    linkedinUrl: PRIYA_SHARMA.linkedinUrl ?? "",
+    notifyProEngage: PRIYA_SHARMA.notifyProEngage,
+    notifyTVW:       PRIYA_SHARMA.notifyTVW,
+    notifyEmail:     true,
+  };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MAIN
+// ═══════════════════════════════════════════════════════════════════════════════
+export default function ProfileView() {
+  const { triggerToast } = useAppContext();
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState<any>(userRole === 'ngo' ? {
-    firstName: "Anjali",
-    lastName: "Mehta",
-    email: "anjali.mehta@pratham.org",
-    designation: "Program Director",
-    company: "Pratham NGO"
-  } : {
-    ...user,
-    languages: user.languages || ["English", "Hindi", "Marathi"],
-    linkedinUrl: user.linkedinUrl || "",
-    disasterResponseInterest: user.disasterResponseInterest ?? true,
-    preferredMode: user.preferredMode || "Either",
-    notifyProEngage: user.notifyProEngage ?? true,
-    notifyTVW: user.notifyTVW ?? true,
-  });
-  const [activeTab, setActiveTab] = useState<'info' | 'history'>('info');
+  const [activeTab, setActiveTab] = useState<NavTab>("personal");
+  const [profile, setProfile] = useState<ProfileState>(initProfile);
+  const [saved, setSaved]     = useState<ProfileState>(initProfile);
+
+  const set = (field: keyof ProfileState, val: any) => setProfile(p=>({...p,[field]:val}));
 
   const handleSave = () => {
-    if (userRole !== 'ngo') setUser(profileData as any);
+    setSaved({...profile});
     setIsEditing(false);
-    triggerToast("Profile updated successfully!");
+    triggerToast("Profile saved successfully.");
   };
 
-  const shareToLinkedIn = () => {
-    const text = `Proud to have volunteered with Pratham NGO on the Financial Literacy for Rural Women project through Tata Engage! #TataEngage #BeTheChange`;
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?text=${encodeURIComponent(text)}`, '_blank');
+  const handleCancel = () => {
+    setProfile({...saved});
+    setIsEditing(false);
   };
+
+  const gridRow: React.CSSProperties = { display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 };
+  const col: React.CSSProperties     = { display:"flex", flexDirection:"column" };
 
   return (
-    <div className="pt-20 pb-20 px-6 md:px-12 bg-white min-h-screen">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-          <div className="flex items-center gap-6">
-            <div className="w-24 h-24 rounded-3xl bg-tata-blue text-white flex items-center justify-center text-3xl font-bold shadow-xl">
-              {profileData.firstName[0]}{profileData.lastName[0]}
+    <div style={{ background:"#f8f9ff", minHeight:"100vh", fontFamily:"'Noto Sans', sans-serif", paddingTop:80, paddingBottom:80 }}>
+      <div style={{ maxWidth:1080, margin:"0 auto", padding:"0 40px" }}>
+
+        {/* ── Hero banner (similar to live site) ────────────────────── */}
+        <div style={{ background:ACCENT_NAVY, borderRadius:"0 0 20px 20px", padding:"32px 40px", marginBottom:32, display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:20 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:20 }}>
+            <div style={{ width:64, height:64, borderRadius:"50%", background:B_INDIGO, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, fontWeight:700, color:"#fff", flexShrink:0, border:"3px solid rgba(255,255,255,0.15)" }}>
+              {profile.firstName[0]}{profile.lastName[0]}
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-zinc-900">{profileData.firstName} {profileData.lastName}</h1>
-              <p className="text-slate-500">{profileData.designation} at {profileData.company}</p>
-              <div className="flex gap-2 mt-2">
-                <span className="px-2 py-0.5 rounded bg-tata-blue/10 text-tata-blue text-xs font-bold uppercase tracking-wider">
-                  {userRole === 'ngo' ? 'NGO Partner' : 'Tata Employee'}
-                </span>
-                <span className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wider">Verified</span>
+              <div style={{ fontSize:22, fontWeight:900, color:"#fff" }}>{profile.firstName} {profile.lastName}</div>
+              <div style={{ fontSize:13.5, color:"rgba(255,255,255,0.5)", marginTop:4 }}>{profile.designationDetail || profile.designation} · {profile.company}</div>
+              <div style={{ display:"flex", gap:8, marginTop:8 }}>
+                <span style={{ background:P_INDIGO, color:B_INDIGO, fontSize:11, fontWeight:700, padding:"3px 10px", borderRadius:100 }}>Tata Employee</span>
+                <span style={{ background:P_TEAL, color:B_TEAL, fontSize:11, fontWeight:700, padding:"3px 10px", borderRadius:100 }}>Verified</span>
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
-            <button 
-              onClick={() => isEditing ? handleSave() : setIsEditing(true)}
-              className={`btn-${isEditing ? 'black' : 'outline'} py-2 px-8 cursor-pointer`}
-            >
-              {isEditing ? "Save Changes" : "Edit Profile"}
-            </button>
-          </div>
-        </div>
-
-        {userRole === 'ngo' && (
-          <div className="flex gap-8 border-b border-slate-100 mb-8">
-            <button 
-              onClick={() => setActiveTab('info')}
-              className={`pb-4 text-xs font-bold uppercase tracking-widest transition-all relative ${activeTab === 'info' ? 'text-tata-blue' : 'text-slate-400 hover:text-slate-600'}`}
-            >
-              Profile Info
-              {activeTab === 'info' && <motion.div layoutId="profileTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-tata-blue" />}
-            </button>
-            <button 
-              onClick={() => setActiveTab('history')}
-              className={`pb-4 text-xs font-bold uppercase tracking-widest transition-all relative ${activeTab === 'history' ? 'text-tata-blue' : 'text-slate-400 hover:text-slate-600'}`}
-            >
-              Support History
-              {activeTab === 'history' && <motion.div layoutId="profileTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-tata-blue" />}
-            </button>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2 space-y-12">
-            {activeTab === 'info' ? (
+          <div style={{ display:"flex", gap:10 }}>
+            {isEditing ? (
               <>
-                {/* Personal Info — locked fields */}
-                <section>
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 pb-2 border-b border-slate-100">Personal Information</h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase">First Name</label>
-                        <div className="py-2 text-zinc-900 border-b border-zinc-50 font-medium">{profileData.firstName}</div>
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase">Last Name</label>
-                        <div className="py-2 text-zinc-900 border-b border-zinc-50 font-medium">{profileData.lastName}</div>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="text-xs font-bold text-slate-400 uppercase">Email Address</label>
-                      <div className="py-2 text-zinc-900 border-b border-zinc-50 font-medium">{profileData.email}</div>
-                    </div>
-                    {isEditing && (
-                      <p className="text-xs text-slate-400 italic">Name and email are locked. Contact Admin to update.</p>
-                    )}
-                  </div>
-                </section>
-
-                {/* Professional Details */}
-                <section>
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 pb-2 border-b border-slate-100">Professional Details</h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase">Designation</label>
-                        {isEditing ? (
-                          <input type="text" value={profileData.designation} onChange={(e) => setProfileData({...profileData, designation: e.target.value})} className="w-full py-2 border-b border-tata-blue focus:outline-none font-medium" />
-                        ) : (
-                          <div className="py-2 text-zinc-900 border-b border-zinc-50 font-medium">{profileData.designation}</div>
-                        )}
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase">Organization</label>
-                        {isEditing ? (
-                          <input type="text" value={profileData.company} onChange={(e) => setProfileData({...profileData, company: e.target.value})} className="w-full py-2 border-b border-tata-blue focus:outline-none font-medium" />
-                        ) : (
-                          <div className="py-2 text-zinc-900 border-b border-zinc-50 font-medium">{profileData.company}</div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase">City</label>
-                        {isEditing ? (
-                          <input type="text" value={profileData.city || ""} onChange={(e) => setProfileData({...profileData, city: e.target.value})} className="w-full py-2 border-b border-tata-blue focus:outline-none font-medium" />
-                        ) : (
-                          <div className="py-2 text-zinc-900 border-b border-zinc-50 font-medium">{profileData.city || "—"}</div>
-                        )}
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase">LinkedIn Profile</label>
-                        {isEditing ? (
-                          <input type="url" value={profileData.linkedinUrl || ""} onChange={(e) => setProfileData({...profileData, linkedinUrl: e.target.value})} placeholder="https://linkedin.com/in/..." className="w-full py-2 border-b border-tata-blue focus:outline-none font-medium" />
-                        ) : (
-                          <div className="py-2 text-zinc-900 border-b border-zinc-50 font-medium">{profileData.linkedinUrl || "—"}</div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                {/* Volunteering Preferences */}
-                {userRole !== 'ngo' && (
-                  <section>
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 pb-2 border-b border-slate-100">Volunteering Preferences</h3>
-                    <div className="space-y-6">
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase mb-2 block">Skills</label>
-                        <TagInput tags={profileData.skills || []} onChange={(t) => setProfileData({...profileData, skills: t})} placeholder="Add skill…" disabled={!isEditing} />
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase mb-2 block">Areas of Interest</label>
-                        <TagInput tags={profileData.interests || []} onChange={(t) => setProfileData({...profileData, interests: t})} placeholder="Add interest…" disabled={!isEditing} />
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase mb-2 block">Languages Spoken</label>
-                        <TagInput tags={profileData.languages || []} onChange={(t) => setProfileData({...profileData, languages: t})} placeholder="Add language…" disabled={!isEditing} />
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-400 uppercase mb-3 block">Preferred Volunteering Mode</label>
-                        <div className="flex gap-4">
-                          {["Remote", "In-Person", "Either"].map(mode => (
-                            <label key={mode} className="flex items-center gap-2 cursor-pointer">
-                              <input
-                                type="radio"
-                                name="preferredMode"
-                                value={mode}
-                                checked={profileData.preferredMode === mode}
-                                onChange={() => isEditing && setProfileData({...profileData, preferredMode: mode})}
-                                disabled={!isEditing}
-                                className="accent-tata-blue"
-                              />
-                              <span className="text-sm font-medium text-slate-700">{mode}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between py-3 border-b border-slate-50">
-                        <span className="text-sm font-medium text-slate-700">Available for disaster response volunteering</span>
-                        <button
-                          type="button"
-                          onClick={() => isEditing && setProfileData({...profileData, disasterResponseInterest: !profileData.disasterResponseInterest})}
-                          className={`w-11 h-6 rounded-full relative transition-colors ${profileData.disasterResponseInterest ? 'bg-tata-blue' : 'bg-slate-300'} ${!isEditing ? 'opacity-60' : 'cursor-pointer'}`}
-                        >
-                          <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${profileData.disasterResponseInterest ? 'translate-x-5' : ''}`} />
-                        </button>
-                      </div>
-                      <div className="space-y-3">
-                        <label className="text-xs font-bold text-slate-400 uppercase block">Notification Preferences</label>
-                        <div className="flex items-center justify-between py-3 border-b border-slate-50">
-                          <span className="text-sm font-medium text-slate-700">Email me about new ProEngage projects</span>
-                          <button
-                            type="button"
-                            onClick={() => isEditing && setProfileData({...profileData, notifyProEngage: !profileData.notifyProEngage})}
-                            className={`w-11 h-6 rounded-full relative transition-colors ${profileData.notifyProEngage ? 'bg-tata-blue' : 'bg-slate-300'} ${!isEditing ? 'opacity-60' : 'cursor-pointer'}`}
-                          >
-                            <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${profileData.notifyProEngage ? 'translate-x-5' : ''}`} />
-                          </button>
-                        </div>
-                        <div className="flex items-center justify-between py-3 border-b border-slate-50">
-                          <span className="text-sm font-medium text-slate-700">Email me about TVW events in my city</span>
-                          <button
-                            type="button"
-                            onClick={() => isEditing && setProfileData({...profileData, notifyTVW: !profileData.notifyTVW})}
-                            className={`w-11 h-6 rounded-full relative transition-colors ${profileData.notifyTVW ? 'bg-tata-blue' : 'bg-slate-300'} ${!isEditing ? 'opacity-60' : 'cursor-pointer'}`}
-                          >
-                            <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${profileData.notifyTVW ? 'translate-x-5' : ''}`} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                )}
-
-                {userRole !== 'ngo' && (
-                  <>
-                    {/* Badge Wall */}
-                    <section>
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 pb-2 border-b border-slate-100">Badge Wall</h3>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {user.badges.map((badge, i) => (
-                          <motion.div 
-                            key={badge.id}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="p-6 rounded-3xl bg-slate-50 border border-slate-100 flex flex-col items-center text-center group hover:bg-white hover:shadow-xl transition-all"
-                          >
-                            <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
-                              {badge.icon}
-                            </div>
-                            <h4 className="text-xs font-bold text-zinc-900 mb-1">{badge.name}</h4>
-                            <p className="text-xs text-slate-400 font-medium uppercase">{badge.date}</p>
-                          </motion.div>
-                        ))}
-                        {feedbackSubmitted && (
-                          <motion.div 
-                            initial={{ opacity: 0, scale: 0.5 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="p-6 rounded-3xl bg-tata-cyan/5 border border-tata-cyan/20 flex flex-col items-center text-center relative overflow-hidden"
-                          >
-                            <motion.div 
-                              animate={{ opacity: [0, 1, 0], scale: [1, 1.5, 1] }}
-                              transition={{ duration: 2, repeat: Infinity }}
-                              className="absolute inset-0 bg-tata-cyan/10"
-                            />
-                            <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-3xl mb-4 z-10">
-                              ⭐
-                            </div>
-                            <h4 className="text-xs font-bold text-tata-cyan mb-1 z-10">Feedback Star</h4>
-                            <p className="text-xs text-tata-cyan/60 font-medium uppercase z-10">April 2026</p>
-                          </motion.div>
-                        )}
-                      </div>
-                    </section>
-
-                    {/* Certificates */}
-                    {projectStatus === "completed" && (
-                      <section>
-                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 pb-2 border-b border-slate-100">Completion Certificates</h3>
-                        <motion.div 
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="relative bg-white border border-slate-100 rounded-3xl p-10 overflow-hidden shadow-sm"
-                        >
-                          <div className="relative z-10 flex flex-col md:flex-row gap-10 items-center">
-                            <div className="w-48 h-64 bg-white rounded-2xl shadow-md border border-slate-100 flex flex-col p-4 text-zinc-900 shrink-0">
-                              <div className="text-[10px] font-bold text-tata-blue mb-4">TATA ENGAGE</div>
-                              <div className="flex-1 flex flex-col items-center justify-center text-center">
-                                <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mb-4">
-                                  <Award size={24} className="text-tata-blue" />
-                                </div>
-                                <div className="text-xs font-bold mb-1">CERTIFICATE OF COMPLETION</div>
-                                <div className="text-[10px] text-slate-400 mb-4">PROENGAGE EDITION 2025</div>
-                                <div className="text-[12px] font-bold text-tata-blue mb-1">{user.firstName} {user.lastName}</div>
-                                <div className="text-[6px] text-slate-500 max-w-[100px]">For outstanding contribution to the Financial Literacy project.</div>
-                              </div>
-                              <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between items-end">
-                                <div className="text-[6px] font-bold">PRATHAM NGO</div>
-                                <div className="w-8 h-8 bg-slate-100 rounded" />
-                              </div>
-                            </div>
-                            <div>
-                              <h4 className="text-2xl font-black text-slate-900 mb-4">Your Impact, Certified.</h4>
-                              <p className="text-slate-500 text-sm mb-8 leading-relaxed">This certificate recognizes your commitment to social change and your contribution to the Tata Engage ecosystem.</p>
-                              <div className="flex flex-wrap gap-4">
-                                <button className="bg-tata-blue text-white py-3 px-8 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-tata-blue/90 transition-all cursor-pointer">
-                                  <Download size={18} /> Download PDF
-                                </button>
-                                <button onClick={shareToLinkedIn} className="bg-slate-100 text-slate-700 py-3 px-8 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-slate-200 transition-all cursor-pointer">
-                                  <Linkedin size={18} /> Share to LinkedIn
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </motion.div>
-                      </section>
-                    )}
-                  </>
-                )}
+                <button onClick={handleCancel} style={{ background:"rgba(255,255,255,0.08)", border:"1.5px solid rgba(255,255,255,0.15)", borderRadius:9, padding:"9px 20px", fontSize:13.5, fontWeight:600, color:"rgba(255,255,255,0.7)", cursor:"pointer" }}>Cancel</button>
+                <button onClick={handleSave}   style={{ background:B_INDIGO, border:"none", borderRadius:9, padding:"9px 24px", fontSize:13.5, fontWeight:700, color:"#fff", cursor:"pointer" }}>Save Changes</button>
               </>
             ) : (
-              <section>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6 pb-2 border-b border-slate-100">Support Interaction History</h3>
-                <div className="space-y-4">
-                  {supportHistory.length > 0 ? (
-                    supportHistory.map((log) => (
-                      <motion.div 
-                        key={log.id}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="p-6 bg-slate-50 rounded-3xl border border-slate-100 flex flex-col md:flex-row justify-between gap-4"
-                      >
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-tata-blue bg-tata-blue/10 px-2 py-0.5 rounded uppercase tracking-wider">AI Assistant</span>
-                            <span className="text-xs text-slate-400 font-medium">{log.timestamp}</span>
-                          </div>
-                          <h4 className="font-bold text-zinc-900 text-sm">Query: {log.query}</h4>
-                          <p className="text-xs text-slate-500 italic">Summary: {log.summary}</p>
-                        </div>
-                        <div className="flex items-center">
-                          <button className="text-xs font-bold text-tata-blue hover:underline cursor-pointer">View Full Transcript</button>
-                        </div>
-                      </motion.div>
-                    ))
-                  ) : (
-                    <div className="text-center py-20 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 text-slate-300">
-                        <History size={32} />
-                      </div>
-                      <p className="text-slate-400 font-medium">No support history found.</p>
-                    </div>
-                  )}
-                </div>
-              </section>
-            )}
-          </div>
-
-          <div className="space-y-12">
-            {/* Stats/Sidebar */}
-            {userRole === 'ngo' ? (
-              <section className="p-8 bg-zinc-900 rounded-3xl text-white shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-tata-blue/20 rounded-full -mr-16 -mt-16 blur-2xl" />
-                <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-8">Organization Stats</h3>
-                <div className="space-y-8">
-                  <div>
-                    <div className="text-3xl font-bold mb-1">{ngoData.projects.length}</div>
-                    <div className="text-xs text-white/60 font-bold uppercase tracking-wider">Total Projects</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold mb-1">{ngoData.volunteers}</div>
-                    <div className="text-xs text-white/60 font-bold uppercase tracking-wider">Volunteers Engaged</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold mb-1">{ngoData.tier}</div>
-                    <div className="text-xs text-white/60 font-bold uppercase tracking-wider">NGO Tier Status</div>
-                  </div>
-                </div>
-              </section>
-            ) : (
-              <section className="p-8 bg-zinc-900 rounded-3xl text-white shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-tata-blue/20 rounded-full -mr-16 -mt-16 blur-2xl" />
-                <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-8">Engagement Stats</h3>
-                <div className="space-y-8">
-                  <div>
-                    <div className="text-3xl font-bold mb-1">128</div>
-                    <div className="text-xs text-white/60 font-bold uppercase tracking-wider">Volunteering Hours</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold mb-1">4</div>
-                    <div className="text-xs text-white/60 font-bold uppercase tracking-wider">Projects Completed</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold mb-1">2,450</div>
-                    <div className="text-xs text-white/60 font-bold uppercase tracking-wider">Impact Points</div>
-                  </div>
-                </div>
-              </section>
+              <>
+                <button onClick={()=>{}} style={{ background:"rgba(255,255,255,0.08)", border:"1.5px solid rgba(255,255,255,0.15)", borderRadius:9, padding:"9px 18px", fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.6)", cursor:"pointer" }}>Delete Account</button>
+                <button onClick={()=>setIsEditing(true)} style={{ background:B_INDIGO, border:"none", borderRadius:9, padding:"9px 24px", fontSize:13.5, fontWeight:700, color:"#fff", cursor:"pointer" }}>Edit Profile</button>
+              </>
             )}
           </div>
         </div>
 
-        {/* ═══ Your SPOC ═══ */}
-        <div className="mt-12">
-          <h3 className="text-[13px] uppercase text-muted-foreground tracking-[0.08em] font-semibold mb-4 flex items-center">
-            <div className="w-1 h-5 bg-tata-blue rounded-full mr-3" />
-            Your SPOC
-          </h3>
-          <div className="bg-white border border-zinc-100 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 rounded-full bg-tata-blue/10 text-tata-blue font-bold flex items-center justify-center">
-                RD
-              </div>
-              <div>
-                <p className="font-semibold text-slate-900">Rohan Desai</p>
-                <p className="text-sm text-slate-500">Corporate SPOC · Tata Consultancy Services</p>
-                <p className="text-xs text-slate-400 mt-1">Covers your region and company volunteering</p>
+        <div style={{ display:"flex", gap:28, alignItems:"flex-start" }}>
+
+          {/* ── Left nav ────────────────────────────────────────────── */}
+          <div style={{ width:200, flexShrink:0, position:"sticky", top:108, alignSelf:"flex-start" }}>
+            <div style={{ background:"#fff", border:"1px solid #e8e8f0", borderRadius:12, overflow:"hidden" }}>
+              {NAV_TABS.map((t,i)=>{
+                const on = activeTab===t.id;
+                return(
+                  <button key={t.id} onClick={()=>setActiveTab(t.id)} style={{ display:"flex", alignItems:"center", gap:10, width:"100%", padding:"13px 16px", borderBottom:i<NAV_TABS.length-1?"1px solid #f0f0f8":"none", background:on?P_INDIGO:"transparent", border:"none", cursor:"pointer", textAlign:"left", transition:"background 0.15s", fontFamily:"'Noto Sans', sans-serif" }}>
+                    <div style={{ width:3, height:16, borderRadius:2, background:on?B_INDIGO:"#e8e8f0", flexShrink:0, transition:"background 0.15s" }}/>
+                    <span style={{ fontSize:13, fontWeight:on?700:400, color:on?B_INDIGO:"#6b6b7a" }}>{t.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* ── Form area ────────────────────────────────────────────── */}
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{ background:"#fff", border:"1px solid #e8e8f0", borderRadius:14, padding:"28px 32px" }}>
+
+              {/* ── PERSONAL INFORMATION ────────────────────────────── */}
+              {activeTab==="personal"&&(
+                <>
+                  <div style={{ fontSize:9.5, fontWeight:700, letterSpacing:"1.8px", textTransform:"uppercase", color:"#aaaabc", marginBottom:20, paddingBottom:12, borderBottom:"1px solid #f0f0f8" }}>Personal Information</div>
+                  <div style={{ background:P_BLUE, border:`1px solid ${B_BLUE}22`, borderRadius:9, padding:"10px 14px", marginBottom:20, fontSize:13, color:"#1d4ed8" }}>
+                    * Name and email are locked to your SSO account. Contact <strong>tataengage@tata.com</strong> to update locked fields.
+                  </div>
+
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel>Title *</FieldLabel>
+                    {isEditing
+                      ? <SelectInput value={profile.title} onChange={v=>set("title",v)} options={TITLES}/>
+                      : <ReadOnly value={profile.title}/>}
+                  </div>
+
+                  <div style={gridRow}>
+                    <div style={col}>
+                      <FieldLabel required>First Name</FieldLabel>
+                      <ReadOnly value={profile.firstName}/>
+                    </div>
+                    <div style={col}>
+                      <FieldLabel required>Last Name</FieldLabel>
+                      <ReadOnly value={profile.lastName}/>
+                    </div>
+                  </div>
+
+                  <div style={gridRow}>
+                    <div style={col}>
+                      <FieldLabel required>Gender</FieldLabel>
+                      {isEditing
+                        ? <SelectInput value={profile.gender} onChange={v=>set("gender",v)} options={GENDERS}/>
+                        : <ReadOnly value={profile.gender}/>}
+                    </div>
+                    <div style={col}>
+                      <FieldLabel required>Birth Date</FieldLabel>
+                      {isEditing
+                        ? <TextInput type="date" value={profile.birthDate} onChange={v=>set("birthDate",v)}/>
+                        : <ReadOnly value={new Date(profile.birthDate).toLocaleDateString("en-GB",{day:"2-digit",month:"2-digit",year:"numeric"})}/>}
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel required>Do you have an Official Tata Email ID?</FieldLabel>
+                    <div style={{ display:"flex", gap:24, marginTop:4 }}>
+                      {[["true","Yes"],["false","No"]].map(([val,lbl])=>(
+                        <label key={val} style={{ display:"flex", alignItems:"center", gap:8, cursor:isEditing?"pointer":"default", fontSize:13.5, color:String(profile.officialEmail)===val?B_INDIGO:ACCENT_NAVY, fontWeight:String(profile.officialEmail)===val?600:400 }}>
+                          <div onClick={()=>isEditing&&set("officialEmail",val==="true")} style={{ width:17,height:17,borderRadius:"50%",border:`2px solid ${String(profile.officialEmail)===val?B_INDIGO:"#dddde8"}`,background:String(profile.officialEmail)===val?B_INDIGO:"#fff",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",cursor:isEditing?"pointer":"default" }}>
+                            {String(profile.officialEmail)===val&&<div style={{ width:6,height:6,borderRadius:"50%",background:"#fff" }}/>}
+                          </div>{lbl}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel required>Email ID</FieldLabel>
+                    <ReadOnly value={profile.email}/>
+                  </div>
+
+                  {/* Country / City */}
+                  <div style={gridRow}>
+                    <div style={col}>
+                      <FieldLabel required>Country</FieldLabel>
+                      {isEditing
+                        ? <SelectInput value={profile.country} onChange={v=>set("country",v)} options={COUNTRIES}/>
+                        : <ReadOnly value={profile.country}/>}
+                    </div>
+                    <div style={col}>
+                      <FieldLabel required>City / Location</FieldLabel>
+                      {isEditing?(
+                        <>
+                          <SelectInput value={profile.city} onChange={v=>set("city",v)} options={CITIES_INDIA}/>
+                          {profile.city==="Other City"&&<div style={{ marginTop:8 }}><TextInput value={profile.cityDetail} onChange={v=>set("cityDetail",v)} placeholder="Specify city"/></div>}
+                        </>
+                      ):<ReadOnly value={profile.city}/>}
+                    </div>
+                  </div>
+
+                  {/* Phone */}
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel>Phone</FieldLabel>
+                    <div style={{ display:"grid", gridTemplateColumns:"80px 100px 1fr", gap:8 }}>
+                      {isEditing?(
+                        <>
+                          <TextInput value={profile.phoneCountryCode} onChange={v=>set("phoneCountryCode",v)} placeholder="91"/>
+                          <TextInput value={profile.phoneArea} onChange={v=>set("phoneArea",v)} placeholder="022"/>
+                          <TextInput value={profile.phoneNum} onChange={v=>set("phoneNum",v)} placeholder="Number"/>
+                        </>
+                      ):<ReadOnly value={`+${profile.phoneCountryCode} (${profile.phoneArea}) ${profile.phoneNum}`}/>}
+                    </div>
+                  </div>
+
+                  {/* Mobile */}
+                  <div style={{ marginBottom:20 }}>
+                    <FieldLabel required>Mobile</FieldLabel>
+                    <div style={{ display:"grid", gridTemplateColumns:"80px 1fr", gap:8 }}>
+                      {isEditing?(
+                        <>
+                          <TextInput value={profile.mobileCountryCode} onChange={v=>set("mobileCountryCode",v)} placeholder="91"/>
+                          <TextInput value={profile.mobileNum} onChange={v=>set("mobileNum",v)} placeholder="Mobile number"/>
+                        </>
+                      ):<ReadOnly value={`+${profile.mobileCountryCode} ${profile.mobileNum}`}/>}
+                    </div>
+                  </div>
+
+                  {/* Photo */}
+                  <div style={{ marginBottom:8 }}>
+                    <FieldLabel>Photograph <span style={{ fontWeight:400, color:"#aaaabc" }}>(Max. size 5 MB)</span></FieldLabel>
+                    <div style={{ display:"flex", alignItems:"center", gap:20 }}>
+                      <div style={{ width:80, height:90, background:"#f0f0f8", borderRadius:9, display:"flex", alignItems:"center", justifyContent:"center", fontSize:32, color:"#dddde8", border:"1.5px dashed #dddde8" }}>👤</div>
+                      {isEditing&&(
+                        <div style={{ border:"1.5px dashed #dddde8", borderRadius:9, padding:"16px 24px", textAlign:"center", cursor:"pointer", fontSize:13, color:"#aaaabc" }}>Choose File · No file chosen</div>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* ── PROFESSIONAL DETAILS ─────────────────────────────── */}
+              {activeTab==="professional"&&(
+                <>
+                  <div style={{ fontSize:9.5, fontWeight:700, letterSpacing:"1.8px", textTransform:"uppercase", color:"#aaaabc", marginBottom:20, paddingBottom:12, borderBottom:"1px solid #f0f0f8" }}>Professional Details</div>
+
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel required>Company</FieldLabel>
+                    {isEditing
+                      ? <SelectInput value={profile.company} onChange={v=>set("company",v)} options={COMPANIES}/>
+                      : <ReadOnly value={profile.company}/>}
+                  </div>
+
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel required>Designation</FieldLabel>
+                    {isEditing?(
+                      <>
+                        <SelectInput value={profile.designation} onChange={v=>set("designation",v)} options={DESIGNATIONS}/>
+                        {profile.designation==="Others"&&<div style={{ marginTop:8 }}><TextInput value={profile.designationDetail} onChange={v=>set("designationDetail",v)} placeholder="Specify designation"/></div>}
+                      </>
+                    ):<ReadOnly value={profile.designationDetail||profile.designation}/>}
+                  </div>
+
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel required>Function</FieldLabel>
+                    {isEditing?(
+                      <>
+                        <SelectInput value={profile.function_} onChange={v=>set("function_",v)} options={FUNCTIONS}/>
+                        {profile.function_==="Others"&&<div style={{ marginTop:8 }}><TextInput value={profile.functionDetail} onChange={v=>set("functionDetail",v)} placeholder="Specify function"/></div>}
+                      </>
+                    ):<ReadOnly value={profile.functionDetail||profile.function_}/>}
+                  </div>
+
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel required>Education Qualification</FieldLabel>
+                    {isEditing?(
+                      <>
+                        <SelectInput value={profile.eduQual} onChange={v=>set("eduQual",v)} options={EDU_QUALS}/>
+                        <div style={{ marginTop:8 }}><TextInput value={profile.eduQualDetail} onChange={v=>set("eduQualDetail",v)} placeholder="Institution / additional detail"/></div>
+                      </>
+                    ):<ReadOnly value={profile.eduQualDetail?`${profile.eduQual} — ${profile.eduQualDetail}`:profile.eduQual}/>}
+                  </div>
+
+                  <div style={{ marginBottom:16 }}>
+                    <FieldLabel>LinkedIn Profile URL</FieldLabel>
+                    {isEditing
+                      ? <TextInput type="url" value={profile.linkedinUrl} onChange={v=>set("linkedinUrl",v)} placeholder="https://linkedin.com/in/..."/>
+                      : <ReadOnly value={profile.linkedinUrl}/>}
+                  </div>
+                </>
+              )}
+
+              {/* ── VOLUNTEERING PREFERENCES ─────────────────────────── */}
+              {activeTab==="volunteering"&&(
+                <>
+                  <div style={{ fontSize:9.5, fontWeight:700, letterSpacing:"1.8px", textTransform:"uppercase", color:"#aaaabc", marginBottom:20, paddingBottom:12, borderBottom:"1px solid #f0f0f8" }}>Volunteering Preferences</div>
+
+                  <div style={{ marginBottom:20 }}>
+                    <FieldLabel>Choose skills you possess that will help you in volunteering</FieldLabel>
+                    <div style={{ fontSize:12, color:"#aaaabc", marginBottom:10 }}>Press to select / deselect multiple skills</div>
+                    {isEditing
+                      ? <MultiSelectList selected={profile.skills} onChange={v=>set("skills",v)} options={SKILLS_LIST}/>
+                      : <div style={{ display:"flex", flexWrap:"wrap", gap:7 }}>{profile.skills.map(s=><span key={s} style={{ background:P_INDIGO, color:B_INDIGO, fontSize:12.5, fontWeight:600, padding:"4px 12px", borderRadius:100 }}>{s}</span>)}</div>}
+                  </div>
+
+                  <div style={{ marginBottom:20 }}>
+                    <FieldLabel>Choose areas of interest in which you would like to volunteer</FieldLabel>
+                    <div style={{ fontSize:12, color:"#aaaabc", marginBottom:10 }}>Press to select / deselect multiple areas of interest</div>
+                    {isEditing
+                      ? <MultiSelectList selected={profile.interests} onChange={v=>set("interests",v)} options={INTERESTS_LIST}/>
+                      : <div style={{ display:"flex", flexWrap:"wrap", gap:7 }}>{profile.interests.map(s=><span key={s} style={{ background:P_TEAL, color:B_TEAL, fontSize:12.5, fontWeight:600, padding:"4px 12px", borderRadius:100 }}>{s}</span>)}</div>}
+                  </div>
+
+                  <div style={{ marginBottom:20 }}>
+                    <FieldLabel>Languages</FieldLabel>
+                    {isEditing
+                      ? <MultiSelectList selected={profile.languages} onChange={v=>set("languages",v)} options={LANGUAGES_LIST} maxH={130}/>
+                      : <div style={{ display:"flex", flexWrap:"wrap", gap:7 }}>{profile.languages.map(s=><span key={s} style={{ background:"#f0f0f8", color:"#555", fontSize:12.5, fontWeight:600, padding:"4px 12px", borderRadius:100 }}>{s}</span>)}</div>}
+                  </div>
+
+                  <div style={{ marginBottom:20 }}>
+                    <FieldLabel>Preferred Volunteering Mode</FieldLabel>
+                    <div style={{ display:"flex", gap:24, marginTop:4, flexWrap:"wrap" }}>
+                      {["Remote","In-Person","Either"].map(mode=>(
+                        <label key={mode} style={{ display:"flex", alignItems:"center", gap:8, cursor:isEditing?"pointer":"default", fontSize:13.5, color:profile.preferredMode===mode?B_INDIGO:ACCENT_NAVY, fontWeight:profile.preferredMode===mode?600:400 }}>
+                          <div onClick={()=>isEditing&&set("preferredMode",mode)} style={{ width:17,height:17,borderRadius:"50%",border:`2px solid ${profile.preferredMode===mode?B_INDIGO:"#dddde8"}`,background:profile.preferredMode===mode?B_INDIGO:"#fff",display:"flex",alignItems:"center",justifyContent:"center",cursor:isEditing?"pointer":"default" }}>
+                            {profile.preferredMode===mode&&<div style={{ width:6,height:6,borderRadius:"50%",background:"#fff" }}/>}
+                          </div>{mode}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom:20 }}>
+                    <FieldLabel>Interested in Volunteering for Disaster Response?</FieldLabel>
+                    <div style={{ display:"flex", gap:24, marginTop:4 }}>
+                      {[["true","Yes"],["false","No"]].map(([val,lbl])=>(
+                        <label key={val} style={{ display:"flex", alignItems:"center", gap:8, cursor:isEditing?"pointer":"default", fontSize:13.5, color:String(profile.disasterResponseInterest)===val?B_INDIGO:ACCENT_NAVY, fontWeight:String(profile.disasterResponseInterest)===val?600:400 }}>
+                          <div onClick={()=>isEditing&&set("disasterResponseInterest",val==="true")} style={{ width:17,height:17,borderRadius:"50%",border:`2px solid ${String(profile.disasterResponseInterest)===val?B_INDIGO:"#dddde8"}`,background:String(profile.disasterResponseInterest)===val?B_INDIGO:"#fff",display:"flex",alignItems:"center",justifyContent:"center",cursor:isEditing?"pointer":"default" }}>
+                            {String(profile.disasterResponseInterest)===val&&<div style={{ width:6,height:6,borderRadius:"50%",background:"#fff" }}/>}
+                          </div>{lbl}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* ── NOTIFICATION SETTINGS ────────────────────────────── */}
+              {activeTab==="notification"&&(
+                <>
+                  <div style={{ fontSize:9.5, fontWeight:700, letterSpacing:"1.8px", textTransform:"uppercase", color:"#aaaabc", marginBottom:20, paddingBottom:12, borderBottom:"1px solid #f0f0f8" }}>Notification Settings</div>
+                  <p style={{ fontSize:13.5, color:"#6b6b7a", lineHeight:1.65, marginBottom:24 }}>
+                    Manage the communications you receive from TataEngage. You can change these at any time.
+                  </p>
+                  {[
+                    { key:"notifyProEngage" as const, label:"Receive communication from Tata Engage regarding ProEngage projects", desc:"Receive matching updates, shortlisting notifications and reminders." },
+                    { key:"notifyTVW"       as const, label:"Receive communication from Tata Engage regarding TVW events",         desc:"Get notified about new events, registrations and reminders." },
+                    { key:"notifyEmail"     as const, label:"Receive general newsletters and platform updates from Tata Engage",    desc:"Monthly digest, platform changes and community highlights." },
+                  ].map(item=>(
+                    <div key={item.key} style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:16, padding:"18px 0", borderBottom:"1px solid #f0f0f8" }}>
+                      <div>
+                        <div style={{ fontSize:13.5, fontWeight:600, color:ACCENT_NAVY, marginBottom:3 }}>{item.label}</div>
+                        <div style={{ fontSize:12.5, color:"#8888a0" }}>{item.desc}</div>
+                      </div>
+                      <div onClick={()=>isEditing&&set(item.key,!profile[item.key])} style={{ width:44,height:24,borderRadius:100,background:profile[item.key]?B_INDIGO:"#dddde8",position:"relative",cursor:isEditing?"pointer":"default",flexShrink:0,transition:"background 0.2s" }}>
+                        <div style={{ position:"absolute",top:3,left:profile[item.key]?22:3,width:18,height:18,borderRadius:"50%",background:"#fff",transition:"left 0.2s",boxShadow:"0 1px 4px rgba(0,0,0,0.2)" }}/>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {/* Save / cancel bottom buttons (only on edit) */}
+              {isEditing&&(
+                <div style={{ display:"flex", gap:12, marginTop:28, paddingTop:20, borderTop:"1px solid #e8e8f0" }}>
+                  <button onClick={handleSave}   style={{ flex:2, background:B_INDIGO, color:"#fff", border:"none", borderRadius:9, padding:"12px", fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'Noto Sans', sans-serif" }}>Save Changes</button>
+                  <button onClick={handleCancel} style={{ flex:1, background:"#fff", border:"1.5px solid #dddde8", borderRadius:9, padding:"12px", fontSize:13.5, fontWeight:600, color:"#6b6b7a", cursor:"pointer", fontFamily:"'Noto Sans', sans-serif" }}>Cancel</button>
+                </div>
+              )}
+            </div>
+
+            {/* ── Engagement Stats sidebar card ─────────────────────── */}
+            <div style={{ background:ACCENT_NAVY, borderRadius:14, padding:"24px 28px", marginTop:20, position:"relative", overflow:"hidden" }}>
+              <div style={{ position:"absolute", top:-20, right:-20, width:120, height:120, borderRadius:"50%", background:`${B_INDIGO}33` }}/>
+              <div style={{ fontSize:10, fontWeight:700, letterSpacing:"1.8px", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:20 }}>Engagement Stats</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:20, position:"relative", zIndex:1 }}>
+                {[["347 hrs","Volunteering Hours"],["4","Projects Completed"],["7","Badges Earned"]].map(([v,l])=>(
+                  <div key={l}>
+                    <div style={{ fontSize:26, fontWeight:900, color:"#fff", letterSpacing:-1 }}>{v}</div>
+                    <div style={{ fontSize:11, fontWeight:600, color:"rgba(255,255,255,0.4)", textTransform:"uppercase", letterSpacing:"0.6px", lineHeight:1.3, marginTop:4 }}>{l}</div>
+                  </div>
+                ))}
               </div>
             </div>
-            <button
-              onClick={() => triggerToast("Message sent to Rohan Desai. He'll respond within 24 hours.")}
-              className="text-sm text-tata-blue font-semibold border border-tata-blue/30 rounded-lg px-4 py-2 hover:bg-tata-blue/5 cursor-pointer"
-            >
-              Contact SPOC
-            </button>
-          </div>
-        </div>
 
-        {/* ═══ Family Members ═══ */}
-        <div className="mt-12">
-          <h3 className="text-[13px] uppercase text-muted-foreground tracking-[0.08em] font-semibold mb-4 flex items-center">
-            <div className="w-1 h-5 bg-tata-blue rounded-full mr-3" />
-            Family Members registered under you
-          </h3>
-          <div className="bg-white border border-zinc-100 rounded-2xl shadow-sm p-5">
-            {MOCK_FAMILY_MEMBERS.map((member, i) => (
-              <div key={member.id} className={`flex justify-between items-center py-3 ${i < MOCK_FAMILY_MEMBERS.length - 1 ? 'border-b border-zinc-100' : ''}`}>
-                <div>
-                  <p className="font-semibold text-sm text-slate-900">{member.name}</p>
-                  <p className="text-xs text-slate-400">{member.relationship}</p>
-                </div>
-                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${member.status === 'Active' ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
-                  {member.status}
-                </span>
+            {/* ── SPOC card ─────────────────────────────────────────── */}
+            <div style={{ background:"#fff", border:"1px solid #e8e8f0", borderRadius:14, padding:"20px 24px", marginTop:20 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+                <div style={{ width:3, height:18, borderRadius:2, background:B_INDIGO }}/>
+                <div style={{ fontSize:14, fontWeight:700, color:ACCENT_NAVY }}>Your SPOC</div>
               </div>
-            ))}
-          </div>
-          <button
-            onClick={() => triggerToast("Invite link copied. Share it with your family member to register.")}
-            className="mt-3 text-sm text-tata-blue font-semibold cursor-pointer"
-          >
-            + Invite a family member
-          </button>
-        </div>
+              <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:14 }}>
+                <div style={{ width:48, height:48, borderRadius:"50%", background:P_INDIGO, color:B_INDIGO, fontWeight:700, fontSize:15, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>RD</div>
+                <div>
+                  <div style={{ fontSize:14.5, fontWeight:700, color:ACCENT_NAVY }}>Rohan Desai</div>
+                  <div style={{ fontSize:12.5, color:"#8888a0", marginTop:2 }}>Corporate SPOC · Tata Consultancy Services</div>
+                  <div style={{ fontSize:12, color:"#aaaabc", marginTop:2 }}>Covers your region and company volunteering</div>
+                </div>
+              </div>
+              <button onClick={()=>triggerToast("Message sent to Rohan Desai. He'll respond within 24 hours.")} style={{ fontSize:13, color:B_INDIGO, fontWeight:600, border:`1.5px solid ${B_INDIGO}33`, borderRadius:8, padding:"7px 18px", cursor:"pointer", background:"transparent", fontFamily:"'Noto Sans', sans-serif" }}>Contact SPOC</button>
+            </div>
 
+            {/* ── Family Members ────────────────────────────────────── */}
+            <div style={{ background:"#fff", border:"1px solid #e8e8f0", borderRadius:14, padding:"20px 24px", marginTop:20 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+                <div style={{ width:3, height:18, borderRadius:2, background:B_INDIGO }}/>
+                <div style={{ fontSize:14, fontWeight:700, color:ACCENT_NAVY }}>Family Members registered under you</div>
+              </div>
+              {MOCK_FAMILY_MEMBERS.map((m,i)=>(
+                <div key={m.id} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"12px 0", borderBottom:i<MOCK_FAMILY_MEMBERS.length-1?"1px solid #f0f0f8":"none" }}>
+                  <div>
+                    <div style={{ fontSize:13.5, fontWeight:600, color:ACCENT_NAVY }}>{m.name}</div>
+                    <div style={{ fontSize:12.5, color:"#8888a0" }}>{m.relationship} · {m.email}</div>
+                  </div>
+                  <span style={{ fontSize:11.5, fontWeight:600, padding:"3px 10px", borderRadius:100, background:m.status==="Active"?"#f0fdf4":"#fffbeb", color:m.status==="Active"?"#166534":"#92400e" }}>{m.status}</span>
+                </div>
+              ))}
+              <button onClick={()=>triggerToast("Invite link copied. Share it with your family member to register.")} style={{ marginTop:14, fontSize:13.5, color:B_INDIGO, fontWeight:600, cursor:"pointer", background:"none", border:"none", padding:0 }}>
+                + Invite a family member
+              </button>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
   );
-};
-
-export default ProfileView;
+}
