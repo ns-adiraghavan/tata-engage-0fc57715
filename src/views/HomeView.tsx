@@ -94,6 +94,21 @@ const HERO_SLIDES = [
   },
 ];
 
+const HERO_PARTICLES = [
+  { top: "8%",  left: "5%",  size: 6, opacity: 0.08, dur: "7s",  delay: "0s"   },
+  { top: "15%", left: "82%", size: 4, opacity: 0.06, dur: "9s",  delay: "1.2s" },
+  { top: "35%", left: "12%", size: 8, opacity: 0.10, dur: "8s",  delay: "0.5s" },
+  { top: "60%", left: "90%", size: 5, opacity: 0.07, dur: "6s",  delay: "2.8s" },
+  { top: "72%", left: "25%", size: 7, opacity: 0.12, dur: "10s", delay: "1.5s" },
+  { top: "20%", left: "68%", size: 4, opacity: 0.06, dur: "7.5s",delay: "3.2s" },
+  { top: "48%", left: "55%", size: 6, opacity: 0.09, dur: "8.5s",delay: "0.8s" },
+  { top: "80%", left: "40%", size: 5, opacity: 0.07, dur: "9.5s",delay: "2.0s" },
+  { top: "12%", left: "45%", size: 8, opacity: 0.10, dur: "6.5s",delay: "3.8s" },
+  { top: "55%", left: "8%",  size: 4, opacity: 0.06, dur: "7s",  delay: "1.0s" },
+  { top: "42%", left: "78%", size: 7, opacity: 0.11, dur: "8s",  delay: "2.5s" },
+  { top: "88%", left: "65%", size: 5, opacity: 0.08, dur: "9s",  delay: "0.3s" },
+];
+
 const SECTION_IDS    = ["hero", "programmes", "journey", "numbers"];
 const SECTION_LABELS = ["Home", "Programmes", "Journey", "Numbers"];
 
