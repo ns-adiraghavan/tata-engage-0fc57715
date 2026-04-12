@@ -27,6 +27,14 @@ const P_TEAL      = "#E6F8F5";
 const P_BLUE      = "#EBF4FF";
 const P_SPOC      = "#EEEDFE";
 
+const NOTIFICATIONS: Record<string, boolean> = {
+  volunteerPipeline: true,
+  feedbackMonitor: true,
+  tvwActions: false,
+};
+
+const notifDot: React.CSSProperties = { position: "absolute", top: -3, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#E8401C", border: "2px solid white" };
+
 // ─── Shared styles ────────────────────────────────────────────────────────────
 const card: React.CSSProperties      = { background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, padding: "20px 22px" };
 const spocCard: React.CSSProperties  = { background: "#fff", border: "1.5px solid #c8c6f0", borderRadius: 14, padding: "20px 22px" };
@@ -358,12 +366,15 @@ export default function SPOCDashboardView() {
         <>
           <div style={{ ...card, padding: "14px 16px" }}>
             <div style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: "1.2px", textTransform: "uppercase", color: B_INDIGO, marginBottom: 10, opacity: 0.8 }}>SPOC Corner</div>
-            {SPOC_SECTIONS.map(s => (
-              <div key={s.id} onClick={() => scrollTo(s.id)}
-                style={{ fontSize: 12, padding: "5px 0", borderBottom: "1px solid #f0f0f8", cursor: "pointer", color: activeSection === s.id ? B_INDIGO : "#6b6b7a", fontWeight: activeSection === s.id ? 700 : 400 }}>
-                {activeSection === s.id ? "↑ " : ""}{s.label}
-              </div>
-            ))}
+            {SPOC_SECTIONS.map(s => {
+              const hasNotif = (s.id === "spoc-tvw" && NOTIFICATIONS.tvwActions) || (s.id === "spoc-oversight" && (NOTIFICATIONS.volunteerPipeline || NOTIFICATIONS.feedbackMonitor));
+              return (
+                <div key={s.id} onClick={() => scrollTo(s.id)}
+                  style={{ position: "relative", display: "inline-flex", fontSize: 12, padding: "5px 0", borderBottom: "1px solid #f0f0f8", cursor: "pointer", color: activeSection === s.id ? B_INDIGO : "#6b6b7a", fontWeight: activeSection === s.id ? 700 : 400, width: "100%" }}>
+                  {activeSection === s.id ? "↑ " : ""}{s.label}{hasNotif && <span style={notifDot} />}
+                </div>
+              );
+            })}
           </div>
           <div style={{ ...card, padding: "14px 16px" }}>
             <div style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: "1.2px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 10 }}>Volunteer</div>
@@ -516,7 +527,7 @@ export default function SPOCDashboardView() {
           <div onClick={() => setPipelineOpen(o => !o)}
             style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", padding: "10px 0", borderBottom: "1px solid #e8e8f0", userSelect: "none" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>Volunteer Pipeline</div>
+              <div style={{ position: "relative", display: "inline-flex", fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>Volunteer Pipeline{NOTIFICATIONS.volunteerPipeline && <span style={notifDot} />}</div>
               <span style={{ background: P_SPOC, color: B_INDIGO, fontSize: 10.5, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>{filteredPipeline.length}</span>
             </div>
             <span style={{ fontSize: 14, color: "#aaaabc", transition: "transform 0.2s", transform: pipelineOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
@@ -573,7 +584,7 @@ export default function SPOCDashboardView() {
             <div onClick={() => setFeedbackPanelOpen(o => !o)}
               style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", padding: "10px 0", borderBottom: "1px solid #e8e8f0", userSelect: "none" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>Feedback Monitor</div>
+                <div style={{ position: "relative", display: "inline-flex", fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>Feedback Monitor{NOTIFICATIONS.feedbackMonitor && <span style={notifDot} />}</div>
                 <span style={{ background: P_RED, color: B_RED, fontSize: 10.5, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>{FEEDBACK_MONITOR_DATA.length} overdue</span>
               </div>
               <span style={{ fontSize: 14, color: "#aaaabc", transition: "transform 0.2s", transform: feedbackPanelOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>

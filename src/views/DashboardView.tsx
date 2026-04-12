@@ -17,6 +17,14 @@ const P_TEAL      = "#E6F8F5";
 const P_BLUE      = "#EBF4FF";
 const IS_NEW_VOLUNTEER = false;
 
+const NOTIFICATIONS: Record<string, boolean> = {
+  viewOpportunities: true,
+  diyActivities: false,
+  proEngageProject: true,
+};
+
+const notifDot: React.CSSProperties = { position: "absolute", top: -3, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#E8401C", border: "2px solid white" };
+
 const VOLUNTEER = {
   firstName: "Priya",
   lastName: "Sharma",
@@ -223,12 +231,13 @@ function StatTile({ value, suffix = "", label, pastel, accentColor, delay, start
 }
 
 // ─── Pill slicers ─────────────────────────────────────────────────────────────
-function Slicers({ options, active, onChange, accentColor = B_INDIGO }: { options: { id: string; label: string }[]; active: string; onChange: (id: string) => void; accentColor?: string; }) {
+function Slicers({ options, active, onChange, accentColor = B_INDIGO, notifications }: { options: { id: string; label: string }[]; active: string; onChange: (id: string) => void; accentColor?: string; notifications?: Record<string, boolean> }) {
   return (
     <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 22 }}>
       {options.map(o => (
-        <button key={o.id} onClick={() => onChange(o.id)} style={{ padding: "6px 16px", borderRadius: 100, border: `1.5px solid ${active === o.id ? accentColor : "#dddde8"}`, background: active === o.id ? accentColor : "transparent", color: active === o.id ? "#fff" : "#666", fontSize: 13, fontWeight: active === o.id ? 600 : 400, cursor: "pointer", transition: "all 0.15s", fontFamily: "'Noto Sans', sans-serif" }}>
+        <button key={o.id} onClick={() => onChange(o.id)} style={{ position: "relative", display: "inline-flex", padding: "6px 16px", borderRadius: 100, border: `1.5px solid ${active === o.id ? accentColor : "#dddde8"}`, background: active === o.id ? accentColor : "transparent", color: active === o.id ? "#fff" : "#666", fontSize: 13, fontWeight: active === o.id ? 600 : 400, cursor: "pointer", transition: "all 0.15s", fontFamily: "'Noto Sans', sans-serif" }}>
           {o.label}
+          {notifications?.[o.id] && <span style={notifDot} />}
         </button>
       ))}
     </div>
@@ -1063,7 +1072,7 @@ export default function DashboardView() {
                 eyebrow={IS_PE_SEASON ? "ProEngage Edition 11 · Open · Closes 15 Jul 2025" : "Non-ProEngage season · Next edition opens Jan 2026"}
                 title="My Activities"
               />
-              <Slicers options={activitySlicers} active={activeActivity} onChange={setActiveActivity} accentColor={B_INDIGO} />
+              <Slicers options={activitySlicers} active={activeActivity} onChange={setActiveActivity} accentColor={B_INDIGO} notifications={{ opportunities: NOTIFICATIONS.viewOpportunities, diy: NOTIFICATIONS.diyActivities, proengage: NOTIFICATIONS.proEngageProject, apply: NOTIFICATIONS.proEngageProject, early: NOTIFICATIONS.proEngageProject }} />
 
               {/* ── View Opportunities tab ─────────────────────────────── */}
               {activeActivity === "opportunities" && (
@@ -1347,10 +1356,11 @@ export default function DashboardView() {
             <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
               {SECTIONS.map(s => {
                 const on = activeSection === s.id;
+                const hasNotif = s.id === "activities" && (NOTIFICATIONS.viewOpportunities || NOTIFICATIONS.diyActivities || NOTIFICATIONS.proEngageProject);
                 return (
                   <button key={s.id} onClick={() => scrollTo(s.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: 8, border: "none", background: on ? P_INDIGO : "transparent", cursor: "pointer", textAlign: "left", transition: "background 0.18s", fontFamily: "'Noto Sans', sans-serif" }}>
                     <div style={{ width: 3, height: 16, borderRadius: 2, background: on ? B_INDIGO : "#dddde8", flexShrink: 0, transition: "background 0.18s" }} />
-                    <span style={{ fontSize: 12.5, fontWeight: on ? 700 : 400, color: on ? B_INDIGO : "#aaaabc", transition: "color 0.18s" }}>{s.label}</span>
+                    <span style={{ position: "relative", display: "inline-flex", fontSize: 12.5, fontWeight: on ? 700 : 400, color: on ? B_INDIGO : "#aaaabc", transition: "color 0.18s" }}>{s.label}{hasNotif && <span style={notifDot} />}</span>
                   </button>
                 );
               })}

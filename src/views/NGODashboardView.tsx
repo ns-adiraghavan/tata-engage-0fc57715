@@ -25,6 +25,14 @@ const P_RED       = "#FFF0EE";
 const P_BLUE      = "#EBF4FF";
 const P_YELLOW    = "#FEF6E4";
 
+const NOTIFICATIONS: Record<string, boolean> = {
+  applications: true,
+  activities: false,
+  feedback: true,
+};
+
+const notifDot: React.CSSProperties = { position: "absolute", top: -3, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#E8401C", border: "2px solid white" };
+
 // ─── DrawerShell — centred modal (matches Volunteer/SPOC dashboards) ──────────
 function DrawerShell({
   open, onClose, title, subtitle, accentTag, width = 560, children,
@@ -593,7 +601,7 @@ const NGODashboardView = () => {
               <button onClick={() => setModal("feedback")}
                 style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}><MessageSquare size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Submit feedback</span></div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}><MessageSquare size={15} color={B_ORANGE} /><span style={{ position: "relative", display: "inline-flex", fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Submit feedback{NOTIFICATIONS.feedback && <span style={notifDot} />}</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Per-project, per-volunteer. Mandatory for certs.</div>
                 <span style={{ fontSize: 11, fontWeight: 600, color: B_ORANGE }}>Open →</span>
               </button>
@@ -972,9 +980,12 @@ const NGODashboardView = () => {
               ...(isLeadPartner ? [{ id: "partnerngos", label: "Partner NGOs", ref: partnerRef }] : []),
               { id: "reports",     label: "Reports",      ref: reportsRef     },
               { id: "resources",   label: "Resources",    ref: resourcesRef   },
-            ].map(({ id, label, ref }) => (
-              <div key={id} onClick={() => scrollTo(ref)} style={railLink(activeSection === id)}>{label}</div>
-            ))}
+            ].map(({ id, label, ref }) => {
+              const hasNotif = (id === "activities" && NOTIFICATIONS.activities) || (id === "applications" && NOTIFICATIONS.applications);
+              return (
+                <div key={id} onClick={() => scrollTo(ref)} style={{ ...railLink(activeSection === id), position: "relative", display: "inline-flex" }}>{label}{hasNotif && <span style={notifDot} />}</div>
+              );
+            })}
           </div>
           {/* Quick links */}
           <div style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "10px 12px" }}>
