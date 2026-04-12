@@ -495,6 +495,8 @@ export default function AboutView() {
         </div>
       </section>
 
+      <SectionDivider />
+
       {/* ════════════════════════════════════════
           TEAM
       ════════════════════════════════════════ */}
@@ -509,6 +511,8 @@ export default function AboutView() {
               <div key={t.name} style={{
                 background: "#fff", border: "1px solid #e8e8f0",
                 borderRadius: 16, padding: 28, textAlign: "center",
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }} {...cardHover}>
               }}>
                 {/* Avatar with initials */}
                 <div style={{
