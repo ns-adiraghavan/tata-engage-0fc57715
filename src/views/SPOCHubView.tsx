@@ -140,6 +140,8 @@ const SPOCHubView = () => {
         <div className="w-px h-5" style={{ backgroundColor: "#e2e8f0" }} />
       </div>
 
+      <SectionDivider />
+
       {/* FOOTER */}
       <footer className="bg-zinc-950 text-white pt-10 pb-7 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
