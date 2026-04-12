@@ -31,7 +31,7 @@ const DIAG_TEXTURE: React.CSSProperties = {
 
 const TVWHubView = () => {
   const { registeredEvents, setRegisteredEvents, triggerToast } = useAppContext();
-  const navigate = useAppNavigate();
+  
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [filters, setFilters] = useState({ location: "All", theme: "All", mode: "All" });
   const [searchQuery, setSearchQuery] = useState("");
