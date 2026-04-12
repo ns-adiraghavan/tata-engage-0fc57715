@@ -2,7 +2,7 @@ import { ROHAN_DESAI, PENDING_APPROVALS_DATA } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { useAuth } from "@/context/AuthContext";
-import RoleToggle from "@/components/shared/RoleToggle";
+
 import { ArrowRight } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataLogo from "@/assets/tata-logo.png";
@@ -40,7 +40,7 @@ const SPOCHubView = () => {
           <div className="relative z-10 flex flex-col justify-between px-8 md:px-12 py-8" style={{ minHeight: 480 }}>
             {/* Top row */}
             <div>
-              {showToggle && <RoleToggle activeView="spoc" className="mb-3" />}
+              
               <span className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-white/60 text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide mb-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
                 SPOC Hub · {spoc.company}
