@@ -15,8 +15,15 @@ import {
 export { SectionDivider };
 
 // ── Programme Spotlight section ───────────────────────────────────────────────
+const PROGRAMME_ROUTE: Record<string, string> = {
+  "TVW": "about-tvw",
+  "ProEngage": "about-proengage",
+  "Disaster Response": "disaster-response",
+};
+
 export function ProgrammeSpotlight() {
   const { triggerToast } = useAppContext();
+  const navigate = useAppNavigate();
   const [flagshipIdx, setFlagshipIdx] = useState(0);
 
   useEffect(() => {
@@ -54,7 +61,9 @@ export function ProgrammeSpotlight() {
             </div>
 
             {/* Card: image left, text right */}
-            <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[420px] flex-1">
+            <div
+              onClick={() => { const r = PROGRAMME_ROUTE[prog.id]; if (r) navigate(r); }}
+              className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm flex flex-col md:flex-row min-h-[420px] flex-1 cursor-pointer hover:shadow-md transition-shadow">
               {/* Image panel with tint */}
               <div className="relative md:w-[45%] min-h-[200px] md:min-h-0 shrink-0 overflow-hidden">
                 <img src={prog.photo} alt={prog.title}
