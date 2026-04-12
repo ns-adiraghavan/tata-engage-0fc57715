@@ -16,7 +16,7 @@ const SPOCHubView = () => {
   const navigate = useAppNavigate();
   const { triggerToast } = useAppContext();
   const { user } = useAuth();
-  const showToggle = user?.role?.includes("spoc") || user?.role === "corporate_spoc";
+  
 
   return (
     <div className="pt-20 min-h-screen bg-white pb-12">
