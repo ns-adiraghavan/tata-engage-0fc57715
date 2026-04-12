@@ -54,8 +54,8 @@ const VolunteerHubView = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
                 Volunteer Hub
               </span>
-              <p className="text-white/55 text-base mt-1">
-                Welcome back, <span className="text-white font-bold">{user?.firstName ?? "there"}</span>
+              <p className="text-white/55 mt-1 text-5xl font-sans">
+                Welcome back, <span className="text-white font-bold">{user?.firstName ?? "there"}!</span>
               </p>
               <p className="text-white/30 text-xs mt-0.5 font-medium">{user?.company} · {user?.designation}</p>
             </div>
