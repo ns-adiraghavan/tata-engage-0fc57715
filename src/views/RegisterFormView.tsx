@@ -370,88 +370,99 @@ const RegisterFormView = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
-      {/* ── Left panel ── */}
-      <div
-        className="hidden md:flex w-1/2 flex-col justify-between relative"
-        style={{ backgroundColor: ACCENT_NAVY, padding: "60px 48px", ...LEFT_TEXTURE }}
-      >
-        <div>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+
+      {/* ── Top banner ── */}
+      <div style={{
+        backgroundColor: ACCENT_NAVY,
+        position: "relative",
+        overflow: "hidden",
+        padding: "28px 64px",
+        backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
+        backgroundSize: "22px 22px",
+      }}>
+        <div style={{ position: "absolute", top: -60, right: -60, width: 280, height: 280, background: "radial-gradient(circle, rgba(51,51,153,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+        <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32 }}>
+
+          {/* Back link */}
           <button
             onClick={() => navigate("register-role")}
-            className="text-xs font-medium cursor-pointer hover:opacity-80 transition-opacity"
-            style={{ color: "rgba(255,255,255,0.4)" }}
+            style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", background: "none", border: "none", cursor: "pointer", letterSpacing: "0.5px", flexShrink: 0 }}
           >
             ← Back to Role Selection
           </button>
-        </div>
 
-        <div className="flex-1 flex flex-col justify-center">
-          <p style={{ fontSize: 28, fontWeight: 900, color: "white", marginBottom: 16 }}>
+          {/* Centre: role label + stepper */}
+          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 32 }}>
+            {roleLabel && (
+              <span style={{
+                backgroundColor: B_YELLOW, color: "#111",
+                fontSize: 11, textTransform: "uppercase" as const,
+                fontWeight: 700, letterSpacing: "0.08em",
+                padding: "5px 14px", borderRadius: 100,
+                flexShrink: 0,
+              }}>
+                {roleLabel}
+              </span>
+            )}
+            {/* Stepper */}
+            <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+              {STEPPER.map((label, i) => (
+                <div key={label} style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "center" }}>
+                    <div style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: i === 0 ? B_YELLOW : "rgba(255,255,255,0.2)" }} />
+                    <span style={{ marginTop: 5, fontSize: 9.5, color: i === 0 ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.3)", whiteSpace: "nowrap" as const, letterSpacing: "0.3px" }}>
+                      {label}
+                    </span>
+                  </div>
+                  {i < STEPPER.length - 1 && (
+                    <div style={{ width: 36, height: 1, backgroundColor: "rgba(255,255,255,0.12)", margin: "0 10px 14px" }} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: "You're almost there" */}
+          <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.45)", flexShrink: 0, fontStyle: "italic" }}>
             You're almost there.
           </p>
-          {roleLabel && (
-            <span
-              className="inline-block self-start px-4 py-1.5 rounded-full mb-10"
-              style={{ backgroundColor: B_YELLOW, color: "#111", fontSize: 12, textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.08em" }}
-            >
-              {roleLabel}
-            </span>
-          )}
-
-          {/* Stepper */}
-          <div className="flex items-center gap-0">
-            {STEPPER.map((label, i) => (
-              <div key={label} className="flex items-center">
-                <div className="flex flex-col items-center">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{
-                      backgroundColor: i === 0 ? B_YELLOW : "rgba(255,255,255,0.2)",
-                      border: i === 0 ? "none" : "none",
-                    }}
-                  />
-                  <span className="mt-2" style={{ fontSize: 10, color: i === 0 ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.35)", whiteSpace: "nowrap" }}>
-                    {label}
-                  </span>
-                </div>
-                {i < STEPPER.length - 1 && (
-                  <div className="mx-3" style={{ width: 40, height: 1, backgroundColor: "rgba(255,255,255,0.1)", marginBottom: 18 }} />
-                )}
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
-      {/* ── Right panel ── */}
-      <div className="w-full md:w-1/2 bg-white overflow-y-auto" style={{ padding: "60px 48px" }}>
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="mb-10">
-            <h3 className="text-xl font-bold text-zinc-900 mb-2">Register as {roleLabel}</h3>
-            <div className="h-1 w-12 rounded-full" style={{ backgroundColor: B_INDIGO }} />
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {renderFields()}
-
-            <div className="pt-8 flex flex-col sm:flex-row gap-4">
-              <button
-                type="button"
-                onClick={() => navigate("register-role")}
-                className="flex-1 btn-outline cursor-pointer"
-              >
-                Back
-              </button>
-              <button
-                type="submit"
-                className="flex-1 btn-black cursor-pointer"
-              >
-                Create Account
-              </button>
+      {/* ── Form body ── */}
+      <div style={{ flex: 1, backgroundColor: "#f5f5fa", display: "flex", justifyContent: "center", padding: "48px 32px" }}>
+        <div style={{ width: "100%", maxWidth: 680 }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <div style={{ marginBottom: 32 }}>
+              <h3 style={{ fontSize: 22, fontWeight: 900, color: ACCENT_NAVY, marginBottom: 6 }}>Register as {roleLabel}</h3>
+              <div style={{ height: 3, width: 40, borderRadius: 4, backgroundColor: B_INDIGO }} />
             </div>
-          </form>
-        </motion.div>
+
+            <div style={{ backgroundColor: "#fff", border: "1px solid #e8e8f0", borderRadius: 16, padding: "40px 36px" }}>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {renderFields()}
+
+                <div className="pt-8 flex flex-col sm:flex-row gap-4">
+                  <button
+                    type="button"
+                    onClick={() => navigate("register-role")}
+                    className="flex-1 btn-outline cursor-pointer"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 btn-black cursor-pointer"
+                  >
+                    Create Account
+                  </button>
+                </div>
+              </form>
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       <ConsentModal

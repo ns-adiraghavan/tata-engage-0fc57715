@@ -952,7 +952,7 @@ export default function DashboardView() {
 
   return (
     <>
-      <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'Noto Sans', sans-serif", paddingBottom: 80 }}>
+      <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'Noto Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
 
         {/* Greeting bar */}
         <div style={{ background: ACCENT_NAVY, padding: "28px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>

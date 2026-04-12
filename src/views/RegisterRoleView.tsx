@@ -5,7 +5,7 @@ import tataEngageLogoNoBg from "@/assets/tata-engage-logo-nobg.png";
 import type { Role } from "@/types";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import { ACCENT_NAVY, B_INDIGO } from "@/data/homeSharedData";
+import { ACCENT_NAVY, B_INDIGO, B_YELLOW } from "@/data/homeSharedData";
 
 const QUOTES = [
   { text: "Volunteering is the ultimate exercise in democracy.", author: "Susan J. Ellis" },
@@ -14,15 +14,10 @@ const QUOTES = [
 ];
 
 const STATS = [
-  { num: "50K+", label: "Volunteers" },
-  { num: "85", label: "NGO Partners" },
-  { num: "2.5M+", label: "Hours" },
+  { num: "50K+",  label: "Active Volunteers" },
+  { num: "85",    label: "NGO Partners"      },
+  { num: "2.5M+", label: "Hours Logged"      },
 ];
-
-const LEFT_TEXTURE = {
-  backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 24px)`,
-  backgroundSize: "24px 24px",
-};
 
 const RegisterRoleView = () => {
   const { selectedRole, handleRoleSelect } = useAppContext();
@@ -30,124 +25,127 @@ const RegisterRoleView = () => {
   const [quoteIdx, setQuoteIdx] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setQuoteIdx((p) => (p + 1) % QUOTES.length), 3000);
+    const id = setInterval(() => setQuoteIdx((p) => (p + 1) % QUOTES.length), 3500);
     return () => clearInterval(id);
   }, []);
 
+  const TEXTURE = {
+    backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
+    backgroundSize: "22px 22px",
+  };
+
   return (
-    <div className="flex min-h-screen">
-      {/* ── Left panel ── */}
-      <div
-        className="hidden md:flex w-1/2 flex-col justify-between relative"
-        style={{ backgroundColor: ACCENT_NAVY, padding: "60px 48px", ...LEFT_TEXTURE }}
-      >
-        <div>
-          <button
-            onClick={() => navigate("home")}
-            className="text-xs font-medium mb-10 cursor-pointer hover:opacity-80 transition-opacity"
-            style={{ color: "rgba(255,255,255,0.4)" }}
-          >
-            ← Back to Home
-          </button>
-          <img src={tataEngageLogoNoBg} alt="TATA engage" className="h-14 object-contain mb-16" style={{ filter: "brightness(0) invert(1)" }} />
-        </div>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
-        <div className="flex-1 flex items-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={quoteIdx}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4 }}
-            >
-              <p style={{ fontSize: 22, fontWeight: 300, color: "rgba(255,255,255,0.85)", lineHeight: 1.6, fontStyle: "italic" }}>
-                "{QUOTES[quoteIdx].text}"
-              </p>
-              <p className="mt-4" style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: "0.15em", color: "rgba(255,255,255,0.4)" }}>
-                — {QUOTES[quoteIdx].author}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      {/* TOP BANNER */}
+      <div style={{ backgroundColor: ACCENT_NAVY, position: "relative", overflow: "hidden", padding: "32px 64px", ...TEXTURE }}>
+        <div style={{ position: "absolute", top: -80, right: -80, width: 340, height: 340, background: "radial-gradient(circle, rgba(51,51,153,0.22) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32 }}>
 
-        <div className="flex gap-10">
-          {STATS.map((s) => (
-            <div key={s.label}>
-              <div style={{ fontSize: 28, fontWeight: 900, color: "white" }}>{s.num}</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+          {/* Logo + back */}
+          <div style={{ flexShrink: 0 }}>
+            <button onClick={() => navigate("home")} style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", background: "none", border: "none", cursor: "pointer", marginBottom: 14, display: "block", letterSpacing: "0.5px" }}>
+              ← Back to Home
+            </button>
+            <img src={tataEngageLogoNoBg} alt="TATA engage" style={{ height: 38, objectFit: "contain", filter: "brightness(0) invert(1)", display: "block" }} />
+          </div>
 
-      {/* ── Right panel ── */}
-      <div className="w-full md:w-1/2 bg-white overflow-y-auto" style={{ padding: "60px 48px" }}>
-        {/* Mobile-only back link */}
-        <button
-          onClick={() => navigate("home")}
-          className="md:hidden text-xs font-medium mb-6 cursor-pointer"
-          style={{ color: "rgba(0,0,0,0.4)" }}
-        >
-          ← Back to Home
-        </button>
-
-        <div className="mb-12">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <div className="flex justify-center md:justify-start mb-6 md:hidden">
-              <img src={tataEngageLogoNoBg} alt="TATA engage" className="h-16 object-contain" />
-            </div>
-            <h2 className="text-4xl font-bold text-zinc-900 mb-2">Create Your Account</h2>
-            <p className="text-zinc-500 text-lg">Join our volunteering platform</p>
-          </motion.div>
-        </div>
-
-        <div className="bg-white border border-zinc-100 rounded-xl p-8 md:p-12" style={{ borderColor: "#e8e8f0" }}>
-          <h3 className="text-xl font-bold text-zinc-900 mb-8">Select Your Role</h3>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {[
-              { id: "tata_employee", title: "Tata Employee", icon: Briefcase, desc: "Current Tata Group employees with or without official Tata email" },
-              { id: "family_member", title: "Family Member", icon: Users, desc: "Spouse, child, parent, or sibling of a Tata employee" },
-              { id: "retired_employee", title: "Retired Employee", icon: Heart, desc: "Former Tata Group employees who have retired" },
-              { id: "ngo", title: "Partner Organisation", icon: Building2, desc: "NGOs and non-profits seeking volunteer support" },
-            ].map((role, i) => (
-              <motion.div
-                key={role.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                onClick={() => handleRoleSelect(role.id as Role)}
-                className={`role-card ${selectedRole === role.id ? "active" : ""}`}
-              >
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center"
-                  style={
-                    selectedRole === role.id
-                      ? { backgroundColor: B_INDIGO, color: "white" }
-                      : { backgroundColor: "#f4f4f5", color: "#71717a" }
-                  }
-                >
-                  <role.icon size={24} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-zinc-900 mb-1">{role.title}</h4>
-                  <p className="text-xs text-zinc-500 leading-tight">{role.desc}</p>
-                </div>
+          {/* Rotating quote */}
+          <div style={{ flex: 1, textAlign: "center", maxWidth: 500 }}>
+            <AnimatePresence mode="wait">
+              <motion.div key={quoteIdx} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.35 }}>
+                <p style={{ fontSize: 14.5, fontWeight: 300, fontStyle: "italic", color: "rgba(255,255,255,0.78)", lineHeight: 1.65, margin: 0 }}>
+                  "{QUOTES[quoteIdx].text}"
+                </p>
+                <p style={{ fontSize: 10.5, textTransform: "uppercase", letterSpacing: "1.5px", color: "rgba(255,255,255,0.32)", marginTop: 8 }}>
+                  — {QUOTES[quoteIdx].author}
+                </p>
               </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Stats */}
+          <div style={{ display: "flex", gap: 28, flexShrink: 0 }}>
+            {STATS.map((s) => (
+              <div key={s.label} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 20, fontWeight: 900, color: "#fff", letterSpacing: "-0.5px" }}>{s.num}</div>
+                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.38)", marginTop: 2, textTransform: "uppercase", letterSpacing: "0.5px" }}>{s.label}</div>
+              </div>
             ))}
           </div>
-
-          <div className="mt-12 pt-8 border-t border-zinc-100 text-center">
-            <p className="text-sm text-zinc-500">
-              Already have an account?{" "}
-              <button onClick={() => navigate("login")} className="font-bold text-zinc-900 hover:underline cursor-pointer">
-                Login here
-              </button>
-            </p>
-          </div>
         </div>
       </div>
+
+      {/* ROLE CARDS */}
+      <div style={{ flex: 1, backgroundColor: "#f5f5fa", display: "flex", alignItems: "center", justifyContent: "center", padding: "52px 32px" }}>
+        <div style={{ width: "100%", maxWidth: 860 }}>
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
+            <h2 style={{ fontSize: 26, fontWeight: 900, color: ACCENT_NAVY, marginBottom: 6, textAlign: "center", letterSpacing: "-0.3px" }}>
+              Create Your Account
+            </h2>
+            <p style={{ fontSize: 14.5, color: "#64748b", textAlign: "center", marginBottom: 36 }}>
+              Who are you joining as?
+            </p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}>
+              {[
+                { id: "tata_employee",    title: "Tata Employee",        icon: Briefcase,  desc: "Current Tata Group employees, with or without a Tata email"  },
+                { id: "family_member",    title: "Family Member",        icon: Users,      desc: "Spouse, child, parent, or sibling of a Tata employee"        },
+                { id: "retired_employee", title: "Retired Employee",     icon: Heart,      desc: "Former Tata Group employees who have retired"                },
+                { id: "ngo",              title: "Partner Organisation", icon: Building2,  desc: "NGOs and non-profits seeking skilled volunteer support"       },
+              ].map((role, i) => {
+                const active = selectedRole === role.id;
+                return (
+                  <motion.div
+                    key={role.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    onClick={() => handleRoleSelect(role.id as Role)}
+                    style={{
+                      backgroundColor: active ? ACCENT_NAVY : "#fff",
+                      border: `2px solid ${active ? B_INDIGO : "#e8e8f0"}`,
+                      borderRadius: 14,
+                      padding: "28px 20px 24px",
+                      cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column" as const,
+                      alignItems: "center",
+                      textAlign: "center" as const,
+                      gap: 12,
+                      transition: "all 0.18s",
+                      boxShadow: active ? `0 0 0 4px ${B_INDIGO}22, 0 8px 24px rgba(0,0,0,0.1)` : "0 1px 4px rgba(0,0,0,0.04)",
+                    }}
+                    onMouseEnter={e => { if (!active) { e.currentTarget.style.borderColor = B_INDIGO; e.currentTarget.style.boxShadow = "0 6px 20px rgba(0,0,0,0.08)"; e.currentTarget.style.transform = "translateY(-2px)"; } }}
+                    onMouseLeave={e => { if (!active) { e.currentTarget.style.borderColor = "#e8e8f0"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.04)"; e.currentTarget.style.transform = "translateY(0)"; } }}
+                  >
+                    <div style={{ width: 52, height: 52, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: active ? "rgba(255,255,255,0.1)" : "#EEF0FF", color: active ? "#fff" : B_INDIGO, flexShrink: 0 }}>
+                      <role.icon size={23} />
+                    </div>
+                    <div>
+                      <h4 style={{ fontWeight: 700, fontSize: 14, color: active ? "#fff" : ACCENT_NAVY, marginBottom: 6 }}>{role.title}</h4>
+                      <p style={{ fontSize: 11.5, color: active ? "rgba(255,255,255,0.55)" : "#94a3b8", lineHeight: 1.55 }}>{role.desc}</p>
+                    </div>
+                    {active && (
+                      <div style={{ fontSize: 11, fontWeight: 700, color: B_YELLOW, letterSpacing: "0.3px", marginTop: 2 }}>Selected ✓</div>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            <div style={{ textAlign: "center", marginTop: 32 }}>
+              <p style={{ fontSize: 13.5, color: "#94a3b8" }}>
+                Already have an account?{" "}
+                <button onClick={() => navigate("login")} style={{ fontWeight: 700, color: ACCENT_NAVY, background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>
+                  Login here
+                </button>
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
     </div>
   );
 };
