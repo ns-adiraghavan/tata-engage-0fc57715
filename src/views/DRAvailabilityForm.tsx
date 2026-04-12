@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowLeft, ArrowRight, ShieldAlert, Check, CheckCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, ShieldAlert, Check } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAuth } from "@/context/AuthContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
