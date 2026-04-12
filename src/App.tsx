@@ -176,8 +176,7 @@ export default function App() {
   return (
     <AppContext.Provider value={ctx}>
       <div className="relative min-h-screen">
-        {user?.role !== "platform_admin" &&
-         !["/dashboard", "/ngo/dashboard", "/spoc/dashboard", "/admin/dashboard"].includes(location.pathname) && (
+        {user?.role !== "platform_admin" && (
           <Navbar
             onNavigate={navigate}
             isLoggedIn={isLoggedIn}
