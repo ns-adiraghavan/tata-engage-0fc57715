@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Mail, ArrowLeft } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { B_INDIGO, B_YELLOW, ACCENT_NAVY } from "@/data/homeSharedData";
-import { useAppNavigate } from "@/hooks/useAppNavigate";
 
 const DIAG_TEXTURE: React.CSSProperties = {
   position: "absolute",
@@ -15,7 +14,7 @@ const DIAG_TEXTURE: React.CSSProperties = {
 
 const OtpView = () => {
   const { otp, setOtp, handleOtpVerify } = useAppContext();
-  const navigate = useAppNavigate();
+  
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [countdown, setCountdown] = useState(60);
   const [canResend, setCanResend] = useState(false);

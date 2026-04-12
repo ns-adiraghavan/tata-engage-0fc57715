@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Send, Lock } from "lucide-react";
+import { ArrowLeft, Lock } from "lucide-react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { B_INDIGO, ACCENT_NAVY } from "@/data/homeSharedData";
 
