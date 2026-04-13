@@ -262,6 +262,34 @@ const HomeView = () => {
         </div>
       </section>
 
+      {/* ── Scroll prompt ─────────────────────────────────────────────────── */}
+      <div className="flex justify-center items-center py-3 bg-white">
+        <button
+          onClick={() => document.getElementById("programmes")?.scrollIntoView({ behavior: "smooth" })}
+          className="flex flex-col items-center gap-0 cursor-pointer group"
+          aria-label="Scroll to programmes"
+          style={{ background: "none", border: "none", padding: 0 }}
+        >
+          {[0, 1, 2].map((i) => (
+            <svg key={i} viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg"
+              style={{
+                width: 28, height: 14,
+                opacity: 1 - i * 0.28,
+                animation: `chevronBob 1.4s ease-in-out ${i * 0.18}s infinite`,
+                color: B_INDIGO,
+              }}>
+              <path d="M2 2 L12 10 L22 2" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          ))}
+        </button>
+      </div>
+      <style>{`
+        @keyframes chevronBob {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(4px); }
+        }
+      `}</style>
+
       <SectionDivider />
 
       {/* 2. PROGRAMME SPOTLIGHT */}
@@ -296,18 +324,19 @@ const HomeView = () => {
             <div>
               <h4 className="font-bold mb-4 text-sm">Quick Links</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                {["About Us", "Volunteering Policy", "FAQs", "Contact Us"].map((l) => (
-                  <li key={l}><span className="hover:text-white transition-colors cursor-pointer">{l}</span></li>
-                ))}
+                <li><span className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate("about")}>About Tata Engage</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate("journey")}>Our Journey</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate("disaster-response")}>Disaster Response</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate("partner")}>Partner With Us</span></li>
                 <li><span className="hover:text-white cursor-pointer" onClick={() => navigate("login")}>Login</span></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-4 text-sm">Programmes</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                {["TVW — Tata Volunteering Week", "ProEngage", "Disaster Response"].map((l) => (
-                  <li key={l}><span className="hover:text-white transition-colors cursor-pointer">{l}</span></li>
-                ))}
+                <li><span className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate("about-tvw")}>TVW — Tata Volunteering Week</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate("about-proengage")}>ProEngage</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate("disaster-response")}>Disaster Response</span></li>
               </ul>
             </div>
             <div>
