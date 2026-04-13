@@ -157,7 +157,29 @@ type ProfileState = {
   spocCompanyEmail: string; spocMobileNum: string;
 };
 
-function initProfile(): ProfileState {
+function initProfile(role?: string): ProfileState {
+  const isSPOC = role === "corporate_spoc" || role === "regional_spoc";
+  if (!isSPOC) {
+    return {
+      title: "Ms", firstName: "Priya", lastName: "Sharma", gender: "Female",
+      birthDate: "1993-07-15", officialEmail: true, email: "priya.sharma@tcs.com",
+      company: "Tata Consultancy Services", designation: "Software Engineer",
+      designationDetail: "Full-Stack Developer — Digital Products",
+      function_: "Technology", functionDetail: "Engineering",
+      eduQual: "B.Tech", eduQualDetail: "IIT Bombay, 2015",
+      country: "India", city: "Mumbai", cityDetail: "",
+      phoneCountryCode: "91", phoneArea: "022", phoneNum: "66661111",
+      mobileCountryCode: "91", mobileNum: "9820000001",
+      skills: ["React", "UX Research", "Teaching", "Communication"],
+      interests: ["Education", "Environment", "Community Health"],
+      languages: ["English", "Hindi", "Tamil"],
+      preferredMode: "In-Person", disasterResponseInterest: false,
+      linkedinUrl: "https://linkedin.com/in/priyasharma",
+      notifyProEngage: true, notifyTVW: true, notifyEmail: true,
+      spocTier: "", spocGeography: "", spocOrientationDone: false,
+      spocCompanyEmail: "", spocMobileNum: "",
+    };
+  }
   return {
     title: "Mr", firstName: "Rohan", lastName: "Desai", gender: "Male",
     birthDate: "1987-03-22", officialEmail: true, email: "rohan.desai@tcs.com",
@@ -213,14 +235,14 @@ export default function ProfileView() {
   const { ngoData, triggerToast } = useAppContext();
   const { show: toast, msg: toastMsg } = useToast();
 
-  const IS_SPOC = user?.role === "corporate_spoc" || user?.role === "regional_spoc" || true; // fallback: demo shows SPOC for Rohan
+  const IS_SPOC = user?.role === "corporate_spoc" || user?.role === "regional_spoc";
   const IS_NGO  = user?.role === "ngo" || (user == null && false); // NGO persona — Anjali
 
   // ─── Volunteer / SPOC profile ────────────────────────────────────────────
   const [isEditing, setIsEditing]  = useState(false);
   const [volTab, setVolTab]  = useState<VolTab>("personal");
-  const [profile, setProfile]      = useState<ProfileState>(initProfile);
-  const [saved, setSaved]          = useState<ProfileState>(initProfile);
+  const [profile, setProfile]      = useState<ProfileState>(() => initProfile(user?.role));
+  const [saved, setSaved]          = useState<ProfileState>(() => initProfile(user?.role));
   const [spocDir, setSpocDir]      = useState(SPOC_DIRECTORY);
 
   // ─── NGO profile ─────────────────────────────────────────────────────────
@@ -571,7 +593,7 @@ export default function ProfileView() {
         <div style={{ background: ACCENT_NAVY, borderRadius: "0 0 20px 20px", padding: "32px 40px", marginBottom: 32, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
             <div style={{ width: 64, height: 64, borderRadius: IS_NGO ? 14 : "50%", background: heroAccent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 700, color: "#fff", flexShrink: 0, border: "3px solid rgba(255,255,255,0.15)" }}>
-              {IS_NGO ? (ngoData.organization?.charAt(0) ?? "P") : "RD"}
+              {IS_NGO ? (ngoData.organization?.charAt(0) ?? "P") : `${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}`}
             </div>
             <div>
               <div style={{ fontSize: 22, fontWeight: 900, color: "#fff" }}>
