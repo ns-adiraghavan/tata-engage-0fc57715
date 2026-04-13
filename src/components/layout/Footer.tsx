@@ -49,6 +49,12 @@ const Footer = () => {
           <Linkedin size={20} className="text-slate-400 hover:text-white cursor-pointer" />
           <Youtube size={20} className="text-slate-400 hover:text-white cursor-pointer" />
         </div>
+        <div className="mt-6">
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Newsletter</p>
+          <input type="text" placeholder="Your name" className="w-full bg-zinc-800 border border-zinc-700 rounded-md px-3 py-2 text-sm text-white placeholder-zinc-500 mb-2 outline-none focus:border-zinc-500" />
+          <input type="email" placeholder="Your email" className="w-full bg-zinc-800 border border-zinc-700 rounded-md px-3 py-2 text-sm text-white placeholder-zinc-500 mb-3 outline-none focus:border-zinc-500" />
+          <button onClick={() => triggerToast("Subscribed! Welcome to Tata Engage updates.")} className="w-full bg-yellow-500 hover:bg-yellow-400 text-zinc-900 font-bold text-sm py-2 rounded-md transition-colors">Subscribe</button>
+        </div>
       </div>
     </div>
     <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
