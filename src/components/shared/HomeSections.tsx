@@ -152,9 +152,9 @@ export function JourneySection() {
 
         {/* Desktop horizontal alternating timeline */}
         <div className="hidden lg:block">
-          <div className="relative" style={{ height: 280 }}>
+          <div className="relative" style={{ height: 340 }}>
             {/* Spine line at vertical center */}
-            <div className="absolute left-0 right-0" style={{ top: 140, height: 2, background: `linear-gradient(to right, ${B_INDIGO}, ${B_TEAL}, ${B_YELLOW})`, opacity: 0.3 }} />
+            <div className="absolute left-0 right-0" style={{ top: 170, height: 2, background: `linear-gradient(to right, ${B_INDIGO}, ${B_TEAL}, ${B_YELLOW})`, opacity: 0.3 }} />
 
             {JOURNEY_MILESTONES.map((m, i) => {
               const above = i % 2 === 0;
@@ -163,7 +163,7 @@ export function JourneySection() {
               return (
                 <div key={`${m.year}-${i}`} className="absolute" style={{ left: leftPct, transform: "translateX(-50%)", top: 0, bottom: 0, width: 120 }}>
                   {/* Dot on spine */}
-                  <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 134 }}>
+                  <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 164 }}>
                     <div className="w-3 h-3 rounded-full flex items-center justify-center" style={{ backgroundColor: m.colour }}>
                       <div className="w-1 h-1 rounded-full bg-white" />
                     </div>
@@ -172,7 +172,7 @@ export function JourneySection() {
                   {above ? (
                     <>
                       {/* Card above */}
-                      <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ bottom: 156, width: 120 }}>
+                      <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ bottom: 170, width: 120 }}>
                         <div className="flex justify-center mb-2">
                           <img src={m.photo} alt={m.title} className="rounded-full object-cover" style={{ width: 80, height: 80, border: `2px solid ${m.colour}` }} referrerPolicy="no-referrer" />
                         </div>
@@ -181,14 +181,14 @@ export function JourneySection() {
                         <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 11 }}>{m.desc}</div>
                       </div>
                       {/* Connector line down to dot */}
-                      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 124, width: 1, height: 10, background: m.colour, opacity: 0.35 }} />
+                      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 134, width: 1, height: 14, background: m.colour, opacity: 0.35 }} />
                     </>
                   ) : (
                     <>
                       {/* Connector line up from dot */}
-                      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 147, width: 1, height: 10, background: m.colour, opacity: 0.35 }} />
+                      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 147, width: 1, height: 14, background: m.colour, opacity: 0.35 }} />
                       {/* Card below */}
-                      <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ top: 160, width: 120 }}>
+                      <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ top: 168, width: 120 }}>
                         <div className="font-extrabold tracking-widest uppercase mb-0.5" style={{ color: m.colour, fontSize: 11 }}>{m.year}</div>
                         <div className="font-bold text-slate-900 leading-snug" style={{ fontSize: 13 }}>{m.title}</div>
                         <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 11 }}>{m.desc}</div>
