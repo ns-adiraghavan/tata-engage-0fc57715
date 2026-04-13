@@ -1315,6 +1315,9 @@ export default function SPOCDashboardView() {
               </div>
             </div>
           </div>
+        </Modal>
+      )}
+
       {/* TVW Registration Modal — volunteer section */}
       <DrawerShell open={!!tvwRegModal} onClose={() => setTvwRegModal(null)} title="Confirm Registration" subtitle={tvwRegModal?.title ?? ""} accentTag="TVW 22">
         {tvwRegModal && (
