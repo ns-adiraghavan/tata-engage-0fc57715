@@ -360,7 +360,7 @@ export default function SPOCDashboardView() {
   ];
 
   // ── Right rail ───────────────────────────────────────────────────────────────
-  const RightRail = () => (
+  const rightRailJSX = (
     <div style={{ width: 152, flexShrink: 0, position: "sticky", top: 88, alignSelf: "flex-start", display: "flex", flexDirection: "column", gap: 10 }}>
       {spocMode ? (
         <>
@@ -427,7 +427,7 @@ export default function SPOCDashboardView() {
   );
 
   // ── SPOC Sections ─────────────────────────────────────────────────────────────
-  const SPOCSections = () => (
+  const spocSectionsJSX = (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
       {/* I — KPIs */}
@@ -703,7 +703,7 @@ export default function SPOCDashboardView() {
         <SectionHeading eyebrow={`SPOC Corner · ${isRegionalSPOC ? "IV" : "V"}`} title="SPOC Resources" spocMode />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
           {[
-            { icon: "📚", title: "E-Module", desc: `${spoc.orientationProgress} of ${spoc.totalOrientationModules} modules complete. Progress tracked by Admin.`, cta: "Continue", fn: () => triggerToast("Opening orientation module…") },
+            { icon: "📚", title: "E-Module", desc: `${spoc.orientationProgress} of ${spoc.totalOrientationModules} modules complete. Progress tracked by Admin.`, cta: "Continue", fn: () => setShowOrientationModal(true) },
             { icon: "🖼",  title: "Media Library", desc: "TVW + PE assets, campaign materials. View-only.", cta: "Browse", fn: () => triggerToast("Opening media library…") },
             { icon: "📋", title: "Open PE Projects", desc: "Real-time list with apply links to share with volunteers.", cta: "Download", fn: () => triggerToast("Downloading open PE projects list…") },
           ].map(r => (
@@ -720,7 +720,7 @@ export default function SPOCDashboardView() {
   );
 
   // ── Volunteer Sections ────────────────────────────────────────────────────────
-  const VolunteerSections = () => (
+  const volunteerSectionsJSX = (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
       {/* Snapshot */}
@@ -948,19 +948,19 @@ export default function SPOCDashboardView() {
           <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 24 }}>
             {spocMode ? (
               <>
-                <SPOCSections />
+                {spocSectionsJSX}
                 <div style={{ borderTop: "2px dashed #c8c6f0", paddingTop: 24, position: "relative" }}>
                   <div style={{ position: "absolute", top: -11, left: "50%", transform: "translateX(-50%)", background: "#f8f9ff", padding: "0 14px", fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px" }}>
                     Your Volunteer Profile
                   </div>
-                  <VolunteerSections />
+                  {volunteerSectionsJSX}
                 </div>
               </>
             ) : (
-              <VolunteerSections />
+              {volunteerSectionsJSX}
             )}
           </div>
-          <RightRail />
+          {rightRailJSX}
         </div>
       </div>
 
