@@ -99,8 +99,6 @@ export function ProgrammeSpotlight() {
               {/* Text panel */}
               <div className="flex-1 p-9 flex flex-col justify-between"
                 style={{ background: `linear-gradient(135deg, ${prog.pastelBg} 0%, #ffffff 60%)` }}>
-                {/* Coloured top accent bar */}
-                <div style={{ width: 36, height: 3, borderRadius: 2, backgroundColor: prog.accentText, marginBottom: 16 }} />
                 <div>
                   {/* Flagship eyebrow */}
                   <div className="flex items-center gap-2 mb-3">
