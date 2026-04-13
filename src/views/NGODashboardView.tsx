@@ -475,9 +475,9 @@ const NGODashboardView = () => {
   const card: React.CSSProperties = { background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, padding: "20px 22px", marginBottom: 20 };
   const railLink = (active: boolean): React.CSSProperties => ({
     display: "block", fontSize: 12, fontWeight: active ? 700 : 500,
-    color: active ? B_ORANGE : "#6b6b7a", padding: "7px 0", lineHeight: 1.4,
+    color: active ? B_ORANGE : "#6b6b7a", padding: "7px 0",
     borderBottom: "1px solid #f0f0f8", cursor: "pointer",
-    whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+    lineHeight: 1.4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
   });
   const tabBtn = (active: boolean): React.CSSProperties => ({
     fontSize: 12.5, fontWeight: active ? 700 : 500, color: active ? B_ORANGE : "#6b6b7a",
@@ -499,7 +499,7 @@ const NGODashboardView = () => {
       </div>
 
       {/* Main layout */}
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 48px 0", display: "grid", gridTemplateColumns: "1fr 172px", gap: 24, alignItems: "start" }}>
+      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 48px 0", display: "grid", gridTemplateColumns: "1fr 148px", gap: 24, alignItems: "start" }}>
 
         {/* ── MAIN SCROLL ── */}
         <div>
@@ -991,7 +991,7 @@ const NGODashboardView = () => {
             ].map(({ id, label, ref }) => {
               const hasNotif = (id === "activities" && NOTIFICATIONS.activities) || (id === "applications" && NOTIFICATIONS.applications);
               return (
-                <div key={id} onClick={() => scrollTo(ref)} style={{ ...railLink(activeSection === id), position: "relative", display: "inline-flex" }}>{label}{hasNotif && <span style={notifDot} />}</div>
+                <div key={id} onClick={() => scrollTo(ref)} style={{ ...railLink(activeSection === id), position: "relative" }}>{label}{hasNotif && <span style={notifDot} />}</div>
               );
             })}
           </div>
@@ -1206,7 +1206,7 @@ const NGODashboardView = () => {
 
       {/* NGO Project Guide */}
       <DrawerShell open={modal === "projectGuide"} onClose={() => setModal(null)} title="NGO Project Guide" accentTag="Resources">
-        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {[
             "Project Brief Template",
             "Volunteer Undertaking Form",
@@ -1216,15 +1216,14 @@ const NGODashboardView = () => {
             "ProEngage Edition Calendar",
             "Feedback Submission Guide",
             "TSG Contact Directory",
-          ].map((name, i) => (
-            <div key={name} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: i < 7 ? "1px solid #f0f0f4" : "none" }}>
-              <FileText size={16} style={{ color: B_ORANGE, flexShrink: 0 }} />
-              <span style={{ flex: 1, fontSize: 13.5, fontWeight: 600, color: "#1e1e2e", fontFamily: "'Noto Sans', sans-serif" }}>{name}</span>
+          ].map((name) => (
+            <div key={name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 14px", background: "#f8f9ff", borderRadius: 9, border: "1px solid #e8e8f0" }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: "#1a1a2e" }}>📄 {name}</span>
               <button
                 onClick={() => triggerToast(`Downloading ${name}...`)}
-                style={{ fontSize: 12, fontWeight: 700, color: B_ORANGE, background: P_ORANGE, border: "none", borderRadius: 7, padding: "5px 12px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}
+                style={{ fontSize: 12, fontWeight: 700, color: B_ORANGE, background: P_ORANGE, border: "none", borderRadius: 7, padding: "5px 14px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}
               >
-                <Download size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Download
+                Download
               </button>
             </div>
           ))}
