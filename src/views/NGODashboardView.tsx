@@ -436,7 +436,7 @@ const NGODashboardView = () => {
   const [drillProject, setDrillProject] = useState<any | null>(null);
 
   // Modals
-  type ModalKey = null | "addProject" | "cloneProject" | "viewProjects" | "reviewApps" | "feedback" | "healthUpdate" | "manageTeam" | "selectedApplicant" | "grievance";
+  type ModalKey = null | "addProject" | "cloneProject" | "viewProjects" | "reviewApps" | "feedback" | "healthUpdate" | "manageTeam" | "selectedApplicant" | "grievance" | "projectGuide";
   const [modal, setModal] = useState<ModalKey>(null);
   const [selectedApplicant, setSelectedApplicant] = useState<any>(null);
   const [feedbackProject, setFeedbackProject] = useState<any>(null);
@@ -964,7 +964,7 @@ const NGODashboardView = () => {
                 <ResourceCard key={r.label} {...r} onClick={() => {
                   if (r.label === "Grievance Redressal") { setModal("grievance"); }
                   else if (r.label === "E-Module / Orientation") { setShowOrientationModal(true); }
-                  else if (r.label === "NGO Project Guide") { triggerToast("NGO Project Guide downloading..."); }
+                  else if (r.label === "NGO Project Guide") { setModal("projectGuide"); }
                   else if (r.label === "Media Library") { navigate("media"); }
                   else if (r.label === "Help & Support") { setShowSupportModal(true); }
                   else { triggerToast(`Opening ${r.label}…`); }
@@ -1201,6 +1201,33 @@ const NGODashboardView = () => {
               triggerToast("Grievance submitted. TSG Admin notified. Auto-acknowledgement sent to your email.");
             }} style={{ flex: 1, padding: "10px", background: B_RED, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Grievance</button>
           </div>
+        </div>
+      </DrawerShell>
+
+      {/* NGO Project Guide */}
+      <DrawerShell open={modal === "projectGuide"} onClose={() => setModal(null)} title="NGO Project Guide" accentTag="Resources">
+        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+          {[
+            "Project Brief Template",
+            "Volunteer Undertaking Form",
+            "M&E Reporting Guidelines",
+            "Photo & Media Consent Form",
+            "Code of Conduct — NGO",
+            "ProEngage Edition Calendar",
+            "Feedback Submission Guide",
+            "TSG Contact Directory",
+          ].map((name, i) => (
+            <div key={name} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: i < 7 ? "1px solid #f0f0f4" : "none" }}>
+              <FileText size={16} style={{ color: B_ORANGE, flexShrink: 0 }} />
+              <span style={{ flex: 1, fontSize: 13.5, fontWeight: 600, color: "#1e1e2e", fontFamily: "'Noto Sans', sans-serif" }}>{name}</span>
+              <button
+                onClick={() => triggerToast(`Downloading ${name}...`)}
+                style={{ fontSize: 12, fontWeight: 700, color: B_ORANGE, background: P_ORANGE, border: "none", borderRadius: 7, padding: "5px 12px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}
+              >
+                <Download size={13} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />Download
+              </button>
+            </div>
+          ))}
         </div>
       </DrawerShell>
 
