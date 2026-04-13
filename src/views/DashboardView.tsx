@@ -949,6 +949,7 @@ export default function DashboardView() {
   const [applyProject, setApplyProject]   = useState<PEProject | null>(null);
   const [referralOpen, setReferralOpen]   = useState(false);
   const [shareOpen, setShareOpen]         = useState(false);
+  const [tvwRegModal, setTvwRegModal]     = useState<any>(null);
 
   return (
     <>
@@ -1101,7 +1102,7 @@ export default function DashboardView() {
                         </div>
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
                           <div style={{ fontSize: 12, fontWeight: 600, color: ev.spotsLeft < 10 ? B_RED : B_TEAL, marginBottom: 6 }}>{ev.spotsLeft} spots left</div>
-                          <button style={{ background: ev.accentColor, color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Register</button>
+                          <button onClick={(e) => { e.stopPropagation(); setTvwRegModal(ev); }} style={{ background: ev.accentColor, color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Register</button>
                         </div>
                       </div>
                     ))}
@@ -1393,6 +1394,27 @@ export default function DashboardView() {
       <ApplyDrawer         project={applyProject} onClose={() => setApplyProject(null)} />
       <ReferralDrawer      open={referralOpen}  onClose={() => setReferralOpen(false)}  />
       <ShareDrawer         open={shareOpen}     onClose={() => setShareOpen(false)}     />
+
+      {/* TVW Registration modal */}
+      <DrawerShell open={!!tvwRegModal} onClose={() => setTvwRegModal(null)} title="Confirm Registration" subtitle={tvwRegModal?.title ?? ""} accentTag="TVW 22">
+        {tvwRegModal && (
+          <div style={{ padding: "28px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 24 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Event</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.title}</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Date</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.date}</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Mode</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.mode}</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Venue</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.venue ?? tvwRegModal.company}</span></div>
+            </div>
+            <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 10, padding: "14px 16px", fontSize: 13, color: "#166534", lineHeight: 1.65, marginBottom: 28 }}>
+              You'll receive a confirmation email within 24 hours. Your spot is reserved until 48 hours before the event.
+            </div>
+            <div style={{ display: "flex", gap: 12 }}>
+              <button onClick={() => { ctxToast("Registered! Confirmation email sent to priya.sharma@tcs.com"); setTvwRegModal(null); }} style={{ flex: 1, background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Confirm Registration</button>
+              <button onClick={() => setTvwRegModal(null)} style={{ flex: 1, background: "transparent", color: "#8888a0", border: "1px solid #e0e0e8", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 600, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+            </div>
+          </div>
+        )}
+      </DrawerShell>
     </>
   );
 }
