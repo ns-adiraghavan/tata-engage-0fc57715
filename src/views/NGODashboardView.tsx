@@ -499,7 +499,7 @@ const NGODashboardView = () => {
       </div>
 
       {/* Main layout */}
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 48px 0", display: "grid", <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 48px 0", display: "grid", gridTemplateColumns: "1fr 172px", gap: 24, alignItems: "start" }}>, gap: 24, alignItems: "start" }}>
+      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 48px 0", display: "grid", gridTemplateColumns: "1fr 172px", gap: 24, alignItems: "start" }}>
 
         {/* ── MAIN SCROLL ── */}
         <div>
