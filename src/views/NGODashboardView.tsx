@@ -475,7 +475,7 @@ const NGODashboardView = () => {
   const card: React.CSSProperties = { background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, padding: "20px 22px", marginBottom: 20 };
   const railLink = (active: boolean): React.CSSProperties => ({
     display: "block", fontSize: 12, fontWeight: active ? 700 : 500,
-    color: active ? B_ORANGE : "#6b6b7a", padding: "6px 0",
+    color: active ? B_ORANGE : "#6b6b7a", padding: "7px 0", lineHeight: 1.4,
     borderBottom: "1px solid #f0f0f8", cursor: "pointer",
     whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
   });
