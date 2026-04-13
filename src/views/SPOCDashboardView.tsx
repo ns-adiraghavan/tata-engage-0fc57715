@@ -150,6 +150,28 @@ function Modal({ onClose, title, children }: { onClose: () => void; title: strin
   );
 }
 
+function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: { open: boolean; onClose: () => void; title: string; subtitle?: string; accentTag?: string; children: React.ReactNode }) {
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
+  }, [onClose]);
+  return (
+    <>
+      <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(13,27,62,0.45)", zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", transition: "opacity 0.22s", backdropFilter: "blur(2px)" }} />
+      <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width: 560, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'Noto Sans', sans-serif", overflowY: "auto" }}>
+        <div style={{ background: ACCENT_NAVY, padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
+          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 7, color: "rgba(255,255,255,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>← Close</button>
+          {accentTag && <div style={{ display: "inline-block", background: `${B_YELLOW}22`, border: `1px solid ${B_YELLOW}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_YELLOW, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
+          <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{title}</div>
+          {subtitle && <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.45)", marginTop: 5 }}>{subtitle}</div>}
+        </div>
+        <div style={{ flex: 1, overflowY: "auto" }}>{children}</div>
+      </div>
+    </>
+  );
+}
+
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return <div style={{ fontSize: 10.5, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: 6 }}>{children}</div>;
 }
@@ -1294,25 +1316,25 @@ export default function SPOCDashboardView() {
             </div>
           </div>
       {/* TVW Registration Modal — volunteer section */}
-      {tvwRegModal && (
-        <Modal onClose={() => setTvwRegModal(null)} title="Confirm Registration">
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <div style={{ background: P_BLUE, borderRadius: 10, padding: "14px 16px" }}>
-              <div style={{ fontSize: 15, fontWeight: 800, color: ACCENT_NAVY, marginBottom: 4 }}>{tvwRegModal.title}</div>
-              <div style={{ fontSize: 12.5, color: "#6b6b7a" }}>{tvwRegModal.date} · {tvwRegModal.mode}{tvwRegModal.venue ? ` · ${tvwRegModal.venue}` : ""}</div>
+      <DrawerShell open={!!tvwRegModal} onClose={() => setTvwRegModal(null)} title="Confirm Registration" subtitle={tvwRegModal?.title ?? ""} accentTag="TVW 22">
+        {tvwRegModal && (
+          <div style={{ padding: "28px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 24 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Event</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.title}</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Date</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.date}</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Mode</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.mode}</span></div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Venue</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.venue ?? tvwRegModal.company}</span></div>
             </div>
-            <div style={{ fontSize: 13, color: "#6b6b7a", lineHeight: 1.6 }}>
+            <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 10, padding: "14px 16px", fontSize: 13, color: "#166534", lineHeight: 1.65, marginBottom: 28 }}>
               You'll receive a confirmation email within 24 hours. Your spot is reserved until 48 hours before the event.
             </div>
-            <div style={{ display: "flex", gap: 10, paddingTop: 4 }}>
-              <PrimaryBtn color={B_BLUE} onClick={() => { triggerToast(`Registered! Confirmation email sent to ${volData.email}`); setTvwRegModal(null); }}>
-                Confirm Registration
-              </PrimaryBtn>
-              <GhostBtn color="#888" onClick={() => setTvwRegModal(null)}>Cancel</GhostBtn>
+            <div style={{ display: "flex", gap: 12 }}>
+              <button onClick={() => { triggerToast("Registered! Confirmation email sent to rohan.desai@tcs.com"); setTvwRegModal(null); }} style={{ flex: 1, background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Confirm Registration</button>
+              <button onClick={() => setTvwRegModal(null)} style={{ flex: 1, background: "transparent", color: "#8888a0", border: "1px solid #e0e0e8", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 600, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
             </div>
           </div>
-        </Modal>
-      )}
+        )}
+      </DrawerShell>
     </div>
   );
 }
