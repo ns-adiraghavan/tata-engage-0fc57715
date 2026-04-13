@@ -26,6 +26,7 @@ const VIEW_TO_PATH: Record<string, string> = {
   "dr-availability-form": "/disaster-response/availability",
   "dr-confirmation": "/disaster-response/confirmation",
   "spoc-dashboard": "/spoc/dashboard",
+  "admin-login": "/admin-login",
   "admin-dashboard": "/admin/dashboard",
   "journey": "/journey",
   "about": "/about",
