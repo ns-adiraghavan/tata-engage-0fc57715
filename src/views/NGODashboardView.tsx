@@ -477,6 +477,7 @@ const NGODashboardView = () => {
     display: "block", fontSize: 12, fontWeight: active ? 700 : 500,
     color: active ? B_ORANGE : "#6b6b7a", padding: "6px 0",
     borderBottom: "1px solid #f0f0f8", cursor: "pointer",
+    whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
   });
   const tabBtn = (active: boolean): React.CSSProperties => ({
     fontSize: 12.5, fontWeight: active ? 700 : 500, color: active ? B_ORANGE : "#6b6b7a",
@@ -498,7 +499,7 @@ const NGODashboardView = () => {
       </div>
 
       {/* Main layout */}
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 48px 0", display: "grid", gridTemplateColumns: "1fr 148px", gap: 24, alignItems: "start" }}>
+      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 48px 0", display: "grid", gridTemplateColumns: "1fr 172px", gap: 24, alignItems: "start" }}>
 
         {/* ── MAIN SCROLL ── */}
         <div>
