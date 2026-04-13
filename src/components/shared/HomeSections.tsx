@@ -45,31 +45,24 @@ export function ProgrammeSpotlight() {
 
           {/* LEFT 70% */}
           <div className="lg:col-span-7 flex flex-col h-full">
-            {/* Flagship selector — badge chips with shape accents instead of plain pills */}
-            <div className="flex gap-3 mb-4 flex-wrap">
+            {/* Programme tabs — shape icon + name only */}
+            <div className="flex gap-2 mb-4 flex-wrap">
               {FLAGSHIP_PROGRAMMES.map((p, i) => {
                 const active = i === flagshipIdx;
-                // Each programme gets a distinct shape marker for personality
                 const shapes = [
-                  // TVW — diamond
-                  <svg key="tvw" viewBox="0 0 10 10" width={10} height={10} style={{ flexShrink: 0 }}><polygon points="5,1 9,5 5,9 1,5" fill={active ? p.accentText : "#CBD5E1"} /></svg>,
-                  // ProEngage — hexagon
-                  <svg key="pe" viewBox="0 0 10 10" width={10} height={10} style={{ flexShrink: 0 }}><polygon points="5,0.5 9.3,2.75 9.3,7.25 5,9.5 0.7,7.25 0.7,2.75" fill={active ? p.accentText : "#CBD5E1"} /></svg>,
-                  // Disaster Response — triangle/arrow
-                  <svg key="dr" viewBox="0 0 10 10" width={10} height={10} style={{ flexShrink: 0 }}><polygon points="5,1 9.5,9 0.5,9" fill={active ? p.accentText : "#CBD5E1"} /></svg>,
+                  <svg key="d" viewBox="0 0 8 8" width={8} height={8}><polygon points="4,0 8,4 4,8 0,4" fill="currentColor"/></svg>,
+                  <svg key="h" viewBox="0 0 8 8" width={8} height={8}><polygon points="4,0 7.5,2 7.5,6 4,8 0.5,6 0.5,2" fill="currentColor"/></svg>,
+                  <svg key="t" viewBox="0 0 8 8" width={8} height={8}><polygon points="4,0.5 7.5,7.5 0.5,7.5" fill="currentColor"/></svg>,
                 ];
                 return (
                   <button key={p.id} onClick={() => setFlagshipIdx(i)}
-                    className="flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full transition-all cursor-pointer border"
-                    style={
-                      active
-                        ? { backgroundColor: p.pastelBg, color: p.accentText, borderColor: p.accentText + "40", boxShadow: `0 0 0 1.5px ${p.accentText}22` }
-                        : { backgroundColor: "white", color: "#94a3b8", borderColor: "#e2e8f0" }
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-1.5 rounded-full border transition-all cursor-pointer"
+                    style={active
+                      ? { background: p.pastelBg, color: p.accentText, borderColor: p.accentText + "50" }
+                      : { background: "white", color: "#94a3b8", borderColor: "#e2e8f0" }
                     }>
-                    {shapes[i]}
-                    <span>Flagship</span>
-                    <span style={{ opacity: active ? 1 : 0.6 }}>·</span>
-                    <span>{p.id}</span>
+                    <span style={{ color: active ? p.accentText : "#CBD5E1", display: "flex" }}>{shapes[i]}</span>
+                    {p.id}
                   </button>
                 );
               })}
@@ -166,6 +159,10 @@ export function ProgrammeSpotlight() {
 export function JourneySection() {
   const navigate = useAppNavigate();
 
+  // Split milestones into two rows: even indices above spine, odd below
+  const above = JOURNEY_MILESTONES.filter((_, i) => i % 2 === 0);
+  const below = JOURNEY_MILESTONES.filter((_, i) => i % 2 !== 0);
+
   return (
     <section className={`${secBg(2)} py-16 px-6 md:px-12`}>
       <div className="max-w-7xl mx-auto">
@@ -174,68 +171,69 @@ export function JourneySection() {
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">A decade of giving back</h2>
         </div>
 
-        {/* Desktop horizontal alternating timeline */}
+        {/* Desktop: two-row timeline with a flex spine in the middle */}
         <div className="hidden lg:block">
-          <div className="relative" style={{ height: 280 }}>
-            {/* Spine line at vertical center */}
-            <div className="absolute left-0 right-0" style={{ top: 140, height: 2, background: `linear-gradient(to right, ${B_INDIGO}, ${B_TEAL}, ${B_YELLOW})`, opacity: 0.3 }} />
+          {/* ROW 1 — items that sit ABOVE the spine */}
+          <div className="flex" style={{ marginBottom: 0 }}>
+            {JOURNEY_MILESTONES.map((m, i) => (
+              <div key={`top-${i}`} className="flex-1 flex flex-col items-center text-center px-1"
+                style={{ visibility: i % 2 === 0 ? "visible" : "hidden" }}>
+                <img src={m.photo} alt={m.title} className="rounded-full object-cover mb-2 shrink-0"
+                  style={{ width: 56, height: 56, border: `2px solid ${m.colour}` }}
+                  referrerPolicy="no-referrer" />
+                <div className="font-extrabold tracking-widest uppercase" style={{ color: m.colour, fontSize: 10 }}>{m.year}</div>
+                <div className="font-bold text-slate-900 leading-snug mt-0.5" style={{ fontSize: 12 }}>{m.title}</div>
+                <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 10 }}>{m.desc}</div>
+              </div>
+            ))}
+          </div>
 
-            {JOURNEY_MILESTONES.map((m, i) => {
-              const above = i % 2 === 0;
-              const leftPct = `${(i / (JOURNEY_MILESTONES.length - 1)) * 100}%`;
-
-              return (
-                <div key={`${m.year}-${i}`} className="absolute" style={{ left: leftPct, transform: "translateX(-50%)", top: 0, bottom: 0, width: 120 }}>
-                  {/* Dot on spine */}
-                  <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 134 }}>
-                    <div className="w-3 h-3 rounded-full flex items-center justify-center" style={{ backgroundColor: m.colour }}>
-                      <div className="w-1 h-1 rounded-full bg-white" />
-                    </div>
-                  </div>
-
-                  {above ? (
-                    <>
-                      {/* Card above */}
-                      <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ bottom: 156, width: 120 }}>
-                        <div className="flex justify-center mb-2">
-                          <img src={m.photo} alt={m.title} className="rounded-full object-cover" style={{ width: 80, height: 80, border: `2px solid ${m.colour}` }} referrerPolicy="no-referrer" />
-                        </div>
-                        <div className="font-extrabold tracking-widest uppercase mb-0.5" style={{ color: m.colour, fontSize: 11 }}>{m.year}</div>
-                        <div className="font-bold text-slate-900 leading-snug" style={{ fontSize: 13 }}>{m.title}</div>
-                        <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 11 }}>{m.desc}</div>
-                      </div>
-                      {/* Connector line down to dot */}
-                      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 124, width: 1, height: 10, background: m.colour, opacity: 0.35 }} />
-                    </>
-                  ) : (
-                    <>
-                      {/* Connector line up from dot */}
-                      <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 147, width: 1, height: 10, background: m.colour, opacity: 0.35 }} />
-                      {/* Card below */}
-                      <div className="absolute left-1/2 -translate-x-1/2 text-center" style={{ top: 160, width: 120 }}>
-                        <div className="font-extrabold tracking-widest uppercase mb-0.5" style={{ color: m.colour, fontSize: 11 }}>{m.year}</div>
-                        <div className="font-bold text-slate-900 leading-snug" style={{ fontSize: 13 }}>{m.title}</div>
-                        <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 11 }}>{m.desc}</div>
-                        <div className="flex justify-center mt-2">
-                          <img src={m.photo} alt={m.title} className="rounded-full object-cover" style={{ width: 80, height: 80, border: `2px solid ${m.colour}` }} referrerPolicy="no-referrer" />
-                        </div>
-                      </div>
-                    </>
-                  )}
+          {/* SPINE ROW — dots + gradient line */}
+          <div className="flex items-center" style={{ marginTop: 10, marginBottom: 10 }}>
+            {JOURNEY_MILESTONES.map((m, i) => (
+              <div key={`spine-${i}`} className="flex-1 flex items-center">
+                {/* Dot */}
+                <div className="shrink-0 w-3 h-3 rounded-full flex items-center justify-center mx-auto"
+                  style={{ backgroundColor: m.colour, boxShadow: `0 0 0 3px ${m.colour}22` }}>
+                  <div className="w-1.5 h-1.5 rounded-full bg-white" />
                 </div>
-              );
-            })}
+                {/* Connector line to next dot */}
+                {i < JOURNEY_MILESTONES.length - 1 && (
+                  <div className="flex-1 h-px" style={{
+                    background: `linear-gradient(to right, ${m.colour}, ${JOURNEY_MILESTONES[i + 1].colour})`,
+                    opacity: 0.35
+                  }} />
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* ROW 3 — items that sit BELOW the spine */}
+          <div className="flex" style={{ marginTop: 0 }}>
+            {JOURNEY_MILESTONES.map((m, i) => (
+              <div key={`bot-${i}`} className="flex-1 flex flex-col items-center text-center px-1"
+                style={{ visibility: i % 2 !== 0 ? "visible" : "hidden" }}>
+                <div className="font-extrabold tracking-widest uppercase" style={{ color: m.colour, fontSize: 10 }}>{m.year}</div>
+                <div className="font-bold text-slate-900 leading-snug mt-0.5" style={{ fontSize: 12 }}>{m.title}</div>
+                <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 10 }}>{m.desc}</div>
+                <img src={m.photo} alt={m.title} className="rounded-full object-cover mt-2 shrink-0"
+                  style={{ width: 56, height: 56, border: `2px solid ${m.colour}` }}
+                  referrerPolicy="no-referrer" />
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Mobile fallback: vertical list */}
-        <div className="lg:hidden grid grid-cols-2 md:grid-cols-3 gap-6">
+        {/* Mobile: simple 2-col grid */}
+        <div className="lg:hidden grid grid-cols-2 gap-5">
           {JOURNEY_MILESTONES.map((m, i) => (
-            <div key={`${m.year}-${i}`} className="flex flex-col items-center text-center">
-              <img src={m.photo} alt={m.title} className="rounded-full object-cover mb-2" style={{ width: 64, height: 64, border: `2px solid ${m.colour}` }} referrerPolicy="no-referrer" />
-              <div className="font-extrabold tracking-widest uppercase mb-0.5" style={{ color: m.colour, fontSize: 11 }}>{m.year}</div>
-              <div className="font-bold text-slate-900 leading-snug" style={{ fontSize: 13 }}>{m.title}</div>
-              <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 11 }}>{m.desc}</div>
+            <div key={`m-${i}`} className="flex flex-col items-center text-center">
+              <img src={m.photo} alt={m.title} className="rounded-full object-cover mb-2"
+                style={{ width: 56, height: 56, border: `2px solid ${m.colour}` }}
+                referrerPolicy="no-referrer" />
+              <div className="font-extrabold tracking-widest uppercase" style={{ color: m.colour, fontSize: 10 }}>{m.year}</div>
+              <div className="font-bold text-slate-900 leading-snug mt-0.5" style={{ fontSize: 12 }}>{m.title}</div>
+              <div className="text-slate-400 leading-relaxed mt-0.5" style={{ fontSize: 10 }}>{m.desc}</div>
             </div>
           ))}
         </div>
