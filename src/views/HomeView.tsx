@@ -336,7 +336,7 @@ const HomeView = () => {
                 {["Privacy Policy", "Terms of Use", "Cookie Policy"].map((l) => (
                   <span key={l} className="hover:text-white cursor-pointer">{l}</span>
                 ))}
-                <span className="text-zinc-700 hover:text-zinc-400 cursor-pointer" onClick={() => navigate("login")}>Admin</span>
+                <span className="text-zinc-700 hover:text-zinc-400 cursor-pointer" onClick={() => navigate("admin-login")}>Admin</span>
               </div>
               <img src={tataLogo} alt="Tata" className="h-6 object-contain brightness-0 invert opacity-40" />
             </div>
