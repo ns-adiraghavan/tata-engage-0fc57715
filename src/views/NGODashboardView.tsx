@@ -5,6 +5,7 @@ import {
   AlertTriangle, Download, CheckCircle2, FileText, Archive,
   BarChart3, Shield, BookOpen, HelpCircle, Inbox, Copy,
   ArrowRight, Star, ChevronDown, ChevronUp, ExternalLink,
+  Bell, Share2, UserPlus, Award, Briefcase, TrendingUp,
 } from "lucide-react";
 import { MOCK_APPLICANTS, ANJALI_MEHTA } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
@@ -436,7 +437,7 @@ const NGODashboardView = () => {
   const [drillProject, setDrillProject] = useState<any | null>(null);
 
   // Modals
-  type ModalKey = null | "addProject" | "cloneProject" | "viewProjects" | "reviewApps" | "feedback" | "healthUpdate" | "manageTeam" | "selectedApplicant" | "grievance" | "projectGuide";
+  type ModalKey = null | "addProject" | "cloneProject" | "viewProjects" | "reviewApps" | "feedback" | "healthUpdate" | "manageTeam" | "selectedApplicant" | "grievance" | "projectGuide" | "referNGO" | "shareStory";
   const [modal, setModal] = useState<ModalKey>(null);
   const [selectedApplicant, setSelectedApplicant] = useState<any>(null);
   const [feedbackProject, setFeedbackProject] = useState<any>(null);
@@ -446,6 +447,12 @@ const NGODashboardView = () => {
 
   // Partner NGO expand
   const [expandedPartner, setExpandedPartner] = useState<number | null>(null);
+
+  // Notification bell
+  const [notifOpen, setNotifOpen] = useState(false);
+
+  // Snapshot popouts
+  const [snapPopout, setSnapPopout] = useState<null | "skills" | "badges" | "social">(null);
 
   // Stats
   const activeProjects  = projects.filter((p: any) => p.status === "Active").length;
@@ -496,7 +503,46 @@ const NGODashboardView = () => {
           <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>Lead Partner · Education · Mumbai, India</div>
         </div>
         <span style={{ background: P_ORANGE, color: B_ORANGE, fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: 100, border: `1px solid ${B_ORANGE}40` }}>{ngoData.tier ?? "Lead Partner"}</span>
+        {/* Notification bell */}
+        <button
+          onClick={() => setNotifOpen(v => !v)}
+          style={{ position: "relative", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 10, width: 38, height: 38, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
+          <Bell size={17} color="rgba(255,255,255,0.85)" />
+          <span style={{ position: "absolute", top: 6, right: 6, width: 8, height: 8, borderRadius: "50%", background: B_RED, border: "2px solid #0D1B3E" }} />
+        </button>
       </div>
+
+      {/* Notification popout */}
+      {notifOpen && (
+        <div style={{ position: "fixed", top: 130, right: 48, width: 320, background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, boxShadow: "0 12px 40px rgba(13,27,62,0.15)", zIndex: 300, fontFamily: "'Noto Sans', sans-serif", overflow: "hidden" }}>
+          <div style={{ background: ACCENT_NAVY, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>Notifications</div>
+            <button onClick={() => setNotifOpen(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", padding: 2, lineHeight: 1 }}>✕</button>
+          </div>
+          <div style={{ maxHeight: 300, overflowY: "auto" }}>
+            {[
+              { icon: "📋", text: "8 new volunteer applications need review", time: "2h ago", dot: true },
+              { icon: "⏰", text: "Feedback due in 1 day — Financial Literacy Project", time: "5h ago", dot: true },
+              { icon: "✅", text: "Project 'Digital Skills for Youth' approved by Admin", time: "Yesterday" },
+              { icon: "👤", text: "New co-ordinator request from Riya Nair", time: "2 days ago" },
+            ].map((n, i) => (
+              <div key={i} style={{ display: "flex", gap: 12, padding: "12px 16px", borderBottom: "1px solid #f0f0f8", cursor: "pointer", background: n.dot ? "#fdfbff" : "#fff" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "#f8f9ff")}
+                onMouseLeave={e => (e.currentTarget.style.background = n.dot ? "#fdfbff" : "#fff")}>
+                <span style={{ fontSize: 18, flexShrink: 0 }}>{n.icon}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 12.5, color: ACCENT_NAVY, lineHeight: 1.4, fontWeight: n.dot ? 600 : 400 }}>{n.text}</div>
+                  <div style={{ fontSize: 11, color: "#aaaabc", marginTop: 3 }}>{n.time}</div>
+                </div>
+                {n.dot && <span style={{ width: 7, height: 7, borderRadius: "50%", background: B_ORANGE, flexShrink: 0, marginTop: 5 }} />}
+              </div>
+            ))}
+          </div>
+          <div style={{ padding: "10px 16px", borderTop: "1px solid #f0f0f8", textAlign: "center" }}>
+            <button onClick={() => setNotifOpen(false)} style={{ fontSize: 12, fontWeight: 700, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>View all</button>
+          </div>
+        </div>
+      )}
 
       {/* Main layout */}
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 48px 0", display: "grid", gridTemplateColumns: "1fr 148px", gap: 24, alignItems: "start" }}>
@@ -507,12 +553,144 @@ const NGODashboardView = () => {
           {/* ─── I. Impact Snapshot ─── */}
           <div id="snapshot" ref={snapshotRef} style={card}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 4 }}>I · Impact Snapshot</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 10 }}>
               <StatTile num={activeProjects} label="Active projects"     bg="#FFF4EC" color="#B45309" />
               <StatTile num={totalVols}      label="Volunteers engaged"  bg={P_TEAL}  color={B_TEAL}  />
               <StatTile num={completedVols}  label="Completed"           bg={P_TEAL}  color={B_TEAL}  />
               <StatTile num={pendingApps}    label="Pending reviews"     bg="#EEEDFE" color="#3C3489" />
             </div>
+            {/* Row 2: Skills, Badges, Social — each clickable for popout */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 16 }}>
+              {/* Skills Utilised */}
+              <div onClick={() => setSnapPopout(snapPopout === "skills" ? null : "skills")}
+                style={{ background: P_BLUE, borderRadius: 10, padding: "12px 14px", cursor: "pointer", border: `1.5px solid ${snapPopout === "skills" ? B_BLUE : "transparent"}`, transition: "border-color 0.15s", position: "relative" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+                  <Briefcase size={13} color={B_BLUE} />
+                  <div style={{ fontSize: 10.5, fontWeight: 700, color: "#6b6b7a", textTransform: "uppercase", letterSpacing: "0.6px" }}>Skills Utilised</div>
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                  {["Finance","Education","IT","HR"].map(s => (
+                    <span key={s} style={{ fontSize: 10.5, fontWeight: 600, background: "#fff", color: B_BLUE, border: `1px solid ${B_BLUE}30`, borderRadius: 100, padding: "2px 7px" }}>{s}</span>
+                  ))}
+                  <span style={{ fontSize: 10.5, fontWeight: 600, color: "#888", padding: "2px 4px" }}>+3 more</span>
+                </div>
+                <div style={{ fontSize: 10, color: B_BLUE, fontWeight: 600, marginTop: 6 }}>View all →</div>
+              </div>
+
+              {/* Badges Earned */}
+              <div onClick={() => setSnapPopout(snapPopout === "badges" ? null : "badges")}
+                style={{ background: P_YELLOW, borderRadius: 10, padding: "12px 14px", cursor: "pointer", border: `1.5px solid ${snapPopout === "badges" ? B_YELLOW : "transparent"}`, transition: "border-color 0.15s" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+                  <Award size={13} color="#9a6500" />
+                  <div style={{ fontSize: 10.5, fontWeight: 700, color: "#6b6b7a", textTransform: "uppercase", letterSpacing: "0.6px" }}>Badges Earned</div>
+                </div>
+                <div style={{ display: "flex", gap: 6 }}>
+                  {["🏅","🌟","🤝","🌱"].map((b, i) => (
+                    <span key={i} style={{ fontSize: 20, lineHeight: 1 }}>{b}</span>
+                  ))}
+                </div>
+                <div style={{ fontSize: 24, fontWeight: 700, color: "#9a6500", letterSpacing: "-1px", marginTop: 4 }}>4</div>
+                <div style={{ fontSize: 10, color: "#9a6500", fontWeight: 600 }}>View all →</div>
+              </div>
+
+              {/* Social Media Contribution */}
+              <div onClick={() => setSnapPopout(snapPopout === "social" ? null : "social")}
+                style={{ background: "#f0f4ff", borderRadius: 10, padding: "12px 14px", cursor: "pointer", border: `1.5px solid ${snapPopout === "social" ? B_INDIGO : "transparent"}`, transition: "border-color 0.15s" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+                  <TrendingUp size={13} color={B_INDIGO} />
+                  <div style={{ fontSize: 10.5, fontWeight: 700, color: "#6b6b7a", textTransform: "uppercase", letterSpacing: "0.6px" }}>Social Contribution</div>
+                </div>
+                <div style={{ fontSize: 24, fontWeight: 700, color: B_INDIGO, letterSpacing: "-1px" }}>12</div>
+                <div style={{ fontSize: 11, color: "#555", marginTop: 2 }}>posts · 3.4k reach</div>
+                <div style={{ fontSize: 10, color: B_INDIGO, fontWeight: 600, marginTop: 4 }}>View breakdown →</div>
+              </div>
+            </div>
+
+            {/* Snapshot popout panels */}
+            {snapPopout === "skills" && (
+              <div style={{ background: "#f8f9ff", border: `1.5px solid ${B_BLUE}30`, borderRadius: 10, padding: "16px", marginBottom: 14 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                  <div style={{ fontSize: 12.5, fontWeight: 700, color: ACCENT_NAVY }}>Skills Utilised This Edition</div>
+                  <button onClick={() => setSnapPopout(null)} style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer", fontSize: 16, lineHeight: 1 }}>✕</button>
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {[
+                    { skill: "Finance & Accounting", count: 14 },
+                    { skill: "Education & Training", count: 22 },
+                    { skill: "IT / Technology", count: 9 },
+                    { skill: "Human Resources", count: 7 },
+                    { skill: "Communications", count: 11 },
+                    { skill: "Project Management", count: 5 },
+                    { skill: "Legal & Compliance", count: 3 },
+                  ].map(s => (
+                    <div key={s.skill} style={{ display: "flex", alignItems: "center", gap: 8, background: "#fff", border: `1px solid ${B_BLUE}25`, borderRadius: 8, padding: "8px 12px", minWidth: 180 }}>
+                      <div style={{ flex: 1, fontSize: 12.5, color: ACCENT_NAVY, fontWeight: 500 }}>{s.skill}</div>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: B_BLUE }}>{s.count} vols</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {snapPopout === "badges" && (
+              <div style={{ background: "#fffbee", border: `1.5px solid ${B_YELLOW}40`, borderRadius: 10, padding: "16px", marginBottom: 14 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                  <div style={{ fontSize: 12.5, fontWeight: 700, color: ACCENT_NAVY }}>Badges Earned by Pratham Foundation</div>
+                  <button onClick={() => setSnapPopout(null)} style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer", fontSize: 16, lineHeight: 1 }}>✕</button>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  {[
+                    { icon: "🏅", name: "ProEngage Partner", desc: "Completed 5+ matched projects", earned: "Jan 2026" },
+                    { icon: "🌟", name: "5-Star NGO", desc: "Consistently high volunteer ratings", earned: "Dec 2025" },
+                    { icon: "🤝", name: "Community Champion", desc: "10+ editions of TVW engagement", earned: "Nov 2025" },
+                    { icon: "🌱", name: "Impact Pathfinder", desc: "First edition with 100% feedback submitted", earned: "Oct 2025" },
+                  ].map(b => (
+                    <div key={b.name} style={{ display: "flex", gap: 10, background: "#fff", border: "1px solid #f5d48a", borderRadius: 8, padding: "10px 12px" }}>
+                      <span style={{ fontSize: 24, flexShrink: 0, lineHeight: 1, marginTop: 2 }}>{b.icon}</span>
+                      <div>
+                        <div style={{ fontSize: 12.5, fontWeight: 700, color: ACCENT_NAVY }}>{b.name}</div>
+                        <div style={{ fontSize: 11, color: "#888", lineHeight: 1.4, marginTop: 2 }}>{b.desc}</div>
+                        <div style={{ fontSize: 10, color: "#9a6500", fontWeight: 600, marginTop: 4 }}>Earned {b.earned}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {snapPopout === "social" && (
+              <div style={{ background: "#f0f4ff", border: `1.5px solid ${B_INDIGO}25`, borderRadius: 10, padding: "16px", marginBottom: 14 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                  <div style={{ fontSize: 12.5, fontWeight: 700, color: ACCENT_NAVY }}>Social Media Contribution</div>
+                  <button onClick={() => setSnapPopout(null)} style={{ background: "none", border: "none", color: "#aaa", cursor: "pointer", fontSize: 16, lineHeight: 1 }}>✕</button>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 12 }}>
+                  {[
+                    { label: "Total Posts", value: "12", color: B_INDIGO },
+                    { label: "Est. Reach", value: "3,400", color: B_INDIGO },
+                    { label: "Shares", value: "47", color: B_INDIGO },
+                  ].map(s => (
+                    <div key={s.label} style={{ background: "#fff", borderRadius: 8, padding: "10px 12px", textAlign: "center", border: `1px solid ${B_INDIGO}20` }}>
+                      <div style={{ fontSize: 20, fontWeight: 700, color: s.color, letterSpacing: "-0.5px" }}>{s.value}</div>
+                      <div style={{ fontSize: 10.5, color: "#6b6b7a", marginTop: 2 }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {[
+                    { platform: "LinkedIn", posts: 7, reach: "2,100" },
+                    { platform: "Twitter / X", posts: 3, reach: "900" },
+                    { platform: "Facebook", posts: 2, reach: "400" },
+                  ].map(p => (
+                    <div key={p.platform} style={{ display: "flex", alignItems: "center", gap: 12, background: "#fff", borderRadius: 7, padding: "8px 12px" }}>
+                      <div style={{ fontSize: 12.5, fontWeight: 600, color: ACCENT_NAVY, flex: 1 }}>{p.platform}</div>
+                      <div style={{ fontSize: 11.5, color: "#555" }}>{p.posts} posts</div>
+                      <div style={{ fontSize: 11.5, fontWeight: 700, color: B_INDIGO }}>{p.reach} reach</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Feedback reminders */}
             {projects
@@ -622,6 +800,24 @@ const NGODashboardView = () => {
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><Users size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Manage team / co-ordinators</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Self-service — no Admin needed</div>
+                <span style={{ fontSize: 11, fontWeight: 600, color: B_ORANGE }}>Open →</span>
+              </button>
+
+              {/* Refer an NGO */}
+              <button onClick={() => setModal("referNGO")}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}><UserPlus size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Refer an NGO</span></div>
+                <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Invite another NGO to join ProEngage</div>
+                <span style={{ fontSize: 11, fontWeight: 600, color: B_ORANGE }}>Open →</span>
+              </button>
+
+              {/* Share story */}
+              <button onClick={() => setModal("shareStory")}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}><Share2 size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Share your story / experience</span></div>
+                <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Post an experience or a project highlight</div>
                 <span style={{ fontSize: 11, fontWeight: 600, color: B_ORANGE }}>Open →</span>
               </button>
             </div>
@@ -1007,6 +1203,20 @@ const NGODashboardView = () => {
               <div key={label} onClick={action} style={{ fontSize: 11, color: B_ORANGE, fontWeight: 600, padding: "5px 0", borderBottom: "1px solid #f0f0f8", cursor: "pointer" }}>{label}</div>
             ))}
           </div>
+          {/* Pending Validations */}
+          <div style={{ background: "#fff", border: "1.5px solid #fde68a", borderRadius: 10, padding: "10px 12px" }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: "#9a6500", marginBottom: 8 }}>Pending Validations</div>
+            {[
+              { label: "Feedback due", detail: "2 projects", color: B_RED },
+              { label: "Co-ord request", detail: "1 pending", color: B_ORANGE },
+              { label: "Health update", detail: "Overdue", color: B_RED },
+            ].map(({ label, detail, color }) => (
+              <div key={label} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "5px 0", borderBottom: "1px solid #fef3c7" }}>
+                <div style={{ fontSize: 11, color: "#555", fontWeight: 500 }}>{label}</div>
+                <span style={{ fontSize: 10.5, fontWeight: 700, color }}>{detail}</span>
+              </div>
+            ))}
+          </div>
           {/* Edition card */}
           <div style={{ background: P_ORANGE, border: `1px solid ${B_ORANGE}40`, borderRadius: 10, padding: "10px 12px" }}>
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", color: B_ORANGE, marginBottom: 6 }}>PE Edition 23</div>
@@ -1227,6 +1437,63 @@ const NGODashboardView = () => {
               </button>
             </div>
           ))}
+        </div>
+      </DrawerShell>
+
+      {/* Refer an NGO */}
+      <DrawerShell open={modal === "referNGO"} onClose={() => setModal(null)} title="Refer an NGO" accentTag="Refer" subtitle="Help grow the ProEngage partner network">
+        <div>
+          <div style={{ background: P_ORANGE, border: `1px solid ${B_ORANGE}30`, borderRadius: 10, padding: "12px 14px", marginBottom: 18, fontSize: 12.5, color: "#7c3000", lineHeight: 1.5 }}>
+            Know a like-minded NGO that would be a great ProEngage partner? Fill in their details and we'll reach out on your behalf.
+          </div>
+          <div style={{ marginBottom: 12 }}><Label required>NGO Name</Label><FInput value="" placeholder="e.g. Akanksha Foundation" /></div>
+          <div style={{ marginBottom: 12 }}><Label required>Primary Contact Name</Label><FInput value="" placeholder="Contact person's name" /></div>
+          <div style={{ marginBottom: 12 }}><Label required>Contact Email</Label><FInput value="" type="email" placeholder="contact@ngo.org" /></div>
+          <div style={{ marginBottom: 12 }}><Label>Contact Phone</Label><FInput value="" placeholder="+91 98XXXXXXXX" /></div>
+          <div style={{ marginBottom: 12 }}><Label>Focus Area</Label>
+            <FSelect value="Select focus area" onChange={() => {}} options={["Select focus area", "Education", "Health", "Environment", "Livelihood", "Disaster Relief", "Women Empowerment", "Other"]} />
+          </div>
+          <div style={{ marginBottom: 18 }}><Label>Why are you recommending them?</Label>
+            <textarea placeholder="What makes this NGO a good fit for ProEngage?" rows={3}
+              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
+          </div>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+            <button onClick={() => { setModal(null); triggerToast("Referral submitted! TSG Admin will reach out to the NGO within 3 working days."); }}
+              style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Referral</button>
+          </div>
+        </div>
+      </DrawerShell>
+
+      {/* Share Story / Experience */}
+      <DrawerShell open={modal === "shareStory"} onClose={() => setModal(null)} title="Share Your Story" accentTag="Story" subtitle="Post a project highlight or impact experience">
+        <div>
+          <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}25`, borderRadius: 10, padding: "12px 14px", marginBottom: 18, fontSize: 12.5, color: B_INDIGO, lineHeight: 1.5 }}>
+            Stories go to TSG Admin for moderation before being published. Approved stories may appear on the TVW Vibe wall and the TataEngage homepage.
+          </div>
+          <div style={{ marginBottom: 12 }}><Label required>Story Type</Label>
+            <FSelect value="Select type" onChange={() => {}} options={["Select type", "Project Highlight", "Impact Story", "Volunteer Spotlight", "Community Change", "Partnership Achievement"]} />
+          </div>
+          <div style={{ marginBottom: 12 }}><Label required>Headline</Label><FInput value="" placeholder="A short, compelling title for your story" /></div>
+          <div style={{ marginBottom: 12 }}><Label required>Your Story</Label>
+            <textarea placeholder="Describe the experience, impact, or moment you want to share…" rows={5}
+              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
+          </div>
+          <div style={{ marginBottom: 12 }}><Label>Link to a Project (optional)</Label>
+            <FSelect value="Select project" onChange={() => {}} options={["Select project", ...(ngoData.projects ?? []).map((p: any) => p.title)]} />
+          </div>
+          <div style={{ marginBottom: 18 }}>
+            <Label>Add Image (optional)</Label>
+            <div style={{ border: "1.5px dashed #e0e0e8", borderRadius: 8, padding: "18px", textAlign: "center", cursor: "pointer", color: "#aaa", fontSize: 13 }}
+              onClick={() => triggerToast("File upload simulated.")}>
+              📎 Click to attach a photo
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+            <button onClick={() => { setModal(null); triggerToast("Story submitted for moderation. TSG Admin will review within 2 working days."); }}
+              style={{ flex: 1, padding: "10px", background: B_INDIGO, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Story</button>
+          </div>
         </div>
       </DrawerShell>
 
