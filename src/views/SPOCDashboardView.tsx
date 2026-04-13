@@ -246,6 +246,9 @@ export default function SPOCDashboardView() {
   const [actTab,  setActTab]  = useState("opportunities");
   const [histTab, setHistTab] = useState("applications");
 
+  // TVW registration modal (volunteer section)
+  const [tvwRegModal, setTvwRegModal] = useState<any>(null);
+
   // Modals
   type ModalType = null | "createEvent" | "vibeSubmit" | "volunteerProfile" | "rejectReason" | "projectUpdate" | "feedback" | "applicationDetail";
   const [modal,         setModal]         = useState<ModalType>(null);
@@ -777,7 +780,7 @@ export default function SPOCDashboardView() {
                     <div style={{ fontSize: 12, color: "#6b6b7a", marginTop: 3 }}>{ev.date} · {ev.mode}</div>
                   </div>
                   <StatusBadge status={ev.status} />
-                  <button onClick={() => triggerToast(`Registered for: ${ev.title}`)}
+                  <button onClick={() => setTvwRegModal(ev)}
                     style={{ fontSize: 12, fontWeight: 600, color: "#fff", background: B_BLUE, border: "none", borderRadius: 8, padding: "7px 14px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
                     Register
                   </button>
@@ -957,7 +960,7 @@ export default function SPOCDashboardView() {
                 </div>
               </>
             ) : (
-              <>{volunteerSectionsJSX}</>
+              {volunteerSectionsJSX}
             )}
           </div>
           {rightRailJSX}
@@ -1288,6 +1291,24 @@ export default function SPOCDashboardView() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+      {/* TVW Registration Modal — volunteer section */}
+      {tvwRegModal && (
+        <Modal onClose={() => setTvwRegModal(null)} title="Confirm Registration">
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ background: P_BLUE, borderRadius: 10, padding: "14px 16px" }}>
+              <div style={{ fontSize: 15, fontWeight: 800, color: ACCENT_NAVY, marginBottom: 4 }}>{tvwRegModal.title}</div>
+              <div style={{ fontSize: 12.5, color: "#6b6b7a" }}>{tvwRegModal.date} · {tvwRegModal.mode}{tvwRegModal.venue ? ` · ${tvwRegModal.venue}` : ""}</div>
+            </div>
+            <div style={{ fontSize: 13, color: "#6b6b7a", lineHeight: 1.6 }}>
+              You'll receive a confirmation email within 24 hours. Your spot is reserved until 48 hours before the event.
+            </div>
+            <div style={{ display: "flex", gap: 10, paddingTop: 4 }}>
+              <PrimaryBtn color={B_BLUE} onClick={() => { triggerToast(`Registered! Confirmation email sent to ${volData.email}`); setTvwRegModal(null); }}>
+                Confirm Registration
+              </PrimaryBtn>
+              <GhostBtn color="#888" onClick={() => setTvwRegModal(null)}>Cancel</GhostBtn>
             </div>
           </div>
         </Modal>
