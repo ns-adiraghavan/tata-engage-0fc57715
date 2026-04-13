@@ -263,9 +263,10 @@ export default function SPOCDashboardView() {
   const [pipeFilter, setPipeFilter] = useState("All");
   const [pipeSearch, setPipeSearch] = useState("");
   const [showNudged, setShowNudged] = useState(false);
+  const [nudgeContact, setNudgeContact] = useState<any>(null);
 
   // Volunteer tabs
-  const [actTab,  setActTab]  = useState("opportunities");
+  const [actTab,  setActTab]  = useState("view");
   const [histTab, setHistTab] = useState("applications");
 
   // TVW registration modal (volunteer section)
@@ -360,29 +361,44 @@ export default function SPOCDashboardView() {
 
   const tcsEntry = COMPANY_LEADERBOARD.find(c => c.name === "TCS");
 
-  const SPOC_SECTIONS = [
-    { id: "spoc-kpis",      label: "Impact KPIs"       },
-    { id: "spoc-tvw",       label: IS_TVW_SEASON ? "TVW Actions" : "TVW (off-season)" },
-    { id: "spoc-oversight", label: "Manage & Oversight" },
-    ...(!isRegionalSPOC ? [{ id: "spoc-mgt", label: "SPOC Mgt" }] : []),
-    { id: "spoc-resources", label: "Resources"          },
+  const pendingCount = approvals.filter(a => a.status === "Pending").length;
+
+  const SPOC_SECTIONS: { id: string; label: string; badge?: number }[] = [
+    { id: "spoc-kpis",        label: "My SPOC Snapshots"  },
+    { id: "spoc-activities",  label: "My Activities"       },
+    { id: "spoc-history",     label: "My History"          },
+    { id: "spoc-oversight",   label: "Manage & Oversight"  },
+    ...(!isRegionalSPOC ? [{ id: "spoc-mgt", label: "SPOC Management" }] : []),
+    { id: "spoc-validation",  label: "Pending Validation", badge: pendingCount },
+    { id: "spoc-annual",      label: "Annual Reporting"   },
+    { id: "spoc-resources",   label: "Resource Library"   },
   ];
 
   const VOL_SECTIONS = [
-    { id: "snapshot",   label: "Snapshot"   },
-    { id: "activities", label: "Activities" },
-    { id: "history",    label: "History"    },
-    { id: "resources",  label: "Resources"  },
+    { id: "snapshot",   label: "My Engagement Snapshot" },
+    { id: "activities", label: "My Activities"          },
+    { id: "history",    label: "My History"             },
+    { id: "resources",  label: "Resource Library"       },
   ];
 
+  // Activity tabs: View (1), DIY (2), Add (3)
   const actTabs = [
-    { id: "opportunities", label: "View Opportunities" },
-    { id: "diy",           label: "DIY Activities"     },
-    ...(IS_PE_SEASON
-      ? [{ id: "proengage", label: volData.activeApplication ? "My ProEngage Project" : "Apply for a Project" }]
-      : [{ id: "early",     label: "Apply Early for ProEngage" }]
-    ),
+    { id: "view", label: "View Opportunities" },
+    { id: "diy",  label: "DIY Activities"     },
+    { id: "add",  label: "Add Opportunities"  },
   ];
+
+  // SPOC History tabs
+  const spocHistTabs = [
+    { id: "company-opps",    label: "Company Opportunities" },
+    { id: "pe-applied",      label: "PE — Applied"          },
+    { id: "pe-matched",      label: "PE — Matched"          },
+    { id: "ongoing",         label: "Ongoing Projects"      },
+    { id: "feedback-status", label: "Feedback Status"       },
+    { id: "edition-end",     label: "Edition End Summary"   },
+  ];
+  const [spocHistTab, setSpocHistTab] = useState("company-opps");
+  const [spocHistFY,  setSpocHistFY]  = useState("FY 2026");
 
   // ── Right rail ───────────────────────────────────────────────────────────────
   const rightRailJSX = (
@@ -392,11 +408,14 @@ export default function SPOCDashboardView() {
           <div style={{ ...card, padding: "14px 16px" }}>
             <div style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: "1.2px", textTransform: "uppercase", color: B_INDIGO, marginBottom: 10, opacity: 0.8 }}>SPOC Corner</div>
             {SPOC_SECTIONS.map(s => {
-              const hasNotif = (s.id === "spoc-tvw" && NOTIFICATIONS.tvwActions) || (s.id === "spoc-oversight" && (NOTIFICATIONS.volunteerPipeline || NOTIFICATIONS.feedbackMonitor));
+              const hasNotif = (s.id === "spoc-activities" && NOTIFICATIONS.tvwActions) || (s.id === "spoc-validation" && (NOTIFICATIONS.volunteerPipeline || NOTIFICATIONS.feedbackMonitor));
               return (
                 <div key={s.id} onClick={() => scrollTo(s.id)}
-                  style={{ position: "relative", display: "inline-flex", fontSize: 12, padding: "5px 0", borderBottom: "1px solid #f0f0f8", cursor: "pointer", color: activeSection === s.id ? B_INDIGO : "#6b6b7a", fontWeight: activeSection === s.id ? 700 : 400, width: "100%" }}>
-                  {activeSection === s.id ? "↑ " : ""}{s.label}{hasNotif && <span style={notifDot} />}
+                  style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: "1px solid #f0f0f8", cursor: "pointer", color: activeSection === s.id ? B_INDIGO : "#6b6b7a", fontWeight: activeSection === s.id ? 700 : 400, width: "100%" }}>
+                  <span>{activeSection === s.id ? "↑ " : ""}{s.label}{hasNotif && <span style={notifDot} />}</span>
+                  {(s.badge ?? 0) > 0 && (
+                    <span style={{ background: B_RED, color: "#fff", fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 100, marginLeft: 4 }}>{s.badge}</span>
+                  )}
                 </div>
               );
             })}
@@ -415,7 +434,6 @@ export default function SPOCDashboardView() {
             {[
               { label: "Edit Profile",      fn: () => navigate("/profile") },
               { label: "Post TVW Event",    fn: () => IS_TVW_SEASON ? setModal("createEvent") : triggerToast("TVW season not active."), hide: !IS_TVW_SEASON },
-              { label: "Pending Approvals", fn: () => scrollTo("spoc-mgt") },
               { label: "Download Certs",    fn: () => triggerToast("Preparing ZIP of all certificates…") },
             ].filter(l => !l.hide).map(l => (
               <div key={l.label} onClick={l.fn} style={{ fontSize: 12, padding: "5px 0", borderBottom: "1px solid #f0f0f8", cursor: "pointer", color: B_INDIGO, fontWeight: 500 }}>{l.label}</div>
@@ -455,28 +473,31 @@ export default function SPOCDashboardView() {
   const spocSectionsJSX = (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
 
-      {/* I — KPIs */}
+      {/* I — My SPOC Snapshots (8 KPIs) */}
       <div id="spoc-kpis" ref={spocRef} style={spocCard}>
-        <SectionHeading eyebrow={`SPOC Corner · I · ${isRegionalSPOC ? (spoc as any).geography : "Full Company"}`} title="Impact KPIs" spocMode />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 14 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 22 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "#8882cc", marginBottom: 5 }}>SPOC Corner · I · {isRegionalSPOC ? (spoc as any).geography : "Full Company"}</div>
+            <h2 style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: 21, fontWeight: 900, color: ACCENT_NAVY, margin: 0, letterSpacing: -0.3 }}>My SPOC Snapshots</h2>
+          </div>
+          <span style={{ background: P_SPOC, color: B_INDIGO, fontSize: 12, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>FY 2026</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 10 }}>
           {([
-            { value: spoc.stats.totalVolunteers,  label: "Total Volunteers",  pastel: P_SPOC,   accent: B_INDIGO,  tip: "Registered volunteers in your scope." },
-            { value: spoc.stats.activeProEngage,  label: "Active PE",         pastel: P_TEAL,   accent: B_TEAL,    tip: "Volunteers currently in an active PE project." },
-            { value: spoc.stats.tvwEvents,         label: "TVW Events",        pastel: P_BLUE,   accent: B_BLUE,    tip: "Events posted by SPOCs this edition." },
-            { value: spoc.stats.pendingApprovals,  label: "Pending Approvals", pastel: P_YELLOW, accent: "#9a6500", tip: "Retiree & no-email registrations awaiting approval." },
+            { value: spoc.stats.totalVolunteers, label: "Signed on for PE",    pastel: P_SPOC,   accent: B_INDIGO, tip: "Employees who signed up for a ProEngage project this edition." },
+            { value: spoc.stats.activeProEngage, label: "Ongoing Projects",     pastel: P_TEAL,   accent: B_TEAL,   tip: "Employees with an active PE project currently underway." },
+            { value: 12,                          label: "Completed Projects",   pastel: P_BLUE,   accent: B_BLUE,   tip: "Employees who completed a PE project this edition." },
+            { value: 4,                           label: "Dropouts",             pastel: P_RED,    accent: B_RED,    tip: "Employees who dropped out of a PE project this edition." },
           ] as any[]).map((t, i) => <StatTile key={i} {...t} delay={i * 80} started={spocStarted} />)}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8, marginBottom: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 18 }}>
           {([
-            { value: 86, label: "Matched",   pastel: P_TEAL,    accent: B_TEAL    },
-            { value: 12, label: "Completed", pastel: P_BLUE,    accent: B_BLUE    },
-            { value: 8,  label: "Paused",    pastel: P_YELLOW,  accent: "#9a6500" },
-            { value: 4,  label: "Dropped",   pastel: P_RED,     accent: B_RED     },
-            { value: 15, label: "Rejected",  pastel: "#f4f4f4", accent: "#888"    },
-          ] as any[]).map((t, i) => <StatTile key={i} {...t} delay={400 + i * 60} started={spocStarted} />)}
+            { value: 7,  label: "Badges as SPOC",      pastel: P_YELLOW, accent: B_YELLOW, tip: "Badges earned in your SPOC role." },
+            { value: 23, label: "Employees Referred",   pastel: P_INDIGO, accent: B_INDIGO, tip: "Employees who signed up via your referral link." },
+            { value: 18, label: "Social Contributions", pastel: P_BLUE,   accent: B_BLUE,   tip: "Social media posts/shares by your company volunteers." },
+            { value: isRegionalSPOC ? 0 : SPOC_DIRECTORY.filter((s: any) => s.company === "TCS" && s.role === "Regional SPOC").length, label: "Regional SPOCs", pastel: P_SPOC, accent: B_INDIGO, tip: "Regional SPOCs under your company." },
+          ] as any[]).map((t, i) => <StatTile key={i} {...t} delay={400 + i * 80} started={spocStarted} />)}
         </div>
-
-        {/* At-risk — read-only, togglable */}
         {AT_RISK_VOLUNTEERS.length > 0 && (
           <div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
@@ -484,9 +505,7 @@ export default function SPOCDashboardView() {
                 <span style={{ background: P_RED, color: B_RED, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>⚠ {AT_RISK_VOLUNTEERS.length} At-Risk</span>
                 <span style={{ fontSize: 12, color: "#6b6b7a" }}>Nudges sent by Admin / AI</span>
               </div>
-              <GhostBtn color={B_INDIGO} onClick={() => setShowNudged(n => !n)}>
-                {showNudged ? "Hide" : "View nudged list"}
-              </GhostBtn>
+              <GhostBtn color={B_INDIGO} onClick={() => setShowNudged(n => !n)}>{showNudged ? "Hide" : "View nudged list"}</GhostBtn>
             </div>
             {showNudged && (
               <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden" }}>
@@ -500,6 +519,10 @@ export default function SPOCDashboardView() {
                     <span style={{ fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, background: v.nudged ? P_TEAL : P_YELLOW, color: v.nudged ? B_TEAL : "#9a6500" }}>
                       {v.nudged ? "✓ Nudged" : "Pending nudge"}
                     </span>
+                    <button onClick={() => setNudgeContact(v)}
+                      style={{ fontSize: 11, fontWeight: 600, color: B_INDIGO, background: P_SPOC, border: "1px solid #c8c6f0", borderRadius: 7, padding: "5px 12px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", whiteSpace: "nowrap" }}>
+                      Contact →
+                    </button>
                   </div>
                 ))}
               </div>
@@ -508,9 +531,9 @@ export default function SPOCDashboardView() {
         )}
       </div>
 
-      {/* II — TVW Actions */}
-      <div id="spoc-tvw" style={IS_TVW_SEASON ? spocCard : { ...spocCard, background: "#fafafa" }}>
-        <SectionHeading eyebrow="SPOC Corner · II" title="TVW Actions" spocMode />
+      {/* II — My Activities (TVW + PE) */}
+      <div id="spoc-activities" style={IS_TVW_SEASON ? spocCard : { ...spocCard, background: "#fafafa" }}>
+        <SectionHeading eyebrow="SPOC Corner · II" title="My Activities" spocMode />
         {IS_TVW_SEASON ? (
           <>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
@@ -531,23 +554,149 @@ export default function SPOCDashboardView() {
                 )}
               </div>
             ))}
-            <div style={{ marginTop: 14 }}>
-              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Campaign kit downloading (mailers, banners, LinkedIn posts)…")}>📦 Campaign Kit</GhostBtn>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16, paddingTop: 14, borderTop: "1px solid #f0f0f8" }}>
+              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Adding volunteering hours…")}>+ Add Volunteering Hours</GhostBtn>
+              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Campaign kit downloading…")}>📦 Campaign Kit</GhostBtn>
+              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Opening story submission form…")}>📖 Share Volunteering Story</GhostBtn>
             </div>
           </>
         ) : (
           <div style={{ textAlign: "center", padding: "24px 0" }}>
             <div style={{ fontSize: 28, marginBottom: 10 }}>📅</div>
             <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 6 }}>TVW season is not currently active</div>
-            <div style={{ fontSize: 13, color: "#6b6b7a" }}>TVW typically runs in March and August. Event creation and vibe submissions unlock when the next edition opens.</div>
+            <div style={{ fontSize: 13, color: "#6b6b7a" }}>TVW typically runs in March and August.</div>
+          </div>
+        )}
+        <div style={{ marginTop: 20, paddingTop: 18, borderTop: "2px dashed #e8e8f0" }}>
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.2px", textTransform: "uppercase", color: "#8882cc", marginBottom: 12 }}>ProEngage — All Year</div>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <GhostBtn color={B_INDIGO} onClick={() => setShowNudged(true)}>PE Volunteers to Nudge</GhostBtn>
+            <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Preparing ZIP of all certificates…")}>⬇ Bulk Download Certs</GhostBtn>
+            <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Downloading open PE projects list…")}>📋 Open PE Projects List</GhostBtn>
+          </div>
+        </div>
+      </div>
+
+      {/* III — My History (6 sub-tabs + FY dropdown + export) */}
+      <div id="spoc-history" style={spocCard}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "#8882cc", marginBottom: 5 }}>SPOC Corner · III</div>
+            <h2 style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: 21, fontWeight: 900, color: ACCENT_NAVY, margin: 0, letterSpacing: -0.3 }}>My History</h2>
+          </div>
+          <select value={spocHistFY} onChange={e => setSpocHistFY(e.target.value)}
+            style={{ border: "1.5px solid #c8c6f0", borderRadius: 9, padding: "7px 12px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: B_INDIGO, fontWeight: 600, background: P_SPOC, cursor: "pointer", outline: "none" }}>
+            {["FY 2026","FY 2025","FY 2024","FY 2023"].map(y => <option key={y}>{y}</option>)}
+          </select>
+          <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Exporting to Excel…")}>⬇ Export XLS</GhostBtn>
+        </div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
+          {spocHistTabs.map(t => (
+            <button key={t.id} onClick={() => setSpocHistTab(t.id)}
+              style={{ padding: "6px 14px", borderRadius: 100, border: `1.5px solid ${spocHistTab === t.id ? B_INDIGO : "#dddde8"}`, background: spocHistTab === t.id ? B_INDIGO : "transparent", color: spocHistTab === t.id ? "#fff" : "#666", fontSize: 12.5, fontWeight: spocHistTab === t.id ? 600 : 400, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", transition: "all 0.15s" }}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+        {spocHistTab === "company-opps" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {[
+              { title: "Financial Literacy for Youth", company: "TCS", mode: "Virtual",    status: "Live"     },
+              { title: "Coastal Cleanup Drive",         company: "TCS · Mumbai", mode: "In-Person", status: "Upcoming" },
+              { title: "Digital Skills for Seniors",    company: "TCS · Pune",   mode: "Hybrid",    status: "Live"     },
+            ].map((o, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "12px 16px", border: "1px solid #e8e8f0", borderRadius: 10 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{o.title}</div>
+                  <div style={{ fontSize: 11, color: "#6b6b7a", marginTop: 2 }}>{o.company} · {o.mode}</div>
+                </div>
+                <StatusBadge status={o.status} />
+              </div>
+            ))}
+          </div>
+        )}
+        {spocHistTab === "pe-applied" && (
+          <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1fr", gap: 12, padding: "10px 16px", background: "#f8f8fc", borderBottom: "1px solid #e8e8f0" }}>
+              {["Volunteer","Project","Status"].map(h => <div key={h} style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px" }}>{h}</div>)}
+            </div>
+            {PROENGAGE_PIPELINE.slice(0, 5).map((v, i) => (
+              <div key={v.id} style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1fr", gap: 12, padding: "11px 16px", borderBottom: i < 4 ? "1px solid #f0f0f8" : "none", alignItems: "center" }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{v.name}</div>
+                <div style={{ fontSize: 12.5, color: "#6b6b7a" }}>{v.project}</div>
+                <StatusBadge status={v.status} />
+              </div>
+            ))}
+          </div>
+        )}
+        {spocHistTab === "pe-matched" && (
+          <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1fr", gap: 12, padding: "10px 16px", background: "#f8f8fc", borderBottom: "1px solid #e8e8f0" }}>
+              {["Volunteer","Project","NGO","Match Date"].map(h => <div key={h} style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px" }}>{h}</div>)}
+            </div>
+            {PROENGAGE_PIPELINE.filter((v: any) => v.status === "Matched" || v.status === "Active").slice(0, 4).map((v, i, arr) => (
+              <div key={v.id} style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1fr", gap: 12, padding: "11px 16px", borderBottom: i < arr.length - 1 ? "1px solid #f0f0f8" : "none", alignItems: "center" }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{v.name}</div>
+                <div style={{ fontSize: 12.5, color: "#6b6b7a" }}>{v.project}</div>
+                <div style={{ fontSize: 12, color: "#6b6b7a" }}>{v.ngo}</div>
+                <div style={{ fontSize: 12, color: "#aaaabc" }}>Mar 2026</div>
+              </div>
+            ))}
+          </div>
+        )}
+        {spocHistTab === "ongoing" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {PROENGAGE_PIPELINE.filter((v: any) => v.status === "Active" || v.status === "Matched").map((v, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", border: "1px solid #e8e8f0", borderRadius: 10 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{v.name}</div>
+                  <div style={{ fontSize: 11, color: "#6b6b7a", marginTop: 2 }}>{v.project} · {v.ngo}</div>
+                </div>
+                <StatusBadge status={v.status} />
+              </div>
+            ))}
+          </div>
+        )}
+        {spocHistTab === "feedback-status" && (
+          <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1fr 1fr", gap: 12, padding: "10px 16px", background: "#f8f8fc", borderBottom: "1px solid #e8e8f0" }}>
+              {["Volunteer","Project","Due","Feedback"].map(h => <div key={h} style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px" }}>{h}</div>)}
+            </div>
+            {FEEDBACK_MONITOR_DATA.map((f, i) => (
+              <div key={f.id} style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1fr 1fr", gap: 12, padding: "11px 16px", borderBottom: i < FEEDBACK_MONITOR_DATA.length - 1 ? "1px solid #f0f0f8" : "none", alignItems: "center" }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{f.name}</div>
+                <div style={{ fontSize: 12, color: "#6b6b7a" }}>{f.project}</div>
+                <div style={{ fontSize: 12, color: B_RED, fontWeight: 600 }}>{f.dueDate}</div>
+                <span style={{ background: P_RED, color: B_RED, fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 100 }}>Overdue</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {spocHistTab === "edition-end" && (
+          <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1fr 1fr", gap: 12, padding: "10px 16px", background: "#f8f8fc", borderBottom: "1px solid #e8e8f0" }}>
+              {["Volunteer","Project","Hours","Outcome"].map(h => <div key={h} style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px" }}>{h}</div>)}
+            </div>
+            {[
+              { name: "Aarav Mehta", project: "Digital Literacy",   hours: 24, outcome: "Completed" },
+              { name: "Sunita Rao",  project: "Financial Inclusion", hours: 18, outcome: "Completed" },
+              { name: "Kiran Desai", project: "Climate Awareness",   hours: 6,  outcome: "Dropped"   },
+              { name: "Priya Nair",  project: "Education for All",   hours: 30, outcome: "Completed" },
+            ].map((v, i, arr) => (
+              <div key={i} style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1fr 1fr", gap: 12, padding: "11px 16px", borderBottom: i < arr.length - 1 ? "1px solid #f0f0f8" : "none", alignItems: "center" }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{v.name}</div>
+                <div style={{ fontSize: 12, color: "#6b6b7a" }}>{v.project}</div>
+                <div style={{ fontSize: 12, color: ACCENT_NAVY, fontWeight: 600 }}>{v.hours}h</div>
+                <StatusBadge status={v.outcome} />
+              </div>
+            ))}
           </div>
         )}
       </div>
 
-      {/* III — Manage & Oversight (PE — all year) */}
+      {/* IV — Manage & Oversight */}
       <div id="spoc-oversight" style={spocCard}>
-        <SectionHeading eyebrow="SPOC Corner · III · All Year" title="Manage & Oversight" spocMode />
-        {/* Sub-panel: Volunteer Pipeline */}
+        <SectionHeading eyebrow="SPOC Corner · IV · All Year" title="Manage & Oversight" spocMode />
         <div style={{ marginBottom: 14 }}>
           <div onClick={() => setPipelineOpen(o => !o)}
             style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", padding: "10px 0", borderBottom: "1px solid #e8e8f0", userSelect: "none" }}>
@@ -562,7 +711,7 @@ export default function SPOCDashboardView() {
               <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap", alignItems: "center" }}>
                 <input value={pipeSearch} onChange={e => setPipeSearch(e.target.value)} placeholder="Search volunteer or project…"
                   style={{ flex: "1 1 180px", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "7px 12px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none" }} />
-                {["All", "Active", "Matched", "Applied", "Completed", "Dropped", "At Risk"].map(f => (
+                {["All","Active","Matched","Applied","Completed","Dropped","At Risk"].map(f => (
                   <button key={f} onClick={() => setPipeFilter(f)}
                     style={{ fontSize: 11.5, fontWeight: pipeFilter === f ? 700 : 400, padding: "5px 12px", borderRadius: 100, border: `1.5px solid ${pipeFilter === f ? B_INDIGO : "#dddde8"}`, background: pipeFilter === f ? B_INDIGO : "transparent", color: pipeFilter === f ? "#fff" : "#666", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
                     {f}
@@ -571,7 +720,7 @@ export default function SPOCDashboardView() {
               </div>
               <div style={{ border: "1px solid #e8e8f0", borderRadius: 10, overflow: "hidden" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "2fr 2fr 1.5fr 1fr 80px", gap: 12, padding: "10px 16px", background: "#f8f8fc", borderBottom: "1px solid #e8e8f0" }}>
-                  {["Volunteer", "Project", "NGO", "Status", ""].map(h => (
+                  {["Volunteer","Project","NGO","Status",""].map(h => (
                     <div key={h} style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px" }}>{h}</div>
                   ))}
                 </div>
@@ -602,8 +751,6 @@ export default function SPOCDashboardView() {
             </div>
           </div>
         </div>
-
-        {/* Sub-panel: Feedback Monitor */}
         {FEEDBACK_MONITOR_DATA.length > 0 && (
           <div style={{ marginBottom: 14 }}>
             <div onClick={() => setFeedbackPanelOpen(o => !o)}
@@ -629,8 +776,6 @@ export default function SPOCDashboardView() {
             </div>
           </div>
         )}
-
-        {/* Sub-panel: Downloads */}
         <div>
           <div onClick={() => setDownloadsPanelOpen(o => !o)}
             style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", padding: "10px 0", borderBottom: "1px solid #e8e8f0", userSelect: "none" }}>
@@ -650,58 +795,82 @@ export default function SPOCDashboardView() {
         </div>
       </div>
 
-      {/* IV — SPOC Mgt (Corporate only) */}
+      {/* V — SPOC Management (Corporate only) */}
       {!isRegionalSPOC && (
         <div id="spoc-mgt" style={spocCard}>
-          <SectionHeading eyebrow="SPOC Corner · IV" title="SPOC Management" spocMode />
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-            <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: ACCENT_NAVY, textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: 10 }}>SPOC Directory</div>
-              {SPOC_DIRECTORY.filter(s => s.company === "TCS").map((s, i) => (
-                <div key={s.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid #f0f0f8" }}>
-                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: s.status === "Active" ? P_SPOC : "#f0f0f4", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: s.status === "Active" ? B_INDIGO : "#aaa", flexShrink: 0 }}>
-                    {s.name.split(" ").map(n => n[0]).join("")}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 12.5, fontWeight: 600, color: ACCENT_NAVY }}>{s.name}</div>
-                    <div style={{ fontSize: 11, color: "#6b6b7a" }}>{s.role} · {s.geography}</div>
-                  </div>
-                  <StatusBadge status={s.status} />
+          <SectionHeading eyebrow="SPOC Corner · V" title="SPOC Management" spocMode />
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {SPOC_DIRECTORY.filter((s: any) => s.company === "TCS").map((s: any, i: number) => (
+              <div key={s.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", border: "1px solid #e8e8f0", borderRadius: 10 }}>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: s.status === "Active" ? P_SPOC : "#f0f0f4", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: s.status === "Active" ? B_INDIGO : "#aaa", flexShrink: 0 }}>
+                  {s.name.split(" ").map((n: string) => n[0]).join("")}
                 </div>
-              ))}
-              <div style={{ marginTop: 10 }}>
-                <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Opening add Regional SPOC form…")}>+ Add Regional SPOC</GhostBtn>
-              </div>
-            </div>
-            <div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: ACCENT_NAVY, textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: 10, display: "flex", alignItems: "center", gap: 8 }}>
-                Pending Approvals
-                {approvals.filter(a => a.status === "Pending").length > 0 && (
-                  <span style={{ background: B_RED, color: "#fff", fontSize: 10, fontWeight: 700, padding: "1px 7px", borderRadius: 100 }}>
-                    {approvals.filter(a => a.status === "Pending").length}
-                  </span>
-                )}
-              </div>
-              {approvals.map(a => (
-                <div key={a.id} style={{ padding: "8px 0", borderBottom: "1px solid #f0f0f8" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-                    <div style={{ fontSize: 12.5, fontWeight: 600, color: ACCENT_NAVY, flex: 1 }}>{a.name}</div>
-                    <StatusBadge status={a.status} />
-                  </div>
-                  <div style={{ fontSize: 11, color: "#6b6b7a", marginBottom: a.status === "Pending" ? 6 : 0 }}>{a.type} · {a.registeredDate}</div>
-                  {(a as any).rejectionReason && <div style={{ fontSize: 11, color: B_RED, marginBottom: 4 }}>Reason: {(a as any).rejectionReason}</div>}
-                  {a.status === "Pending" && (
-                    <div style={{ display: "flex", gap: 6 }}>
-                      <button onClick={() => handleApprove(a.id)} style={{ fontSize: 11, fontWeight: 600, color: "#fff", background: B_TEAL, border: "none", borderRadius: 6, padding: "4px 12px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Approve</button>
-                      <button onClick={() => { setRejectTarget(a); setModal("rejectReason"); }} style={{ fontSize: 11, fontWeight: 600, color: B_RED, background: P_RED, border: `1px solid ${B_RED}33`, borderRadius: 6, padding: "4px 12px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Reject</button>
-                    </div>
-                  )}
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{s.name}</div>
+                  <div style={{ fontSize: 11, color: "#6b6b7a" }}>{s.role} · {s.geography}</div>
                 </div>
-              ))}
-            </div>
+                <StatusBadge status={s.status} />
+              </div>
+            ))}
+            <div style={{ marginTop: 6 }}><GhostBtn color={B_INDIGO} onClick={() => triggerToast("Opening add Regional SPOC form…")}>+ Add Regional SPOC</GhostBtn></div>
           </div>
         </div>
       )}
+
+      {/* VI — Pending Validation (own anchor) */}
+      <div id="spoc-validation" style={spocCard}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "#8882cc", marginBottom: 5 }}>SPOC Corner · {isRegionalSPOC ? "V" : "VI"}</div>
+            <h2 style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: 21, fontWeight: 900, color: ACCENT_NAVY, margin: 0, letterSpacing: -0.3 }}>Pending Validation</h2>
+          </div>
+          {pendingCount > 0 && <span style={{ background: B_RED, color: "#fff", fontSize: 11, fontWeight: 700, padding: "3px 12px", borderRadius: 100 }}>{pendingCount} pending</span>}
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+          {approvals.map(a => (
+            <div key={a.id} style={{ padding: "12px 0", borderBottom: "1px solid #f0f0f8" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY, flex: 1 }}>{a.name}</div>
+                <StatusBadge status={a.status} />
+              </div>
+              <div style={{ fontSize: 11.5, color: "#6b6b7a", marginBottom: a.status === "Pending" ? 8 : 0 }}>{a.type} · {a.registeredDate}</div>
+              {(a as any).rejectionReason && <div style={{ fontSize: 11, color: B_RED, marginBottom: 4 }}>Reason: {(a as any).rejectionReason}</div>}
+              {a.status === "Pending" && (
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button onClick={() => handleApprove(a.id)} style={{ fontSize: 12, fontWeight: 600, color: "#fff", background: B_TEAL, border: "none", borderRadius: 7, padding: "6px 14px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Approve</button>
+                  <button onClick={() => { setRejectTarget(a); setModal("rejectReason"); }} style={{ fontSize: 12, fontWeight: 600, color: B_RED, background: P_RED, border: `1px solid ${B_RED}33`, borderRadius: 7, padding: "6px 14px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Reject</button>
+                </div>
+              )}
+            </div>
+          ))}
+          {pendingCount === 0 && <div style={{ textAlign: "center", padding: "24px 0", color: "#aaaabc", fontSize: 13 }}>No pending registrations.</div>}
+        </div>
+      </div>
+
+      {/* VII — Annual Reporting */}
+      <div id="spoc-annual" style={spocCard}>
+        <SectionHeading eyebrow={`SPOC Corner · ${isRegionalSPOC ? "VI" : "VII"}`} title="Annual Reporting" spocMode />
+        <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 12, padding: "20px 24px", display: "flex", alignItems: "center", gap: 20, marginBottom: 12 }}>
+          <div style={{ fontSize: 32 }}>📊</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 4 }}>FY 2026 Annual Report</div>
+            <div style={{ fontSize: 13, color: "#6b6b7a", lineHeight: 1.6 }}>View and download the full company volunteering report including PE outcomes, TVW participation, and impact metrics.</div>
+          </div>
+          <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Annual reporting portal link coming soon.")}>Open Portal →</GhostBtn>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
+          {[
+            { label: "Download FY 2026 Report", fn: () => triggerToast("FY 2026 report available at edition end.") },
+            { label: "Download FY 2025 Report", fn: () => triggerToast("Downloading FY 2025 annual report…") },
+            { label: "Download FY 2024 Report", fn: () => triggerToast("Downloading FY 2024 annual report…") },
+          ].map(r => (
+            <button key={r.label} onClick={r.fn}
+              style={{ background: "transparent", border: "1px solid #e8e8f0", borderRadius: 9, padding: "11px 14px", fontSize: 12.5, fontWeight: 600, color: B_INDIGO, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", textAlign: "left", display: "flex", alignItems: "center", gap: 8 }}>
+              ⬇ {r.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Leaderboard (Corporate only) */}
       {!isRegionalSPOC && (
@@ -723,20 +892,36 @@ export default function SPOCDashboardView() {
         </div>
       )}
 
-      {/* Resources */}
+      {/* VIII — Resource Library */}
       <div id="spoc-resources" style={spocCard}>
-        <SectionHeading eyebrow={`SPOC Corner · ${isRegionalSPOC ? "IV" : "V"}`} title="SPOC Resources" spocMode />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+        <SectionHeading eyebrow={`SPOC Corner · ${isRegionalSPOC ? "VII" : "VIII"}`} title="Resource Library" spocMode />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 14 }}>
           {[
-            { icon: "📚", title: "E-Module", desc: `${spoc.orientationProgress} of ${spoc.totalOrientationModules} modules complete. Progress tracked by Admin.`, cta: "Continue", fn: () => setShowOrientationModal(true) },
+            { icon: "📚", title: "E-Module", desc: `${spoc.orientationProgress} of ${spoc.totalOrientationModules} modules complete.`, cta: "Continue", fn: () => setShowOrientationModal(true) },
             { icon: "🖼",  title: "Media Library", desc: "TVW + PE assets, campaign materials. View-only.", cta: "Browse", fn: () => triggerToast("Opening media library…") },
-            { icon: "📋", title: "Open PE Projects", desc: "Real-time list with apply links to share with volunteers.", cta: "Download", fn: () => triggerToast("Downloading open PE projects list…") },
+            { icon: "📋", title: "Open PE Projects", desc: "Real-time list with apply links to share.", cta: "Download", fn: () => triggerToast("Downloading open PE projects list…") },
           ].map(r => (
             <div key={r.title} style={{ background: "#fafafa", border: "1px solid #e8e8f0", borderRadius: 12, padding: "16px" }}>
               <div style={{ fontSize: 18, marginBottom: 8 }}>{r.icon}</div>
               <div style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 6 }}>{r.title}</div>
               <div style={{ fontSize: 12, color: "#6b6b7a", lineHeight: 1.5, marginBottom: 12 }}>{r.desc}</div>
               <GhostBtn color={B_INDIGO} onClick={r.fn}>{r.cta} →</GhostBtn>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+          {[
+            { label: "Videos",       desc: "TVW and PE edition highlights",         icon: "🎬", fn: () => triggerToast("Opening video library…") },
+            { label: "Stories",      desc: "Volunteer experiences & narratives",     icon: "📖", fn: () => triggerToast("Opening stories…") },
+            { label: "Campaign Kit", desc: "Mailers, banners, LinkedIn post drafts", icon: "📦", fn: () => triggerToast("Campaign kit downloading…") },
+          ].map(r => (
+            <div key={r.label} onClick={r.fn}
+              style={{ background: P_SPOC, border: "1px solid #c8c6f0", borderRadius: 12, padding: "14px 16px", cursor: "pointer", transition: "transform 0.15s" }}
+              onMouseEnter={e => (e.currentTarget.style.transform = "translateY(-2px)")}
+              onMouseLeave={e => (e.currentTarget.style.transform = "")}>
+              <div style={{ fontSize: 20, marginBottom: 6 }}>{r.icon}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 3 }}>{r.label}</div>
+              <div style={{ fontSize: 11.5, color: "#6b6b7a", lineHeight: 1.4 }}>{r.desc}</div>
             </div>
           ))}
         </div>
@@ -791,7 +976,7 @@ export default function SPOCDashboardView() {
         <SectionHeading eyebrow="My Space · II" title="My Activities" />
         <Slicers options={actTabs} active={actTab} onChange={setActTab} accent={B_BLUE} />
 
-        {actTab === "opportunities" && (
+        {actTab === "view" && (
           IS_TVW_SEASON ? (
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <div style={{ fontSize: 13, color: "#6b6b7a", marginBottom: 4 }}>TVW Edition 23 · Active</div>
@@ -833,7 +1018,7 @@ export default function SPOCDashboardView() {
           </div>
         )}
 
-        {(actTab === "proengage" || actTab === "apply") && IS_PE_SEASON && (
+        {actTab === "add" && IS_PE_SEASON && (
           volData.activeApplication ? (
             <div>
               <div style={{ background: P_TEAL, borderRadius: 12, padding: "16px", marginBottom: 16 }}>
@@ -865,7 +1050,7 @@ export default function SPOCDashboardView() {
           )
         )}
 
-        {actTab === "early" && !IS_PE_SEASON && (
+        {actTab === "add" && !IS_PE_SEASON && (
           <div style={{ background: "#fafafa", borderRadius: 12, padding: "24px", textAlign: "center" }}>
             <div style={{ fontSize: 24, marginBottom: 8 }}>🚀</div>
             <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 6 }}>ProEngage Edition 12 opens soon</div>
@@ -988,6 +1173,33 @@ export default function SPOCDashboardView() {
           {rightRailJSX}
         </div>
       </div>
+
+      {/* Nudge Contact Modal */}
+      {nudgeContact && (
+        <Modal onClose={() => setNudgeContact(null)} title={`Contact — ${nudgeContact.name}`}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <div style={{ background: P_RED, border: `1px solid ${B_RED}22`, borderRadius: 10, padding: "12px 16px", fontSize: 13, color: "#7f1d1d", lineHeight: 1.6 }}>
+              <strong>At-risk volunteer</strong> — {nudgeContact.reason}
+            </div>
+            {[
+              ["Name",    nudgeContact.name],
+              ["Project", nudgeContact.project],
+              ["Email",   nudgeContact.contact ?? nudgeContact.email ?? "contact@tcs.com"],
+              ["Phone",   "+91 98765 43210"],
+              ["Status",  nudgeContact.nudged ? "Nudged by system" : "Awaiting nudge"],
+            ].map(([k, v]) => (
+              <div key={k} style={{ display: "flex", gap: 16, paddingBottom: 10, borderBottom: "1px solid #f0f0f8" }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px", width: 80, flexShrink: 0 }}>{k}</div>
+                <div style={{ fontSize: 13, color: ACCENT_NAVY, fontWeight: 500 }}>{v}</div>
+              </div>
+            ))}
+            <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
+              <PrimaryBtn onClick={() => { triggerToast(`Email drafted to ${nudgeContact.name}.`); setNudgeContact(null); }}>📧 Email Volunteer</PrimaryBtn>
+              <GhostBtn onClick={() => setNudgeContact(null)} color="#888">Close</GhostBtn>
+            </div>
+          </div>
+        </Modal>
+      )}
 
       {/* Create Event Modal */}
       {modal === "createEvent" && (
