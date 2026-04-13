@@ -63,7 +63,7 @@ const Footer = () => {
         <a href="#" className="hover:text-white">Privacy Policy</a>
         <a href="#" className="hover:text-white">Terms of Use</a>
         <a href="#" className="hover:text-white">Cookie Policy</a>
-        <span onClick={() => navigate("admin-login")} className="text-zinc-600 text-xs hover:text-zinc-400 transition-colors cursor-pointer">Admin access</span>
+        <span onClick={() => navigate("admin-login")} className="text-zinc-600 text-xs hover:text-zinc-400 transition-colors cursor-pointer">Admin</span>
       </div>
     </div>
   </footer>
