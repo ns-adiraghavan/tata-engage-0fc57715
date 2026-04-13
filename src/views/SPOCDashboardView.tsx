@@ -272,6 +272,22 @@ export default function SPOCDashboardView() {
   // TVW registration modal (volunteer section)
   const [tvwRegModal, setTvwRegModal] = useState<any>(null);
 
+  // Hours, Story, Nudge modals
+  const [hoursModal, setHoursModal] = useState(false);
+  const [storyModal, setStoryModal] = useState(false);
+  const [nudgeDrawer, setNudgeDrawer] = useState(false);
+
+  // Hours form state
+  const [hoursEvent, setHoursEvent] = useState("");
+  const [hoursCount, setHoursCount] = useState("");
+  const [hoursDate, setHoursDate] = useState(new Date().toISOString().slice(0, 10));
+  const [hoursDesc, setHoursDesc] = useState("");
+
+  // Story form state
+  const [storyVolName, setStoryVolName] = useState("");
+  const [storyProject, setStoryProject] = useState("");
+  const [storyText, setStoryText] = useState("");
+
   // Modals
   type ModalType = null | "createEvent" | "vibeSubmit" | "volunteerProfile" | "rejectReason" | "projectUpdate" | "feedback" | "applicationDetail";
   const [modal,         setModal]         = useState<ModalType>(null);
@@ -555,9 +571,9 @@ export default function SPOCDashboardView() {
               </div>
             ))}
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16, paddingTop: 14, borderTop: "1px solid #f0f0f8" }}>
-              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Adding volunteering hours…")}>+ Add Volunteering Hours</GhostBtn>
+              <GhostBtn color={B_INDIGO} onClick={() => { setHoursEvent(tvwEvents[0]?.title ?? ""); setHoursCount(""); setHoursDate(new Date().toISOString().slice(0, 10)); setHoursDesc(""); setHoursModal(true); }}>+ Add Volunteering Hours</GhostBtn>
               <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Campaign kit downloading…")}>📦 Campaign Kit</GhostBtn>
-              <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Opening story submission form…")}>📖 Share Volunteering Story</GhostBtn>
+              <GhostBtn color={B_INDIGO} onClick={() => { setStoryVolName(""); setStoryProject(""); setStoryText(""); setStoryModal(true); }}>📖 Share Volunteering Story</GhostBtn>
             </div>
           </>
         ) : (
@@ -570,7 +586,7 @@ export default function SPOCDashboardView() {
         <div style={{ marginTop: 20, paddingTop: 18, borderTop: "2px dashed #e8e8f0" }}>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.2px", textTransform: "uppercase", color: "#8882cc", marginBottom: 12 }}>ProEngage — All Year</div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <GhostBtn color={B_INDIGO} onClick={() => setShowNudged(true)}>PE Volunteers to Nudge</GhostBtn>
+            <GhostBtn color={B_INDIGO} onClick={() => setNudgeDrawer(true)}>PE Volunteers to Nudge</GhostBtn>
             <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Preparing ZIP of all certificates…")}>⬇ Bulk Download Certs</GhostBtn>
             <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Downloading open PE projects list…")}>📋 Open PE Projects List</GhostBtn>
           </div>
@@ -579,21 +595,21 @@ export default function SPOCDashboardView() {
 
       {/* III — My History (6 sub-tabs + FY dropdown + export) */}
       <div id="spoc-history" style={spocCard}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
-          <div style={{ flex: 1 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22, overflowX: "auto", paddingBottom: 4 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "#8882cc", marginBottom: 5 }}>SPOC Corner · III</div>
             <h2 style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: 21, fontWeight: 900, color: ACCENT_NAVY, margin: 0, letterSpacing: -0.3 }}>My History</h2>
           </div>
           <select value={spocHistFY} onChange={e => setSpocHistFY(e.target.value)}
-            style={{ border: "1.5px solid #c8c6f0", borderRadius: 9, padding: "7px 12px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: B_INDIGO, fontWeight: 600, background: P_SPOC, cursor: "pointer", outline: "none" }}>
+            style={{ border: "1.5px solid #c8c6f0", borderRadius: 9, padding: "7px 12px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: B_INDIGO, fontWeight: 600, background: P_SPOC, cursor: "pointer", outline: "none", flexShrink: 0 }}>
             {["FY 2026","FY 2025","FY 2024","FY 2023"].map(y => <option key={y}>{y}</option>)}
           </select>
           <GhostBtn color={B_INDIGO} onClick={() => triggerToast("Exporting to Excel…")}>⬇ Export XLS</GhostBtn>
         </div>
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20, overflowX: "auto", paddingBottom: 4 }}>
           {spocHistTabs.map(t => (
             <button key={t.id} onClick={() => setSpocHistTab(t.id)}
-              style={{ padding: "6px 14px", borderRadius: 100, border: `1.5px solid ${spocHistTab === t.id ? B_INDIGO : "#dddde8"}`, background: spocHistTab === t.id ? B_INDIGO : "transparent", color: spocHistTab === t.id ? "#fff" : "#666", fontSize: 12.5, fontWeight: spocHistTab === t.id ? 600 : 400, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", transition: "all 0.15s" }}>
+              style={{ padding: "5px 11px", fontSize: 12, whiteSpace: "nowrap", borderRadius: 100, border: `1.5px solid ${spocHistTab === t.id ? B_INDIGO : "#dddde8"}`, background: spocHistTab === t.id ? B_INDIGO : "transparent", color: spocHistTab === t.id ? "#fff" : "#666", fontWeight: spocHistTab === t.id ? 600 : 400, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", transition: "all 0.15s" }}>
               {t.label}
             </button>
           ))}
@@ -1529,6 +1545,86 @@ export default function SPOCDashboardView() {
           </div>
         </Modal>
       )}
+
+      {/* Log Volunteering Hours Modal */}
+      <DrawerShell open={hoursModal} onClose={() => setHoursModal(false)} title="Log Volunteering Hours" accentTag="TVW 22">
+        <div style={{ padding: "28px", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div><FieldLabel>Select Event</FieldLabel>
+            <SelectInput value={hoursEvent} onChange={setHoursEvent} options={tvwEvents.map(e => e.title)} />
+          </div>
+          <div><FieldLabel>Hours Contributed (1–12)</FieldLabel>
+            <TextInput type="number" value={hoursCount} onChange={setHoursCount} placeholder="e.g. 4" />
+          </div>
+          <div><FieldLabel>Date of Activity</FieldLabel>
+            <TextInput type="date" value={hoursDate} onChange={setHoursDate} />
+          </div>
+          <div><FieldLabel>Brief Description (optional)</FieldLabel>
+            <Textarea value={hoursDesc} onChange={setHoursDesc} placeholder="e.g. 50 children taught basic computer skills" rows={3} />
+          </div>
+          <button onClick={() => { triggerToast("Volunteering hours logged successfully."); setHoursModal(false); }}
+            style={{ width: "100%", background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Hours</button>
+          <button onClick={() => setHoursModal(false)}
+            style={{ width: "100%", background: "transparent", color: "#8888a0", border: "1px solid #e0e0e8", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 600, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+        </div>
+      </DrawerShell>
+
+      {/* Share Volunteering Story Modal */}
+      <DrawerShell open={storyModal} onClose={() => setStoryModal(false)} title="Share a Volunteering Story" accentTag="TVW Vibe">
+        <div style={{ padding: "28px", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div style={{ background: P_YELLOW, borderRadius: 10, padding: "12px 16px", fontSize: 13, color: "#78350f", lineHeight: 1.6 }}>
+            Stories go to Admin moderation before publishing.
+          </div>
+          <div><FieldLabel>Volunteer Name</FieldLabel>
+            <TextInput value={storyVolName} onChange={setStoryVolName} placeholder="Full name" />
+          </div>
+          <div><FieldLabel>Event or Project Name</FieldLabel>
+            <TextInput value={storyProject} onChange={setStoryProject} placeholder="Event or project name" />
+          </div>
+          <div><FieldLabel>The Story</FieldLabel>
+            <Textarea value={storyText} onChange={setStoryText} placeholder="What happened? What was the impact?" rows={4} />
+          </div>
+          <div style={{ border: "1.5px dashed #dddde8", borderRadius: 10, padding: "20px", textAlign: "center", fontSize: 13, color: "#aaaabc", cursor: "pointer" }}>
+            Attach a photo (optional)
+          </div>
+          <button onClick={() => { triggerToast("Story submitted for Admin review."); setStoryModal(false); }}
+            style={{ width: "100%", background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Story</button>
+          <button onClick={() => setStoryModal(false)}
+            style={{ width: "100%", background: "transparent", color: "#8888a0", border: "1px solid #e0e0e8", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 600, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+        </div>
+      </DrawerShell>
+
+      {/* PE Volunteers to Nudge Drawer */}
+      <DrawerShell open={nudgeDrawer} onClose={() => setNudgeDrawer(false)} title="Volunteers to Nudge" accentTag="ProEngage">
+        <div style={{ padding: "28px" }}>
+          <div style={{ background: P_INDIGO, borderRadius: 10, padding: "12px 16px", fontSize: 13, color: B_INDIGO, lineHeight: 1.6, marginBottom: 20 }}>
+            Nudges are sent by Admin/AI. You can contact volunteers directly using the details below.
+          </div>
+          {AT_RISK_VOLUNTEERS.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "24px 0", fontSize: 13, color: "#aaaabc" }}>No at-risk volunteers right now.</div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+              {AT_RISK_VOLUNTEERS.map((v, i) => (
+                <div key={v.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: i < AT_RISK_VOLUNTEERS.length - 1 ? "1px solid #f0f0f8" : "none" }}>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <RiskDot severity={v.severity} />
+                      <span style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{v.name}</span>
+                    </div>
+                    <div style={{ fontSize: 11, color: "#6b6b7a", marginTop: 2 }}>{v.project} · {v.reason}</div>
+                  </div>
+                  <span style={{ fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, background: v.nudged ? P_TEAL : P_YELLOW, color: v.nudged ? B_TEAL : "#9a6500", flexShrink: 0 }}>
+                    {v.nudged ? "✓ Nudged" : "Pending nudge"}
+                  </span>
+                  <button onClick={() => { setNudgeContact(v); setNudgeDrawer(false); }}
+                    style={{ fontSize: 11, fontWeight: 600, color: B_INDIGO, background: P_SPOC, border: "1px solid #c8c6f0", borderRadius: 7, padding: "5px 12px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", whiteSpace: "nowrap", flexShrink: 0 }}>
+                    Contact →
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </DrawerShell>
 
       {/* TVW Registration Modal — volunteer section */}
       <DrawerShell open={!!tvwRegModal} onClose={() => setTvwRegModal(null)} title="Confirm Registration" subtitle={tvwRegModal?.title ?? ""} accentTag="TVW 22">
