@@ -3,6 +3,14 @@ import { X, Lock, Check } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAuth } from "@/context/AuthContext";
 
+const NGO_MODULES = [
+  { id: 1, title: "Welcome to Tata Engage",          status: "Completed" },
+  { id: 2, title: "Posting & Managing Projects",     status: "Completed" },
+  { id: 3, title: "Reviewing Volunteer Applications", status: "Locked"   },
+  { id: 4, title: "M&E Reporting",                   status: "Locked"    },
+  { id: 5, title: "NGO Code of Conduct",             status: "Locked"    },
+];
+
 const SPOC_MODULES = [
   { id: 1, title: "Platform Overview",     status: "Completed" },
   { id: 2, title: "TVW Coordinator Guide", status: "Completed" },
@@ -23,15 +31,20 @@ const OrientationModal = () => {
   const { setShowOrientationModal } = useAppContext();
   const { user } = useAuth();
 
+  const isNGO  = user?.role === "ngo";
   const isSPOC = user?.role === "corporate_spoc" || user?.role === "regional_spoc";
-  const modules = isSPOC ? SPOC_MODULES : VOLUNTEER_MODULES;
+  const modules = isNGO ? NGO_MODULES : isSPOC ? SPOC_MODULES : VOLUNTEER_MODULES;
 
-  const title    = isSPOC ? "SPOC Orientation" : "Volunteer E-Module";
-  const subtitle = isSPOC
+  const title    = isNGO ? "NGO Orientation" : isSPOC ? "SPOC Orientation" : "Volunteer E-Module";
+  const subtitle = isNGO
+    ? "Complete your orientation to unlock your project certificate and access NGO contact details."
+    : isSPOC
     ? "Master the platform to effectively manage your company's volunteering impact."
     : "Complete your orientation to unlock your project certificate and access NGO contact details.";
-  const nextLabel = isSPOC ? "Next: ProEngage Monitoring" : "Next: Mid-Project Check-in";
-  const nextDesc  = isSPOC
+  const nextLabel = isNGO ? "Complete Module 3" : isSPOC ? "Next: ProEngage Monitoring" : "Next: Mid-Project Check-in";
+  const nextDesc  = isNGO
+    ? "Learn how to shortlist and confirm volunteers for your project."
+    : isSPOC
     ? "Learn how to track and approve ProEngage applications for your company."
     : "Complete the mid-project module to stay on track with your NGO.";
 

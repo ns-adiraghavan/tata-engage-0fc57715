@@ -436,7 +436,7 @@ const NGODashboardView = () => {
   const [drillProject, setDrillProject] = useState<any | null>(null);
 
   // Modals
-  type ModalKey = null | "addProject" | "cloneProject" | "viewProjects" | "reviewApps" | "feedback" | "healthUpdate" | "manageTeam" | "selectedApplicant" | "grievance";
+  type ModalKey = null | "addProject" | "cloneProject" | "viewProjects" | "reviewApps" | "feedback" | "healthUpdate" | "manageTeam" | "selectedApplicant" | "grievance" | "projectGuide";
   const [modal, setModal] = useState<ModalKey>(null);
   const [selectedApplicant, setSelectedApplicant] = useState<any>(null);
   const [feedbackProject, setFeedbackProject] = useState<any>(null);
@@ -964,7 +964,7 @@ const NGODashboardView = () => {
                 <ResourceCard key={r.label} {...r} onClick={() => {
                   if (r.label === "Grievance Redressal") { setModal("grievance"); }
                   else if (r.label === "E-Module / Orientation") { setShowOrientationModal(true); }
-                  else if (r.label === "NGO Project Guide") { triggerToast("NGO Project Guide downloading..."); }
+                  else if (r.label === "NGO Project Guide") { setModal("projectGuide"); }
                   else if (r.label === "Media Library") { navigate("media"); }
                   else if (r.label === "Help & Support") { setShowSupportModal(true); }
                   else { triggerToast(`Opening ${r.label}…`); }
