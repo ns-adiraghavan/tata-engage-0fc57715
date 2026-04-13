@@ -241,8 +241,8 @@ export default function ProfileView() {
   // ─── Volunteer / SPOC profile ────────────────────────────────────────────
   const [isEditing, setIsEditing]  = useState(false);
   const [volTab, setVolTab]  = useState<VolTab>("personal");
-  const [profile, setProfile]      = useState<ProfileState>(initProfile);
-  const [saved, setSaved]          = useState<ProfileState>(initProfile);
+  const [profile, setProfile]      = useState<ProfileState>(() => initProfile(user?.role));
+  const [saved, setSaved]          = useState<ProfileState>(() => initProfile(user?.role));
   const [spocDir, setSpocDir]      = useState(SPOC_DIRECTORY);
 
   // ─── NGO profile ─────────────────────────────────────────────────────────
