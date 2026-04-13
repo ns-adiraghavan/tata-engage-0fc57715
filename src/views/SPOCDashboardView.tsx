@@ -982,7 +982,7 @@ export default function SPOCDashboardView() {
                 </div>
               </>
             ) : (
-              {volunteerSectionsJSX}
+              <>{volunteerSectionsJSX}</>
             )}
           </div>
           {rightRailJSX}
