@@ -152,7 +152,7 @@ export function JourneySection() {
 
         {/* Desktop horizontal alternating timeline */}
         <div className="hidden lg:block">
-          <div className="relative" style={{ height: 280 }}>
+          <div className="relative" style={{ height: 340 }}>
             {/* Spine line at vertical center */}
             <div className="absolute left-0 right-0" style={{ top: 140, height: 2, background: `linear-gradient(to right, ${B_INDIGO}, ${B_TEAL}, ${B_YELLOW})`, opacity: 0.3 }} />
 
