@@ -209,9 +209,9 @@ const HomeView = () => {
           ))}
         </div>
 
-        {/* Dark overlay — pure dark, no colour/purple tint */}
+        {/* Dark overlay — heavy on left (text side), lighter on right to reveal image */}
         <div className="absolute inset-0" style={{
-          background: "linear-gradient(155deg, rgba(8,12,22,0.72) 0%, rgba(8,12,22,0.48) 60%, rgba(8,12,22,0.62) 100%)",
+          background: "linear-gradient(to right, rgba(8,12,22,0.82) 0%, rgba(8,12,22,0.65) 40%, rgba(8,12,22,0.18) 75%, rgba(8,12,22,0.10) 100%)",
           zIndex: 1,
         }} />
 
