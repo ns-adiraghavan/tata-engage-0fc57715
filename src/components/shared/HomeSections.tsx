@@ -153,8 +153,7 @@ const GeoIcon = {
 const PROG_CONFIG = [
   {
     id: "TVW",              route: "about-tvw",
-    bg: B_INDIGO,
-    iconFn: GeoIcon.diamond,  iconColour: B_TEAL,
+    bg: "#4A90C4",
     title: "Tata Volunteering Week",
     label: "Bi-annual · Global",
     stat1: "12 Editions",    stat2: "50K+ Volunteers",
@@ -163,8 +162,7 @@ const PROG_CONFIG = [
   },
   {
     id: "ProEngage",        route: "about-proengage",
-    bg: "#3B1E8E",
-    iconFn: GeoIcon.hexagon,  iconColour: B_TEAL,
+    bg: "#2E7D4F",
     title: "ProEngage",
     label: "Skill-based",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
@@ -173,8 +171,7 @@ const PROG_CONFIG = [
   },
   {
     id: "Disaster Response", route: "disaster-response",
-    bg: "#8B1A1A",
-    iconFn: GeoIcon.triangle, iconColour: B_BLUE,
+    bg: "#F5A623",
     title: "Disaster Response",
     label: "Rapid Action",
     stat1: "24 Responses",   stat2: "8 States",
