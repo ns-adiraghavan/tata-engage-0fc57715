@@ -17,9 +17,7 @@ export const P_TEAL   = "#E6F8F5";
 // ── Helpers ───────────────────────────────────────────────────────────────────
 export const secBg = (i: number) => i % 2 === 0 ? "bg-white" : "bg-[#F0F4FA]";
 
-export const SectionDivider = () => (
-  <div style={{ height: 3, background: "#0D1B3E", width: "100%" }} />
-);
+export const SectionDivider = () => null;
 
 // ── Programme data ────────────────────────────────────────────────────────────
 export const FLAGSHIP_PROGRAMMES = [
