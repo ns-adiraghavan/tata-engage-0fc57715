@@ -153,7 +153,7 @@ const HomeView = () => {
       }
       const heroEl = document.getElementById("hero");
       if (heroEl) {
-        setInHero(window.scrollY < heroEl.offsetHeight - 100);
+        setInHero(window.scrollY < heroEl.offsetHeight - 300);
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
