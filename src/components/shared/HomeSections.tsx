@@ -224,136 +224,77 @@ export function ProgrammeSpotlight() {
             <DefinerUnderline colour={B_INDIGO} width={68} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 260px", gap: 20, alignItems: "stretch" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 260px", gap: 20, alignItems: "stretch" }}>
 
-            {/* LEFT — standalone photo card (EOEO hero style) */}
-            <div style={{
-              borderRadius: 18, overflow: "hidden", position: "relative",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.14)", cursor: "default",
-              minHeight: 400,
-            }}>
-              {/* Full-bleed photo */}
-              <div style={{
-                position: "absolute", inset: 0,
-                backgroundImage: `url(${tataElxsiImg})`,
-                backgroundSize: "cover", backgroundPosition: "center 20%",
-              }} />
-              {/* Dark overlay — heavier at bottom */}
-              <div style={{
-                position: "absolute", inset: 0,
-                background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 45%, rgba(0,0,0,0.10) 100%)",
-              }} />
-              {/* Text — anchored to bottom */}
-              <div style={{
-                position: "relative", zIndex: 2,
-                padding: "32px 28px",
-                height: "100%", minHeight: 400,
-                display: "flex", flexDirection: "column", justifyContent: "flex-end",
-              }}>
-                <span style={{
-                  fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
-                  textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
-                  marginBottom: 8, display: "block",
-                }}>
-                  Each One Empowers One
-                </span>
-                <h3 style={{
-                  fontSize: 26, fontWeight: 900, color: "white",
-                  letterSpacing: "-0.3px", lineHeight: 1.2, margin: "0 0 6px",
-                }}>
-                  Become a TCS Literacy Champion
-                </h3>
-                <p style={{
-                  fontSize: 13, color: "rgba(255,255,255,0.72)",
-                  lineHeight: 1.6, margin: 0,
-                }}>
-                  Building foundation for livelihood
-                </p>
-              </div>
-            </div>
-
-            {/* MIDDLE — single cycling flip card */}
+            {/* LEFT — single cycling photo card */}
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div
-                className="flip-card prog-card"
                 onClick={() => navigate(p.route)}
                 style={{
                   flex: 1, borderRadius: 18, overflow: "hidden",
-                  background: p.bg, cursor: "pointer", position: "relative",
+                  cursor: "pointer", position: "relative",
                   minHeight: 400, boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
-                  transition: "background 0.45s ease",
+                  background: "#1a1a2e",
                 }}
               >
-                <div className="flip-card-inner">
-                  {/* Front face */}
-                  <div className="flip-front" style={{ background: p.bg, position: "relative" }}>
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.14) 100%)" }} />
-                    <div style={{ position: "relative", zIndex: 2, padding: "36px 36px 32px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-                      <div style={{ marginBottom: 20 }}>
-                        {p.iconFn(p.iconColour, 38)}
-                      </div>
-                      <span style={{
-                        fontSize: 10, fontWeight: 700, letterSpacing: "1.2px",
-                        textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
-                      }}>
-                        {p.label}
-                      </span>
-                      <h3 style={{
-                        fontSize: 36, fontWeight: 900, color: "white",
-                        letterSpacing: "-0.4px", lineHeight: 1.2, margin: "10px 0 0",
-                      }}>
-                        {p.title}
-                      </h3>
+                {/* Full-bleed photo */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  backgroundImage: `url(${p.photo})`,
+                  backgroundSize: "cover", backgroundPosition: p.photoPos,
+                  transition: "opacity 0.5s ease",
+                }} />
+                {/* Subtle dark vignette — bottom only, light touch */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.08) 55%, transparent 100%)",
+                }} />
+                {/* Coloured accent bar — top-left, 3px tall */}
+                <div style={{
+                  position: "absolute", top: 0, left: 0, right: 0, height: 4,
+                  background: p.bg, zIndex: 3,
+                }} />
+                {/* Text box — bottom-left overlay */}
+                <div style={{
+                  position: "absolute", bottom: 28, left: 28, right: 28,
+                  zIndex: 4,
+                  background: "rgba(10,10,20,0.72)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  borderRadius: 12,
+                  padding: "20px 22px",
+                  borderLeft: `4px solid ${p.bg}`,
+                }}>
+                  <span style={{
+                    fontSize: 9, fontWeight: 700, letterSpacing: "1.5px",
+                    textTransform: "uppercase", color: "rgba(255,255,255,0.5)",
+                    display: "block", marginBottom: 6,
+                  }}>
+                    {p.label}
+                  </span>
+                  <h3 style={{
+                    fontSize: 22, fontWeight: 900, color: "white",
+                    letterSpacing: "-0.3px", lineHeight: 1.25, margin: "0 0 14px",
+                  }}>
+                    {p.title}
+                  </h3>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      {[p.stat1, p.stat2].map((s, i) => (
+                        <span key={i} style={{
+                          fontSize: 11, fontWeight: 700,
+                          color: "rgba(255,255,255,0.85)",
+                          background: "rgba(255,255,255,0.1)",
+                          padding: "3px 10px", borderRadius: 100,
+                          border: "1px solid rgba(255,255,255,0.15)",
+                        }}>{s}</span>
+                      ))}
                     </div>
-                  </div>
-
-                  {/* Back face */}
-                  <div className="flip-back" style={{ background: p.bg, position: "relative" }}>
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.28) 100%)" }} />
-                    <div style={{ position: "relative", zIndex: 2, padding: "36px 36px 32px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                        <div>
-                          <span style={{
-                            fontSize: 10, fontWeight: 700, letterSpacing: "1.2px",
-                            textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
-                          }}>
-                            {p.label}
-                          </span>
-                          <h3 style={{
-                            fontSize: 20, fontWeight: 800, color: "white",
-                            letterSpacing: "-0.4px", lineHeight: 1.2, margin: "8px 0 16px",
-                          }}>
-                            {p.title}
-                          </h3>
-                          <p style={{
-                            fontSize: 14, color: "rgba(255,255,255,0.82)",
-                            lineHeight: 1.65, margin: 0,
-                          }}>
-                            {p.desc}
-                          </p>
-                        </div>
-
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                          <div style={{ display: "flex", gap: 8 }}>
-                            {[p.stat1, p.stat2].map((s, i) => (
-                              <span key={i} style={{
-                                fontSize: 11, fontWeight: 700,
-                                color: "rgba(255,255,255,0.88)",
-                                background: "rgba(255,255,255,0.13)",
-                                backdropFilter: "blur(4px)",
-                                padding: "4px 11px", borderRadius: 100,
-                                border: "1px solid rgba(255,255,255,0.16)",
-                              }}>{s}</span>
-                            ))}
-                          </div>
-                          <div style={{
-                            display: "flex", alignItems: "center", gap: 6,
-                            fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.72)",
-                          }}>
-                            Learn more <ArrowRight size={13} />
-                          </div>
-                        </div>
-                      </div>
+                    <div style={{
+                      display: "flex", alignItems: "center", gap: 5,
+                      fontSize: 12, fontWeight: 700, color: p.bg,
+                    }}>
+                      Learn more <ArrowRight size={12} />
                     </div>
                   </div>
                 </div>
@@ -375,48 +316,69 @@ export function ProgrammeSpotlight() {
               </div>
             </div>
 
-            {/* RIGHT — EOEO: headline + CTA only */}
+            {/* RIGHT — EOEO panel: image + overlaid text box */}
             <div style={{
-              borderRadius: 18,
-              background: P_INDIGO,
-              border: `1.5px solid ${B_INDIGO}18`,
-              display: "flex", flexDirection: "column",
-              padding: "28px 22px",
-              boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
-              justifyContent: "flex-start",
-              gap: 24,
+              borderRadius: 18, overflow: "hidden",
+              position: "relative", minHeight: 400,
+              boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
+              background: ACCENT_NAVY,
             }}>
-              <span style={{
-                display: "inline-block", fontSize: 9, fontWeight: 800,
-                color: B_INDIGO, background: "white",
-                padding: "3px 9px", borderRadius: 100,
-                border: `1px solid ${B_INDIGO}25`,
-                textTransform: "uppercase", letterSpacing: "0.8px",
-                alignSelf: "flex-start",
+              {/* Background image */}
+              <div style={{
+                position: "absolute", inset: 0,
+                backgroundImage: `url(${tataCommunications})`,
+                backgroundSize: "cover", backgroundPosition: "center top",
+                opacity: 0.45,
+              }} />
+              {/* Dark base */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "linear-gradient(to top, rgba(13,27,62,0.92) 0%, rgba(13,27,62,0.4) 60%, transparent 100%)",
+              }} />
+              {/* Accent bar top */}
+              <div style={{
+                position: "absolute", top: 0, left: 0, right: 0, height: 4,
+                background: B_INDIGO, zIndex: 3,
+              }} />
+              {/* Text box */}
+              <div style={{
+                position: "absolute", bottom: 28, left: 20, right: 20,
+                zIndex: 4,
+                background: "rgba(10,10,20,0.72)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                borderRadius: 12,
+                padding: "18px 18px",
+                borderLeft: `4px solid ${B_INDIGO}`,
               }}>
-                {EOEO.tag}
-              </span>
-
-              <h3 style={{
-                fontSize: 19, fontWeight: 900, color: ACCENT_NAVY,
-                lineHeight: 1.3, margin: 0,
-              }}>
-                {EOEO.headline}
-              </h3>
-
-              <a
-                href={EOEO.ctaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                  padding: "12px 0", borderRadius: 10,
-                  fontSize: 13, fontWeight: 800, color: "white",
-                  background: B_INDIGO, textDecoration: "none", cursor: "pointer",
-                }}
-              >
-                {EOEO.cta} <ExternalLink size={12} />
-              </a>
+                <span style={{
+                  fontSize: 9, fontWeight: 800, letterSpacing: "1px",
+                  textTransform: "uppercase", color: "rgba(255,255,255,0.5)",
+                  display: "block", marginBottom: 6,
+                }}>
+                  {EOEO.tag}
+                </span>
+                <h3 style={{
+                  fontSize: 16, fontWeight: 900, color: "white",
+                  lineHeight: 1.3, margin: "0 0 16px",
+                }}>
+                  {EOEO.headline}
+                </h3>
+                <a
+                  href={EOEO.ctaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                    padding: "10px 0", borderRadius: 8,
+                    fontSize: 12, fontWeight: 800, color: "white",
+                    background: B_INDIGO, textDecoration: "none", cursor: "pointer",
+                    width: "100%",
+                  }}
+                >
+                  {EOEO.cta} <ExternalLink size={11} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
