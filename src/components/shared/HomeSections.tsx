@@ -217,6 +217,7 @@ export function ProgrammeSpotlight() {
             <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
               Our Volunteering Opportunities
             </h2>
+            <div style={{ width: 48, height: 3, borderRadius: 2, background: B_INDIGO, marginTop: 10 }} />
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 0.85fr 260px", gap: 16, alignItems: "stretch" }}>
@@ -304,10 +305,11 @@ export function ProgrammeSpotlight() {
               <h3 style={{
                 fontSize: 28, fontWeight: 900, color: "#ffffff",
                 letterSpacing: "-0.4px", lineHeight: 1.2,
-                margin: "0 0 20px",
+                margin: "0 0 8px",
               }}>
                 {p.title}
               </h3>
+              <div style={{ width: 36, height: 3, borderRadius: 2, background: "rgba(255,255,255,0.5)", marginBottom: 16 }} />
               <div style={{ display: "flex", gap: 8, marginBottom: 28 }}>
                 {[p.stat1, p.stat2].map((s, i) => (
                   <span key={i} style={{
@@ -438,6 +440,7 @@ export function JourneySection() {
           <h2 style={{ fontSize: 30, fontWeight: 900, color: "white", letterSpacing: "-0.5px", margin: 0 }}>
             A decade of giving back
           </h2>
+          <div style={{ width: 48, height: 3, borderRadius: 2, background: B_YELLOW, marginTop: 10 }} />
         </div>
 
         {/* ── DESKTOP: 3-row flex ── */}
@@ -690,6 +693,7 @@ export function NumbersSection() {
               <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
                 Community Overview
               </h2>
+              <div style={{ width: 48, height: 3, borderRadius: 2, background: B_TEAL, marginTop: 10 }} />
             </div>
             <div style={{
               display: "flex", alignItems: "center", gap: 6,
