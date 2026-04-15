@@ -377,10 +377,13 @@ const RegisterFormView = () => {
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
       {/* ── TOP BANNER ─────────────────────────────────────────────────────── */}
-      <div style={{ backgroundColor: ACCENT_NAVY, position: "relative", overflow: "hidden", padding: "28px 64px", ...TEXTURE }}>
-        {/* Radial glows — same as RegisterRoleView */}
-        <div style={{ position: "absolute", top: -60, right: -60, width: 280, height: 280, background: "radial-gradient(circle, rgba(62,126,176,0.22) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -50, left: -30, width: 200, height: 200, background: "radial-gradient(circle, rgba(51,51,153,0.16) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ backgroundColor: B_TICKER, position: "relative", overflow: "hidden", padding: "92px 64px 28px", ...TEXTURE }}>
+        {/* Radial glows */}
+        <div style={{ position: "absolute", top: -60, right: -60, width: 280, height: 280, background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -50, left: -30, width: 200, height: 200, background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <img src={doodleCluster1} alt="" style={{ position: "absolute", left: -30, top: 10, width: 200, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "-12deg" }} />
+        <img src={doodleCluster2} alt="" style={{ position: "absolute", right: -20, bottom: -30, width: 220, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "8deg" }} />
+        <img src={doodleCluster3} alt="" style={{ position: "absolute", right: "35%", top: -10, width: 140, opacity: 0.05, pointerEvents: "none", userSelect: "none", rotate: "15deg" }} />
 
         <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32 }}>
 
