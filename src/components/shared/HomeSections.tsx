@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, ExternalLink, RefreshCw, ChevronDown } from "lucide-react";
+import { ArrowRight, ExternalLink, ChevronDown } from "lucide-react";
 import { Twitter, Instagram, Linkedin } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
