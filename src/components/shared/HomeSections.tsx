@@ -690,13 +690,7 @@ export function NumbersSection() {
   ];
 
   return (
-    <section className="section-block" style={{ background: "#f8faff" }}>
-      <img src={doodleCluster3} alt="" style={{
-        position: "absolute", top: -10, right: -200, width: 460, opacity: 0.15,
-        pointerEvents: "none", userSelect: "none",
-        transform: "scaleX(-1) scaleY(-1) rotate(3deg)",
-      }} />
-
+    <section className="section-block" style={{ background: "#ffffff" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
         <div className="section-header">
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
@@ -723,31 +717,21 @@ export function NumbersSection() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
 
-          {/* LEFT — insight / did you know panel, dark with tata-elxsi image */}
+          {/* Tile 1 — Insight (dark, no photo) */}
           <div style={{
-            borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 300,
+            borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
+            background: ACCENT_NAVY,
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
-            border: "1px solid #f0f0f5",
           }}>
-            <img src={tataElxsiImg} alt="" style={{
-              position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
-            }} />
-            {/* Dark overlay — pure dark, no colour tint */}
             <div style={{
-              position: "absolute", inset: 0,
-              background: "linear-gradient(135deg, rgba(13,27,62,0.90), rgba(13,27,62,0.72))",
-            }} />
-
-            <div style={{
-              position: "relative", zIndex: 10, padding: 36,
+              position: "relative", zIndex: 10, padding: 28,
               display: "flex", flexDirection: "column",
-              justifyContent: "space-between", height: "100%", minHeight: 300,
+              justifyContent: "space-between", height: "100%", minHeight: 280,
             }}>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-                  {/* B_YELLOW badge — justified: white text needs contrast on dark bg */}
                   <span style={{
                     display: "inline-flex", alignItems: "center", gap: 5,
                     fontSize: 10, fontWeight: 800,
@@ -778,7 +762,6 @@ export function NumbersSection() {
                       style={{
                         width: i === factIdx ? 18 : 6, height: 4,
                         borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                        /* B_YELLOW active dot — contrast on dark */ 
                         background: i === factIdx ? B_YELLOW : "rgba(255,255,255,0.2)",
                         transition: "all 0.2s",
                       }}
@@ -796,26 +779,24 @@ export function NumbersSection() {
             </div>
           </div>
 
-          {/* RIGHT — rotating KPI card + social feed */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-
-            {/* KPI stat card — rotates every 3.5s */}
-            <div style={{ position: "relative" }}>
-              {HERO_STATS.map((s, i) => {
-                const sg = statIcons[i];
-                return (
-                  <div key={s.label} style={{
-                    display: i === statIdx ? "block" : "none",
-                    borderRadius: 18, padding: 22, position: "relative", overflow: "hidden",
-                    background: "white",
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
-                    border: "1px solid #f0f0f5",
-                  }}>
-                    {/* Colour top bar */}
-                    <div style={{
-                      position: "absolute", top: 0, left: 0, right: 0, height: 3,
-                      background: `linear-gradient(90deg, ${s.colour}, ${s.colour}70)`,
-                    }} />
+          {/* Tile 2 — KPI stat card */}
+          <div style={{ position: "relative", minHeight: 280 }}>
+            {HERO_STATS.map((s, i) => {
+              const sg = statIcons[i];
+              return (
+                <div key={s.label} style={{
+                  display: i === statIdx ? "flex" : "none",
+                  flexDirection: "column", justifyContent: "space-between",
+                  borderRadius: 18, padding: 28, position: "relative", overflow: "hidden",
+                  background: "white", minHeight: 280,
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
+                  border: "1px solid #f0f0f5",
+                }}>
+                  <div style={{
+                    position: "absolute", top: 0, left: 0, right: 0, height: 3,
+                    background: s.colour,
+                  }} />
+                  <div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                       <p style={{ fontSize: 10, color: "#94a3b8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", margin: 0 }}>
                         {s.label}
@@ -828,124 +809,114 @@ export function NumbersSection() {
                         {sg.fn(sg.colour, 18)}
                       </div>
                     </div>
-                    <p style={{ fontSize: 34, fontWeight: 900, color: s.colour, letterSpacing: "-1px", lineHeight: 1, margin: 0 }}>
+                    <p style={{ fontSize: 42, fontWeight: 900, color: s.colour, letterSpacing: "-1px", lineHeight: 1, margin: 0 }}>
                       {s.num}
                     </p>
                     <p style={{ fontSize: 11, color: "#94a3b8", margin: "6px 0 0" }}>{s.sub}</p>
-                    <svg style={{ marginTop: 12, width: "100%", height: 24 }} viewBox="0 0 100 20" preserveAspectRatio="none">
-                      <path
-                        d={`M0 18 Q10 ${16 - i * 2},20 ${14 - i} T40 ${12 - i} T60 ${10 - i * 2} T80 ${6 + i} T100 ${4 - i}`}
-                        fill="none" stroke={s.colour} strokeWidth="1.5" strokeLinecap="round" opacity="0.3"
-                      />
-                      <path
-                        d={`M0 18 Q10 ${16 - i * 2},20 ${14 - i} T40 ${12 - i} T60 ${10 - i * 2} T80 ${6 + i} T100 ${4 - i} L100 20 L0 20 Z`}
-                        fill={`${s.colour}08`}
-                      />
-                    </svg>
-                    <div style={{ display: "flex", gap: 5, justifyContent: "center", marginTop: 12 }}>
-                      {HERO_STATS.map((_, j) => (
-                        <button key={j} onClick={() => setStatIdx(j)} style={{
-                          width: j === statIdx ? 16 : 6, height: 4,
-                          borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                          background: j === statIdx ? s.colour : "#e2e8f0",
-                          transition: "all 0.2s",
-                        }} />
-                      ))}
-                    </div>
                   </div>
-                );
-              })}
-            </div>
-
-            {/* Social feed */}
-            <div
-              style={{
-                borderRadius: 18, background: "white", flex: 1,
-                overflow: "hidden", position: "relative",
-                boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
-                border: "1px solid #f0f0f5", display: "flex", flexDirection: "column",
-              }}
-              onMouseEnter={() => setShimmer(true)}
-              onMouseLeave={() => setShimmer(false)}
-            >
-              {shimmer && (
-                <div style={{
-                  position: "absolute", top: 0, bottom: 0, width: "40%",
-                  background: "linear-gradient(105deg, transparent 0%, rgba(51,51,153,0.04) 45%, rgba(51,51,153,0.06) 50%, rgba(51,51,153,0.04) 55%, transparent 100%)",
-                  animation: "te-shimmer 0.6s ease-out forwards",
-                  pointerEvents: "none", zIndex: 5,
-                }} />
-              )}
-
-              <div style={{
-                padding: "16px 20px 12px", borderBottom: "1px solid #f0f0f5",
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-              }}>
-                <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.8px", color: "#1e293b" }}>
-                  Social Feed
-                </span>
-                <div style={{ display: "flex", gap: 6 }}>
-                  {[{ Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }].map(({ Icon, c }) => (
-                    <div key={c} style={{
-                      width: 24, height: 24, borderRadius: 6,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      background: `${c}12`, cursor: "pointer",
-                    }}>
-                      <Icon size={10} style={{ color: c }} />
-                    </div>
-                  ))}
+                  <div style={{ display: "flex", gap: 5, justifyContent: "center", marginTop: 12 }}>
+                    {HERO_STATS.map((_, j) => (
+                      <button key={j} onClick={() => setStatIdx(j)} style={{
+                        width: j === statIdx ? 16 : 6, height: 4,
+                        borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
+                        background: j === statIdx ? s.colour : "#e2e8f0",
+                        transition: "all 0.2s",
+                      }} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              );
+            })}
+          </div>
 
-              <div style={{ flex: 1, padding: "16px 20px" }}>
-                {SOCIAL_POSTS.map((post, i) => (
-                  <div key={i} style={{ display: i === socialIdx ? "block" : "none" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                      <div style={{
-                        width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        background: `linear-gradient(135deg, ${post.iconBg}, ${post.iconBg}cc)`,
-                      }}>
-                        <post.Icon size={13} color="white" />
-                      </div>
-                      <div>
-                        <p style={{ fontSize: 13, fontWeight: 800, color: ACCENT_NAVY, margin: 0 }}>{post.handle}</p>
-                        <p style={{ fontSize: 10, color: "#94a3b8", margin: 0 }}>{post.time} · {post.platform}</p>
-                      </div>
-                    </div>
-                    <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.6, margin: 0 }}>{post.text}</p>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
-                      <span style={{ fontSize: 10, color: "#94a3b8" }}>❤️ {post.likes}</span>
-                      <button onClick={() => triggerToast("Opening social post...")}
-                        style={{ fontSize: 10, fontWeight: 800, color: B_INDIGO, background: "none", border: "none", cursor: "pointer" }}>
-                        View →
-                      </button>
-                    </div>
+          {/* Tile 3 — Social feed */}
+          <div
+            style={{
+              borderRadius: 18, background: "white", minHeight: 280,
+              overflow: "hidden", position: "relative",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
+              border: "1px solid #f0f0f5", display: "flex", flexDirection: "column",
+            }}
+            onMouseEnter={() => setShimmer(true)}
+            onMouseLeave={() => setShimmer(false)}
+          >
+            {shimmer && (
+              <div style={{
+                position: "absolute", top: 0, bottom: 0, width: "40%",
+                background: "linear-gradient(105deg, transparent 0%, rgba(51,51,153,0.04) 45%, rgba(51,51,153,0.06) 50%, rgba(51,51,153,0.04) 55%, transparent 100%)",
+                animation: "te-shimmer 0.6s ease-out forwards",
+                pointerEvents: "none", zIndex: 5,
+              }} />
+            )}
+
+            <div style={{
+              padding: "16px 20px 12px", borderBottom: "1px solid #f0f0f5",
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+            }}>
+              <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.8px", color: "#1e293b" }}>
+                Social Feed
+              </span>
+              <div style={{ display: "flex", gap: 6 }}>
+                {[{ Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }].map(({ Icon, c }) => (
+                  <div key={c} style={{
+                    width: 24, height: 24, borderRadius: 6,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    background: `${c}12`, cursor: "pointer",
+                  }}>
+                    <Icon size={10} style={{ color: c }} />
                   </div>
                 ))}
               </div>
+            </div>
 
-              <div style={{ padding: "0 20px 16px" }}>
-                <div style={{ display: "flex", gap: 5, justifyContent: "center", marginBottom: 10 }}>
-                  {SOCIAL_POSTS.map((_, i) => (
-                    <button key={i} onClick={() => setSocialIdx(i)} style={{
-                      width: i === socialIdx ? 16 : 6, height: 4,
-                      borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                      background: i === socialIdx ? B_INDIGO : "#e2e8f0",
-                      transition: "all 0.2s",
-                    }} />
-                  ))}
+            <div style={{ flex: 1, padding: "16px 20px" }}>
+              {SOCIAL_POSTS.map((post, i) => (
+                <div key={i} style={{ display: i === socialIdx ? "block" : "none" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                    <div style={{
+                      width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      background: `linear-gradient(135deg, ${post.iconBg}, ${post.iconBg}cc)`,
+                    }}>
+                      <post.Icon size={13} color="white" />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: 13, fontWeight: 800, color: ACCENT_NAVY, margin: 0 }}>{post.handle}</p>
+                      <p style={{ fontSize: 10, color: "#94a3b8", margin: 0 }}>{post.time} · {post.platform}</p>
+                    </div>
+                  </div>
+                  <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.6, margin: 0 }}>{post.text}</p>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
+                    <span style={{ fontSize: 10, color: "#94a3b8" }}>❤️ {post.likes}</span>
+                    <button onClick={() => triggerToast("Opening social post...")}
+                      style={{ fontSize: 10, fontWeight: 800, color: B_INDIGO, background: "none", border: "none", cursor: "pointer" }}>
+                      View →
+                    </button>
+                  </div>
                 </div>
-                <button onClick={() => triggerToast("Opening social media...")} style={{
-                  width: "100%", display: "flex", alignItems: "center", justifyContent: "center",
-                  gap: 6, padding: "9px 0", borderRadius: 10,
-                  fontSize: 11, fontWeight: 800,
-                  background: `linear-gradient(135deg, ${B_INDIGO}, ${B_BLUE})`,
-                  color: "white", border: "none", cursor: "pointer",
-                }}>
-                  Follow @TataEngage <ArrowRight size={9} />
-                </button>
+              ))}
+            </div>
+
+            <div style={{ padding: "0 20px 16px" }}>
+              <div style={{ display: "flex", gap: 5, justifyContent: "center", marginBottom: 10 }}>
+                {SOCIAL_POSTS.map((_, i) => (
+                  <button key={i} onClick={() => setSocialIdx(i)} style={{
+                    width: i === socialIdx ? 16 : 6, height: 4,
+                    borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
+                    background: i === socialIdx ? B_INDIGO : "#e2e8f0",
+                    transition: "all 0.2s",
+                  }} />
+                ))}
               </div>
+              <button onClick={() => triggerToast("Opening social media...")} style={{
+                width: "100%", display: "flex", alignItems: "center", justifyContent: "center",
+                gap: 6, padding: "9px 0", borderRadius: 10,
+                fontSize: 11, fontWeight: 800,
+                background: B_INDIGO,
+                color: "white", border: "none", cursor: "pointer",
+              }}>
+                Follow @TataEngage <ArrowRight size={9} />
+              </button>
             </div>
           </div>
         </div>
