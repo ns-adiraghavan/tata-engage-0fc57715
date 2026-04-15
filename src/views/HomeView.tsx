@@ -63,7 +63,7 @@ const HERO_SLIDES = [
   },
   {
     photo: tataMotors1,
-    accent: "#E8401C", tag: "Community", cta: "video" as const,
+    accent: "#1B7D3C", tag: "Community", cta: "video" as const,
     headline: "10,000 rural families reached through free health camps",
     sub: "When professionals volunteer their expertise, communities transform.",
     doodles: {
@@ -382,8 +382,6 @@ const HomeView = () => {
           }
         `}</style>
       </section>
-
-      <SectionDivider />
 
       {/* 2. PROGRAMME SPOTLIGHT */}
       <div id="programmes">
