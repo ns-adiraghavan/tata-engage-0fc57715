@@ -83,7 +83,7 @@ const LoginView = () => {
     triggerToast(newVal ? "PE Season ON — dashboard shows ProEngage mode" : "PE Season OFF — dashboard shows non-PE mode");
   };
 
-  const handleLogin = (user: typeof PRIYA_SHARMA, dest: string, toast: string) => {
+  const handleLogin = (user: Record<string, any>, dest: string, toast: string) => {
     setIsLoggedIn(true);
     setUser(user);
     navigate(dest as any);
