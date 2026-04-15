@@ -175,7 +175,7 @@ const PROG_CONFIG = [
     label: "Bi-annual · Global",
     stat1: "12 Editions",    stat2: "50K+ Volunteers",
     desc: "A bi-annual celebration of collective action across every Tata company, worldwide.",
-    photo: airIndia,
+    photo: airIndia,         photoPos: "center 40%",
   },
   {
     id: "ProEngage",        route: "about-proengage",
@@ -185,7 +185,7 @@ const PROG_CONFIG = [
     label: "Skill-based",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
     desc: "Match your professional expertise to NGO projects that need it most.",
-    photo: tataCommunications,
+    photo: tataCommunications, photoPos: "center top",
   },
   {
     id: "Disaster Response", route: "disaster-response",
@@ -195,7 +195,7 @@ const PROG_CONFIG = [
     label: "Rapid Action",
     stat1: "24 Responses",   stat2: "8 States",
     desc: "Volunteers deployed within 48 hours when communities need urgent support.",
-    photo: infiniti,
+    photo: infiniti,         photoPos: "center 30%",
   },
 ];
 
@@ -245,15 +245,14 @@ export function ProgrammeSpotlight() {
 
           <div style={{ display: "grid", gridTemplateColumns: "240px 1fr 260px", gap: 20, alignItems: "stretch" }}>
 
-            {/* LEFT — standalone photo card */}
+            {/* LEFT — standalone photo card (fixed image) */}
             <div style={{
               borderRadius: 18,
               overflow: "hidden",
-              backgroundImage: `url(${p.photo})`,
+              backgroundImage: `url(${tataElxsiImg})`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundPosition: "center 20%",
               boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
-              transition: "background-image 0.45s ease",
             }} />
 
             {/* MIDDLE — single cycling flip card */}
