@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, ExternalLink, RefreshCw, ChevronDown } from "lucide-react";
+import { ArrowRight, ExternalLink, ChevronDown } from "lucide-react";
 import { Twitter, Instagram, Linkedin } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
@@ -669,11 +669,7 @@ export function NumbersSection() {
     return () => clearInterval(t);
   }, []);
   useEffect(() => {
-    const t = setInterval(() => {
-      setFactFading(true);
-      setTimeout(() => { setFactIdx((p) => (p + 1) % FUN_FACTS.length); setFactFading(false); }, 280);
-    }, 5200);
-    return () => clearInterval(t);
+    // No auto-rotate — advance only on "Next" click
   }, []);
   useEffect(() => {
     const t = setInterval(() => setSocialIdx((p) => (p + 1) % SOCIAL_POSTS.length), 4000);
@@ -776,7 +772,7 @@ export function NumbersSection() {
                   fontSize: 11, color: "rgba(255,255,255,0.45)", fontWeight: 700,
                   background: "none", border: "none", cursor: "pointer",
                 }}>
-                  <RefreshCw size={11} /> Next
+                  Next
                 </button>
               </div>
             </div>
