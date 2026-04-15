@@ -165,130 +165,193 @@ const HomeView = () => {
       </div>
 
       {/* ════════════════════════════════════════════════════════════════════
-          1. HERO
+          1. HERO — full-bleed dark overlay, slow pan, chevrons inside
       ════════════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="relative min-h-[560px] flex items-center overflow-hidden pt-16 bg-white">
+      <section id="hero" className="relative flex items-center overflow-hidden" style={{ minHeight: "92vh", paddingTop: 64 }}>
 
-        <div className="absolute top-16 left-0 right-0 h-0.5 z-20 transition-colors duration-700"
-          style={{ backgroundColor: slide.accent }} />
+        {/* Slide images — full bleed, slow horizontal pan, no zoom */}
+        {HERO_SLIDES.map((s, i) => (
+          <div key={i} className="absolute inset-0" style={{
+            opacity: heroSlide === i ? 1 : 0,
+            transition: "opacity 1s ease",
+          }}>
+            <img
+              src={s.photo} alt={s.tag}
+              referrerPolicy="no-referrer"
+              style={{
+                position: "absolute", inset: 0,
+                width: "100%", height: "100%",
+                objectFit: "cover", objectPosition: "center",
+                // Slow horizontal pan — no scale/zoom
+                animation: heroSlide === i ? "heroPan 18s ease-in-out infinite alternate" : "none",
+              }}
+            />
+          </div>
+        ))}
 
-        <div className="absolute inset-0 flex justify-end">
-          {HERO_SLIDES.map((s, i) => (
-            <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${heroSlide === i ? "opacity-100" : "opacity-0"}`}>
-              <img src={s.photo} alt={s.tag}
-                className="absolute right-0 top-0 h-full w-[65%] object-cover object-center"
-                referrerPolicy="no-referrer"
-                style={{ transition: "transform 6s ease-out", transform: heroSlide === i ? "scale(1.04)" : "scale(1)" }}
-              />
-              <div className="absolute inset-0" style={{
-                background: "linear-gradient(to right, #ffffff 0%, #ffffff 28%, rgba(255,255,255,0.85) 42%, rgba(255,255,255,0.35) 58%, rgba(255,255,255,0) 72%)"
-              }} />
-              <div className="absolute inset-0" style={{
-                background: "linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 18%, rgba(255,255,255,0) 80%, rgba(255,255,255,0.6) 100%)"
-              }} />
-            </div>
-          ))}
-        </div>
+        {/* Dark overlay — pure dark, no colour/purple tint */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(155deg, rgba(8,12,22,0.72) 0%, rgba(8,12,22,0.48) 60%, rgba(8,12,22,0.62) 100%)",
+          zIndex: 1,
+        }} />
 
-        <div className="absolute inset-0 pointer-events-none z-10">
+        {/* Subtle ink doodles — kept but white/very faint on dark bg */}
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 2 }}>
           <InkSpiral className="absolute transition-all duration-700"
-            style={{ top: d.spiral.top, right: d.spiral.right, width: d.spiral.size, height: d.spiral.size, color: slide.accent, opacity: d.spiral.opacity }} />
+            style={{ top: d.spiral.top, right: d.spiral.right, width: d.spiral.size, height: d.spiral.size, color: "white", opacity: 0.06 }} />
           <InkDots className="absolute transition-all duration-700"
-            style={{ top: d.dots.top, bottom: (d.dots as any).bottom, right: d.dots.right, width: d.dots.size, color: slide.accent, opacity: d.dots.opacity }} />
-          <InkStar className="absolute transition-all duration-700"
-            style={{ top: d.star.top, bottom: (d.star as any).bottom, right: d.star.right, width: d.star.size, height: d.star.size, color: slide.accent, opacity: d.star.opacity }} />
-          <InkSwish className="absolute transition-all duration-700"
-            style={{ top: (d.swish as any).top, bottom: (d.swish as any).bottom, right: d.swish.right, width: d.swish.size, color: slide.accent, opacity: d.swish.opacity }} />
+            style={{ top: d.dots.top, bottom: (d.dots as any).bottom, right: d.dots.right, width: d.dots.size, color: "white", opacity: 0.07 }} />
         </div>
 
-        {/* Floating ink-dot particles */}
-        <div className="absolute inset-0 pointer-events-none z-10">
-          {HERO_PARTICLES.map((p, i) => (
-            <div key={i} style={{
-              position: "absolute", top: p.top, left: p.left,
-              width: p.size, height: p.size, borderRadius: "50%",
-              background: "#fff", opacity: p.opacity,
-              animation: `te-float ${p.dur} ease-in-out ${p.delay} infinite`,
-            }} />
-          ))}
-        </div>
+        {/* Accent line — top, slide colour */}
+        <div className="absolute left-0 right-0 z-10 transition-colors duration-700"
+          style={{ top: 64, height: 2, backgroundColor: slide.accent }} />
 
-        <div className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 w-full py-12">
-          <div className="max-w-[480px]">
-            <span className="inline-flex items-center text-xs font-bold px-3 py-1.5 rounded-full mb-5 tracking-wide text-white"
-              style={{ backgroundColor: slide.accent }}>
+        {/* Hero content */}
+        <div className="relative w-full max-w-7xl mx-auto px-6 md:px-16 py-16" style={{ zIndex: 3 }}>
+          <div style={{ maxWidth: 580 }}>
+
+            {/* Eyebrow tag + definer underline */}
+            <span style={{
+              display: "inline-block",
+              fontSize: 10, fontWeight: 800, letterSpacing: "2px",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.55)",
+              marginBottom: 0,
+              fontFamily: "'DM Mono', monospace",
+            }}>
               {slide.tag}
             </span>
-            <h1 className="text-3xl md:text-[2.5rem] font-bold text-slate-900 leading-[1.2] mb-4 tracking-tight">
+            {/* Definer underline — sweeps in under the eyebrow */}
+            <div style={{ height: 2, width: 48, borderRadius: 2, background: "rgba(255,255,255,0.12)", marginTop: 4, marginBottom: 20, overflow: "hidden" }}>
+              <div style={{
+                height: "100%", borderRadius: 2,
+                background: slide.accent,
+                animation: "definerSweep 0.7s cubic-bezier(0.22,1,0.36,1) forwards",
+              }} />
+            </div>
+
+            <h1 style={{
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontSize: "clamp(2rem, 4vw, 3rem)",
+              lineHeight: 1.12, letterSpacing: "-0.5px",
+              color: "white", margin: "0 0 18px", fontWeight: 400,
+            }}>
               {slide.headline}
             </h1>
-            <p className="text-base text-slate-500 leading-relaxed mb-8 max-w-md">{slide.sub}</p>
-            <div className="flex flex-wrap gap-3 mb-8">
+
+            <p style={{
+              fontSize: 15, lineHeight: 1.7, fontWeight: 300,
+              color: "rgba(255,255,255,0.65)",
+              margin: "0 0 32px", maxWidth: 460,
+            }}>
+              {slide.sub}
+            </p>
+
+            {/* CTA button */}
+            <div style={{ marginBottom: 36 }}>
               {slide.cta === "story" ? (
                 <button onClick={() => triggerToast("Opening full story...")}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
-                  style={{ backgroundColor: B_INDIGO }}>
+                  className="flex items-center gap-2 cursor-pointer"
+                  style={{
+                    padding: "11px 24px", borderRadius: 10,
+                    fontSize: 13, fontWeight: 800, color: "white",
+                    background: B_INDIGO, border: "none",
+                  }}>
                   <BookOpen size={14} /> Read Story
                 </button>
               ) : (
                 <button onClick={() => triggerToast("Opening video...")}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all cursor-pointer"
-                  style={{ backgroundColor: B_INDIGO }}>
+                  className="flex items-center gap-2 cursor-pointer"
+                  style={{
+                    padding: "11px 24px", borderRadius: 10,
+                    fontSize: 13, fontWeight: 800, color: "white",
+                    background: B_INDIGO, border: "none",
+                  }}>
                   <Play size={14} /> Watch More
                 </button>
               )}
             </div>
+
+            {/* Slide controls — prev / dots / next / counter */}
             <div className="flex items-center gap-3">
               <button onClick={() => setHeroSlide((p) => (p - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)}
-                className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:border-slate-400 transition-all cursor-pointer">
+                style={{
+                  width: 32, height: 32, borderRadius: "50%",
+                  border: "1.5px solid rgba(255,255,255,0.25)",
+                  background: "rgba(255,255,255,0.08)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer", color: "white",
+                }}>
                 <ChevronLeft size={14} />
               </button>
               <div className="flex gap-2">
                 {HERO_SLIDES.map((_, i) => (
                   <button key={i} onClick={() => setHeroSlide(i)}
                     className="rounded-full transition-all duration-300 cursor-pointer"
-                    style={{ width: heroSlide === i ? 24 : 8, height: 8, backgroundColor: heroSlide === i ? slide.accent : "#CBD5E1" }} />
+                    style={{
+                      width: heroSlide === i ? 24 : 8, height: 8, border: "none", padding: 0,
+                      backgroundColor: heroSlide === i ? slide.accent : "rgba(255,255,255,0.3)",
+                    }} />
                 ))}
               </div>
               <button onClick={() => setHeroSlide((p) => (p + 1) % HERO_SLIDES.length)}
-                className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:border-slate-400 transition-all cursor-pointer">
+                style={{
+                  width: 32, height: 32, borderRadius: "50%",
+                  border: "1.5px solid rgba(255,255,255,0.25)",
+                  background: "rgba(255,255,255,0.08)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer", color: "white",
+                }}>
                 <ChevronRight size={14} />
               </button>
-              <span className="text-xs text-slate-400 font-semibold tabular-nums ml-1">
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", fontWeight: 600, marginLeft: 4 }}>
                 {String(heroSlide + 1).padStart(2, "0")} / {String(HERO_SLIDES.length).padStart(2, "0")}
               </span>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* ── Scroll prompt ─────────────────────────────────────────────────── */}
-      <div className="flex justify-center items-center py-3 bg-white">
+        {/* Scroll chevrons — INSIDE the hero, bottom-centre */}
         <button
           onClick={() => document.getElementById("programmes")?.scrollIntoView({ behavior: "smooth" })}
-          className="flex flex-col items-center gap-0 cursor-pointer group"
           aria-label="Scroll to programmes"
-          style={{ background: "none", border: "none", padding: 0 }}
+          style={{
+            position: "absolute", bottom: 32, left: "50%",
+            transform: "translateX(-50%)",
+            background: "none", border: "none", cursor: "pointer",
+            display: "flex", flexDirection: "column", alignItems: "center",
+            gap: 2, padding: 8, zIndex: 4,
+          }}
         >
           {[0, 1, 2].map((i) => (
             <svg key={i} viewBox="0 0 24 12" fill="none" xmlns="http://www.w3.org/2000/svg"
               style={{
                 width: 28, height: 14,
                 opacity: 1 - i * 0.28,
+                color: "white",
                 animation: `chevronBob 1.4s ease-in-out ${i * 0.18}s infinite`,
-                color: B_INDIGO,
               }}>
               <path d="M2 2 L12 10 L22 2" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           ))}
         </button>
-      </div>
-      <style>{`
-        @keyframes chevronBob {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(4px); }
-        }
-      `}</style>
+
+        <style>{`
+          @keyframes heroPan {
+            0%   { object-position: 30% center; }
+            100% { object-position: 70% center; }
+          }
+          @keyframes chevronBob {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(4px); }
+          }
+          @keyframes definerSweep {
+            from { width: 0%; }
+            to   { width: 100%; }
+          }
+        `}</style>
+      </section>
 
       <SectionDivider />
 
