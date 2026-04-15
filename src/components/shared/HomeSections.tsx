@@ -277,11 +277,11 @@ export function ProgrammeSpotlight() {
               style={{
                 borderRadius: 18,
                 background: PROG_PASTEL[idx],
-                border: "1px solid #e8e8f0",
+                border: "none",
                 padding: "36px 32px",
                 display: "flex", flexDirection: "column",
                 justifyContent: "flex-end",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
                 cursor: "pointer",
                 minHeight: 300,
                 transition: "background 0.5s ease, box-shadow 0.2s ease",
@@ -289,20 +289,20 @@ export function ProgrammeSpotlight() {
             >
               <div style={{
                 width: 3, height: 32, borderRadius: 2,
-                background: PROG_ACCENT_TEXT[idx],
+                background: "rgba(255,255,255,0.4)",
                 marginBottom: 20,
                 transition: "background 0.5s ease",
               }} />
               <span style={{
                 fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
-                textTransform: "uppercase", color: "#94A3B8",
+                textTransform: "uppercase", color: "rgba(255,255,255,0.6)",
                 marginBottom: 10, display: "block",
                 transition: "opacity 0.4s ease",
               }}>
                 {p.label}
               </span>
               <h3 style={{
-                fontSize: 28, fontWeight: 900, color: ACCENT_NAVY,
+                fontSize: 28, fontWeight: 900, color: "#ffffff",
                 letterSpacing: "-0.4px", lineHeight: 1.2,
                 margin: "0 0 20px",
               }}>
@@ -311,10 +311,10 @@ export function ProgrammeSpotlight() {
               <div style={{ display: "flex", gap: 8, marginBottom: 28 }}>
                 {[p.stat1, p.stat2].map((s, i) => (
                   <span key={i} style={{
-                    fontSize: 11, fontWeight: 700, color: "#475569",
-                    background: "rgba(255,255,255,0.7)",
+                    fontSize: 11, fontWeight: 700, color: "#ffffff",
+                    background: "rgba(255,255,255,0.15)",
                     padding: "4px 12px", borderRadius: 100,
-                    border: "1px solid rgba(0,0,0,0.08)",
+                    border: "1px solid rgba(255,255,255,0.2)",
                   }}>{s}</span>
                 ))}
               </div>
