@@ -4,7 +4,7 @@ export type View = "home" | "login" | "register-role" | "register-form" | "otp" 
   | "spoc-dashboard" | "spoc-hub"
   | "admin-dashboard"
   | "create-project" | "active-project-management" | "project-feedback"
-  | "profile" | "tvw" | "proengage" | "my-applications" | "tvw-vibe"
+  | "profile" | "tvw" | "proengage"
   | "disaster-response" | "dr-availability-form" | "dr-confirmation"
   | "about" | "about-tvw" | "about-proengage" | "partner" | "media" | "journey"
   | "contact" | "faq" | "policy";
