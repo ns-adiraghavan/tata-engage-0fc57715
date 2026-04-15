@@ -673,9 +673,9 @@ export function NumbersSection() {
 
   // Geo icons for stat cards — brand colours, no orange
   const statIcons = [
-    { fn: GeoIcon.diamond,  colour: B_INDIGO },
-    { fn: GeoIcon.hexagon,  colour: B_TEAL   },
-    { fn: GeoIcon.triangle, colour: B_BLUE   },
+    { fn: GeoIcon.diamond,  colour: "#8BC9A3" },
+    { fn: GeoIcon.hexagon,  colour: "#7EB3E0" },
+    { fn: GeoIcon.triangle, colour: "#F5C842" },
   ];
 
   return (
@@ -777,38 +777,38 @@ export function NumbersSection() {
                   display: i === statIdx ? "flex" : "none",
                   flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" as const,
                   borderRadius: 18, padding: 28, position: "relative", overflow: "hidden",
-                  background: `${s.colour}14`, minHeight: 280,
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
-                  border: `1px solid ${s.colour}25`,
+                  background: s.colour, minHeight: 280,
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                  border: "none",
                 }}>
                   <div style={{
                     position: "absolute", top: 0, left: 0, right: 0, height: 3,
-                    background: s.colour,
+                    background: "rgba(255,255,255,0.3)",
                   }} />
                   <div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 12 }}>
-                      <p className="text-zinc-950 font-bold" style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", margin: 0 }}>
+                      <p style={{ fontSize: 13, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.2px", margin: 0, color: "rgba(255,255,255,0.85)" }}>
                         {s.label}
                       </p>
                       <div style={{
-                        width: 36, height: 36, borderRadius: 10,
+                        width: 28, height: 28, borderRadius: 8,
                         display: "flex", alignItems: "center", justifyContent: "center",
-                        background: `${s.colour}12`,
+                        background: "rgba(255,255,255,0.15)",
                       }}>
-                        {sg.fn(sg.colour, 18)}
+                        {sg.fn(sg.colour, 16)}
                       </div>
                     </div>
-                    <p style={{ fontSize: 42, fontWeight: 900, color: s.colour, letterSpacing: "-1px", lineHeight: 1, margin: 0 }}>
+                    <p style={{ fontSize: 48, fontWeight: 900, color: "#ffffff", letterSpacing: "-1px", lineHeight: 1, margin: 0 }}>
                       {s.num}
                     </p>
-                    <p className="text-zinc-950" style={{ fontSize: 11, margin: "6px 0 0" }}>{s.sub}</p>
+                    <p style={{ fontSize: 12, margin: "8px 0 0", color: "rgba(255,255,255,0.7)" }}>{s.sub}</p>
                   </div>
                   <div style={{ display: "flex", gap: 5, justifyContent: "center", marginTop: 12 }}>
                     {HERO_STATS.map((_, j) => (
                       <button key={j} onClick={() => setStatIdx(j)} style={{
                         width: j === statIdx ? 16 : 6, height: 4,
                         borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                        background: j === statIdx ? s.colour : "#e2e8f0",
+                        background: j === statIdx ? "#ffffff" : "rgba(255,255,255,0.3)",
                         transition: "all 0.2s",
                       }} />
                     ))}
