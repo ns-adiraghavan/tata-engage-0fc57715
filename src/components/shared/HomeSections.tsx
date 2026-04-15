@@ -800,7 +800,7 @@ export function NumbersSection() {
                     background: s.colour,
                   }} />
                   <div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 12 }}>
                       <p className="text-zinc-950 font-bold" style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", margin: 0 }}>
                         {s.label}
                       </p>
