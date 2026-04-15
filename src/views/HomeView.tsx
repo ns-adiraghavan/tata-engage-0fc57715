@@ -470,7 +470,7 @@ const HomeView = () => {
       <TickerBar fixed />
 
       {/* Floating social cluster */}
-      <div className="fixed bottom-24 left-5 z-40 flex flex-col gap-2 items-center">
+      <div className="fixed bottom-24 left-5 z-40 flex flex-col gap-2 items-center transition-colors duration-300">
         {[
           { icon: <Linkedin size={15} />, label: "LinkedIn" },
           { icon: <Instagram size={15} />, label: "Instagram" },
@@ -480,15 +480,20 @@ const HomeView = () => {
             key={label}
             onClick={() => triggerToast(`Opening ${label}...`)}
             title={label}
-            className="w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer"
-            style={{ backgroundColor: "white", border: "1px solid #e2e8f0", color: B_INDIGO, boxShadow: "0 1px 6px rgba(0,0,0,0.10)" }}
-            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#EEF0FF")}
-            onMouseLeave={e => (e.currentTarget.style.backgroundColor = "white")}
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer"
+            style={{
+              backgroundColor: inHero ? "rgba(255,255,255,0.12)" : "white",
+              border: inHero ? "1px solid rgba(255,255,255,0.25)" : "1px solid #e2e8f0",
+              color: inHero ? "white" : B_INDIGO,
+              boxShadow: inHero ? "0 1px 6px rgba(0,0,0,0.20)" : "0 1px 6px rgba(0,0,0,0.10)",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = inHero ? "rgba(255,255,255,0.22)" : "#EEF0FF")}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = inHero ? "rgba(255,255,255,0.12)" : "white")}
           >
             {icon}
           </button>
         ))}
-        <div className="w-px h-5" style={{ backgroundColor: "#e2e8f0" }} />
+        <div className="w-px h-5 transition-colors duration-300" style={{ backgroundColor: inHero ? "rgba(255,255,255,0.25)" : "#e2e8f0" }} />
 
         {/* Subscribe — only when not logged in */}
         {!isLoggedIn && (
