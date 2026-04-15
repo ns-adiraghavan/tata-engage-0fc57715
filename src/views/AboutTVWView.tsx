@@ -153,7 +153,7 @@ export default function AboutTVWView() {
             Programme · Bi-Annual
           </p>
           <h1 style={{
-            fontFamily: "'Noto Sans', sans-serif", fontWeight: 900,
+            fontFamily: "'DM Sans', sans-serif", fontWeight: 900,
             fontSize: 52, color: "#fff", margin: "0 0 16px", lineHeight: 1.1, letterSpacing: "-1px",
           }}>
             Tata Volunteering Week
