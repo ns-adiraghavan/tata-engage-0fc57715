@@ -878,7 +878,7 @@ export function NumbersSection() {
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
                     <span style={{ fontSize: 10, color: "#94a3b8" }}>❤️ {post.likes}</span>
                     <button onClick={() => triggerToast("Opening social post...")}
-                      style={{ fontSize: 10, fontWeight: 800, color: B_INDIGO, background: "none", border: "none", cursor: "pointer" }}>
+                      style={{ fontSize: 10, fontWeight: 800, color: B_TEAL, background: "none", border: "none", cursor: "pointer" }}>
                       View →
                     </button>
                   </div>
@@ -892,7 +892,7 @@ export function NumbersSection() {
                   <button key={i} onClick={() => setSocialIdx(i)} style={{
                     width: i === socialIdx ? 16 : 6, height: 4,
                     borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                    background: i === socialIdx ? B_INDIGO : "#e2e8f0",
+                    background: i === socialIdx ? B_TEAL : "#e2e8f0",
                     transition: "all 0.2s",
                   }} />
                 ))}
