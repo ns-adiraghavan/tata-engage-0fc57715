@@ -815,7 +815,7 @@ export function NumbersSection() {
                     <p style={{ fontSize: 42, fontWeight: 900, color: s.colour, letterSpacing: "-1px", lineHeight: 1, margin: 0 }}>
                       {s.num}
                     </p>
-                    <p style={{ fontSize: 11, color: "#94a3b8", margin: "6px 0 0" }}>{s.sub}</p>
+                    <p className="text-zinc-950" style={{ fontSize: 11, margin: "6px 0 0" }}>{s.sub}</p>
                   </div>
                   <div style={{ display: "flex", gap: 5, justifyContent: "center", marginTop: 12 }}>
                     {HERO_STATS.map((_, j) => (
