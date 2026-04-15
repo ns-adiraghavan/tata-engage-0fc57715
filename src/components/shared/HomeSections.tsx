@@ -417,14 +417,17 @@ export function JourneySection() {
   ];
 
   return (
-    <section ref={ref} className="section-block" style={{ background: "#F7F9FF" }}>
-      <img src={doodleCluster3} alt="" style={{
-        position: "absolute", bottom: -10, right: -70, width: 260, opacity: 0.07,
-        pointerEvents: "none", userSelect: "none", transform: "rotate(-6deg)",
+    <section ref={ref} className="section-block" style={{ background: "#F7F9FF", position: "relative", overflow: "hidden" }}>
+      {/* Background photo */}
+      <img src={tajSatsImg} alt="" style={{
+        position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
+        pointerEvents: "none", userSelect: "none",
       }} />
-      <img src={doodleCluster1} alt="" style={{
-        position: "absolute", top: 10, left: -50, width: 180, opacity: 0.06,
-        pointerEvents: "none", userSelect: "none", transform: "rotate(12deg)",
+      {/* Dark overlay for readability */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(135deg, rgba(5,5,20,0.82) 0%, rgba(5,5,20,0.75) 50%, rgba(5,5,20,0.70) 100%)",
+        pointerEvents: "none",
       }} />
 
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
