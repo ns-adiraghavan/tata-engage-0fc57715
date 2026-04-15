@@ -181,7 +181,10 @@ const PROG_CONFIG = [
   },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
+const PROG_PASTEL = ["#EEF0FF", "#F5F3FF", "#FEF6E4"];
+const PROG_ACCENT_TEXT = ["#333399", "#5b21b6", "#B87C0A"];
+
+//
 // PROGRAMME SPOTLIGHT
 // Single card, auto-cycles every 5s. Dot indicators only (no text labels).
 // Solid dark coloured bg. Hover: image fades in, desc slides up.
@@ -245,7 +248,7 @@ export function ProgrammeSpotlight() {
                     style={{
                       position: "absolute", inset: 0,
                       backgroundImage: `url(${pc.photo})`,
-                      backgroundSize: "cover",
+                      backgroundSize: "110%",
                       backgroundPosition: pc.photoPos,
                       opacity: i === idx ? 1 : 0,
                       transition: "opacity 0.7s ease",
@@ -281,7 +284,7 @@ export function ProgrammeSpotlight() {
               onClick={() => navigate(p.route)}
               style={{
                 borderRadius: 18,
-                background: "#ffffff",
+                background: PROG_PASTEL[idx],
                 border: "1px solid #e8e8f0",
                 padding: "36px 32px",
                 display: "flex", flexDirection: "column",
@@ -289,12 +292,12 @@ export function ProgrammeSpotlight() {
                 boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
                 cursor: "pointer",
                 minHeight: 380,
-                transition: "box-shadow 0.2s ease",
+                transition: "background 0.5s ease, box-shadow 0.2s ease",
               }}
             >
               <div style={{
                 width: 3, height: 32, borderRadius: 2,
-                background: p.colour,
+                background: PROG_ACCENT_TEXT[idx],
                 marginBottom: 20,
                 transition: "background 0.5s ease",
               }} />
@@ -317,15 +320,15 @@ export function ProgrammeSpotlight() {
                 {[p.stat1, p.stat2].map((s, i) => (
                   <span key={i} style={{
                     fontSize: 11, fontWeight: 700, color: "#475569",
-                    background: "#f1f5f9",
+                    background: "rgba(255,255,255,0.7)",
                     padding: "4px 12px", borderRadius: 100,
-                    border: "1px solid #e2e8f0",
+                    border: "1px solid rgba(0,0,0,0.08)",
                   }}>{s}</span>
                 ))}
               </div>
               <div style={{
                 display: "flex", alignItems: "center", gap: 6,
-                fontSize: 13, fontWeight: 700, color: p.colour,
+                fontSize: 13, fontWeight: 700, color: PROG_ACCENT_TEXT[idx],
                 transition: "color 0.5s ease",
               }}>
                 Learn more <ArrowRight size={13} />
