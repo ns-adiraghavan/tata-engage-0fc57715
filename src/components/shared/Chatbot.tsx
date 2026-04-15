@@ -100,7 +100,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-[100] flex flex-col items-end">
+    <div className="fixed bottom-14 right-8 z-[100] flex flex-col items-end">
       <AnimatePresence>
         {isChatOpen && (
           <motion.div 
@@ -205,7 +205,8 @@ const Chatbot = () => {
 
       <button 
         onClick={() => setIsChatOpen(!isChatOpen)}
-        className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-white transition-all transform hover:scale-110 active:scale-95 cursor-pointer ${isChatOpen ? 'bg-zinc-900 rotate-90' : 'bg-tata-blue'}`}
+        className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-white transition-all transform hover:scale-110 active:scale-95 cursor-pointer ${isChatOpen ? 'bg-zinc-900 rotate-90' : ''}`}
+        style={{ backgroundColor: isChatOpen ? undefined : '#333399' }}
       >
         {isChatOpen ? <X size={28} /> : <MessageSquare size={28} />}
       </button>
