@@ -473,9 +473,9 @@ export function JourneySection() {
                   <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 4 }}>
                     {m.title}
                   </div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.7)", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
                   <div style={{ fontSize: 18, fontWeight: 900, color: m.colour }}>{ex.metric}</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.65)", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
                     {ex.label}
                   </div>
                 </div>
@@ -571,9 +571,9 @@ export function JourneySection() {
                   <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 4 }}>
                     {m.title}
                   </div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.7)", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
                   <div style={{ fontSize: 18, fontWeight: 900, color: m.colour }}>{ex.metric}</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.65)", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
                     {ex.label}
                   </div>
                 </div>
@@ -606,10 +606,10 @@ export function JourneySection() {
                     </span>
                   </div>
                   <div style={{ fontSize: 13, fontWeight: 800, color: "white" }}>{m.title}</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 3, lineHeight: 1.5 }}>{m.desc}</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", marginTop: 3, lineHeight: 1.5 }}>{m.desc}</div>
                   <div style={{ fontSize: 16, fontWeight: 900, color: m.colour, marginTop: 6 }}>
                     {ex.metric}{" "}
-                    <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase" }}>
+                    <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.65)", textTransform: "uppercase" }}>
                       {ex.label}
                     </span>
                   </div>
@@ -759,7 +759,7 @@ export function NumbersSection() {
                 </div>
                 <button onClick={cycleFact} style={{
                   display: "flex", alignItems: "center", gap: 5,
-                  fontSize: 11, color: "rgba(255,255,255,0.45)", fontWeight: 700,
+                  fontSize: 11, color: "rgba(255,255,255,0.7)", fontWeight: 700,
                   background: "none", border: "none", cursor: "pointer",
                 }}>
                   Next
