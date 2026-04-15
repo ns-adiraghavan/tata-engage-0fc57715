@@ -176,7 +176,7 @@ const HomeView = () => {
               {active && (
                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full mr-2 whitespace-nowrap shadow-sm transition-colors duration-300"
                   style={{
-                    backgroundColor: inHero ? "rgba(255,255,255,0.15)" : "white",
+                    backgroundColor: inHero ? "rgba(0,0,0,0.70)" : "white",
                     border: inHero ? "1px solid rgba(255,255,255,0.25)" : "1px solid #e2e8f0",
                     color: inHero ? "white" : "#334155",
                   }}>
