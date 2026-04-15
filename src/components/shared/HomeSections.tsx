@@ -181,7 +181,10 @@ const PROG_CONFIG = [
   },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
+const PROG_PASTEL = ["#EEF0FF", "#F5F3FF", "#FEF6E4"];
+const PROG_ACCENT_TEXT = ["#333399", "#5b21b6", "#B87C0A"];
+
+//
 // PROGRAMME SPOTLIGHT
 // Single card, auto-cycles every 5s. Dot indicators only (no text labels).
 // Solid dark coloured bg. Hover: image fades in, desc slides up.
