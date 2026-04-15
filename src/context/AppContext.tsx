@@ -26,8 +26,6 @@ export interface AppContextType {
   setFormStep: React.Dispatch<React.SetStateAction<number>>;
   formData: any;
   setFormData: React.Dispatch<React.SetStateAction<any>>;
-  otpChannel: "phone" | "email";
-  setOtpChannel: React.Dispatch<React.SetStateAction<"phone" | "email">>;
   projectStatus: "matched" | "active" | "completed";
   setProjectStatus: React.Dispatch<React.SetStateAction<"matched" | "active" | "completed">>;
   showPulseCheck: boolean;
@@ -75,7 +73,7 @@ export interface AppContextType {
   handleRoleSelect: (role: Role) => void;
   handleFormSubmit: (e: React.FormEvent) => void;
   handleConsentAccept: () => void;
-  handleOtpChannelSelect: () => void;
+  
   handleOtpVerify: () => void;
 }
 

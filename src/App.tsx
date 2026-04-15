@@ -32,9 +32,7 @@ import ActiveProjectManagementView from "@/views/ActiveProjectManagementView";
 import ProjectFeedbackView from "@/views/ProjectFeedbackView";
 import ProfileView from "@/views/ProfileView";
 import TVWHubView from "@/views/TVWHubView";
-import TVWVibeView from "@/views/TVWVibeView";
 import ProEngageView from "@/views/ProEngageView";
-import MyApplicationsView from "@/views/MyApplicationsView";
 import DisasterResponseView from "@/views/DisasterResponseView";
 
 import DRAvailabilityForm from "@/views/DRAvailabilityForm";
@@ -71,7 +69,7 @@ export default function App() {
   const [likedProjects, setLikedProjects] = useState<number[]>([]);
   const [formStep, setFormStep] = useState(1);
   const [formData, setFormData] = useState<any>({});
-  const [otpChannel, setOtpChannel] = useState<"phone" | "email">("email");
+  
   const [projectStatus, setProjectStatus] = useState<"matched" | "active" | "completed">("matched");
   const [showPulseCheck, setShowPulseCheck] = useState(true);
   const [pulseCheckSubmitted, setPulseCheckSubmitted] = useState(false);
@@ -138,7 +136,7 @@ export default function App() {
       navigate("otp");
     }
   };
-  const handleOtpChannelSelect = () => { navigate("otp"); };
+  
   const handleOtpVerify = () => { setIsLoggedIn(true); setUser(PRIYA_SHARMA); navigate("dashboard"); triggerToast("Registration Successful! Welcome to Tata Engage."); };
 
   const onLogout = () => {
@@ -155,7 +153,7 @@ export default function App() {
     otp, setOtp, showToast, setShowToast, toastMessage, setToastMessage,
     registeredEvents, setRegisteredEvents, appliedProjects, setAppliedProjects,
     likedProjects, setLikedProjects, formStep, setFormStep,
-    formData, setFormData, otpChannel, setOtpChannel,
+    formData, setFormData,
     projectStatus, setProjectStatus, showPulseCheck, setShowPulseCheck,
     pulseCheckSubmitted, setPulseCheckSubmitted,
     showFeedbackForm, setShowFeedbackForm, feedbackSubmitted, setFeedbackSubmitted,
@@ -169,8 +167,7 @@ export default function App() {
     ngoData, setNgoData, adminActiveTab, setAdminActiveTab,
     auditLogs, setAuditLogs,
     addAuditLog, triggerToast,
-    handleRoleSelect, handleFormSubmit, handleConsentAccept,
-    handleOtpChannelSelect, handleOtpVerify,
+    handleRoleSelect, handleFormSubmit, handleConsentAccept, handleOtpVerify,
   };
 
   return (
@@ -209,9 +206,7 @@ export default function App() {
                 <Route path="/projects/feedback" element={<ProtectedRoute><ProjectFeedbackView project={activeProject} /></ProtectedRoute>} />
                 <Route path="/profile" element={<ProtectedRoute><ProfileView /></ProtectedRoute>} />
                 <Route path="/tvw" element={<ProtectedRoute><TVWHubView /></ProtectedRoute>} />
-                <Route path="/tvw/vibe" element={<TVWVibeView />} />
                 <Route path="/proengage" element={<ProtectedRoute><ProEngageView /></ProtectedRoute>} />
-                <Route path="/my-applications" element={<ProtectedRoute><MyApplicationsView /></ProtectedRoute>} />
                 <Route path="/disaster-response" element={<DisasterResponseView />} />
                 
                 <Route path="/disaster-response/availability" element={<ProtectedRoute><DRAvailabilityForm /></ProtectedRoute>} />
