@@ -243,17 +243,53 @@ export function ProgrammeSpotlight() {
             <DefinerUnderline colour={B_INDIGO} width={68} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "240px 1fr 260px", gap: 20, alignItems: "stretch" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 260px", gap: 20, alignItems: "stretch" }}>
 
-            {/* LEFT — standalone photo card (fixed image) */}
+            {/* LEFT — standalone photo card (EOEO hero style) */}
             <div style={{
-              borderRadius: 18,
-              overflow: "hidden",
-              backgroundImage: `url(${tataElxsiImg})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center 20%",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
-            }} />
+              borderRadius: 18, overflow: "hidden", position: "relative",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.14)", cursor: "default",
+              minHeight: 400,
+            }}>
+              {/* Full-bleed photo */}
+              <div style={{
+                position: "absolute", inset: 0,
+                backgroundImage: `url(${tataElxsiImg})`,
+                backgroundSize: "cover", backgroundPosition: "center 20%",
+              }} />
+              {/* Dark overlay — heavier at bottom */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 45%, rgba(0,0,0,0.10) 100%)",
+              }} />
+              {/* Text — anchored to bottom */}
+              <div style={{
+                position: "relative", zIndex: 2,
+                padding: "32px 28px",
+                height: "100%", minHeight: 400,
+                display: "flex", flexDirection: "column", justifyContent: "flex-end",
+              }}>
+                <span style={{
+                  fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
+                  textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
+                  marginBottom: 8, display: "block",
+                }}>
+                  Each One Empowers One
+                </span>
+                <h3 style={{
+                  fontSize: 26, fontWeight: 900, color: "white",
+                  letterSpacing: "-0.3px", lineHeight: 1.2, margin: "0 0 6px",
+                }}>
+                  Become a TCS Literacy Champion
+                </h3>
+                <p style={{
+                  fontSize: 13, color: "rgba(255,255,255,0.72)",
+                  lineHeight: 1.6, margin: 0,
+                }}>
+                  Building foundation for livelihood
+                </p>
+              </div>
+            </div>
 
             {/* MIDDLE — single cycling flip card */}
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -293,48 +329,51 @@ export function ProgrammeSpotlight() {
                   {/* Back face */}
                   <div className="flip-back" style={{ background: p.bg, position: "relative" }}>
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.28) 100%)" }} />
-                    <div style={{ position: "relative", zIndex: 2, padding: "36px 36px 32px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                      <div>
-                        <span style={{
-                          fontSize: 10, fontWeight: 700, letterSpacing: "1.2px",
-                          textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
-                        }}>
-                          {p.label}
-                        </span>
-                        <h3 style={{
-                          fontSize: 20, fontWeight: 800, color: "white",
-                          letterSpacing: "-0.4px", lineHeight: 1.2, margin: "8px 0 16px",
-                        }}>
-                          {p.title}
-                        </h3>
-                        <p style={{
-                          fontSize: 14, color: "rgba(255,255,255,0.82)",
-                          lineHeight: 1.65, margin: 0,
-                        }}>
-                          {p.desc}
-                        </p>
-                      </div>
+                    <div style={{ position: "relative", zIndex: 2, padding: "36px 36px 32px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                        <div>
+                          <span style={{
+                            fontSize: 10, fontWeight: 700, letterSpacing: "1.2px",
+                            textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
+                          }}>
+                            {p.label}
+                          </span>
+                          <h3 style={{
+                            fontSize: 20, fontWeight: 800, color: "white",
+                            letterSpacing: "-0.4px", lineHeight: 1.2, margin: "8px 0 16px",
+                          }}>
+                            {p.title}
+                          </h3>
+                          <p style={{
+                            fontSize: 14, color: "rgba(255,255,255,0.82)",
+                            lineHeight: 1.65, margin: 0,
+                          }}>
+                            {p.desc}
+                          </p>
+                        </div>
 
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 24 }}>
-                        <div style={{ display: "flex", gap: 8 }}>
-                          {[p.stat1, p.stat2].map((s, i) => (
-                            <span key={i} style={{
-                              fontSize: 11, fontWeight: 700,
-                              color: "rgba(255,255,255,0.88)",
-                              background: "rgba(255,255,255,0.13)",
-                              backdropFilter: "blur(4px)",
-                              padding: "4px 11px", borderRadius: 100,
-                              border: "1px solid rgba(255,255,255,0.16)",
-                            }}>{s}</span>
-                          ))}
-                        </div>
-                        <div style={{
-                          display: "flex", alignItems: "center", gap: 6,
-                          fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.72)",
-                        }}>
-                          Learn more <ArrowRight size={13} />
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                          <div style={{ display: "flex", gap: 8 }}>
+                            {[p.stat1, p.stat2].map((s, i) => (
+                              <span key={i} style={{
+                                fontSize: 11, fontWeight: 700,
+                                color: "rgba(255,255,255,0.88)",
+                                background: "rgba(255,255,255,0.13)",
+                                backdropFilter: "blur(4px)",
+                                padding: "4px 11px", borderRadius: 100,
+                                border: "1px solid rgba(255,255,255,0.16)",
+                              }}>{s}</span>
+                            ))}
+                          </div>
+                          <div style={{
+                            display: "flex", alignItems: "center", gap: 6,
+                            fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.72)",
+                          }}>
+                            Learn more <ArrowRight size={13} />
+                          </div>
                         </div>
                       </div>
+                    </div>
                     </div>
                   </div>
                 </div>
