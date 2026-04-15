@@ -38,6 +38,7 @@ const PageShell = ({ accentColor, sections, pageTitle, pageEyebrow, pageDesc, ch
         >
           {pageTitle}
         </h1>
+        <div className="mt-3" style={{ width: 48, height: 3, borderRadius: 2, background: accentColor }} />
         {pageDesc && (
           <p className="text-base text-slate-500 font-light max-w-2xl mt-3">
             {pageDesc}
