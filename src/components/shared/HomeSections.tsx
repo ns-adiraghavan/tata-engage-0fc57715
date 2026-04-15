@@ -232,9 +232,6 @@ export function ProgrammeSpotlight() {
               Our Programmes
             </p>
             <DefinerUnderline colour={B_INDIGO} width={68} />
-            <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: "10px 0 0" }}>
-              Ways to make a <span className="gradient-text">difference</span>
-            </h2>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 20, alignItems: "stretch" }}>
@@ -249,26 +246,27 @@ export function ProgrammeSpotlight() {
                   background: p.bg, cursor: "pointer", position: "relative",
                   minHeight: 400, boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
                   transition: "background 0.45s ease",
+                  display: "flex", flexDirection: "row" as const,
                 }}
               >
-                {/* Image — opacity 0 at rest, fades in on hover */}
-                <div className="prog-img" style={{
-                  position: "absolute", inset: 0,
-                  backgroundImage: `url(${p.photo})`,
-                  backgroundSize: "cover", backgroundPosition: "center",
-                }} />
-                {/* Persistent dark overlay */}
+                {/* Photo panel */}
                 <div style={{
-                  position: "absolute", inset: 0,
-                  background: "linear-gradient(155deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.14) 100%)",
+                  width: "42%",
+                  flexShrink: 0,
+                  backgroundImage: `url(${p.photo})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
                 }} />
 
+                {/* Text panel */}
                 <div style={{
-                  position: "relative", zIndex: 2,
-                  padding: "36px 36px 32px",
-                  display: "flex", flexDirection: "column",
-                  height: "100%", minHeight: 400,
+                  flex: 1,
+                  background: p.bg,
+                  padding: "36px 32px 32px",
+                  display: "flex",
+                  flexDirection: "column",
                   justifyContent: "space-between",
+                  transition: "background 0.45s ease",
                 }}>
                   <div>
                     <div style={{ marginBottom: 20 }}>
