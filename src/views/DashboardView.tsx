@@ -217,7 +217,7 @@ function StatTile({ value, suffix = "", label, pastel, accentColor, delay, start
       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; setShowTip(false); }}
     >
       {isZero && <div style={{ position: "absolute", top: 14, left: "50%", transform: "translateX(-50%)", width: 32, height: 32, borderRadius: "50%", border: `2px dashed ${accentColor}44`, animation: "pulse-ring 2s ease-in-out infinite" }} />}
-      <div style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: isZero ? 32 : 38, fontWeight: 900, lineHeight: 1, letterSpacing: "-2px", color: isZero ? "#ccccdd" : accentColor, position: "relative", zIndex: 1 }}>
+      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: isZero ? 32 : 38, fontWeight: 900, lineHeight: 1, letterSpacing: "-2px", color: isZero ? "#ccccdd" : accentColor, position: "relative", zIndex: 1 }}>
         {n}{suffix}
       </div>
       <div style={{ fontSize: 11, fontWeight: 600, color: isZero ? "#bbbbcc" : ACCENT_NAVY, marginTop: 8, textTransform: "uppercase", letterSpacing: "0.6px", lineHeight: 1.3 }}>{label}</div>
@@ -236,7 +236,7 @@ function Slicers({ options, active, onChange, accentColor = B_INDIGO, notificati
   return (
     <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 22 }}>
       {options.map(o => (
-        <button key={o.id} onClick={() => onChange(o.id)} style={{ position: "relative", display: "inline-flex", padding: "6px 16px", borderRadius: 100, border: `1.5px solid ${active === o.id ? accentColor : "#dddde8"}`, background: active === o.id ? accentColor : "transparent", color: active === o.id ? "#fff" : "#666", fontSize: 13, fontWeight: active === o.id ? 600 : 400, cursor: "pointer", transition: "all 0.15s", fontFamily: "'Noto Sans', sans-serif" }}>
+        <button key={o.id} onClick={() => onChange(o.id)} style={{ position: "relative", display: "inline-flex", padding: "6px 16px", borderRadius: 100, border: `1.5px solid ${active === o.id ? accentColor : "#dddde8"}`, background: active === o.id ? accentColor : "transparent", color: active === o.id ? "#fff" : "#666", fontSize: 13, fontWeight: active === o.id ? 600 : 400, cursor: "pointer", transition: "all 0.15s", fontFamily: "'DM Sans', sans-serif" }}>
           {o.label}
           {notifications?.[o.id] && <span style={notifDot} />}
         </button>
@@ -257,14 +257,14 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   return (
     <div style={{ marginBottom: 24 }}>
       <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 5 }}>{eyebrow}</div>
-      <h2 style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: 21, fontWeight: 900, color: ACCENT_NAVY, margin: 0, letterSpacing: -0.3 }}>{title}</h2>
+      <h2 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 21, fontWeight: 900, color: ACCENT_NAVY, margin: 0, letterSpacing: -0.3 }}>{title}</h2>
     </div>
   );
 }
 
 // ─── History filters ──────────────────────────────────────────────────────────
 function HistoryFilters({ edition, setEdition, year, setYear }: { edition: string; setEdition: (v: string) => void; year: string; setYear: (v: string) => void; }) {
-  const sel: React.CSSProperties = { padding: "6px 12px", borderRadius: 8, border: "1.5px solid #dddde8", background: "#fff", fontSize: 13, color: ACCENT_NAVY, fontFamily: "'Noto Sans', sans-serif", cursor: "pointer", outline: "none" };
+  const sel: React.CSSProperties = { padding: "6px 12px", borderRadius: 8, border: "1.5px solid #dddde8", background: "#fff", fontSize: 13, color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif", cursor: "pointer", outline: "none" };
   return (
     <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
       <select value={edition} onChange={e => setEdition(e.target.value)} style={sel}>
@@ -310,7 +310,7 @@ function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: { 
   return (
     <>
       <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(13,27,62,0.45)", zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", transition: "opacity 0.22s", backdropFilter: "blur(2px)" }} />
-      <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width: 560, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'Noto Sans', sans-serif", overflowY: "auto" }}>
+      <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width: 560, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif", overflowY: "auto" }}>
         <div style={{ background: ACCENT_NAVY, padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
           <button onClick={onClose} style={{ background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 7, color: "rgba(255,255,255,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>← Close</button>
           {accentTag && <div style={{ display: "inline-block", background: `${B_YELLOW}22`, border: `1px solid ${B_YELLOW}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_YELLOW, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
@@ -386,13 +386,13 @@ function ProjectUpdateDrawer({ open, onClose }: { open: boolean; onClose: () => 
           <p style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6, marginBottom: 22 }}>Share a brief progress note with TSG and your NGO partner. This helps track the health of your project.</p>
           <div style={{ marginBottom: 16 }}>
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Update</label>
-            <textarea value={text} onChange={e => setText(e.target.value)} placeholder="What progress have you made this week? Any blockers or next steps?" rows={6} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, resize: "vertical", outline: "none", lineHeight: 1.6, boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+            <textarea value={text} onChange={e => setText(e.target.value)} placeholder="What progress have you made this week? Any blockers or next steps?" rows={6} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "vertical", outline: "none", lineHeight: 1.6, boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
           </div>
           <div style={{ marginBottom: 22 }}>
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Attachment (optional)</label>
             <div style={{ border: "1.5px dashed #dddde8", borderRadius: 10, padding: "16px", textAlign: "center", fontSize: 13, color: "#aaaabc", cursor: "pointer" }}>Drop a file here or click to browse</div>
           </div>
-          <button disabled={!text.trim()} onClick={() => setSubmitted(true)} style={{ width: "100%", background: text.trim() ? B_INDIGO : "#e0e0e8", color: text.trim() ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: text.trim() ? "pointer" : "not-allowed", fontFamily: "'Noto Sans', sans-serif", transition: "background 0.2s" }}>Post Update</button>
+          <button disabled={!text.trim()} onClick={() => setSubmitted(true)} style={{ width: "100%", background: text.trim() ? B_INDIGO : "#e0e0e8", color: text.trim() ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: text.trim() ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Post Update</button>
         </div>
       )}
     </DrawerShell>
@@ -420,7 +420,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
     : completed === "no" && dropoutReason !== "";
 
   const label: React.CSSProperties = { fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 };
-  const inp: React.CSSProperties = { width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" };
+  const inp: React.CSSProperties = { width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" };
   const sel: React.CSSProperties = { ...inp, appearance: "none", cursor: "pointer" };
 
   function StarRow({ count = 5, value, hover, onHov, onSet }: { count?: number; value: number; hover: number; onHov: (v: number) => void; onSet: (v: number) => void }) {
@@ -583,7 +583,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
             </>
           )}
 
-          <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ width: "100%", background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'Noto Sans', sans-serif", marginTop: 8, transition: "background 0.2s" }}>Submit Feedback</button>
+          <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ width: "100%", background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", marginTop: 8, transition: "background 0.2s" }}>Submit Feedback</button>
         </div>
       )}
     </DrawerShell>
@@ -626,13 +626,13 @@ function GrievanceDrawer({ open, onClose }: { open: boolean; onClose: () => void
           </div>
           <div style={{ marginBottom: 22 }}>
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Describe the issue *</label>
-            <textarea value={text} onChange={e => setText(e.target.value)} rows={5} placeholder="Provide as much detail as possible so the team can investigate effectively." style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, resize: "none", outline: "none", lineHeight: 1.6, boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+            <textarea value={text} onChange={e => setText(e.target.value)} rows={5} placeholder="Provide as much detail as possible so the team can investigate effectively." style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "none", outline: "none", lineHeight: 1.6, boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
           </div>
           <div style={{ marginBottom: 22 }}>
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Supporting file (optional)</label>
             <div style={{ border: "1.5px dashed #dddde8", borderRadius: 10, padding: "14px", textAlign: "center", fontSize: 13, color: "#aaaabc", cursor: "pointer" }}>Drop a file here or click to browse</div>
           </div>
-          <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ width: "100%", background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'Noto Sans', sans-serif", transition: "background 0.2s" }}>Submit Grievance</button>
+          <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ width: "100%", background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Submit Grievance</button>
         </div>
       )}
     </DrawerShell>
@@ -664,7 +664,7 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
   const canSubmit = whyBestFit.trim() && threeSteps.trim() && similarTask && agreed;
 
   const label: React.CSSProperties = { fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 };
-  const inp: React.CSSProperties = { width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" };
+  const inp: React.CSSProperties = { width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "10px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" };
   const sel: React.CSSProperties = { ...inp, appearance: "none", cursor: "pointer", background: "#fff" };
 
   const undertakingPoints = [
@@ -841,8 +841,8 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
             </div>
 
             <div style={{ display: "flex", gap: 10 }}>
-              <button onClick={reset} style={{ flex: 1, background: "#fff", border: "1.5px solid #dddde8", borderRadius: 10, padding: "12px", fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Save for Later</button>
-              <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ flex: 2, background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "12px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'Noto Sans', sans-serif", transition: "background 0.2s" }}>Submit Application</button>
+              <button onClick={reset} style={{ flex: 1, background: "#fff", border: "1.5px solid #dddde8", borderRadius: 10, padding: "12px", fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Save for Later</button>
+              <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ flex: 2, background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "12px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Submit Application</button>
             </div>
           </div>
         )
@@ -887,9 +887,9 @@ function ShareDrawer({ open, onClose }: { open: boolean; onClose: () => void }) 
           ))}
         </div>
         <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Pre-written caption (you can edit)</label>
-        <textarea defaultValue={captions[active]} rows={5} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, resize: "none", outline: "none", lineHeight: 1.6, boxSizing: "border-box", marginBottom: 16 }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+        <textarea defaultValue={captions[active]} rows={5} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "none", outline: "none", lineHeight: 1.6, boxSizing: "border-box", marginBottom: 16 }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
         <div style={{ fontSize: 12, color: "#aaaabc", marginBottom: 20 }}>The platform never auto-posts on your behalf. You'll be taken to the platform to paste and post.</div>
-        <button style={{ width: "100%", background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Open {["linkedin","twitter","whatsapp"].includes(active) ? active.charAt(0).toUpperCase() + active.slice(1) : ""}</button>
+        <button style={{ width: "100%", background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Open {["linkedin","twitter","whatsapp"].includes(active) ? active.charAt(0).toUpperCase() + active.slice(1) : ""}</button>
       </div>
     </DrawerShell>
   );
@@ -953,7 +953,7 @@ export default function DashboardView() {
 
   return (
     <>
-      <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'Noto Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
+      <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
 
         {/* Greeting bar */}
         <div style={{ background: ACCENT_NAVY, padding: "28px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
@@ -1027,7 +1027,7 @@ export default function DashboardView() {
                         onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
                       >
                         <div style={{ width: 42, height: 42, borderRadius: "50%", background: b.color, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <span style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: 11, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>{b.symbol}</span>
+                          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>{b.symbol}</span>
                         </div>
                         <span style={{ fontSize: 10, fontWeight: 600, color: "#6b6b7a", textAlign: "center", lineHeight: 1.2, maxWidth: 52 }}>{b.name}</span>
                       </div>
@@ -1155,7 +1155,7 @@ export default function DashboardView() {
                       { label: "Download Certificate",   desc: "Available once both sides submit feedback.",    color: "#bbb",   pastel: "#f8f8fc", action: () => {},                   disabled: true  },
                     ].map(a => (
                       <button key={a.label} disabled={a.disabled} onClick={a.action}
-                        style={{ background: a.pastel, border: `1px solid ${a.disabled ? "#e8e8f0" : a.color + "22"}`, borderRadius: 12, padding: "18px", textAlign: "left", cursor: a.disabled ? "not-allowed" : "pointer", opacity: a.disabled ? 0.5 : 1, transition: "transform 0.18s, box-shadow 0.18s", fontFamily: "'Noto Sans', sans-serif" }}
+                        style={{ background: a.pastel, border: `1px solid ${a.disabled ? "#e8e8f0" : a.color + "22"}`, borderRadius: 12, padding: "18px", textAlign: "left", cursor: a.disabled ? "not-allowed" : "pointer", opacity: a.disabled ? 0.5 : 1, transition: "transform 0.18s, box-shadow 0.18s", fontFamily: "'DM Sans', sans-serif" }}
                         onMouseEnter={e => { if (!a.disabled) { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 20px ${a.color}22`; }}}
                         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
                       >
@@ -1207,18 +1207,18 @@ export default function DashboardView() {
                 <div style={{ ...card, textAlign: "center", padding: "36px 32px" }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 8 }}>ProEngage applications open in January 2026</div>
                   <div style={{ fontSize: 13.5, color: "#8888a0", lineHeight: 1.65, maxWidth: 380, margin: "0 auto 20px" }}>The next edition isn't open yet, but you can register your interest early and be first to know when projects are listed.</div>
-                  <button style={{ background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "10px 24px", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Register Early Interest</button>
+                  <button style={{ background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "10px 24px", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Register Early Interest</button>
                 </div>
               )}
 
               {/* Refer + Share — always below active tab */}
               <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
-                <button onClick={() => setReferralOpen(true)} style={{ flex: 1, background: P_INDIGO, border: `1.5px solid ${B_INDIGO}22`, borderRadius: 10, padding: "13px 16px", fontSize: 13.5, fontWeight: 600, color: B_INDIGO, cursor: "pointer", transition: "border-color 0.18s, transform 0.18s", fontFamily: "'Noto Sans', sans-serif" }}
+                <button onClick={() => setReferralOpen(true)} style={{ flex: 1, background: P_INDIGO, border: `1.5px solid ${B_INDIGO}22`, borderRadius: 10, padding: "13px 16px", fontSize: 13.5, fontWeight: 600, color: B_INDIGO, cursor: "pointer", transition: "border-color 0.18s, transform 0.18s", fontFamily: "'DM Sans', sans-serif" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = B_INDIGO; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `${B_INDIGO}22`; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
                   Refer a Colleague or Family Member
                 </button>
-                <button onClick={() => setShareOpen(true)} style={{ flex: 1, background: P_BLUE, border: `1.5px solid ${B_BLUE}22`, borderRadius: 10, padding: "13px 16px", fontSize: 13.5, fontWeight: 600, color: B_BLUE, cursor: "pointer", transition: "border-color 0.18s, transform 0.18s", fontFamily: "'Noto Sans', sans-serif" }}
+                <button onClick={() => setShareOpen(true)} style={{ flex: 1, background: P_BLUE, border: `1.5px solid ${B_BLUE}22`, borderRadius: 10, padding: "13px 16px", fontSize: 13.5, fontWeight: 600, color: B_BLUE, cursor: "pointer", transition: "border-color 0.18s, transform 0.18s", fontFamily: "'DM Sans', sans-serif" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = B_BLUE; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `${B_BLUE}22`; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
                   Share Your Story
@@ -1364,7 +1364,7 @@ export default function DashboardView() {
                 const on = activeSection === s.id;
                 const hasNotif = s.id === "activities" && (NOTIFICATIONS.viewOpportunities || NOTIFICATIONS.diyActivities || NOTIFICATIONS.proEngageProject);
                 return (
-                  <button key={s.id} onClick={() => scrollTo(s.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: 8, border: "none", background: on ? P_INDIGO : "transparent", cursor: "pointer", textAlign: "left", transition: "background 0.18s", fontFamily: "'Noto Sans', sans-serif" }}>
+                  <button key={s.id} onClick={() => scrollTo(s.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: 8, border: "none", background: on ? P_INDIGO : "transparent", cursor: "pointer", textAlign: "left", transition: "background 0.18s", fontFamily: "'DM Sans', sans-serif" }}>
                     <div style={{ width: 3, height: 16, borderRadius: 2, background: on ? B_INDIGO : "#dddde8", flexShrink: 0, transition: "background 0.18s" }} />
                     <span style={{ position: "relative", display: "inline-flex", fontSize: 12.5, fontWeight: on ? 700 : 400, color: on ? B_INDIGO : "#aaaabc", transition: "color 0.18s" }}>{s.label}{hasNotif && <span style={notifDot} />}</span>
                   </button>
@@ -1374,7 +1374,7 @@ export default function DashboardView() {
             <div style={{ marginTop: 28 }}>
               <div style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: "1.8px", textTransform: "uppercase", color: "#c0c0cc", marginBottom: 12 }}>Quick Links</div>
               {[{ label: "Edit Profile", action: () => navigate("/profile") }, { label: "Raise a Grievance", action: () => setGrievanceOpen(true) }].map(a => (
-                <button key={a.label} onClick={a.action} style={{ display: "block", width: "100%", background: "none", border: "none", padding: "7px 10px", borderRadius: 8, fontSize: 12.5, color: "#8888a0", cursor: "pointer", textAlign: "left", fontFamily: "'Noto Sans', sans-serif", transition: "background 0.15s, color 0.15s" }}
+                <button key={a.label} onClick={a.action} style={{ display: "block", width: "100%", background: "none", border: "none", padding: "7px 10px", borderRadius: 8, fontSize: 12.5, color: "#8888a0", cursor: "pointer", textAlign: "left", fontFamily: "'DM Sans', sans-serif", transition: "background 0.15s, color 0.15s" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#f0f0f8"; (e.currentTarget as HTMLElement).style.color = ACCENT_NAVY; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "none"; (e.currentTarget as HTMLElement).style.color = "#8888a0"; }}>
                   {a.label}
@@ -1409,8 +1409,8 @@ export default function DashboardView() {
               You'll receive a confirmation email within 24 hours. Your spot is reserved until 48 hours before the event.
             </div>
             <div style={{ display: "flex", gap: 12 }}>
-              <button onClick={() => { ctxToast("Registered! Confirmation email sent to priya.sharma@tcs.com"); setTvwRegModal(null); }} style={{ flex: 1, background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Confirm Registration</button>
-              <button onClick={() => setTvwRegModal(null)} style={{ flex: 1, background: "transparent", color: "#8888a0", border: "1px solid #e0e0e8", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 600, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+              <button onClick={() => { ctxToast("Registered! Confirmation email sent to priya.sharma@tcs.com"); setTvwRegModal(null); }} style={{ flex: 1, background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Confirm Registration</button>
+              <button onClick={() => setTvwRegModal(null)} style={{ flex: 1, background: "transparent", color: "#8888a0", border: "1px solid #e0e0e8", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
             </div>
           </div>
         )}

@@ -92,7 +92,7 @@ export default function MediaView() {
       <div id="media-hero" style={{ background: ACCENT_NAVY, padding: "100px 24px 48px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={DIAG_TEXTURE} />
         <div style={{ position: "relative", zIndex: 1 }}>
-          <h1 style={{ fontFamily: "'Noto Sans', sans-serif", fontWeight: 900, fontSize: 36, color: "#fff", margin: 0 }}>Media &amp; Resources</h1>
+          <h1 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 900, fontSize: 36, color: "#fff", margin: 0 }}>Media &amp; Resources</h1>
           <p style={{ fontSize: 16, color: "rgba(255,255,255,0.65)", marginTop: 10 }}>Stories, photos, videos and moments from across the Tata Engage community</p>
         </div>
       </div>

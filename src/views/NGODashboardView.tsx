@@ -50,9 +50,9 @@ function DrawerShell({
   return (
     <>
       <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(13,27,62,0.45)", zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", transition: "opacity 0.22s", backdropFilter: "blur(2px)" }} />
-      <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'Noto Sans', sans-serif", overflowY: "auto" }}>
+      <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif", overflowY: "auto" }}>
         <div style={{ background: ACCENT_NAVY, padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
-          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 7, color: "rgba(255,255,255,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16, fontFamily: "'Noto Sans', sans-serif" }}>← Close</button>
+          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 7, color: "rgba(255,255,255,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16, fontFamily: "'DM Sans', sans-serif" }}>← Close</button>
           {accentTag && <div style={{ display: "inline-block", background: `${B_ORANGE}22`, border: `1px solid ${B_ORANGE}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_ORANGE, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
           <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{title}</div>
           {subtitle && <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.45)", marginTop: 5 }}>{subtitle}</div>}
@@ -68,10 +68,10 @@ function Label({ children, required }: { children: React.ReactNode; required?: b
   return <div style={{ fontSize: 10.5, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: 6 }}>{children}{required && <span style={{ color: B_RED, marginLeft: 3 }}>*</span>}</div>;
 }
 function FInput({ value, onChange, placeholder, type = "text" }: { value: string; onChange?: (v: string) => void; placeholder?: string; type?: string }) {
-  return <input type={type} value={value} placeholder={placeholder} onChange={e => onChange?.(e.target.value)} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_ORANGE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />;
+  return <input type={type} value={value} placeholder={placeholder} onChange={e => onChange?.(e.target.value)} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_ORANGE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />;
 }
 function FSelect({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: string[] }) {
-  return <select value={value} onChange={e => onChange(e.target.value)} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", background: "#fff", appearance: "none", cursor: "pointer", boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_ORANGE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")}>{options.map(o => <option key={o}>{o}</option>)}</select>;
+  return <select value={value} onChange={e => onChange(e.target.value)} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", background: "#fff", appearance: "none", cursor: "pointer", boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_ORANGE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")}>{options.map(o => <option key={o}>{o}</option>)}</select>;
 }
 
 // ─── AI Enhance button + textarea ─────────────────────────────────────────────
@@ -117,7 +117,7 @@ function AITextarea({
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
         {label && <Label>{label}</Label>}
         <button onClick={doEnhance} disabled={enhancing || !value.trim()}
-          style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11.5, fontWeight: 700, color: enhancing ? "#aaaabc" : enhanced ? B_TEAL : B_INDIGO, background: enhanced ? P_TEAL : P_INDIGO, border: `1px solid ${enhanced ? B_TEAL : B_INDIGO}30`, borderRadius: 7, padding: "4px 10px", cursor: enhancing || !value.trim() ? "not-allowed" : "pointer", fontFamily: "'Noto Sans', sans-serif", transition: "all 0.2s", whiteSpace: "nowrap" }}>
+          style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11.5, fontWeight: 700, color: enhancing ? "#aaaabc" : enhanced ? B_TEAL : B_INDIGO, background: enhanced ? P_TEAL : P_INDIGO, border: `1px solid ${enhanced ? B_TEAL : B_INDIGO}30`, borderRadius: 7, padding: "4px 10px", cursor: enhancing || !value.trim() ? "not-allowed" : "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s", whiteSpace: "nowrap" }}>
           {enhancing ? (
             <><span style={{ display: "inline-block", width: 12, height: 12, borderRadius: "50%", border: `2px solid ${B_INDIGO}`, borderTopColor: "transparent", animation: "spin 0.8s linear infinite" }} /> Enhancing…</>
           ) : enhanced ? (
@@ -128,7 +128,7 @@ function AITextarea({
         </button>
       </div>
       <textarea value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={rows}
-        style={{ width: "100%", border: `1.5px solid ${enhanced ? B_TEAL : "#e0e0e8"}`, borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box", transition: "border-color 0.2s" }}
+        style={{ width: "100%", border: `1.5px solid ${enhanced ? B_TEAL : "#e0e0e8"}`, borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box", transition: "border-color 0.2s" }}
         onFocus={e => (e.target.style.borderColor = B_ORANGE)} onBlur={e => (e.target.style.borderColor = enhanced ? B_TEAL : "#e0e0e8")} />
       {value.length > 0 && (
         <div style={{ marginTop: 5, display: "flex", alignItems: "center", gap: 8 }}>
@@ -316,8 +316,8 @@ function AddProjectForm({ clonedFrom, onClose, onSubmit }: { clonedFrom?: any; o
         </label>
       </div>
       <div style={{ display: "flex", gap: 10, marginTop: 16, paddingTop: 16, borderTop: "1px solid #f0f0f8" }}>
-        <button onClick={onClose} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
-        <button onClick={onSubmit} style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit for Review</button>
+        <button onClick={onClose} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
+        <button onClick={onSubmit} style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Submit for Review</button>
       </div>
     </div>
   );
@@ -344,7 +344,7 @@ function FeedbackForm({ project, onClose, onSubmit }: { project: any; onClose: (
         <Label>Q1 — Completion status</Label>
         <div style={{ display: "flex", gap: 16 }}>
           {["Completed","Not Completed"].map(o => (
-            <label key={o} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13.5, cursor: "pointer", color: ACCENT_NAVY, fontFamily: "'Noto Sans', sans-serif" }}>
+            <label key={o} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13.5, cursor: "pointer", color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif" }}>
               <input type="radio" checked={status === o} onChange={() => setStatus(o)} style={{ accentColor: B_ORANGE }} />{o}
             </label>
           ))}
@@ -366,7 +366,7 @@ function FeedbackForm({ project, onClose, onSubmit }: { project: any; onClose: (
           <div style={{ marginBottom: 16 }}>
             <Label>Q4 — Testimonial (optional)</Label>
             <textarea value={testimonial} onChange={e => setTestimonial(e.target.value)} placeholder="Share your experience with this volunteer…" rows={4}
-              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
+              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
             <div style={{ fontSize: 11, color: "#aaaabc", marginTop: 4 }}>Testimonials go to Admin moderation before being published.</div>
           </div>
           <div style={{ fontSize: 11.5, color: "#888", marginBottom: 12 }}>For large NGOs with many projects, bulk upload via Excel template is available — contact TSG Admin.</div>
@@ -376,15 +376,15 @@ function FeedbackForm({ project, onClose, onSubmit }: { project: any; onClose: (
         <div style={{ marginBottom: 16 }}>
           <Label>Q2 — Reason for non-completion</Label>
           {["Volunteer withdrew from project","Project scope changed significantly","Scheduling/availability conflict"].map(opt => (
-            <label key={opt} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, cursor: "pointer", color: ACCENT_NAVY, marginBottom: 8, fontFamily: "'Noto Sans', sans-serif" }}>
+            <label key={opt} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, cursor: "pointer", color: ACCENT_NAVY, marginBottom: 8, fontFamily: "'DM Sans', sans-serif" }}>
               <input type="radio" name="reason" style={{ accentColor: B_ORANGE }} />{opt}
             </label>
           ))}
         </div>
       )}
       <div style={{ display: "flex", gap: 10 }}>
-        <button onClick={onClose} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
-        <button onClick={onSubmit} style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Feedback</button>
+        <button onClick={onClose} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
+        <button onClick={onSubmit} style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Submit Feedback</button>
       </div>
     </div>
   );
@@ -489,11 +489,11 @@ const NGODashboardView = () => {
   const tabBtn = (active: boolean): React.CSSProperties => ({
     fontSize: 12.5, fontWeight: active ? 700 : 500, color: active ? B_ORANGE : "#6b6b7a",
     background: active ? P_ORANGE : "transparent", border: active ? `1px solid ${B_ORANGE}40` : "1px solid transparent",
-    borderRadius: 7, padding: "5px 13px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif",
+    borderRadius: 7, padding: "5px 13px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
   });
 
   return (
-    <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'Noto Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
+    <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
 
       {/* Identity banner */}
       <div style={{ background: ACCENT_NAVY, padding: "20px 48px 18px", display: "flex", alignItems: "center", gap: 16 }}>
@@ -514,7 +514,7 @@ const NGODashboardView = () => {
 
       {/* Notification popout */}
       {notifOpen && (
-        <div style={{ position: "fixed", top: 130, right: 48, width: 320, background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, boxShadow: "0 12px 40px rgba(13,27,62,0.15)", zIndex: 300, fontFamily: "'Noto Sans', sans-serif", overflow: "hidden" }}>
+        <div style={{ position: "fixed", top: 130, right: 48, width: 320, background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, boxShadow: "0 12px 40px rgba(13,27,62,0.15)", zIndex: 300, fontFamily: "'DM Sans', sans-serif", overflow: "hidden" }}>
           <div style={{ background: ACCENT_NAVY, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>Notifications</div>
             <button onClick={() => setNotifOpen(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", padding: 2, lineHeight: 1 }}>✕</button>
@@ -539,7 +539,7 @@ const NGODashboardView = () => {
             ))}
           </div>
           <div style={{ padding: "10px 16px", borderTop: "1px solid #f0f0f8", textAlign: "center" }}>
-            <button onClick={() => setNotifOpen(false)} style={{ fontSize: 12, fontWeight: 700, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>View all</button>
+            <button onClick={() => setNotifOpen(false)} style={{ fontSize: 12, fontWeight: 700, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>View all</button>
           </div>
         </div>
       )}
@@ -704,7 +704,7 @@ const NGODashboardView = () => {
                       <strong>Feedback due {days <= 0 ? "today" : `in ${days} day${days !== 1 ? "s" : ""}`}</strong> — "{p.title}" · Complete to trigger volunteer certificates.
                     </div>
                     <button onClick={() => { setActiveProject(p); setFeedbackProject(p); setModal("feedback"); }}
-                      style={{ background: "#9a6500", border: "none", borderRadius: 8, padding: "7px 14px", fontSize: 12.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", whiteSpace: "nowrap" }}>
+                      style={{ background: "#9a6500", border: "none", borderRadius: 8, padding: "7px 14px", fontSize: 12.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap" }}>
                       Complete Feedback
                     </button>
                   </div>
@@ -745,14 +745,14 @@ const NGODashboardView = () => {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
               {/* Add project */}
               <button onClick={() => { setClonedFrom(null); setModal("addProject"); }}
-                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><Plus size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Add project</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Full project form with AI quality scoring</div>
                 <div style={{ display: "flex", gap: 6 }}>
                   <span style={{ fontSize: 11, fontWeight: 600, color: B_ORANGE }}>New →</span>
                   <button onClick={e => { e.stopPropagation(); setModal("cloneProject"); }}
-                    style={{ fontSize: 11, fontWeight: 600, color: B_INDIGO, background: P_INDIGO, border: `1px solid ${B_INDIGO}30`, borderRadius: 6, padding: "2px 8px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
+                    style={{ fontSize: 11, fontWeight: 600, color: B_INDIGO, background: P_INDIGO, border: `1px solid ${B_INDIGO}30`, borderRadius: 6, padding: "2px 8px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
                     Clone from previous
                   </button>
                 </div>
@@ -760,7 +760,7 @@ const NGODashboardView = () => {
 
               {/* View/edit projects */}
               <button onClick={() => setModal("viewProjects")}
-                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><FileText size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>View / Edit my projects</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Draft → Under Review → Live / Returned</div>
@@ -769,7 +769,7 @@ const NGODashboardView = () => {
 
               {/* Review applications */}
               <button onClick={() => { scrollTo(applicationsRef); }}
-                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><Inbox size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Review applications</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>{pendingApps} pending · AI shortlist at top</div>
@@ -778,7 +778,7 @@ const NGODashboardView = () => {
 
               {/* Submit feedback */}
               <button onClick={() => setModal("feedback")}
-                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><MessageSquare size={15} color={B_ORANGE} /><span style={{ position: "relative", display: "inline-flex", fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Submit feedback{NOTIFICATIONS.feedback && <span style={notifDot} />}</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Per-project, per-volunteer. Mandatory for certs.</div>
@@ -787,7 +787,7 @@ const NGODashboardView = () => {
 
               {/* Project health update */}
               <button onClick={() => setModal("healthUpdate")}
-                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><BarChart3 size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Project health update</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Active / Paused / Extended / Close early</div>
@@ -796,7 +796,7 @@ const NGODashboardView = () => {
 
               {/* Manage team */}
               <button onClick={() => setModal("manageTeam")}
-                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><Users size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Manage team / co-ordinators</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Self-service — no Admin needed</div>
@@ -805,7 +805,7 @@ const NGODashboardView = () => {
 
               {/* Refer an NGO */}
               <button onClick={() => setModal("referNGO")}
-                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><UserPlus size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Refer an NGO</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Invite another NGO to join ProEngage</div>
@@ -814,7 +814,7 @@ const NGODashboardView = () => {
 
               {/* Share story */}
               <button onClick={() => setModal("shareStory")}
-                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
+                style={{ background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, padding: "14px", textAlign: "left", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", flexDirection: "column", gap: 6 }}
                 onMouseEnter={e => (e.currentTarget.style.borderColor = B_ORANGE)} onMouseLeave={e => (e.currentTarget.style.borderColor = "#e8e8f0")}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}><Share2 size={15} color={B_ORANGE} /><span style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>Share your story / experience</span></div>
                 <div style={{ fontSize: 11.5, color: "#888", lineHeight: 1.4 }}>Post an experience or a project highlight</div>
@@ -839,7 +839,7 @@ const NGODashboardView = () => {
             <div style={{ position: "relative", marginBottom: 12 }}>
               <Search size={13} style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "#aaa" }} />
               <input placeholder="Search name or skill…" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
-                style={{ width: "100%", paddingLeft: 32, paddingRight: 12, paddingTop: 8, paddingBottom: 8, border: "1px solid #e0e0e8", borderRadius: 8, fontSize: 13, fontFamily: "'Noto Sans', sans-serif", outline: "none", boxSizing: "border-box" }} />
+                style={{ width: "100%", paddingLeft: 32, paddingRight: 12, paddingTop: 8, paddingBottom: 8, border: "1px solid #e0e0e8", borderRadius: 8, fontSize: 13, fontFamily: "'DM Sans', sans-serif", outline: "none", boxSizing: "border-box" }} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 1, maxHeight: 340, overflowY: "auto" }}>
               {(appTab === "shortlist" ? shortlisted : filtered).map((a, i) => (
@@ -866,7 +866,7 @@ const NGODashboardView = () => {
             </div>
             {appTab === "shortlist" && shortlisted.filter(a => a.status === "Pending").length >= 5 && (
               <button onClick={() => { shortlisted.filter(a => a.status === "Pending").forEach(a => handleAccept(a.id)); }}
-                style={{ width: "100%", marginTop: 12, padding: "10px", background: B_INDIGO, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
+                style={{ width: "100%", marginTop: 12, padding: "10px", background: B_INDIGO, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
                 Bulk Accept Top {shortlisted.filter(a => a.status === "Pending").length}
               </button>
             )}
@@ -895,13 +895,13 @@ const NGODashboardView = () => {
               ))}
             </div>
             <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
-              <select style={{ fontSize: 11.5, padding: "4px 9px", border: "1px solid #e0e0e8", borderRadius: 6, background: "#f8f9ff", color: "#555", fontFamily: "'Noto Sans', sans-serif", outline: "none" }}>
+              <select style={{ fontSize: 11.5, padding: "4px 9px", border: "1px solid #e0e0e8", borderRadius: 6, background: "#f8f9ff", color: "#555", fontFamily: "'DM Sans', sans-serif", outline: "none" }}>
                 <option>Edition 23</option><option>Edition 22</option><option>Edition 21</option>
               </select>
-              <select style={{ fontSize: 11.5, padding: "4px 9px", border: "1px solid #e0e0e8", borderRadius: 6, background: "#f8f9ff", color: "#555", fontFamily: "'Noto Sans', sans-serif", outline: "none" }}>
+              <select style={{ fontSize: 11.5, padding: "4px 9px", border: "1px solid #e0e0e8", borderRadius: 6, background: "#f8f9ff", color: "#555", fontFamily: "'DM Sans', sans-serif", outline: "none" }}>
                 <option>2025–26</option><option>2024–25</option><option>2023–24</option>
               </select>
-              <button onClick={() => triggerToast("Generating export…")} style={{ marginLeft: "auto", fontSize: 12, color: B_ORANGE, fontWeight: 600, background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
+              <button onClick={() => triggerToast("Generating export…")} style={{ marginLeft: "auto", fontSize: 12, color: B_ORANGE, fontWeight: 600, background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif", display: "flex", alignItems: "center", gap: 5 }}>
                 <Download size={12} /> Export
               </button>
             </div>
@@ -912,8 +912,8 @@ const NGODashboardView = () => {
                 {/* Breadcrumb */}
                 {(drillEdition || drillProject) && (
                   <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12, fontSize: 12 }}>
-                    <button onClick={() => { setDrillEdition(null); setDrillProject(null); }} style={{ color: "#aaa", background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Editions</button>
-                    {drillEdition && <><span style={{ color: "#ccc" }}>›</span><button onClick={() => setDrillProject(null)} style={{ color: drillProject ? "#aaa" : ACCENT_NAVY, fontWeight: drillProject ? 400 : 700, background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>{drillEdition}</button></>}
+                    <button onClick={() => { setDrillEdition(null); setDrillProject(null); }} style={{ color: "#aaa", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Editions</button>
+                    {drillEdition && <><span style={{ color: "#ccc" }}>›</span><button onClick={() => setDrillProject(null)} style={{ color: drillProject ? "#aaa" : ACCENT_NAVY, fontWeight: drillProject ? 400 : 700, background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>{drillEdition}</button></>}
                     {drillProject && <><span style={{ color: "#ccc" }}>›</span><span style={{ color: ACCENT_NAVY, fontWeight: 700 }}>{drillProject.title}</span></>}
                   </div>
                 )}
@@ -977,10 +977,10 @@ const NGODashboardView = () => {
                           <div>
                             {v.feedbackDone
                               ? <span style={{ fontSize: 11.5, color: B_TEAL, fontWeight: 700, display: "flex", alignItems: "center", gap: 4 }}><CheckCircle2 size={12} /> Submitted</span>
-                              : <button onClick={() => { setActiveProject(drillProject); navigate("project-feedback"); }} style={{ fontSize: 11.5, fontWeight: 600, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Give Feedback</button>}
+                              : <button onClick={() => { setActiveProject(drillProject); navigate("project-feedback"); }} style={{ fontSize: 11.5, fontWeight: 600, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Give Feedback</button>}
                           </div>
                           <div style={{ fontSize: 12, color: "#777" }}>{v.hours ?? "—"}</div>
-                          <button onClick={() => { setActiveProject(drillProject); navigate("active-project-management"); }} style={{ fontSize: 11.5, fontWeight: 600, color: "#aaa", background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>View</button>
+                          <button onClick={() => { setActiveProject(drillProject); navigate("active-project-management"); }} style={{ fontSize: 11.5, fontWeight: 600, color: "#aaa", background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>View</button>
                         </div>
                       ))}
                     </div>
@@ -1136,7 +1136,7 @@ const NGODashboardView = () => {
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span style={{ fontSize: 11, color: "#aaaabc" }}>{r.date}</span>
                     <button onClick={() => triggerToast(`Generating "${r.title}"… You'll receive an email when ready.`)}
-                      style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, color: B_ORANGE, background: P_ORANGE, border: `1px solid ${B_ORANGE}30`, borderRadius: 7, padding: "5px 10px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
+                      style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, color: B_ORANGE, background: P_ORANGE, border: `1px solid ${B_ORANGE}30`, borderRadius: 7, padding: "5px 10px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
                       <Download size={12} /> Download
                     </button>
                   </div>
@@ -1246,7 +1246,7 @@ const NGODashboardView = () => {
         <div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
             {["All","Active","Under Review","Draft","Closed"].map(f => (
-              <span key={f} style={{ fontSize: 12, padding: "4px 11px", border: "1px solid #e0e0e8", borderRadius: 6, color: "#555", cursor: "pointer", fontWeight: 500, fontFamily: "'Noto Sans', sans-serif" }}>{f}</span>
+              <span key={f} style={{ fontSize: 12, padding: "4px 11px", border: "1px solid #e0e0e8", borderRadius: 6, color: "#555", cursor: "pointer", fontWeight: 500, fontFamily: "'DM Sans', sans-serif" }}>{f}</span>
             ))}
           </div>
           {projects.map((p: any) => (
@@ -1259,7 +1259,7 @@ const NGODashboardView = () => {
               <button onClick={() => triggerToast("Opening project editor…")} style={{ background: "none", border: "none", cursor: "pointer", color: "#aaa", padding: 4 }}><Edit2 size={14} /></button>
             </div>
           ))}
-          <button onClick={() => triggerToast("Downloading project export…")} style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 6, fontSize: 12.5, fontWeight: 600, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>
+          <button onClick={() => triggerToast("Downloading project export…")} style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 6, fontSize: 12.5, fontWeight: 600, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
             <Download size={13} /> Export Project Details (Excel)
           </button>
         </div>
@@ -1297,8 +1297,8 @@ const NGODashboardView = () => {
             </div>
             {selectedApplicant.status === "Pending" && (
               <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => handleReject(selectedApplicant.id)} style={{ flex: 1, padding: "11px", background: P_RED, border: `1px solid ${B_RED}30`, borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: B_RED, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Reject</button>
-                <button onClick={() => handleAccept(selectedApplicant.id)} style={{ flex: 1, padding: "11px", background: ACCENT_NAVY, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Accept Volunteer</button>
+                <button onClick={() => handleReject(selectedApplicant.id)} style={{ flex: 1, padding: "11px", background: P_RED, border: `1px solid ${B_RED}30`, borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: B_RED, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Reject</button>
+                <button onClick={() => handleAccept(selectedApplicant.id)} style={{ flex: 1, padding: "11px", background: ACCENT_NAVY, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Accept Volunteer</button>
               </div>
             )}
           </div>
@@ -1312,7 +1312,7 @@ const NGODashboardView = () => {
             <div style={{ marginBottom: 14, fontSize: 13, color: "#6b6b7a" }}>Select a project to submit feedback for:</div>
             {projects.filter((p: any) => ["Active","Closed"].includes(p.status)).map((p: any) => (
               <button key={p.id} onClick={() => setFeedbackProject(p)}
-                style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, cursor: "pointer", fontFamily: "'Noto Sans', sans-serif", textAlign: "left", width: "100%", marginBottom: 8 }}>
+                style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: "#f8f9ff", border: "1px solid #e8e8f0", borderRadius: 10, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", textAlign: "left", width: "100%", marginBottom: 8 }}>
                 <MessageSquare size={16} color={B_ORANGE} />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13.5, fontWeight: 600, color: ACCENT_NAVY }}>{p.title}</div>
@@ -1326,7 +1326,7 @@ const NGODashboardView = () => {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16, padding: "8px 12px", background: P_ORANGE, borderRadius: 8 }}>
               <div style={{ fontSize: 13, fontWeight: 700, color: B_ORANGE, flex: 1 }}>{feedbackProject.title}</div>
-              <button onClick={() => setFeedbackProject(null)} style={{ fontSize: 11, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>← Change</button>
+              <button onClick={() => setFeedbackProject(null)} style={{ fontSize: 11, color: B_ORANGE, background: "none", border: "none", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>← Change</button>
             </div>
             <FeedbackForm project={feedbackProject} onClose={() => { setModal(null); setFeedbackProject(null); }} onSubmit={() => { setModal(null); setFeedbackProject(null); triggerToast("Feedback submitted. TSG Admin notified. Certificate process will begin once volunteer also submits."); }} />
           </div>
@@ -1342,11 +1342,11 @@ const NGODashboardView = () => {
             <div><Label>Status</Label><FSelect value="Healthy" onChange={() => {}} options={["Healthy","At Risk","Drop Out","Paused","Extended","Close Early"]} /></div>
           </div>
           <div style={{ marginBottom: 18 }}><Label>Notes (optional)</Label>
-            <textarea rows={3} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} placeholder="Context for this update…" />
+            <textarea rows={3} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} placeholder="Context for this update…" />
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
-            <button onClick={() => { setModal(null); triggerToast("Health update submitted. TSG Admin notified."); }} style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Update</button>
+            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
+            <button onClick={() => { setModal(null); triggerToast("Health update submitted. TSG Admin notified."); }} style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Submit Update</button>
           </div>
         </div>
       </DrawerShell>
@@ -1384,7 +1384,7 @@ const NGODashboardView = () => {
           <div style={{ marginBottom: 12 }}><Label>Category</Label><FSelect value={grievanceForm.category} onChange={v => setGrievanceForm(f => ({ ...f, category: v }))} options={["Select category…","Volunteer conduct","Communication breakdown","Project scope disagreement","Scheduling conflict","Platform / technical issue","Other"]} /></div>
           <div style={{ marginBottom: 18 }}><Label>Description</Label>
             <textarea value={grievanceForm.description} onChange={e => setGrievanceForm(f => ({ ...f, description: e.target.value }))} placeholder="Describe the issue clearly. TSG Admin acknowledges within 2 working days." rows={4}
-              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
+              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
           </div>
           <div style={{ fontSize: 11.5, color: "#aaaabc", marginBottom: 12, fontStyle: "italic" }}>Only 1 open grievance per active project at a time. Auto-acknowledgement sent on submission.</div>
           {submittedGrievances.length > 0 && (
@@ -1402,14 +1402,14 @@ const NGODashboardView = () => {
             </div>
           )}
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
             <button onClick={() => {
               if (!grievanceForm.category || !grievanceForm.description || !grievanceForm.projectId) { triggerToast("Please fill all fields."); return; }
               setSubmittedGrievances(prev => [...prev, { ...grievanceForm, id: Date.now(), status: "Open", date: new Date().toLocaleDateString() }]);
               setGrievanceForm({ projectId: "", category: "", description: "" });
               setModal(null);
               triggerToast("Grievance submitted. TSG Admin notified. Auto-acknowledgement sent to your email.");
-            }} style={{ flex: 1, padding: "10px", background: B_RED, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Grievance</button>
+            }} style={{ flex: 1, padding: "10px", background: B_RED, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Submit Grievance</button>
           </div>
         </div>
       </DrawerShell>
@@ -1431,7 +1431,7 @@ const NGODashboardView = () => {
               <span style={{ fontSize: 13, fontWeight: 600, color: "#1a1a2e" }}>📄 {name}</span>
               <button
                 onClick={() => triggerToast(`Downloading ${name}...`)}
-                style={{ fontSize: 12, fontWeight: 700, color: B_ORANGE, background: P_ORANGE, border: "none", borderRadius: 7, padding: "5px 14px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}
+                style={{ fontSize: 12, fontWeight: 700, color: B_ORANGE, background: P_ORANGE, border: "none", borderRadius: 7, padding: "5px 14px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}
               >
                 Download
               </button>
@@ -1455,12 +1455,12 @@ const NGODashboardView = () => {
           </div>
           <div style={{ marginBottom: 18 }}><Label>Why are you recommending them?</Label>
             <textarea placeholder="What makes this NGO a good fit for ProEngage?" rows={3}
-              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
+              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
             <button onClick={() => { setModal(null); triggerToast("Referral submitted! TSG Admin will reach out to the NGO within 3 working days."); }}
-              style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Referral</button>
+              style={{ flex: 1, padding: "10px", background: B_ORANGE, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Submit Referral</button>
           </div>
         </div>
       </DrawerShell>
@@ -1477,7 +1477,7 @@ const NGODashboardView = () => {
           <div style={{ marginBottom: 12 }}><Label required>Headline</Label><FInput value="" placeholder="A short, compelling title for your story" /></div>
           <div style={{ marginBottom: 12 }}><Label required>Your Story</Label>
             <textarea placeholder="Describe the experience, impact, or moment you want to share…" rows={5}
-              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
+              style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 8, padding: "9px 12px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", resize: "none", boxSizing: "border-box" }} />
           </div>
           <div style={{ marginBottom: 12 }}><Label>Link to a Project (optional)</Label>
             <FSelect value="Select project" onChange={() => {}} options={["Select project", ...(ngoData.projects ?? []).map((p: any) => p.title)]} />
@@ -1490,9 +1490,9 @@ const NGODashboardView = () => {
             </div>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+            <button onClick={() => setModal(null)} style={{ flex: 1, padding: "10px", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 9, fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
             <button onClick={() => { setModal(null); triggerToast("Story submitted for moderation. TSG Admin will review within 2 working days."); }}
-              style={{ flex: 1, padding: "10px", background: B_INDIGO, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Submit Story</button>
+              style={{ flex: 1, padding: "10px", background: B_INDIGO, border: "none", borderRadius: 9, fontSize: 13.5, fontWeight: 700, color: "#fff", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Submit Story</button>
           </div>
         </div>
       </DrawerShell>

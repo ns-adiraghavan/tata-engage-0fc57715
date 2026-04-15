@@ -49,7 +49,7 @@ function ReadOnly({ value }: { value: string }) {
 function TextInput({ value, onChange, placeholder, type = "text" }: { value: string; onChange: (v: string) => void; placeholder?: string; type?: string }) {
   return (
     <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-      style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 13px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" }}
+      style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 13px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" }}
       onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
   );
 }
@@ -57,7 +57,7 @@ function TextInput({ value, onChange, placeholder, type = "text" }: { value: str
 function SelectInput({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: string[] }) {
   return (
     <select value={value} onChange={e => onChange(e.target.value)}
-      style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 13px", fontSize: 13.5, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", appearance: "none", background: "#fff", cursor: "pointer", boxSizing: "border-box" }}
+      style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 13px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", appearance: "none", background: "#fff", cursor: "pointer", boxSizing: "border-box" }}
       onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")}>
       {options.map(o => <option key={o}>{o}</option>)}
     </select>
@@ -307,9 +307,9 @@ export default function ProfileView() {
           <FieldLabel>Phone (Landline)</FieldLabel>
           {isEditing ? (
             <div style={{ display: "flex", gap: 6 }}>
-              <input value={profile.phoneCountryCode} onChange={e => set("phoneCountryCode", e.target.value)} placeholder="+91" style={{ width: 54, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 8px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", textAlign: "center" }} />
-              <input value={profile.phoneArea} onChange={e => set("phoneArea", e.target.value)} placeholder="022" style={{ width: 60, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 8px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", textAlign: "center" }} />
-              <input value={profile.phoneNum} onChange={e => set("phoneNum", e.target.value)} placeholder="66660000" style={{ flex: 1, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 12px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none" }} />
+              <input value={profile.phoneCountryCode} onChange={e => set("phoneCountryCode", e.target.value)} placeholder="+91" style={{ width: 54, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 8px", fontSize: 13, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", textAlign: "center" }} />
+              <input value={profile.phoneArea} onChange={e => set("phoneArea", e.target.value)} placeholder="022" style={{ width: 60, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 8px", fontSize: 13, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", textAlign: "center" }} />
+              <input value={profile.phoneNum} onChange={e => set("phoneNum", e.target.value)} placeholder="66660000" style={{ flex: 1, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 12px", fontSize: 13, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none" }} />
             </div>
           ) : <ReadOnly value={`+${profile.phoneCountryCode} (${profile.phoneArea}) ${profile.phoneNum}`} />}
         </div>
@@ -317,8 +317,8 @@ export default function ProfileView() {
           <FieldLabel>Mobile</FieldLabel>
           {isEditing ? (
             <div style={{ display: "flex", gap: 6 }}>
-              <input value={profile.mobileCountryCode} onChange={e => set("mobileCountryCode", e.target.value)} placeholder="+91" style={{ width: 54, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 8px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none", textAlign: "center" }} />
-              <input value={profile.mobileNum} onChange={e => set("mobileNum", e.target.value)} placeholder="9876543210" style={{ flex: 1, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 12px", fontSize: 13, fontFamily: "'Noto Sans', sans-serif", color: ACCENT_NAVY, outline: "none" }} />
+              <input value={profile.mobileCountryCode} onChange={e => set("mobileCountryCode", e.target.value)} placeholder="+91" style={{ width: 54, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 8px", fontSize: 13, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", textAlign: "center" }} />
+              <input value={profile.mobileNum} onChange={e => set("mobileNum", e.target.value)} placeholder="9876543210" style={{ flex: 1, border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 12px", fontSize: 13, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none" }} />
             </div>
           ) : <ReadOnly value={`+${profile.mobileCountryCode} ${profile.mobileNum}`} />}
         </div>
@@ -340,7 +340,7 @@ export default function ProfileView() {
       <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
         <div style={{ width: 72, height: 72, borderRadius: "50%", background: P_INDIGO, border: `2px dashed #c8c6f0`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 700, color: B_INDIGO, flexShrink: 0 }}>RD</div>
         {isEditing ? (
-          <div><button onClick={() => toast("Photo upload coming soon.")} style={{ fontSize: 13, fontWeight: 600, color: B_INDIGO, background: P_INDIGO, border: `1px solid #c8c6f0`, borderRadius: 9, padding: "8px 16px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Upload Photo</button><div style={{ fontSize: 11, color: "#aaaabc", marginTop: 5 }}>JPG or PNG, max 2MB. Square crop recommended.</div></div>
+          <div><button onClick={() => toast("Photo upload coming soon.")} style={{ fontSize: 13, fontWeight: 600, color: B_INDIGO, background: P_INDIGO, border: `1px solid #c8c6f0`, borderRadius: 9, padding: "8px 16px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Upload Photo</button><div style={{ fontSize: 11, color: "#aaaabc", marginTop: 5 }}>JPG or PNG, max 2MB. Square crop recommended.</div></div>
         ) : <div style={{ fontSize: 13, color: "#6b6b7a" }}>No photo uploaded. Edit profile to add one.</div>}
       </div>
     </div>
@@ -415,7 +415,7 @@ export default function ProfileView() {
           {isEditing ? (
             <div style={{ display: "flex", gap: 10 }}>
               {["Remote","In-Person","Either"].map(m => (
-                <label key={m} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, cursor: "pointer", color: ACCENT_NAVY, fontFamily: "'Noto Sans', sans-serif" }}>
+                <label key={m} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, cursor: "pointer", color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif" }}>
                   <input type="radio" name="mode" checked={profile.preferredMode === m} onChange={() => set("preferredMode", m)} style={{ accentColor: B_INDIGO }} />{m}
                 </label>
               ))}
@@ -464,7 +464,7 @@ export default function ProfileView() {
           <div style={{ height: "100%", width: "40%", background: B_INDIGO, borderRadius: 4 }} />
         </div>
         <div style={{ fontSize: 12, color: "#6b6b7a", marginBottom: 12 }}>Complete all 5 modules to receive your SPOC certification. Admin tracks progress.</div>
-        <button onClick={() => toast("Opening orientation module 3…")} style={{ fontSize: 13, fontWeight: 600, color: "#fff", background: B_INDIGO, border: "none", borderRadius: 9, padding: "8px 18px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Continue Orientation →</button>
+        <button onClick={() => toast("Opening orientation module 3…")} style={{ fontSize: 13, fontWeight: 600, color: "#fff", background: B_INDIGO, border: "none", borderRadius: 9, padding: "8px 18px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Continue Orientation →</button>
       </div>
       <SectionHeading label="Regional SPOCs Under Me" />
       <div style={{ border: "1px solid #e8e8f0", borderRadius: 12, overflow: "hidden", marginBottom: 12 }}>
@@ -477,11 +477,11 @@ export default function ProfileView() {
             <div style={{ fontSize: 12, color: "#555" }}>{s.role}</div>
             <div style={{ fontSize: 12, color: "#6b6b7a" }}>{s.geography}</div>
             <StatusBadge status={s.status} />
-            <button onClick={() => toast(`Deactivating ${s.name}…`)} style={{ fontSize: 11, fontWeight: 600, color: B_RED, background: P_RED, border: `1px solid ${B_RED}22`, borderRadius: 6, padding: "3px 9px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Deactivate</button>
+            <button onClick={() => toast(`Deactivating ${s.name}…`)} style={{ fontSize: 11, fontWeight: 600, color: B_RED, background: P_RED, border: `1px solid ${B_RED}22`, borderRadius: 6, padding: "3px 9px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Deactivate</button>
           </div>
         ))}
       </div>
-      <button onClick={() => toast("Opening add Regional SPOC form…")} style={{ fontSize: 13, fontWeight: 600, color: B_INDIGO, background: P_INDIGO, border: `1px solid #c8c6f0`, borderRadius: 9, padding: "8px 16px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>+ Add Regional SPOC</button>
+      <button onClick={() => toast("Opening add Regional SPOC form…")} style={{ fontSize: 13, fontWeight: 600, color: B_INDIGO, background: P_INDIGO, border: `1px solid #c8c6f0`, borderRadius: 9, padding: "8px 16px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>+ Add Regional SPOC</button>
       <SectionHeading label="Family Members Linked" />
       <div style={{ border: "1px solid #e8e8f0", borderRadius: 12, overflow: "hidden" }}>
         {FAMILY_MEMBERS.map((f, i) => (
@@ -586,7 +586,7 @@ export default function ProfileView() {
 
   // ─── RENDER ───────────────────────────────────────────────────────────────
   return (
-    <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'Noto Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
+    <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
       <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
 
         {/* ── Hero banner ── */}
@@ -621,11 +621,11 @@ export default function ProfileView() {
           <div style={{ display: "flex", gap: 10 }}>
             {isEditing ? (
               <>
-                <button onClick={IS_NGO ? handleNGOSave : handleSave} style={{ fontSize: 13.5, fontWeight: 700, color: "#fff", background: B_TEAL, border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Save Changes</button>
-                <button onClick={IS_NGO ? handleNGOCancel : handleCancel} style={{ fontSize: 13.5, fontWeight: 700, color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 10, padding: "10px 18px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+                <button onClick={IS_NGO ? handleNGOSave : handleSave} style={{ fontSize: 13.5, fontWeight: 700, color: "#fff", background: B_TEAL, border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Save Changes</button>
+                <button onClick={IS_NGO ? handleNGOCancel : handleCancel} style={{ fontSize: 13.5, fontWeight: 700, color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 10, padding: "10px 18px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
               </>
             ) : (
-              <button onClick={() => setIsEditing(true)} style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY, background: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Edit Profile</button>
+              <button onClick={() => setIsEditing(true)} style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY, background: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Edit Profile</button>
             )}
           </div>
         </div>
@@ -670,8 +670,8 @@ export default function ProfileView() {
             {/* Save row inside panel */}
             {isEditing && (
               <div style={{ display: "flex", gap: 10, marginTop: 28, paddingTop: 20, borderTop: "1px solid #e8e8f0" }}>
-                <button onClick={IS_NGO ? handleNGOSave : handleSave} style={{ fontSize: 13.5, fontWeight: 700, color: "#fff", background: IS_NGO ? B_ORANGE : B_INDIGO, border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Save Changes</button>
-                <button onClick={IS_NGO ? handleNGOCancel : handleCancel} style={{ fontSize: 13.5, fontWeight: 700, color: "#6b6b7a", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 10, padding: "10px 18px", cursor: "pointer", fontFamily: "'Noto Sans', sans-serif" }}>Cancel</button>
+                <button onClick={IS_NGO ? handleNGOSave : handleSave} style={{ fontSize: 13.5, fontWeight: 700, color: "#fff", background: IS_NGO ? B_ORANGE : B_INDIGO, border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Save Changes</button>
+                <button onClick={IS_NGO ? handleNGOCancel : handleCancel} style={{ fontSize: 13.5, fontWeight: 700, color: "#6b6b7a", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 10, padding: "10px 18px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
               </div>
             )}
           </div>

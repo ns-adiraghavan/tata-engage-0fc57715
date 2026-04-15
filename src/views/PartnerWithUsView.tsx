@@ -36,7 +36,7 @@ export default function PartnerWithUsView() {
 
       {/* 1 — Hero */}
       <div id="pwu-hero" style={{ maxWidth: 900, margin: "0 auto", padding: "100px 56px 48px" }}>
-        <h1 style={{ fontFamily: "'Noto Sans', sans-serif", fontWeight: 900, fontSize: 38, color: B_INDIGO, margin: "0 0 28px" }}>Partner with us</h1>
+        <h1 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 900, fontSize: 38, color: B_INDIGO, margin: "0 0 28px" }}>Partner with us</h1>
         <div style={{ position: "relative", borderRadius: 14, overflow: "hidden", borderBottom: `3px solid ${B_YELLOW}` }}>
           <img
             src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=900&q=80"

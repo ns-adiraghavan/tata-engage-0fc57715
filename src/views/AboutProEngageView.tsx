@@ -147,7 +147,7 @@ export default function AboutProEngageView() {
               Programme · Skill-based
             </p>
             <h1 style={{
-              fontFamily: "'Noto Sans', sans-serif", fontWeight: 900,
+              fontFamily: "'DM Sans', sans-serif", fontWeight: 900,
               fontSize: 56, color: "#fff", margin: "0 0 16px", lineHeight: 1.05, letterSpacing: "-2px",
             }}>
               ProEngage

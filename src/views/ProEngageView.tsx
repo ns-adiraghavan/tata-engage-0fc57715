@@ -60,7 +60,7 @@ function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: {
   return (
     <>
       <div onClick={onClose} style={{ position:"fixed", inset:0, background:"rgba(13,27,62,0.45)", zIndex:200, opacity:open?1:0, pointerEvents:open?"auto":"none", transition:"opacity 0.22s", backdropFilter:"blur(2px)" }} />
-      <div style={{ position:"fixed", top:"50%", left:"50%", transform:open?"translate(-50%,-50%) scale(1)":"translate(-50%,-48%) scale(0.97)", transition:"transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity:open?1:0, pointerEvents:open?"auto":"none", width:580, maxWidth:"calc(100vw - 40px)", maxHeight:"calc(100vh - 60px)", background:"#fff", borderRadius:16, zIndex:201, boxShadow:"0 24px 64px rgba(13,27,62,0.22)", display:"flex", flexDirection:"column", fontFamily:"'Noto Sans', sans-serif", overflowY:"auto" }}>
+      <div style={{ position:"fixed", top:"50%", left:"50%", transform:open?"translate(-50%,-50%) scale(1)":"translate(-50%,-48%) scale(0.97)", transition:"transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity:open?1:0, pointerEvents:open?"auto":"none", width:580, maxWidth:"calc(100vw - 40px)", maxHeight:"calc(100vh - 60px)", background:"#fff", borderRadius:16, zIndex:201, boxShadow:"0 24px 64px rgba(13,27,62,0.22)", display:"flex", flexDirection:"column", fontFamily:"'DM Sans', sans-serif", overflowY:"auto" }}>
         <div style={{ background:ACCENT_NAVY, padding:"24px 28px", borderRadius:"16px 16px 0 0", flexShrink:0 }}>
           <button onClick={onClose} style={{ background:"rgba(255,255,255,0.1)", border:"none", borderRadius:7, color:"rgba(255,255,255,0.7)", fontSize:13, fontWeight:500, padding:"5px 12px", cursor:"pointer", marginBottom:16 }}>← Close</button>
           {accentTag && <div style={{ display:"inline-block", background:`${B_YELLOW}22`, border:`1px solid ${B_YELLOW}44`, borderRadius:100, padding:"3px 10px", fontSize:10.5, fontWeight:700, color:B_YELLOW, letterSpacing:"0.6px", textTransform:"uppercase", marginBottom:10 }}>{accentTag}</div>}
@@ -79,7 +79,7 @@ function ProjectDetailPanel({ project, onClose, onApply }: { project: any; onClo
   return (
     <>
       <div onClick={onClose} style={{ position:"fixed", inset:0, background:"rgba(13,27,62,0.3)", zIndex:150, backdropFilter:"blur(1px)" }} />
-      <div style={{ position:"fixed", top:0, right:0, bottom:0, width:520, maxWidth:"95vw", background:"#fff", zIndex:151, boxShadow:"-8px 0 40px rgba(13,27,62,0.15)", overflowY:"auto", fontFamily:"'Noto Sans', sans-serif" }}>
+      <div style={{ position:"fixed", top:0, right:0, bottom:0, width:520, maxWidth:"95vw", background:"#fff", zIndex:151, boxShadow:"-8px 0 40px rgba(13,27,62,0.15)", overflowY:"auto", fontFamily:"'DM Sans', sans-serif" }}>
         <div style={{ background:ACCENT_NAVY, padding:"28px 28px 24px", position:"sticky", top:0, zIndex:1 }}>
           <button onClick={onClose} style={{ background:"rgba(255,255,255,0.1)", border:"none", borderRadius:7, color:"rgba(255,255,255,0.7)", fontSize:13, fontWeight:500, padding:"5px 12px", cursor:"pointer", marginBottom:16, display:"flex", alignItems:"center", gap:6 }}>
             <ArrowLeft size={13}/> Back
@@ -120,7 +120,7 @@ function ProjectDetailPanel({ project, onClose, onApply }: { project: any; onClo
             </div>
           </div>
           <div style={{ display:"flex", gap:10 }}>
-            <button onClick={onApply} style={{ flex:1, background:B_INDIGO, color:"#fff", border:"none", borderRadius:10, padding:"14px", fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'Noto Sans', sans-serif" }}>Apply Now</button>
+            <button onClick={onApply} style={{ flex:1, background:B_INDIGO, color:"#fff", border:"none", borderRadius:10, padding:"14px", fontSize:14, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans', sans-serif" }}>Apply Now</button>
             <button style={{ background:P_INDIGO, color:B_INDIGO, border:`1px solid ${B_INDIGO}22`, borderRadius:10, padding:"14px 18px", fontSize:13.5, fontWeight:600, cursor:"pointer", display:"flex", alignItems:"center", gap:6 }}><Bookmark size={16}/> Save</button>
           </div>
         </div>
@@ -161,8 +161,8 @@ function ProjectCard({ project, onSelect, onApply, saved, onToggleSave, aiRec=fa
         </div>
       </div>
       <div style={{ padding:"10px 14px", borderTop:"1px solid #f0f0f8", display:"flex", gap:8 }}>
-        <button onClick={e=>{e.stopPropagation();onToggleSave();}} style={{ flex:1, background:"none", border:"1.5px solid #dddde8", borderRadius:8, padding:"7px", fontSize:12, fontWeight:600, color:"#6b6b7a", cursor:"pointer", fontFamily:"'Noto Sans', sans-serif" }}>{saved?"Saved ✓":"Save for Later"}</button>
-        <button onClick={e=>{e.stopPropagation();onApply();}} style={{ flex:2, background:cat.color, color:"#fff", border:"none", borderRadius:8, padding:"7px", fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"'Noto Sans', sans-serif", display:"flex", alignItems:"center", justifyContent:"center", gap:4 }}>View & Apply<ChevronRight size={13}/></button>
+        <button onClick={e=>{e.stopPropagation();onToggleSave();}} style={{ flex:1, background:"none", border:"1.5px solid #dddde8", borderRadius:8, padding:"7px", fontSize:12, fontWeight:600, color:"#6b6b7a", cursor:"pointer", fontFamily:"'DM Sans', sans-serif" }}>{saved?"Saved ✓":"Save for Later"}</button>
+        <button onClick={e=>{e.stopPropagation();onApply();}} style={{ flex:2, background:cat.color, color:"#fff", border:"none", borderRadius:8, padding:"7px", fontSize:12, fontWeight:700, cursor:"pointer", fontFamily:"'DM Sans', sans-serif", display:"flex", alignItems:"center", justifyContent:"center", gap:4 }}>View & Apply<ChevronRight size={13}/></button>
       </div>
     </div>
   );
@@ -186,7 +186,7 @@ function ApplyModal({ project, onClose }: { project:any; onClose:()=>void }) {
   const canSubmit = whyBestFit.trim()&&threeSteps.trim()&&similarTask&&agreed;
   const reset = ()=>{onClose();setSubmitted(false);setWhyBestFit("");setThreeSteps("");setAgreed(false);setSimilarTask("");};
   const lbl: React.CSSProperties = {fontSize:11,fontWeight:700,color:"#aaaabc",textTransform:"uppercase",letterSpacing:"1px",display:"block",marginBottom:8};
-  const inp: React.CSSProperties = {width:"100%",border:"1.5px solid #e0e0e8",borderRadius:10,padding:"10px 14px",fontSize:13.5,fontFamily:"'Noto Sans', sans-serif",color:ACCENT_NAVY,outline:"none",boxSizing:"border-box"};
+  const inp: React.CSSProperties = {width:"100%",border:"1.5px solid #e0e0e8",borderRadius:10,padding:"10px 14px",fontSize:13.5,fontFamily:"'DM Sans', sans-serif",color:ACCENT_NAVY,outline:"none",boxSizing:"border-box"};
   const sel: React.CSSProperties = {...inp,appearance:"none",cursor:"pointer",background:"#fff"};
 
   const undertaking=[
@@ -320,8 +320,8 @@ function ApplyModal({ project, onClose }: { project:any; onClose:()=>void }) {
           </div>
           
           <div style={{ display:"flex", gap:10 }}>
-            <button onClick={reset} style={{ flex:1, background:"#fff", border:"1.5px solid #dddde8", borderRadius:10, padding:"12px", fontSize:13.5, fontWeight:600, color:"#6b6b7a", cursor:"pointer", fontFamily:"'Noto Sans', sans-serif" }}>Save for Later</button>
-            <button disabled={!canSubmit} onClick={()=>{setSubmitted(true);triggerToast(`Application for ${project.title} submitted!`);}} style={{ flex:2, background:canSubmit?B_INDIGO:"#e0e0e8", color:canSubmit?"#fff":"#aaa", border:"none", borderRadius:10, padding:"12px", fontSize:14, fontWeight:700, cursor:canSubmit?"pointer":"not-allowed", fontFamily:"'Noto Sans', sans-serif" }}>Submit Application</button>
+            <button onClick={reset} style={{ flex:1, background:"#fff", border:"1.5px solid #dddde8", borderRadius:10, padding:"12px", fontSize:13.5, fontWeight:600, color:"#6b6b7a", cursor:"pointer", fontFamily:"'DM Sans', sans-serif" }}>Save for Later</button>
+            <button disabled={!canSubmit} onClick={()=>{setSubmitted(true);triggerToast(`Application for ${project.title} submitted!`);}} style={{ flex:2, background:canSubmit?B_INDIGO:"#e0e0e8", color:canSubmit?"#fff":"#aaa", border:"none", borderRadius:10, padding:"12px", fontSize:14, fontWeight:700, cursor:canSubmit?"pointer":"not-allowed", fontFamily:"'DM Sans', sans-serif" }}>Submit Application</button>
           </div>
         </div>
       )}
@@ -358,7 +358,7 @@ export default function ProEngageView() {
   const showAISection = aiRecommended.length>0&&!selectedCategory&&activeFilter==="all"&&!searchQuery;
 
   return (
-    <div style={{ background:"#f8f9ff", minHeight:"100vh", fontFamily:"'Noto Sans', sans-serif", paddingTop:80, paddingBottom:80 }}>
+    <div style={{ background:"#f8f9ff", minHeight:"100vh", fontFamily:"'DM Sans', sans-serif", paddingTop:80, paddingBottom:80 }}>
       <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 40px" }}>
 
         {/* Header */}
@@ -400,7 +400,7 @@ export default function ProEngageView() {
           <div style={{ flex:1, position:"relative", minWidth:220 }}>
             <Search size={16} style={{ position:"absolute", left:14, top:"50%", transform:"translateY(-50%)", color:"#aaaabc" }}/>
             <input type="text" placeholder="Search by skill, NGO or project name..." value={searchQuery} onChange={e=>setSearchQuery(e.target.value)}
-              style={{ width:"100%", paddingLeft:40, paddingRight:14, paddingTop:11, paddingBottom:11, border:"1.5px solid #e0e0e8", borderRadius:10, fontSize:13.5, fontFamily:"'Noto Sans', sans-serif", color:ACCENT_NAVY, outline:"none", background:"#fff", boxSizing:"border-box" }}
+              style={{ width:"100%", paddingLeft:40, paddingRight:14, paddingTop:11, paddingBottom:11, border:"1.5px solid #e0e0e8", borderRadius:10, fontSize:13.5, fontFamily:"'DM Sans', sans-serif", color:ACCENT_NAVY, outline:"none", background:"#fff", boxSizing:"border-box" }}
               onFocus={e=>(e.target.style.borderColor=B_INDIGO)} onBlur={e=>(e.target.style.borderColor="#e0e0e8")}/>
           </div>
           <div style={{ display:"flex", gap:6 }}>
@@ -419,7 +419,7 @@ export default function ProEngageView() {
                 const Icon=cat.icon; const count=catCounts[cat.name]||0;
                 return(
                   <button key={cat.name} onClick={()=>setSelectedCategory(cat.name)}
-                    style={{ background:"#fff", border:"1px solid #e8e8f0", borderRadius:12, padding:"14px 10px", cursor:"pointer", textAlign:"center", transition:"all 0.18s", fontFamily:"'Noto Sans', sans-serif" }}
+                    style={{ background:"#fff", border:"1px solid #e8e8f0", borderRadius:12, padding:"14px 10px", cursor:"pointer", textAlign:"center", transition:"all 0.18s", fontFamily:"'DM Sans', sans-serif" }}
                     onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.background=cat.pastel;(e.currentTarget as HTMLElement).style.borderColor=`${cat.color}33`;(e.currentTarget as HTMLElement).style.transform="translateY(-2px)";}}
                     onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.background="#fff";(e.currentTarget as HTMLElement).style.borderColor="#e8e8f0";(e.currentTarget as HTMLElement).style.transform="translateY(0)";}}>
                     <div style={{ width:34,height:34,borderRadius:8,background:cat.pastel,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 8px" }}><Icon size={17} color={cat.color}/></div>
