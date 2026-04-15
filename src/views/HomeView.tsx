@@ -252,7 +252,7 @@ const HomeView = () => {
             </div>
 
             <h1 style={{
-              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontFamily: "'DM Sans', ui-sans-serif, sans-serif",
               fontSize: "clamp(2rem, 4vw, 3rem)",
               lineHeight: 1.12, letterSpacing: "-0.5px",
               color: "white", margin: "0 0 18px", fontWeight: 400,
