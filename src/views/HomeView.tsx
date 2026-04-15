@@ -63,7 +63,7 @@ const HERO_SLIDES = [
   },
   {
     photo: tataMotors1,
-    accent: "#1B7D3C", tag: "Community", cta: "video" as const,
+    accent: B_BLUE, tag: "Community", cta: "video" as const,
     headline: "10,000 rural families reached through free health camps",
     sub: "When professionals volunteer their expertise, communities transform.",
     doodles: {
@@ -75,7 +75,7 @@ const HERO_SLIDES = [
   },
   {
     photo: tataMotors2,
-    accent: B_TEAL, tag: "Environment", cta: "story" as const,
+    accent: B_YELLOW, tag: "Environment", cta: "story" as const,
     headline: "1 million trees planted across Tata campuses nationwide",
     sub: "A greener legacy, growing branch by branch.",
     doodles: {
@@ -237,9 +237,6 @@ const HomeView = () => {
             style={{ top: d.dots.top, bottom: (d.dots as any).bottom, right: d.dots.right, width: d.dots.size, color: "white", opacity: 0.07 }} />
         </div>
 
-        {/* Accent line — top, slide colour */}
-        <div className="absolute left-0 right-0 z-10 transition-colors duration-700"
-          style={{ top: 64, height: 2, backgroundColor: slide.accent }} />
 
         {/* Hero content */}
         <div className="relative w-full max-w-7xl mx-auto px-6 md:px-16 py-16" style={{ zIndex: 3 }}>
@@ -257,7 +254,7 @@ const HomeView = () => {
               {slide.tag}
             </span>
             {/* Definer underline — sweeps in under the eyebrow */}
-            <div style={{ height: 2, width: 48, borderRadius: 2, background: "rgba(255,255,255,0.12)", marginTop: 4, marginBottom: 20, overflow: "hidden" }}>
+            <div style={{ height: 2, width: 80, borderRadius: 2, background: "rgba(255,255,255,0.12)", marginTop: 4, marginBottom: 20, overflow: "hidden" }}>
               <div style={{
                 height: "100%", borderRadius: 2,
                 background: slide.accent,
