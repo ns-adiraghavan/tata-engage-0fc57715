@@ -129,6 +129,7 @@ const HomeView = () => {
   const [subName,        setSubName]        = useState("");
   const [subEmail,       setSubEmail]       = useState("");
   const [subDone,        setSubDone]        = useState(false);
+  const [inHero,         setInHero]         = useState(true);
 
   useEffect(() => {
     const obs: IntersectionObserver[] = [];
@@ -147,8 +148,13 @@ const HomeView = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      if (!heroImgRef.current) return;
-      heroImgRef.current.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+      if (heroImgRef.current) {
+        heroImgRef.current.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+      }
+      const heroEl = document.getElementById("hero");
+      if (heroEl) {
+        setInHero(window.scrollY < heroEl.offsetHeight - 100);
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -168,12 +174,20 @@ const HomeView = () => {
             <button key={id} onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
               className="flex items-center justify-end">
               {active && (
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full mr-2 whitespace-nowrap bg-white border border-slate-200 text-slate-700 shadow-sm">
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-full mr-2 whitespace-nowrap shadow-sm transition-colors duration-300"
+                  style={{
+                    backgroundColor: inHero ? "rgba(255,255,255,0.15)" : "white",
+                    border: inHero ? "1px solid rgba(255,255,255,0.25)" : "1px solid #e2e8f0",
+                    color: inHero ? "white" : "#334155",
+                  }}>
                   {SECTION_LABELS[i]}
                 </span>
               )}
               <span className="rounded-full transition-all duration-300"
-                style={{ width: active ? 10 : 7, height: active ? 10 : 7, backgroundColor: active ? B_INDIGO : "#CBD5E1" }} />
+                style={{
+                  width: active ? 10 : 7, height: active ? 10 : 7,
+                  backgroundColor: active ? (inHero ? "white" : B_INDIGO) : (inHero ? "rgba(255,255,255,0.4)" : "#CBD5E1"),
+                }} />
             </button>
           );
         })}
@@ -456,7 +470,7 @@ const HomeView = () => {
       <TickerBar fixed />
 
       {/* Floating social cluster */}
-      <div className="fixed bottom-24 left-5 z-40 flex flex-col gap-2 items-center">
+      <div className="fixed bottom-24 left-5 z-40 flex flex-col gap-2 items-center transition-colors duration-300">
         {[
           { icon: <Linkedin size={15} />, label: "LinkedIn" },
           { icon: <Instagram size={15} />, label: "Instagram" },
@@ -466,15 +480,20 @@ const HomeView = () => {
             key={label}
             onClick={() => triggerToast(`Opening ${label}...`)}
             title={label}
-            className="w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer"
-            style={{ backgroundColor: "white", border: "1px solid #e2e8f0", color: B_INDIGO, boxShadow: "0 1px 6px rgba(0,0,0,0.10)" }}
-            onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#EEF0FF")}
-            onMouseLeave={e => (e.currentTarget.style.backgroundColor = "white")}
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer"
+            style={{
+              backgroundColor: inHero ? "rgba(255,255,255,0.12)" : "white",
+              border: inHero ? "1px solid rgba(255,255,255,0.25)" : "1px solid #e2e8f0",
+              color: inHero ? "white" : B_INDIGO,
+              boxShadow: inHero ? "0 1px 6px rgba(0,0,0,0.20)" : "0 1px 6px rgba(0,0,0,0.10)",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.backgroundColor = inHero ? "rgba(255,255,255,0.22)" : "#EEF0FF")}
+            onMouseLeave={e => (e.currentTarget.style.backgroundColor = inHero ? "rgba(255,255,255,0.12)" : "white")}
           >
             {icon}
           </button>
         ))}
-        <div className="w-px h-5" style={{ backgroundColor: "#e2e8f0" }} />
+        <div className="w-px h-5 transition-colors duration-300" style={{ backgroundColor: inHero ? "rgba(255,255,255,0.25)" : "#e2e8f0" }} />
 
         {/* Subscribe — only when not logged in */}
         {!isLoggedIn && (
