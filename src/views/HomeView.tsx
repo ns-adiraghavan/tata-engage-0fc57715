@@ -148,8 +148,13 @@ const HomeView = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      if (!heroImgRef.current) return;
-      heroImgRef.current.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+      if (heroImgRef.current) {
+        heroImgRef.current.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+      }
+      const heroEl = document.getElementById("hero");
+      if (heroEl) {
+        setInHero(window.scrollY < heroEl.offsetHeight - 100);
+      }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
