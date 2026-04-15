@@ -174,12 +174,20 @@ const HomeView = () => {
             <button key={id} onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
               className="flex items-center justify-end">
               {active && (
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full mr-2 whitespace-nowrap bg-white border border-slate-200 text-slate-700 shadow-sm">
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-full mr-2 whitespace-nowrap shadow-sm transition-colors duration-300"
+                  style={{
+                    backgroundColor: inHero ? "rgba(255,255,255,0.15)" : "white",
+                    border: inHero ? "1px solid rgba(255,255,255,0.25)" : "1px solid #e2e8f0",
+                    color: inHero ? "white" : "#334155",
+                  }}>
                   {SECTION_LABELS[i]}
                 </span>
               )}
               <span className="rounded-full transition-all duration-300"
-                style={{ width: active ? 10 : 7, height: active ? 10 : 7, backgroundColor: active ? B_INDIGO : "#CBD5E1" }} />
+                style={{
+                  width: active ? 10 : 7, height: active ? 10 : 7,
+                  backgroundColor: active ? (inHero ? "white" : B_INDIGO) : (inHero ? "rgba(255,255,255,0.4)" : "#CBD5E1"),
+                }} />
             </button>
           );
         })}
