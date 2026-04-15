@@ -129,6 +129,7 @@ const HomeView = () => {
   const [subName,        setSubName]        = useState("");
   const [subEmail,       setSubEmail]       = useState("");
   const [subDone,        setSubDone]        = useState(false);
+  const [inHero,         setInHero]         = useState(true);
 
   useEffect(() => {
     const obs: IntersectionObserver[] = [];
