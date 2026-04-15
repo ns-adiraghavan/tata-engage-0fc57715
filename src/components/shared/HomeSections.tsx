@@ -439,6 +439,9 @@ export function JourneySection() {
 
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
         <div className="section-header">
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: B_INDIGO, margin: "0 0 8px", opacity: 0.7 }}>
+            Our Journey
+          </p>
           <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
             A decade of giving back
           </h2>
@@ -489,27 +492,34 @@ export function JourneySection() {
 
           {/* SPINE — curved SVG path + dots */}
           {(() => {
+            // 6 columns → 6 dot positions evenly spaced across full width
+            // SVG: wide aspect, curve arcs up for even-index segments (connecting above→below), down for odd
             const n = JOURNEY_MILESTONES.length;
             const W = 1000, H = 80;
             const xStep = W / (n - 1);
+            // Dots sit at y=40 (centre). Curve arcs to y=10 (up) between col 0-1, y=70 (down) between col 1-2, etc.
             const pts = JOURNEY_MILESTONES.map((_, i) => ({ x: i * xStep, y: H / 2 }));
+            // Build smooth cubic bezier path through all 6 points with alternating arcs
             let d = `M ${pts[0].x} ${pts[0].y}`;
             for (let i = 0; i < n - 1; i++) {
-              const x2 = pts[i + 1].x;
-              const midX = (pts[i].x + x2) / 2;
-              const arcY = i % 2 === 0 ? H * 0.15 : H * 0.85;
+              const x1 = pts[i].x, x2 = pts[i + 1].x;
+              const midX = (x1 + x2) / 2;
+              // arc up (negative offset) for even segments (0,2,4), down for odd (1,3)
+              const arcY = i % 2 === 0 ? H * 0.18 : H * 0.82;
               d += ` C ${midX} ${arcY}, ${midX} ${arcY}, ${x2} ${pts[i + 1].y}`;
             }
             return (
-              <div style={{ position: "relative", margin: "12px 0", height: H, overflow: "visible" }}>
+              <div style={{ position: "relative", margin: "12px 0", height: H }}>
                 <svg
+                  width="100%" height={H}
                   viewBox={`0 0 ${W} ${H}`}
-                  style={{ width: "100%", height: H, display: "block", overflow: "visible" }}
+                  preserveAspectRatio="none"
+                  style={{ position: "absolute", top: 0, left: 0 }}
                 >
                   <defs>
                     <linearGradient id="jt-spine" x1="0" y1="0" x2="1" y2="0">
                       {JOURNEY_MILESTONES.map((m, i) => (
-                        <stop key={i} offset={`${(i / (n - 1)) * 100}%`} stopColor={m.colour} stopOpacity="0.55" />
+                        <stop key={i} offset={`${(i / (n - 1)) * 100}%`} stopColor={m.colour} stopOpacity="0.45" />
                       ))}
                     </linearGradient>
                   </defs>
@@ -517,13 +527,12 @@ export function JourneySection() {
                     d={d}
                     fill="none"
                     stroke="url(#jt-spine)"
-                    strokeWidth="2.5"
-                    strokeDasharray="8 6"
+                    strokeWidth="2"
+                    strokeDasharray="6 5"
                     strokeLinecap="round"
-                    pathLength="1000"
-                    strokeDashoffset={vis ? 0 : 1000}
-                    style={{ transition: "stroke-dashoffset 1.6s cubic-bezier(0.22,1,0.36,1) 0.1s" }}
+                    className={`te-trail${vis ? " on" : ""}`}
                   />
+                  {/* Dots */}
                   {JOURNEY_MILESTONES.map((m, i) => (
                     <circle
                       key={i}
@@ -532,7 +541,7 @@ export function JourneySection() {
                       r="5"
                       fill={m.colour}
                       opacity={vis ? 1 : 0}
-                      style={{ transition: `opacity 0.3s ease ${0.3 + i * 0.12}s` }}
+                      style={{ transition: `opacity 0.35s ease ${i * 0.11}s` }}
                     />
                   ))}
                 </svg>
@@ -682,12 +691,23 @@ export function NumbersSection() {
 
   return (
     <section className="section-block" style={{ background: "#f8faff" }}>
+      <img src={doodleCluster3} alt="" style={{
+        position: "absolute", top: -10, right: -200, width: 460, opacity: 0.15,
+        pointerEvents: "none", userSelect: "none",
+        transform: "scaleX(-1) scaleY(-1) rotate(3deg)",
+      }} />
+
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
         <div className="section-header">
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-            <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
-              Community Overview
-            </h2>
+            <div>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: B_INDIGO, margin: "0 0 8px", opacity: 0.7 }}>
+                By the numbers
+              </p>
+              <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
+                Community Overview
+              </h2>
+            </div>
             <div style={{
               display: "flex", alignItems: "center", gap: 6,
               padding: "6px 14px", borderRadius: 100,
@@ -703,21 +723,31 @@ export function NumbersSection() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 16 }}>
 
-          {/* TILE 1 — Insight / Did You Know (dark) */}
+          {/* LEFT — insight / did you know panel, dark with tata-elxsi image */}
           <div style={{
-            borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
+            borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 300,
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
-            background: ACCENT_NAVY,
+            border: "1px solid #f0f0f5",
           }}>
+            <img src={tataElxsiImg} alt="" style={{
+              position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
+            }} />
+            {/* Dark overlay — pure dark, no colour tint */}
             <div style={{
-              position: "relative", zIndex: 10, padding: 28,
+              position: "absolute", inset: 0,
+              background: "linear-gradient(135deg, rgba(13,27,62,0.90), rgba(13,27,62,0.72))",
+            }} />
+
+            <div style={{
+              position: "relative", zIndex: 10, padding: 36,
               display: "flex", flexDirection: "column",
-              justifyContent: "space-between", height: "100%", minHeight: 280,
+              justifyContent: "space-between", height: "100%", minHeight: 300,
             }}>
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                  {/* B_YELLOW badge — justified: white text needs contrast on dark bg */}
                   <span style={{
                     display: "inline-flex", alignItems: "center", gap: 5,
                     fontSize: 10, fontWeight: 800,
@@ -731,15 +761,16 @@ export function NumbersSection() {
                   </span>
                 </div>
                 <p style={{
-                  color: "white", fontSize: 18, fontWeight: 700,
-                  lineHeight: 1.6, maxWidth: 340,
+                  color: "white", fontSize: 22, fontWeight: 700,
+                  lineHeight: 1.5, maxWidth: 520,
                   opacity: factFading ? 0 : 1,
                   transition: "opacity 0.28s", margin: 0,
                 }}>
                   {FUN_FACTS[factIdx]}
                 </p>
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 20 }}>
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 24 }}>
                 <div style={{ display: "flex", gap: 6 }}>
                   {FUN_FACTS.map((_, i) => (
                     <button key={i}
@@ -747,6 +778,7 @@ export function NumbersSection() {
                       style={{
                         width: i === factIdx ? 18 : 6, height: 4,
                         borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
+                        /* B_YELLOW active dot — contrast on dark */ 
                         background: i === factIdx ? B_YELLOW : "rgba(255,255,255,0.2)",
                         transition: "all 0.2s",
                       }}
@@ -764,25 +796,27 @@ export function NumbersSection() {
             </div>
           </div>
 
-          {/* TILE 2 — Rotating KPI stat card */}
-          <div style={{ position: "relative", minHeight: 280 }}>
-            {HERO_STATS.map((s, i) => {
-              const sg = statIcons[i];
-              return (
-                <div key={s.label} style={{
-                  display: i === statIdx ? "flex" : "none",
-                  flexDirection: "column", justifyContent: "space-between",
-                  borderRadius: 18, padding: 28, height: "100%", minHeight: 280,
-                  background: "white",
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
-                  border: "1px solid #f0f0f5", position: "relative", overflow: "hidden",
-                }}>
-                  <div style={{
-                    position: "absolute", top: 0, left: 0, right: 0, height: 3,
-                    background: s.colour,
-                  }} />
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+          {/* RIGHT — rotating KPI card + social feed */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+
+            {/* KPI stat card — rotates every 3.5s */}
+            <div style={{ position: "relative" }}>
+              {HERO_STATS.map((s, i) => {
+                const sg = statIcons[i];
+                return (
+                  <div key={s.label} style={{
+                    display: i === statIdx ? "block" : "none",
+                    borderRadius: 18, padding: 22, position: "relative", overflow: "hidden",
+                    background: "white",
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
+                    border: "1px solid #f0f0f5",
+                  }}>
+                    {/* Colour top bar */}
+                    <div style={{
+                      position: "absolute", top: 0, left: 0, right: 0, height: 3,
+                      background: `linear-gradient(90deg, ${s.colour}, ${s.colour}70)`,
+                    }} />
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                       <p style={{ fontSize: 10, color: "#94a3b8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", margin: 0 }}>
                         {s.label}
                       </p>
@@ -794,114 +828,126 @@ export function NumbersSection() {
                         {sg.fn(sg.colour, 18)}
                       </div>
                     </div>
-                    <p style={{ fontSize: 42, fontWeight: 900, color: s.colour, letterSpacing: "-1.5px", lineHeight: 1, margin: 0 }}>
+                    <p style={{ fontSize: 34, fontWeight: 900, color: s.colour, letterSpacing: "-1px", lineHeight: 1, margin: 0 }}>
                       {s.num}
                     </p>
-                    <p style={{ fontSize: 12, color: "#94a3b8", margin: "8px 0 0" }}>{s.sub}</p>
+                    <p style={{ fontSize: 11, color: "#94a3b8", margin: "6px 0 0" }}>{s.sub}</p>
+                    <svg style={{ marginTop: 12, width: "100%", height: 24 }} viewBox="0 0 100 20" preserveAspectRatio="none">
+                      <path
+                        d={`M0 18 Q10 ${16 - i * 2},20 ${14 - i} T40 ${12 - i} T60 ${10 - i * 2} T80 ${6 + i} T100 ${4 - i}`}
+                        fill="none" stroke={s.colour} strokeWidth="1.5" strokeLinecap="round" opacity="0.3"
+                      />
+                      <path
+                        d={`M0 18 Q10 ${16 - i * 2},20 ${14 - i} T40 ${12 - i} T60 ${10 - i * 2} T80 ${6 + i} T100 ${4 - i} L100 20 L0 20 Z`}
+                        fill={`${s.colour}08`}
+                      />
+                    </svg>
+                    <div style={{ display: "flex", gap: 5, justifyContent: "center", marginTop: 12 }}>
+                      {HERO_STATS.map((_, j) => (
+                        <button key={j} onClick={() => setStatIdx(j)} style={{
+                          width: j === statIdx ? 16 : 6, height: 4,
+                          borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
+                          background: j === statIdx ? s.colour : "#e2e8f0",
+                          transition: "all 0.2s",
+                        }} />
+                      ))}
+                    </div>
                   </div>
-                  <div style={{ display: "flex", gap: 5, justifyContent: "flex-start", marginTop: 16 }}>
-                    {HERO_STATS.map((_, j) => (
-                      <button key={j} onClick={() => setStatIdx(j)} style={{
-                        width: j === statIdx ? 16 : 6, height: 4,
-                        borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                        background: j === statIdx ? s.colour : "#e2e8f0",
-                        transition: "all 0.2s",
-                      }} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
 
-          {/* TILE 3 — Social feed */}
-          <div
-            style={{
-              borderRadius: 18, background: "white", minHeight: 280,
-              overflow: "hidden", position: "relative",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
-              border: "1px solid #f0f0f5", display: "flex", flexDirection: "column",
-            }}
-            onMouseEnter={() => setShimmer(true)}
-            onMouseLeave={() => setShimmer(false)}
-          >
-            {shimmer && (
+            {/* Social feed */}
+            <div
+              style={{
+                borderRadius: 18, background: "white", flex: 1,
+                overflow: "hidden", position: "relative",
+                boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
+                border: "1px solid #f0f0f5", display: "flex", flexDirection: "column",
+              }}
+              onMouseEnter={() => setShimmer(true)}
+              onMouseLeave={() => setShimmer(false)}
+            >
+              {shimmer && (
+                <div style={{
+                  position: "absolute", top: 0, bottom: 0, width: "40%",
+                  background: "linear-gradient(105deg, transparent 0%, rgba(51,51,153,0.04) 45%, rgba(51,51,153,0.06) 50%, rgba(51,51,153,0.04) 55%, transparent 100%)",
+                  animation: "te-shimmer 0.6s ease-out forwards",
+                  pointerEvents: "none", zIndex: 5,
+                }} />
+              )}
+
               <div style={{
-                position: "absolute", top: 0, bottom: 0, width: "40%",
-                background: "linear-gradient(105deg, transparent 0%, rgba(51,51,153,0.04) 45%, rgba(51,51,153,0.06) 50%, rgba(51,51,153,0.04) 55%, transparent 100%)",
-                animation: "te-shimmer 0.6s ease-out forwards",
-                pointerEvents: "none", zIndex: 5,
-              }} />
-            )}
-            <div style={{
-              padding: "16px 20px 12px", borderBottom: "1px solid #f0f0f5",
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-            }}>
-              <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.8px", color: "#1e293b" }}>
-                Social Feed
-              </span>
-              <div style={{ display: "flex", gap: 6 }}>
-                {[{ Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }].map(({ Icon, c }) => (
-                  <div key={c} style={{
-                    width: 24, height: 24, borderRadius: 6,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    background: `${c}12`, cursor: "pointer",
-                  }}>
-                    <Icon size={10} style={{ color: c }} />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div style={{ flex: 1, padding: "16px 20px" }}>
-              {SOCIAL_POSTS.map((post, i) => (
-                <div key={i} style={{ display: i === socialIdx ? "block" : "none" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                    <div style={{
-                      width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      background: `linear-gradient(135deg, ${post.iconBg}, ${post.iconBg}cc)`,
-                    }}>
-                      <post.Icon size={13} color="white" />
-                    </div>
-                    <div>
-                      <p style={{ fontSize: 13, fontWeight: 800, color: ACCENT_NAVY, margin: 0 }}>{post.handle}</p>
-                      <p style={{ fontSize: 10, color: "#94a3b8", margin: 0 }}>{post.time} · {post.platform}</p>
-                    </div>
-                  </div>
-                  <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.6, margin: 0 }}>{post.text}</p>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
-                    <span style={{ fontSize: 10, color: "#94a3b8" }}>❤️ {post.likes}</span>
-                    <button onClick={() => triggerToast("Opening social post...")}
-                      style={{ fontSize: 10, fontWeight: 800, color: B_INDIGO, background: "none", border: "none", cursor: "pointer" }}>
-                      View →
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div style={{ padding: "0 20px 16px" }}>
-              <div style={{ display: "flex", gap: 5, justifyContent: "center", marginBottom: 10 }}>
-                {SOCIAL_POSTS.map((_, i) => (
-                  <button key={i} onClick={() => setSocialIdx(i)} style={{
-                    width: i === socialIdx ? 16 : 6, height: 4,
-                    borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                    background: i === socialIdx ? B_INDIGO : "#e2e8f0",
-                    transition: "all 0.2s",
-                  }} />
-                ))}
-              </div>
-              <button onClick={() => triggerToast("Opening social media...")} style={{
-                width: "100%", display: "flex", alignItems: "center", justifyContent: "center",
-                gap: 6, padding: "9px 0", borderRadius: 10,
-                fontSize: 11, fontWeight: 800,
-                background: B_INDIGO,
-                color: "white", border: "none", cursor: "pointer",
+                padding: "16px 20px 12px", borderBottom: "1px solid #f0f0f5",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
               }}>
-                Follow @TataEngage <ArrowRight size={9} />
-              </button>
+                <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.8px", color: "#1e293b" }}>
+                  Social Feed
+                </span>
+                <div style={{ display: "flex", gap: 6 }}>
+                  {[{ Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }].map(({ Icon, c }) => (
+                    <div key={c} style={{
+                      width: 24, height: 24, borderRadius: 6,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      background: `${c}12`, cursor: "pointer",
+                    }}>
+                      <Icon size={10} style={{ color: c }} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ flex: 1, padding: "16px 20px" }}>
+                {SOCIAL_POSTS.map((post, i) => (
+                  <div key={i} style={{ display: i === socialIdx ? "block" : "none" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                      <div style={{
+                        width: 36, height: 36, borderRadius: 10, flexShrink: 0,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        background: `linear-gradient(135deg, ${post.iconBg}, ${post.iconBg}cc)`,
+                      }}>
+                        <post.Icon size={13} color="white" />
+                      </div>
+                      <div>
+                        <p style={{ fontSize: 13, fontWeight: 800, color: ACCENT_NAVY, margin: 0 }}>{post.handle}</p>
+                        <p style={{ fontSize: 10, color: "#94a3b8", margin: 0 }}>{post.time} · {post.platform}</p>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.6, margin: 0 }}>{post.text}</p>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
+                      <span style={{ fontSize: 10, color: "#94a3b8" }}>❤️ {post.likes}</span>
+                      <button onClick={() => triggerToast("Opening social post...")}
+                        style={{ fontSize: 10, fontWeight: 800, color: B_INDIGO, background: "none", border: "none", cursor: "pointer" }}>
+                        View →
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ padding: "0 20px 16px" }}>
+                <div style={{ display: "flex", gap: 5, justifyContent: "center", marginBottom: 10 }}>
+                  {SOCIAL_POSTS.map((_, i) => (
+                    <button key={i} onClick={() => setSocialIdx(i)} style={{
+                      width: i === socialIdx ? 16 : 6, height: 4,
+                      borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
+                      background: i === socialIdx ? B_INDIGO : "#e2e8f0",
+                      transition: "all 0.2s",
+                    }} />
+                  ))}
+                </div>
+                <button onClick={() => triggerToast("Opening social media...")} style={{
+                  width: "100%", display: "flex", alignItems: "center", justifyContent: "center",
+                  gap: 6, padding: "9px 0", borderRadius: 10,
+                  fontSize: 11, fontWeight: 800,
+                  background: `linear-gradient(135deg, ${B_INDIGO}, ${B_BLUE})`,
+                  color: "white", border: "none", cursor: "pointer",
+                }}>
+                  Follow @TataEngage <ArrowRight size={9} />
+                </button>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
