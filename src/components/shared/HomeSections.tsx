@@ -374,7 +374,6 @@ export function ProgrammeSpotlight() {
                         </div>
                       </div>
                     </div>
-                    </div>
                   </div>
                 </div>
               </div>
