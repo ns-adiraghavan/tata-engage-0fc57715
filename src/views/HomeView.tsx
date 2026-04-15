@@ -74,7 +74,7 @@ const HERO_SLIDES = [
     },
   },
   {
-    photo: tataMotors2,
+    photo: voltasImg,
     accent: B_YELLOW, tag: "Environment", cta: "story" as const,
     headline: "1 million trees planted across Tata campuses nationwide",
     sub: "A greener legacy, growing branch by branch.",
