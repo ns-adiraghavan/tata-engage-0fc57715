@@ -627,9 +627,9 @@ export function JourneySection() {
               display: "inline-flex", alignItems: "center", gap: 8,
               fontSize: 13, fontWeight: 800,
               padding: "12px 28px", borderRadius: 10,
-              background: B_INDIGO, color: "white",
+              background: B_TEAL, color: "white",
               border: "none", cursor: "pointer",
-              boxShadow: `0 4px 16px ${B_INDIGO}40`,
+              boxShadow: `0 4px 16px ${B_TEAL}40`,
             }}
           >
             Read our full story <ArrowRight size={13} />
@@ -878,7 +878,7 @@ export function NumbersSection() {
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
                     <span style={{ fontSize: 10, color: "#94a3b8" }}>❤️ {post.likes}</span>
                     <button onClick={() => triggerToast("Opening social post...")}
-                      style={{ fontSize: 10, fontWeight: 800, color: B_INDIGO, background: "none", border: "none", cursor: "pointer" }}>
+                      style={{ fontSize: 10, fontWeight: 800, color: B_TEAL, background: "none", border: "none", cursor: "pointer" }}>
                       View →
                     </button>
                   </div>
@@ -892,7 +892,7 @@ export function NumbersSection() {
                   <button key={i} onClick={() => setSocialIdx(i)} style={{
                     width: i === socialIdx ? 16 : 6, height: 4,
                     borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                    background: i === socialIdx ? B_INDIGO : "#e2e8f0",
+                    background: i === socialIdx ? B_TEAL : "#e2e8f0",
                     transition: "all 0.2s",
                   }} />
                 ))}
@@ -901,7 +901,7 @@ export function NumbersSection() {
                 width: "100%", display: "flex", alignItems: "center", justifyContent: "center",
                 gap: 6, padding: "9px 0", borderRadius: 10,
                 fontSize: 11, fontWeight: 800,
-                background: B_INDIGO,
+                background: B_TEAL,
                 color: "white", border: "none", cursor: "pointer",
               }}>
                 Follow @TataEngage <ArrowRight size={9} />
