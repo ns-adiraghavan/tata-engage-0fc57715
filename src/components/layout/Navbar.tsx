@@ -101,7 +101,7 @@ const Navbar = ({
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${scrolled ? "bg-white border-b border-zinc-100 shadow-sm" : "bg-black/20 backdrop-blur-sm border-b border-transparent"}`}>
+      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${(scrolled || isLoggedIn) ? "bg-white border-b border-zinc-100 shadow-sm" : "bg-black/20 backdrop-blur-sm border-b border-transparent"}`}>
 
         {/* ── LEFT: TataEngage logo (public) OR TataEngage logo (logged-in) ── */}
         <div className="flex-shrink-0">
@@ -258,7 +258,7 @@ const Navbar = ({
               <div className="relative" ref={dropdownRef}>
                 <button onClick={() => setDropdownOpen((o) => !o)}
                   className="flex items-center gap-2 cursor-pointer group">
-                  <div className="w-9 h-9 rounded-full bg-[#003580] text-white flex items-center justify-center text-sm font-bold">
+                  <div className="w-9 h-9 rounded-full bg-[#3E7EB0] text-white flex items-center justify-center text-sm font-bold">
                     {user?.firstName?.[0]}{user?.lastName?.[0]}
                   </div>
                   <ChevronDown size={14} className="text-zinc-400 group-hover:text-zinc-600 transition-colors" />
