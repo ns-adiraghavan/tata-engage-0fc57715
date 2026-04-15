@@ -741,7 +741,7 @@ export function NumbersSection() {
                     ✨ Insight
                   </span>
                   <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.8px" }}>
-                    Auto-rotating
+                    {"\n"}
                   </span>
                 </div>
                 <p style={{
