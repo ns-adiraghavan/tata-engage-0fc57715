@@ -213,6 +213,9 @@ export function ProgrammeSpotlight() {
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: B_INDIGO, margin: "0 0 8px", opacity: 0.7 }}>
               Our Programmes
             </p>
+            <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
+              Our Volunteering Opportunities
+            </h2>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 0.85fr 260px", gap: 16, alignItems: "stretch" }}>
@@ -788,9 +791,9 @@ export function NumbersSection() {
                   display: i === statIdx ? "flex" : "none",
                   flexDirection: "column", justifyContent: "space-between",
                   borderRadius: 18, padding: 28, position: "relative", overflow: "hidden",
-                  background: "white", minHeight: 280,
+                  background: `${s.colour}14`, minHeight: 280,
                   boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
-                  border: "1px solid #f0f0f5",
+                  border: `1px solid ${s.colour}25`,
                 }}>
                   <div style={{
                     position: "absolute", top: 0, left: 0, right: 0, height: 3,
