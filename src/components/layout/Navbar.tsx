@@ -101,7 +101,7 @@ const Navbar = ({
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${scrolled ? "bg-white border-b border-zinc-100 shadow-sm" : "bg-transparent border-b border-transparent"}`}>
+      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${scrolled ? "bg-white border-b border-zinc-100 shadow-sm" : "bg-black/20 backdrop-blur-sm border-b border-transparent"}`}>
 
         {/* ── LEFT: TataEngage logo (public) OR TataEngage logo (logged-in) ── */}
         <div className="flex-shrink-0">
@@ -115,10 +115,10 @@ const Navbar = ({
 
         {/* ── CENTRE: public nav links ── */}
         {!isLoggedIn && (
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10 lg:gap-[60px]">
             <span
               onClick={() => onNavigate("home")}
-              className="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors cursor-pointer"
+              className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${scrolled ? "text-zinc-500 hover:text-zinc-900" : "text-white/90 hover:text-white"}`}
             >
               Home
             </span>
@@ -185,7 +185,7 @@ const Navbar = ({
               },
             ].map((nav) => (
               <div key={nav.label} className="relative group">
-                <span className="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors cursor-pointer flex items-center gap-1">
+                <span className={`text-sm font-medium transition-colors duration-300 cursor-pointer flex items-center gap-1 ${scrolled ? "text-zinc-500 hover:text-zinc-900" : "text-white/90 hover:text-white"}`}>
                   {nav.label} <ChevronDown size={12} />
                 </span>
                 <div className="absolute top-full left-0 mt-2 bg-white border border-zinc-100 rounded-xl shadow-sm py-2 w-52 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150">
@@ -199,7 +199,7 @@ const Navbar = ({
               </div>
             ))}
 
-            <Search size={18} className="text-zinc-400 hover:text-zinc-700 cursor-pointer transition-colors" />
+            <Search size={18} className={`cursor-pointer transition-colors duration-300 ${scrolled ? "text-zinc-400 hover:text-zinc-700" : "text-white/80 hover:text-white"}`} />
           </div>
         )}
 
@@ -299,15 +299,16 @@ const Navbar = ({
             /* ── Public right: Log In + Register + Tata logo ── */
             <div className="flex items-center gap-4">
               <span onClick={() => onNavigate("login")}
-                className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors cursor-pointer">
+                className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${scrolled ? "text-zinc-600 hover:text-zinc-900" : "text-white/90 hover:text-white"}`}>
                 Log In
               </span>
               <button onClick={() => onNavigate("register-role")}
-                className="btn-black py-2 px-5 text-sm cursor-pointer">
+                className="py-2 px-5 text-sm font-semibold rounded-lg cursor-pointer transition-all hover:brightness-95"
+                style={{ background: "#FCB514", color: "#0D1B3E" }}>
                 Register
               </button>
               {/* Tata logo — right end */}
-              <img src={tataLogo} alt="Tata" className="h-8 w-8 object-contain hidden md:block" />
+              <img src={tataLogo} alt="Tata" className={`h-8 w-8 object-contain hidden md:block transition-all duration-300 ${scrolled ? "brightness-0" : "brightness-0 invert"}`} />
             </div>
           )}
         </div>
