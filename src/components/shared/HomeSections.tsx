@@ -149,7 +149,7 @@ const PROG_CONFIG = [
     title: "Tata Volunteering Week",
     label: "Bi-annual · Global",
     stat1: "12 Editions", stat2: "50K+ Volunteers",
-    colour: "#4A90C4",
+    colour: "#1A4731",
     photo: airIndia, photoPos: "center 25%",
   },
   {
@@ -157,7 +157,7 @@ const PROG_CONFIG = [
     title: "ProEngage",
     label: "Skill-based · Year-round",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
-    colour: "#2E7D4F",
+    colour: "#003580",
     photo: tataCommunications, photoPos: "center center",
   },
   {
@@ -165,7 +165,7 @@ const PROG_CONFIG = [
     title: "Disaster Response",
     label: "Rapid Action",
     stat1: "24 Responses", stat2: "8 States",
-    colour: "#00A896",
+    colour: "#C8850A",
     photo: infiniti, photoPos: "center 20%",
   },
 ];
