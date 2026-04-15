@@ -8,7 +8,7 @@ import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
 import tataAIG from "@/assets/Tata_AIG_2.jpg";
 import tataMotors1 from "@/assets/Tata_Motors_1.jpg";
-import tataMotors2 from "@/assets/tata-motors-2.jpg";
+import voltasImg from "@/assets/Voltas.JPG";
 import tajSats from "@/assets/Taj_Sats.jpeg";
 import {
   B_INDIGO, B_YELLOW, B_TEAL, B_BLUE, B_TICKER, ACCENT_NAVY,
