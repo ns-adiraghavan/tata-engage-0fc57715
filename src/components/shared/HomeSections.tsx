@@ -170,7 +170,7 @@ const PROG_CONFIG = [
   },
 ];
 
-const PROG_PASTEL = ["#003580", "#1A4731", "#C8850A"];
+const PROG_PASTEL = ["#4A90C4", "#2E7D4F", "#00A896"];
 const PROG_ACCENT_TEXT = ["#ffffff", "#ffffff", "#ffffff"];
 
 //
