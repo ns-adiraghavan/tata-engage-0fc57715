@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronLeft, Play, BookOpen, Bell, X, Check } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
@@ -143,6 +143,17 @@ const HomeView = () => {
 
   useEffect(() => { const t = setInterval(() => setHeroSlide((p) => (p + 1) % HERO_SLIDES.length), 6000); return () => clearInterval(t); }, []);
 
+  const heroImgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!heroImgRef.current) return;
+      heroImgRef.current.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const slide        = HERO_SLIDES[heroSlide];
   const d            = slide.doodles;
 
@@ -173,23 +184,30 @@ const HomeView = () => {
       ════════════════════════════════════════════════════════════════════ */}
       <section id="hero" className="relative flex items-center overflow-hidden" style={{ minHeight: "92vh", paddingTop: 64 }}>
 
-        {/* Slide images — full bleed, slow horizontal pan, no zoom */}
-        {HERO_SLIDES.map((s, i) => (
-          <div key={i} className="absolute inset-0" style={{
-            opacity: heroSlide === i ? 1 : 0,
-            transition: "opacity 1s ease",
-          }}>
+        {/* Parallax image layer — one div per slide, JS scroll moves it */}
+        <div
+          ref={heroImgRef}
+          style={{
+            position: "absolute",
+            top: "-25%", left: 0, right: 0, bottom: "-25%",
+            willChange: "transform",
+            zIndex: 0,
+          }}
+        >
+          {HERO_SLIDES.map((s, i) => (
             <div
+              key={i}
               style={{
                 position: "absolute", inset: 0,
                 backgroundImage: `url(${s.photo})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                backgroundAttachment: "fixed",
+                opacity: heroSlide === i ? 1 : 0,
+                transition: "opacity 1s ease",
               }}
             />
-          </div>
-        ))}
+          ))}
+        </div>
 
         {/* Dark overlay — pure dark, no colour/purple tint */}
         <div className="absolute inset-0" style={{
