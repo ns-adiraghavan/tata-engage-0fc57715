@@ -4,11 +4,15 @@ import { Info, Clock } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import ConsentModal from "@/components/shared/ConsentModal";
-import { ACCENT_NAVY, B_YELLOW, B_INDIGO } from "@/data/homeSharedData";
+import doodleCluster1 from "@/assets/doodle-cluster-1.png";
+import doodleCluster2 from "@/assets/doodle-cluster-2.png";
+import doodleCluster3 from "@/assets/doodle-cluster-3.png";
+import doodleCluster5 from "@/assets/doodle-cluster-5.png";
+import { ACCENT_NAVY, B_YELLOW, B_TICKER } from "@/data/homeSharedData";
 
-const LEFT_TEXTURE = {
-  backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 24px)`,
-  backgroundSize: "24px 24px",
+const TEXTURE = {
+  backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)`,
+  backgroundSize: "22px 22px",
 };
 
 const STEPPER = ["Your Details", "Skills & Interests", "Verify"];
@@ -77,11 +81,11 @@ const RegisterFormView = () => {
       case "tata_employee":
         return (
           <>
-            <div className="mb-6 p-5 bg-blue-50 border border-blue-100 rounded-2xl flex items-start gap-4">
-              <Info size={20} className="text-blue-600 mt-0.5 shrink-0" />
+            <div className="mb-6 p-5 rounded-2xl flex items-start gap-4" style={{ backgroundColor: `${B_TICKER}0f`, border: `1px solid ${B_TICKER}28` }}>
+              <Info size={20} className="mt-0.5 shrink-0" style={{ color: B_TICKER }} />
               <div>
-                <p className="text-sm text-blue-800 font-semibold mb-1">Tata Employee Registration</p>
-                <p className="text-xs text-blue-700 leading-relaxed">
+                <p className="text-sm font-semibold mb-1" style={{ color: B_TICKER }}>Tata Employee Registration</p>
+                <p className="text-xs text-zinc-600 leading-relaxed">
                   If you have an official Tata email (@tata.com), enter it below for instant verification.
                   If you don't have a Tata email, use your personal email and provide your SPOC's email for manual verification.
                 </p>
@@ -141,7 +145,7 @@ const RegisterFormView = () => {
               <div>
                 <label className="form-label">SPOC Email</label>
                 <input type="email" placeholder="Enter your SPOC's email" className="form-input" />
-                <p className="text-xs text-zinc-400 mt-1">Required if you don't have an official Tata email. Your company SPOC will verify your identity.</p>
+                <p className="text-xs text-zinc-400 mt-1">Required if you don't have an official Tata email.</p>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -179,10 +183,10 @@ const RegisterFormView = () => {
       case "retired_employee":
         return (
           <>
-            <div className="mb-6 p-5 border rounded-2xl flex items-start gap-4" style={{ backgroundColor: `${B_INDIGO}08`, borderColor: `${B_INDIGO}15` }}>
-              <Info size={20} className="mt-0.5 shrink-0" style={{ color: B_INDIGO }} />
+            <div className="mb-6 p-5 rounded-2xl flex items-start gap-4" style={{ backgroundColor: `${B_TICKER}0f`, border: `1px solid ${B_TICKER}28` }}>
+              <Info size={20} className="mt-0.5 shrink-0" style={{ color: B_TICKER }} />
               <div>
-                <p className="text-sm font-semibold mb-1" style={{ color: B_INDIGO }}>Retired Employee Registration</p>
+                <p className="text-sm font-semibold mb-1" style={{ color: B_TICKER }}>Retired Employee Registration</p>
                 <p className="text-xs text-zinc-600 leading-relaxed">
                   Welcome back to the Tata family! As a retiree, you'll need to provide a personal email and the email of a SPOC from your last Tata company who can confirm your service history.
                 </p>
@@ -372,20 +376,15 @@ const RegisterFormView = () => {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
-      {/* ── Top banner ── */}
-      <div style={{
-        backgroundColor: ACCENT_NAVY,
-        position: "relative",
-        overflow: "hidden",
-        padding: "28px 64px",
-        backgroundImage: "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
-        backgroundSize: "22px 22px",
-      }}>
-        <div style={{ position: "absolute", top: -60, right: -60, width: 280, height: 280, background: "radial-gradient(circle, rgba(51,51,153,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
+      {/* ── TOP BANNER ─────────────────────────────────────────────────────── */}
+      <div style={{ backgroundColor: ACCENT_NAVY, position: "relative", overflow: "hidden", padding: "28px 64px", ...TEXTURE }}>
+        {/* Radial glows — same as RegisterRoleView */}
+        <div style={{ position: "absolute", top: -60, right: -60, width: 280, height: 280, background: "radial-gradient(circle, rgba(62,126,176,0.22) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -50, left: -30, width: 200, height: 200, background: "radial-gradient(circle, rgba(51,51,153,0.16) 0%, transparent 70%)", pointerEvents: "none" }} />
 
         <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32 }}>
 
-          {/* Back link */}
+          {/* Left — back link */}
           <button
             onClick={() => navigate("register-role")}
             style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", background: "none", border: "none", cursor: "pointer", letterSpacing: "0.5px", flexShrink: 0 }}
@@ -393,21 +392,20 @@ const RegisterFormView = () => {
             ← Back to Role Selection
           </button>
 
-          {/* Centre: role label + stepper */}
-          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 32 }}>
+          {/* Centre — role pill + stepper */}
+          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 28 }}>
             {roleLabel && (
               <span style={{
                 backgroundColor: B_YELLOW, color: "#111",
                 fontSize: 11, textTransform: "uppercase" as const,
                 fontWeight: 700, letterSpacing: "0.08em",
-                padding: "5px 14px", borderRadius: 100,
-                flexShrink: 0,
+                padding: "5px 14px", borderRadius: 100, flexShrink: 0,
               }}>
                 {roleLabel}
               </span>
             )}
             {/* Stepper */}
-            <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               {STEPPER.map((label, i) => (
                 <div key={label} style={{ display: "flex", alignItems: "center" }}>
                   <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "center" }}>
@@ -424,22 +422,37 @@ const RegisterFormView = () => {
             </div>
           </div>
 
-          {/* Right: "You're almost there" */}
-          <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.45)", flexShrink: 0, fontStyle: "italic" }}>
+          {/* Right — flavour text */}
+          <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.45)", flexShrink: 0, fontStyle: "italic", margin: 0 }}>
             You're almost there.
           </p>
         </div>
       </div>
 
-      {/* ── Form body ── */}
-      <div style={{ flex: 1, backgroundColor: "#f5f5fa", display: "flex", justifyContent: "center", padding: "48px 32px" }}>
-        <div style={{ width: "100%", maxWidth: 680 }}>
+      {/* ── FORM BODY ──────────────────────────────────────────────────────── */}
+      <div style={{ flex: 1, backgroundColor: "#f5f5fa", position: "relative", display: "flex", justifyContent: "center", padding: "48px 32px", overflow: "hidden" }}>
+
+        {/* Doodles — left */}
+        <img src={doodleCluster1} alt="" style={{ position: "absolute", left: -48, top: "40%", transform: "translateY(-50%)", width: 240, opacity: 0.09, pointerEvents: "none", userSelect: "none", rotate: "-8deg" }} />
+        <img src={doodleCluster5} alt="" style={{ position: "absolute", left: 52, bottom: 32, width: 160, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "5deg" }} />
+
+        {/* Doodles — right */}
+        <img src={doodleCluster2} alt="" style={{ position: "absolute", right: -36, top: "35%", transform: "translateY(-50%)", width: 220, opacity: 0.09, pointerEvents: "none", userSelect: "none", rotate: "12deg" }} />
+        <img src={doodleCluster3} alt="" style={{ position: "absolute", right: 64, bottom: 28, width: 150, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "-6deg" }} />
+
+        <div style={{ width: "100%", maxWidth: 680, position: "relative", zIndex: 1 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <div style={{ marginBottom: 32 }}>
-              <h3 style={{ fontSize: 22, fontWeight: 900, color: ACCENT_NAVY, marginBottom: 6 }}>Register as {roleLabel}</h3>
-              <div style={{ height: 3, width: 40, borderRadius: 4, backgroundColor: B_INDIGO }} />
+
+            {/* Section heading */}
+            <div style={{ marginBottom: 28 }}>
+              <h3 style={{ fontSize: 22, fontWeight: 900, color: ACCENT_NAVY, marginBottom: 8, letterSpacing: "-0.3px" }}>
+                Register as {roleLabel}
+              </h3>
+              {/* Definer bar — B_TICKER */}
+              <div style={{ height: 3, width: 40, borderRadius: 4, backgroundColor: B_TICKER }} />
             </div>
 
+            {/* White form card */}
             <div style={{ backgroundColor: "#fff", border: "1px solid #e8e8f0", borderRadius: 16, padding: "40px 36px" }}>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {renderFields()}
