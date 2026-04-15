@@ -4,10 +4,19 @@ import { ArrowRight } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
-import { B_INDIGO, B_YELLOW, B_TEAL } from "@/data/homeSharedData";
+import heroImg from "@/assets/Infiniti (1).jpg";
+import { B_TICKER, B_YELLOW } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
-// ── Component ─────────────────────────────────────────────────────────────────
+const B_ORANGE = "#C14D00";
+
+const greeting = () => {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 17) return "Good afternoon";
+  return "Good evening";
+};
+
 const NGOHubView = () => {
   const { ngoData, triggerToast } = useAppContext();
   const navigate = useAppNavigate();
@@ -18,35 +27,39 @@ const NGOHubView = () => {
       {/* HERO */}
       <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
         <div className="relative rounded-2xl overflow-hidden" style={{ minHeight: 480 }}>
+
+          {/* Background image */}
           <img
-            src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1600"
+            src={heroImg}
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
-            referrerPolicy="no-referrer"
+            style={{ objectPosition: "center 40%" }}
           />
+
+          {/* Left-heavy dark gradient */}
           <div className="absolute inset-0" style={{
-            background: "linear-gradient(120deg, rgba(5,30,25,0.88) 0%, rgba(5,30,25,0.72) 40%, rgba(5,30,25,0.35) 70%, rgba(5,30,25,0.15) 100%)"
+            background: "linear-gradient(105deg, rgba(20,8,5,0.92) 0%, rgba(20,8,5,0.78) 35%, rgba(20,8,5,0.38) 62%, rgba(20,8,5,0.08) 100%)"
           }} />
           <div className="absolute inset-0" style={{
-            background: "linear-gradient(to top, rgba(5,30,25,0.6) 0%, transparent 35%)"
+            background: "linear-gradient(to top, rgba(20,8,5,0.55) 0%, transparent 40%)"
           }} />
 
           <div className="relative z-10 flex flex-col justify-between px-8 md:px-12 py-8" style={{ minHeight: 480 }}>
-            {/* Top row */}
+
+            {/* Top — greeting */}
             <div>
-              <span className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-white/60 text-xs font-semibold px-3 py-1.5 rounded-full tracking-wide mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
-                Partner NGO Hub
-              </span>
-              <p className="text-white/55 mt-1 text-5xl font-sans">
-                Welcome back, <span className="text-white font-bold">{ngoData.firstName ?? "Anjali"}!</span>
+              <p className="text-white/50 text-sm font-medium tracking-wide mb-1">
+                {greeting()},
               </p>
-              <p className="text-white/30 text-xs mt-0.5 font-medium">{ngoData.organization} · {ngoData.tier}</p>
+              <p className="text-white/90 text-5xl font-sans font-light" style={{ letterSpacing: "-0.5px", lineHeight: 1.1 }}>
+                <span className="font-bold text-white">{ngoData.firstName ?? "Anjali"}!</span>
+              </p>
+              <p className="text-white/30 text-xs mt-2 font-medium">{ngoData.organization} · {ngoData.tier}</p>
             </div>
 
             {/* Centre — quote */}
             <div className="max-w-lg">
-              <svg width="24" height="20" viewBox="0 0 28 22" fill="none" className="mb-3 opacity-25">
+              <svg width="24" height="20" viewBox="0 0 28 22" fill="none" className="mb-3 opacity-20">
                 <path d="M0 22V13.5C0 5.8 4.5 1.5 13.5 0L15 3C10.5 4.2 8 7 7.5 11H12V22H0ZM16 22V13.5C16 5.8 20.5 1.5 29.5 0L31 3C26.5 4.2 24 7 23.5 11H28V22H16Z" fill="white"/>
               </svg>
               <h2 className="text-white font-bold text-xl md:text-2xl leading-snug tracking-tight mb-3">
@@ -55,12 +68,12 @@ const NGOHubView = () => {
               <p className="text-white/40 text-xs font-bold uppercase tracking-widest">— Helen Keller</p>
             </div>
 
-            {/* Bottom row — CTA */}
+            {/* Bottom — CTA */}
             <div className="flex justify-end">
               <button
                 onClick={() => navigate("ngo-dashboard")}
                 className="flex items-center gap-2 text-white text-sm font-bold px-6 py-2.5 rounded-xl hover:brightness-110 transition-all cursor-pointer shadow-lg"
-                style={{ backgroundColor: B_TEAL }}
+                style={{ backgroundColor: B_ORANGE }}
               >
                 My Space <ArrowRight size={15} />
               </button>
@@ -70,18 +83,12 @@ const NGOHubView = () => {
       </div>
 
       <SectionDivider />
-
       <ProgrammeSpotlight />
-
       <SectionDivider />
-
       <JourneySection />
-
       <SectionDivider />
-
       <NumbersSection />
 
-      {/* TICKER */}
       <TickerBar fixed />
 
       {/* Floating social cluster */}
@@ -99,7 +106,7 @@ const NGOHubView = () => {
             style={{
               backgroundColor: "white",
               border: "1px solid #e2e8f0",
-              color: B_INDIGO,
+              color: B_TICKER,
               boxShadow: "0 1px 6px rgba(0,0,0,0.10)",
             }}
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#EEF0FF")}
