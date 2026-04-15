@@ -7,7 +7,7 @@ import { ROHAN_DESAI_VOLUNTEER } from "@/data/mockData";
 import RoleToggle from "@/components/shared/RoleToggle";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
-import heroImg from "@/assets/tata-aig-1.jpg";
+import heroImg from "@/assets/Taj_Sats_1.jpeg";
 import { B_TICKER, B_YELLOW, ACCENT_NAVY } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
