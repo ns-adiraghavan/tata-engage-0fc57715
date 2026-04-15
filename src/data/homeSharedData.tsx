@@ -18,11 +18,7 @@ export const P_TEAL   = "#E6F8F5";
 export const secBg = (i: number) => i % 2 === 0 ? "bg-white" : "bg-[#F0F4FA]";
 
 export const SectionDivider = () => (
-  <div className="flex items-center justify-center gap-2 py-5">
-    {[B_INDIGO, B_YELLOW, B_RED, B_TEAL, B_BLUE].map((c) => (
-      <span key={c} className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: c }} />
-    ))}
-  </div>
+  <div style={{ height: 3, background: "#0D1B3E", width: "100%" }} />
 );
 
 // ── Programme data ────────────────────────────────────────────────────────────
