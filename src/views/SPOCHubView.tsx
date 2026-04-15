@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
-import heroImg from "@/assets/tata-motors-3.jpg";
+import heroImg from "@/assets/voltas.jpg";
 import { B_TICKER, B_YELLOW, ACCENT_NAVY } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
