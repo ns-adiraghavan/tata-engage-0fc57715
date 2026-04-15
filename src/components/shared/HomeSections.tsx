@@ -93,6 +93,10 @@ const GLOBAL_STYLES = `
   /* Stat pulse dot */
   @keyframes te-pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
   .te-pulse { animation: te-pulse 2s ease-in-out infinite; }
+
+  /* Programme image card hover */
+  .prog-img-card { transition: transform 0.3s ease; }
+  .prog-img-card:hover { transform: scale(1.012); }
 `;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -152,31 +156,28 @@ const GeoIcon = {
 // ─────────────────────────────────────────────────────────────────────────────
 const PROG_CONFIG = [
   {
-    id: "TVW",              route: "about-tvw",
-    bg: "#4A90C4",
+    id: "TVW", route: "about-tvw",
     title: "Tata Volunteering Week",
     label: "Bi-annual · Global",
-    stat1: "12 Editions",    stat2: "50K+ Volunteers",
-    desc: "A bi-annual celebration of collective action across every Tata company, worldwide.",
-    photo: airIndia,         photoPos: "center 40%",
+    stat1: "12 Editions", stat2: "50K+ Volunteers",
+    colour: "#4A90C4",
+    photo: airIndia, photoPos: "center 30%",
   },
   {
-    id: "ProEngage",        route: "about-proengage",
-    bg: "#2E7D4F",
+    id: "ProEngage", route: "about-proengage",
     title: "ProEngage",
-    label: "Skill-based",
+    label: "Skill-based · Year-round",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
-    desc: "Match your professional expertise to NGO projects that need it most.",
+    colour: "#2E7D4F",
     photo: tataCommunications, photoPos: "center top",
   },
   {
     id: "Disaster Response", route: "disaster-response",
-    bg: "#F5A623",
     title: "Disaster Response",
     label: "Rapid Action",
-    stat1: "24 Responses",   stat2: "8 States",
-    desc: "Volunteers deployed within 48 hours when communities need urgent support.",
-    photo: infiniti,         photoPos: "center 30%",
+    stat1: "24 Responses", stat2: "8 States",
+    colour: "#F5A623",
+    photo: infiniti, photoPos: "center 30%",
   },
 ];
 
@@ -224,83 +225,42 @@ export function ProgrammeSpotlight() {
             <DefinerUnderline colour={B_INDIGO} width={68} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 260px", gap: 20, alignItems: "stretch" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 0.85fr 260px", gap: 16, alignItems: "stretch" }}>
 
-            {/* LEFT — single cycling photo card */}
+            {/* COL 1 — Image tile */}
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div
+                className="prog-img-card"
                 onClick={() => navigate(p.route)}
                 style={{
-                  flex: 1, borderRadius: 18, overflow: "hidden",
-                  cursor: "pointer", position: "relative",
-                  minHeight: 400, boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
-                  background: "#1a1a2e",
+                  borderRadius: 18, overflow: "hidden",
+                  flex: 1, minHeight: 380, position: "relative",
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.13)",
+                  cursor: "pointer",
                 }}
               >
-                {/* Full-bleed photo */}
-                <div style={{
-                  position: "absolute", inset: 0,
-                  backgroundImage: `url(${p.photo})`,
-                  backgroundSize: "cover", backgroundPosition: p.photoPos,
-                  transition: "opacity 0.5s ease",
-                }} />
-                {/* Subtle dark vignette — bottom only, light touch */}
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.08) 55%, transparent 100%)",
-                }} />
-                {/* Coloured accent bar — top-left, 3px tall */}
+                {PROG_CONFIG.map((pc, i) => (
+                  <div
+                    key={pc.id}
+                    style={{
+                      position: "absolute", inset: 0,
+                      backgroundImage: `url(${pc.photo})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: pc.photoPos,
+                      opacity: i === idx ? 1 : 0,
+                      transition: "opacity 0.7s ease",
+                    }}
+                  />
+                ))}
                 <div style={{
                   position: "absolute", top: 0, left: 0, right: 0, height: 4,
-                  background: p.bg, zIndex: 3,
+                  background: p.colour, zIndex: 2,
+                  transition: "background 0.5s ease",
                 }} />
-                {/* Text box — bottom-left overlay */}
-                <div style={{
-                  position: "absolute", bottom: 28, left: 28, right: 28,
-                  zIndex: 4,
-                  background: "rgba(10,10,20,0.72)",
-                  backdropFilter: "blur(8px)",
-                  WebkitBackdropFilter: "blur(8px)",
-                  borderRadius: 12,
-                  padding: "20px 22px",
-                  borderLeft: `4px solid ${p.bg}`,
-                }}>
-                  <span style={{
-                    fontSize: 9, fontWeight: 700, letterSpacing: "1.5px",
-                    textTransform: "uppercase", color: "rgba(255,255,255,0.5)",
-                    display: "block", marginBottom: 6,
-                  }}>
-                    {p.label}
-                  </span>
-                  <h3 style={{
-                    fontSize: 22, fontWeight: 900, color: "white",
-                    letterSpacing: "-0.3px", lineHeight: 1.25, margin: "0 0 14px",
-                  }}>
-                    {p.title}
-                  </h3>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <div style={{ display: "flex", gap: 8 }}>
-                      {[p.stat1, p.stat2].map((s, i) => (
-                        <span key={i} style={{
-                          fontSize: 11, fontWeight: 700,
-                          color: "rgba(255,255,255,0.85)",
-                          background: "rgba(255,255,255,0.1)",
-                          padding: "3px 10px", borderRadius: 100,
-                          border: "1px solid rgba(255,255,255,0.15)",
-                        }}>{s}</span>
-                      ))}
-                    </div>
-                    <div style={{
-                      display: "flex", alignItems: "center", gap: 5,
-                      fontSize: 12, fontWeight: 700, color: p.bg,
-                    }}>
-                      Learn more <ArrowRight size={12} />
-                    </div>
-                  </div>
-                </div>
               </div>
-              {/* Dot indicators — no text labels */}
-              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 16 }}>
+
+              {/* Dot indicators */}
+              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 14 }}>
                 {PROG_CONFIG.map((pc, i) => (
                   <button
                     key={i}
@@ -308,77 +268,133 @@ export function ProgrammeSpotlight() {
                     style={{
                       width: i === idx ? 24 : 8, height: 8,
                       borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                      background: i === idx ? pc.bg : "#d1d5db",
-                      transition: "all 0.3s ease",
+                      background: i === idx ? pc.colour : "#d1d5db",
+                      transition: "all 0.35s ease",
                     }}
                   />
                 ))}
               </div>
             </div>
 
-            {/* RIGHT — EOEO panel: image + overlaid text box */}
-            <div style={{
-              borderRadius: 18, overflow: "hidden",
-              position: "relative", minHeight: 400,
-              boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
-              background: ACCENT_NAVY,
-            }}>
-              {/* Background image */}
+            {/* COL 2 — Text tile */}
+            <div
+              onClick={() => navigate(p.route)}
+              style={{
+                borderRadius: 18,
+                background: "#ffffff",
+                border: "1px solid #e8e8f0",
+                padding: "36px 32px",
+                display: "flex", flexDirection: "column",
+                justifyContent: "flex-end",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+                cursor: "pointer",
+                minHeight: 380,
+                transition: "box-shadow 0.2s ease",
+              }}
+            >
               <div style={{
-                position: "absolute", inset: 0,
-                backgroundImage: `url(${tataCommunications})`,
-                backgroundSize: "cover", backgroundPosition: "center top",
-                opacity: 0.45,
+                width: 3, height: 32, borderRadius: 2,
+                background: p.colour,
+                marginBottom: 20,
+                transition: "background 0.5s ease",
               }} />
-              {/* Dark base */}
-              <div style={{
-                position: "absolute", inset: 0,
-                background: "linear-gradient(to top, rgba(13,27,62,0.92) 0%, rgba(13,27,62,0.4) 60%, transparent 100%)",
-              }} />
-              {/* Accent bar top */}
-              <div style={{
-                position: "absolute", top: 0, left: 0, right: 0, height: 4,
-                background: B_INDIGO, zIndex: 3,
-              }} />
-              {/* Text box */}
-              <div style={{
-                position: "absolute", bottom: 28, left: 20, right: 20,
-                zIndex: 4,
-                background: "rgba(10,10,20,0.72)",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
-                borderRadius: 12,
-                padding: "18px 18px",
-                borderLeft: `4px solid ${B_INDIGO}`,
+              <span style={{
+                fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
+                textTransform: "uppercase", color: "#94A3B8",
+                marginBottom: 10, display: "block",
+                transition: "opacity 0.4s ease",
               }}>
-                <span style={{
-                  fontSize: 9, fontWeight: 800, letterSpacing: "1px",
-                  textTransform: "uppercase", color: "rgba(255,255,255,0.5)",
-                  display: "block", marginBottom: 6,
-                }}>
-                  {EOEO.tag}
-                </span>
-                <h3 style={{
-                  fontSize: 16, fontWeight: 900, color: "white",
-                  lineHeight: 1.3, margin: "0 0 16px",
-                }}>
-                  {EOEO.headline}
-                </h3>
-                <a
-                  href={EOEO.ctaUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                    padding: "10px 0", borderRadius: 8,
-                    fontSize: 12, fontWeight: 800, color: "white",
-                    background: B_INDIGO, textDecoration: "none", cursor: "pointer",
-                    width: "100%",
-                  }}
-                >
-                  {EOEO.cta} <ExternalLink size={11} />
-                </a>
+                {p.label}
+              </span>
+              <h3 style={{
+                fontSize: 28, fontWeight: 900, color: ACCENT_NAVY,
+                letterSpacing: "-0.4px", lineHeight: 1.2,
+                margin: "0 0 20px",
+              }}>
+                {p.title}
+              </h3>
+              <div style={{ display: "flex", gap: 8, marginBottom: 28 }}>
+                {[p.stat1, p.stat2].map((s, i) => (
+                  <span key={i} style={{
+                    fontSize: 11, fontWeight: 700, color: "#475569",
+                    background: "#f1f5f9",
+                    padding: "4px 12px", borderRadius: 100,
+                    border: "1px solid #e2e8f0",
+                  }}>{s}</span>
+                ))}
               </div>
+              <div style={{
+                display: "flex", alignItems: "center", gap: 6,
+                fontSize: 13, fontWeight: 700, color: p.colour,
+                transition: "color 0.5s ease",
+              }}>
+                Learn more <ArrowRight size={13} />
+              </div>
+            </div>
+
+            {/* COL 3 — EOEO tile */}
+            <div style={{
+              borderRadius: 18,
+              background: ACCENT_NAVY,
+              padding: "28px 22px",
+              display: "flex", flexDirection: "column",
+              justifyContent: "flex-start",
+              gap: 20,
+              boxShadow: "0 4px 20px rgba(0,0,0,0.13)",
+              position: "relative",
+              overflow: "hidden",
+              minHeight: 380,
+            }}>
+              <img src={doodleCluster3} alt="" style={{
+                position: "absolute", bottom: -20, right: -30,
+                width: 200, opacity: 0.08,
+                pointerEvents: "none", userSelect: "none",
+                transform: "rotate(-10deg)",
+              }} />
+
+              <span style={{
+                display: "inline-block", fontSize: 9, fontWeight: 800,
+                color: "rgba(255,255,255,0.5)",
+                textTransform: "uppercase", letterSpacing: "1px",
+                alignSelf: "flex-start",
+              }}>
+                {EOEO.tag}
+              </span>
+
+              <h3 style={{
+                fontSize: 20, fontWeight: 900, color: "white",
+                lineHeight: 1.3, margin: 0,
+              }}>
+                {EOEO.headline}
+              </h3>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
+                {EOEO.steps.map((step) => (
+                  <div key={step.num} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                    <span style={{
+                      fontSize: 10, fontWeight: 800, color: B_YELLOW,
+                      minWidth: 20, marginTop: 1,
+                    }}>{step.num}</span>
+                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", lineHeight: 1.45 }}>
+                      {step.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href={EOEO.ctaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                  padding: "12px 0", borderRadius: 10,
+                  fontSize: 13, fontWeight: 800, color: ACCENT_NAVY,
+                  background: B_YELLOW, textDecoration: "none", cursor: "pointer",
+                }}
+              >
+                {EOEO.cta} <ExternalLink size={12} />
+              </a>
             </div>
           </div>
         </div>
