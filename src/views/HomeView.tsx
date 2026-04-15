@@ -11,7 +11,7 @@ import tataMotors1 from "@/assets/Tata_Motors_1.jpg";
 import tataMotors2 from "@/assets/tata-motors-2.jpg";
 import tajSats from "@/assets/Taj_Sats.jpeg";
 import {
-  B_INDIGO, B_YELLOW, B_TEAL, B_BLUE, ACCENT_NAVY,
+  B_INDIGO, B_YELLOW, B_TEAL, B_BLUE, B_TICKER, ACCENT_NAVY,
 } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 

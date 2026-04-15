@@ -4,7 +4,7 @@ import { Twitter, Instagram, Linkedin } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import {
-  B_INDIGO, B_YELLOW, B_RED, B_TEAL, B_BLUE,
+  B_INDIGO, B_YELLOW, B_RED, B_TEAL, B_BLUE, B_TICKER,
   P_INDIGO, P_TEAL, P_RED, P_YELLOW,
   secBg, SectionDivider,
   FLAGSHIP_PROGRAMMES, JOURNEY_MILESTONES, FUN_FACTS,
