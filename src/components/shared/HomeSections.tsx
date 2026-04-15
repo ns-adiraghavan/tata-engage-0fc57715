@@ -19,6 +19,7 @@ import tataElxsiImg   from "@/assets/tata-elxsi.jpg";
 import airIndia from "@/assets/air-india.jpg";
 import tataCommunications from "@/assets/tata-communications-1.jpg";
 import infiniti from "@/assets/Infiniti_2.jpg";
+import tajSatsImg from "@/assets/Taj_Sats.jpeg";
 
 export { SectionDivider };
 
@@ -416,22 +417,25 @@ export function JourneySection() {
   ];
 
   return (
-    <section ref={ref} className="section-block" style={{ background: "#F7F9FF" }}>
-      <img src={doodleCluster3} alt="" style={{
-        position: "absolute", bottom: -10, right: -70, width: 260, opacity: 0.07,
-        pointerEvents: "none", userSelect: "none", transform: "rotate(-6deg)",
+    <section ref={ref} className="section-block" style={{ background: "#F7F9FF", position: "relative", overflow: "hidden" }}>
+      {/* Background photo */}
+      <img src={tajSatsImg} alt="" style={{
+        position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
+        pointerEvents: "none", userSelect: "none",
       }} />
-      <img src={doodleCluster1} alt="" style={{
-        position: "absolute", top: 10, left: -50, width: 180, opacity: 0.06,
-        pointerEvents: "none", userSelect: "none", transform: "rotate(12deg)",
+      {/* Dark overlay for readability */}
+      <div style={{
+        position: "absolute", inset: 0,
+        background: "linear-gradient(135deg, rgba(5,5,20,0.82) 0%, rgba(5,5,20,0.75) 50%, rgba(5,5,20,0.70) 100%)",
+        pointerEvents: "none",
       }} />
 
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
         <div className="section-header">
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: B_INDIGO, margin: "0 0 8px", opacity: 0.7 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "0 0 8px" }}>
             Our Journey
           </p>
-          <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
+          <h2 style={{ fontSize: 30, fontWeight: 900, color: "white", letterSpacing: "-0.5px", margin: 0 }}>
             A decade of giving back
           </h2>
         </div>
@@ -466,12 +470,12 @@ export function JourneySection() {
                   }}>
                     {m.year}
                   </div>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: ACCENT_NAVY, lineHeight: 1.3, marginBottom: 4 }}>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 4 }}>
                     {m.title}
                   </div>
-                  <div style={{ fontSize: 10, color: "#94a3b8", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
                   <div style={{ fontSize: 18, fontWeight: 900, color: m.colour }}>{ex.metric}</div>
-                  <div style={{ fontSize: 9, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
                     {ex.label}
                   </div>
                 </div>
@@ -564,12 +568,12 @@ export function JourneySection() {
                   }}>
                     {m.year}
                   </div>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: ACCENT_NAVY, lineHeight: 1.3, marginBottom: 4 }}>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 4 }}>
                     {m.title}
                   </div>
-                  <div style={{ fontSize: 10, color: "#94a3b8", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
                   <div style={{ fontSize: 18, fontWeight: 900, color: m.colour }}>{ex.metric}</div>
-                  <div style={{ fontSize: 9, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
+                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
                     {ex.label}
                   </div>
                 </div>
@@ -594,18 +598,18 @@ export function JourneySection() {
                   borderRadius: "50%", background: m.colour,
                   border: "2px solid white", boxShadow: `0 0 0 2px ${m.colour}30`,
                 }} />
-                <div style={{ background: "white", borderRadius: 12, padding: "14px 16px", border: "1px solid #e8e8f0" }}>
+                <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 12, padding: "14px 16px", border: "1px solid rgba(255,255,255,0.1)" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
                     {ex.iconFn(ex.iconColour, 13)}
                     <span style={{ fontSize: 9, fontWeight: 900, color: m.colour, textTransform: "uppercase", letterSpacing: "1.2px" }}>
                       {m.year}
                     </span>
                   </div>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: ACCENT_NAVY }}>{m.title}</div>
-                  <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 3, lineHeight: 1.5 }}>{m.desc}</div>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: "white" }}>{m.title}</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 3, lineHeight: 1.5 }}>{m.desc}</div>
                   <div style={{ fontSize: 16, fontWeight: 900, color: m.colour, marginTop: 6 }}>
                     {ex.metric}{" "}
-                    <span style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase" }}>
+                    <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase" }}>
                       {ex.label}
                     </span>
                   </div>
