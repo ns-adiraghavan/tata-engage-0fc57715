@@ -801,7 +801,7 @@ export function NumbersSection() {
                   }} />
                   <div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-                      <p style={{ fontSize: 10, color: "#94a3b8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", margin: 0 }}>
+                      <p className="text-zinc-950" style={{ fontSize: 10, color: "#94a3b8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", margin: 0 }}>
                         {s.label}
                       </p>
                       <div style={{
