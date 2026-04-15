@@ -371,7 +371,7 @@ export default function ProEngageView() {
               <div style={{ fontSize:10, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase", color:"#aaaabc", marginBottom:6 }}>ProEngage 2025 | Edition 11</div>
               <h1 style={{ fontSize:28, fontWeight:900, color:ACCENT_NAVY, margin:0, letterSpacing:-0.5 }}>Browse Projects</h1>
             </div>
-            <button onClick={()=>navigate("/my-applications")} style={{ background:P_INDIGO, color:B_INDIGO, border:`1px solid ${B_INDIGO}22`, borderRadius:10, padding:"10px 18px", fontSize:13.5, fontWeight:700, cursor:"pointer", display:"flex", alignItems:"center", gap:7 }}>
+            <button onClick={()=>navigate("/dashboard")} style={{ background:P_INDIGO, color:B_INDIGO, border:`1px solid ${B_INDIGO}22`, borderRadius:10, padding:"10px 18px", fontSize:13.5, fontWeight:700, cursor:"pointer", display:"flex", alignItems:"center", gap:7 }}>
               <Bookmark size={15}/> My Applications
             </button>
           </div>
