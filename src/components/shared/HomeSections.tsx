@@ -75,22 +75,6 @@ const GLOBAL_STYLES = `
   .te-bob-2 { animation: te-bob 1.6s ease-in-out infinite 0.18s;  }
   .te-bob-3 { animation: te-bob 1.6s ease-in-out infinite 0.36s;  }
 
-  /* Flip card */
-  .flip-card { perspective: 1000px; }
-  .flip-card-inner {
-    position: relative; width: 100%; height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.55s ease;
-  }
-  .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
-  .flip-front, .flip-back {
-    position: absolute; inset: 0;
-    backface-visibility: hidden; -webkit-backface-visibility: hidden;
-    border-radius: 18px; overflow: hidden;
-  }
-  .flip-back { transform: rotateY(180deg); }
-  .prog-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-  .prog-card:hover { transform: translateY(-4px); box-shadow: 0 20px 56px rgba(0,0,0,0.22) !important; }
 
   /* Journey: dashed trail draw-on */
   .te-trail { stroke-dashoffset: 300; transition: stroke-dashoffset 1s ease-out; }
