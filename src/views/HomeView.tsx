@@ -186,7 +186,7 @@ const HomeView = () => {
               <span className="rounded-full transition-all duration-300"
                 style={{
                   width: active ? 10 : 7, height: active ? 10 : 7,
-                  backgroundColor: active ? (inHero ? "white" : B_TEAL) : (inHero ? "rgba(255,255,255,0.4)" : "#CBD5E1"),
+                  backgroundColor: active ? (inHero ? "white" : B_TICKER) : (inHero ? "rgba(255,255,255,0.4)" : "#CBD5E1"),
                 }} />
             </button>
           );
@@ -479,7 +479,7 @@ const HomeView = () => {
             style={{
               backgroundColor: inHero ? "rgba(255,255,255,0.12)" : "white",
               border: inHero ? "1px solid rgba(255,255,255,0.25)" : "1px solid #e2e8f0",
-              color: inHero ? "white" : B_TEAL,
+              color: inHero ? "white" : B_TICKER,
               boxShadow: inHero ? "0 1px 6px rgba(0,0,0,0.20)" : "0 1px 6px rgba(0,0,0,0.10)",
             }}
             onMouseEnter={e => (e.currentTarget.style.backgroundColor = inHero ? "rgba(255,255,255,0.22)" : "#EEF0FF")}
@@ -498,7 +498,7 @@ const HomeView = () => {
               title="Subscribe to newsletter"
               style={{
                 width: 36, height: 36, borderRadius: "50%",
-                backgroundColor: subDone ? "#0d7c52" : B_TEAL,
+                backgroundColor: subDone ? "#0d7c52" : B_TICKER,
                 border: "none", color: "#fff",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 cursor: "pointer", boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
@@ -544,7 +544,7 @@ const HomeView = () => {
                   }}
                   style={{
                     width: "100%", padding: "8px 0",
-                    backgroundColor: B_TEAL, color: "#fff",
+                    backgroundColor: B_TICKER, color: "#fff",
                     border: "none", borderRadius: 7,
                     fontSize: 12.5, fontWeight: 700, cursor: "pointer",
                   }}

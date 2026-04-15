@@ -206,7 +206,7 @@ const Chatbot = () => {
       <button 
         onClick={() => setIsChatOpen(!isChatOpen)}
         className={`w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-white transition-all transform hover:scale-110 active:scale-95 cursor-pointer ${isChatOpen ? 'bg-zinc-900 rotate-90' : ''}`}
-        style={{ backgroundColor: isChatOpen ? undefined : '#00A896' }}
+        style={{ backgroundColor: isChatOpen ? undefined : '#3E7EB0' }}
       >
         {isChatOpen ? <X size={28} /> : <MessageSquare size={28} />}
       </button>
