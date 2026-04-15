@@ -963,7 +963,7 @@ export function TickerBar({ fixed = false }: { fixed?: boolean }) {
     <div style={{
       ...(fixed ? { position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 50 } : {}),
       padding: "10px 0", overflow: "hidden",
-      background: "#4A90C4",
+      background: "#3E7EB0",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ flexShrink: 0, paddingLeft: 24 }}>

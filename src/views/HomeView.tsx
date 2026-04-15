@@ -287,7 +287,7 @@ const HomeView = () => {
                   style={{
                     padding: "11px 24px", borderRadius: 10,
                     fontSize: 13, fontWeight: 800, color: "white",
-                    background: "#4A90C4", border: "none",
+                    background: "#3E7EB0", border: "none",
                   }}>
                   <BookOpen size={14} /> Read Story
                 </button>
@@ -297,7 +297,7 @@ const HomeView = () => {
                   style={{
                     padding: "11px 24px", borderRadius: 10,
                     fontSize: 13, fontWeight: 800, color: "white",
-                    background: "#4A90C4", border: "none",
+                    background: "#3E7EB0", border: "none",
                   }}>
                   <Play size={14} /> Watch More
                 </button>
