@@ -789,7 +789,7 @@ export function NumbersSection() {
               return (
                 <div key={s.label} style={{
                   display: i === statIdx ? "flex" : "none",
-                  flexDirection: "column", justifyContent: "space-between",
+                  flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" as const,
                   borderRadius: 18, padding: 28, position: "relative", overflow: "hidden",
                   background: `${s.colour}14`, minHeight: 280,
                   boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
@@ -800,7 +800,7 @@ export function NumbersSection() {
                     background: s.colour,
                   }} />
                   <div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 12 }}>
                       <p className="text-zinc-950 font-bold" style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", margin: 0 }}>
                         {s.label}
                       </p>
