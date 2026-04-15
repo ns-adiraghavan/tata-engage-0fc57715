@@ -356,25 +356,11 @@ export function ProgrammeSpotlight() {
               </span>
 
               <h3 style={{
-                fontSize: 20, fontWeight: 900, color: "white",
-                lineHeight: 1.3, margin: 0,
+                fontSize: 28, fontWeight: 900, color: "white",
+                lineHeight: 1.3, margin: 0, flex: 1,
               }}>
                 {EOEO.headline}
               </h3>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
-                {EOEO.steps.map((step) => (
-                  <div key={step.num} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                    <span style={{
-                      fontSize: 10, fontWeight: 800, color: B_YELLOW,
-                      minWidth: 20, marginTop: 1,
-                    }}>{step.num}</span>
-                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", lineHeight: 1.45 }}>
-                      {step.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
 
               <a
                 href={EOEO.ctaUrl}
