@@ -170,8 +170,8 @@ const PROG_CONFIG = [
   },
 ];
 
-const PROG_PASTEL = ["#EEF0FF", "#F5F3FF", "#E6F8F5"];
-const PROG_ACCENT_TEXT = ["#333399", "#5b21b6", "#00A896"];
+const PROG_PASTEL = ["#003580", "#1A4731", "#C8850A"];
+const PROG_ACCENT_TEXT = ["#ffffff", "#ffffff", "#ffffff"];
 
 //
 // PROGRAMME SPOTLIGHT
