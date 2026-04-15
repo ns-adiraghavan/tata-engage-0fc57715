@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import tataEngageLogoNoBg from "@/assets/tata-engage-logo-nobg.png";
-import { X, ChevronRight, LayoutDashboard, Briefcase, Calendar, ClipboardList, User, Shield, Compass } from "lucide-react";
+import { X, ChevronRight, LayoutDashboard, Briefcase, Calendar, User, Shield } from "lucide-react";
 import type { View } from "@/types";
 
 const MegaMenu = ({ isOpen, onClose, isLoggedIn, onNavigate, onLogout, user }: { 
@@ -65,22 +65,10 @@ const MegaMenu = ({ isOpen, onClose, isLoggedIn, onNavigate, onLogout, user }: {
                         <span className="flex items-center gap-3"><Calendar size={16} /> TVW Hub</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
                       </li>
                       <li 
-                        onClick={() => { onNavigate("my-applications"); onClose(); }}
-                        className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
-                      >
-                        <span className="flex items-center gap-3"><ClipboardList size={16} /> My Applications</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
-                      </li>
-                      <li 
                         onClick={() => { onNavigate("profile"); onClose(); }}
                         className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
                       >
                         <span className="flex items-center gap-3"><User size={16} /> My Profile</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
-                      </li>
-                      <li 
-                        onClick={() => { onNavigate("tvw-vibe"); onClose(); }}
-                        className="hover:text-tata-blue cursor-pointer flex items-center justify-between group"
-                      >
-                        <span className="flex items-center gap-3"><Compass size={16} /> TVW Vibe Highlights</span> <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all" />
                       </li>
                       <li 
                         onClick={() => { onNavigate("disaster-response"); onClose(); }}
