@@ -19,7 +19,7 @@ import tataElxsiImg   from "@/assets/tata-elxsi.jpg";
 import airIndia from "@/assets/air-india.jpg";
 import tataCommunications from "@/assets/tata-communications-1.jpg";
 import infiniti from "@/assets/Infiniti_2.jpg";
-import tajSatsImg from "@/assets/Taj_Sats.jpeg";
+import tajSatsImg from "@/assets/tata-motors-2.jpg";
 
 export { SectionDivider };
 
