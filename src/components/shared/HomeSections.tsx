@@ -789,7 +789,7 @@ export function NumbersSection() {
               return (
                 <div key={s.label} style={{
                   display: i === statIdx ? "flex" : "none",
-                  flexDirection: "column", justifyContent: "space-between",
+                  flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" as const,
                   borderRadius: 18, padding: 28, position: "relative", overflow: "hidden",
                   background: `${s.colour}14`, minHeight: 280,
                   boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
