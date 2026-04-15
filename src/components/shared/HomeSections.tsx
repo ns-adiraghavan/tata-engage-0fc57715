@@ -627,9 +627,9 @@ export function JourneySection() {
               display: "inline-flex", alignItems: "center", gap: 8,
               fontSize: 13, fontWeight: 800,
               padding: "12px 28px", borderRadius: 10,
-              background: B_INDIGO, color: "white",
+              background: B_TEAL, color: "white",
               border: "none", cursor: "pointer",
-              boxShadow: `0 4px 16px ${B_INDIGO}40`,
+              boxShadow: `0 4px 16px ${B_TEAL}40`,
             }}
           >
             Read our full story <ArrowRight size={13} />
@@ -901,7 +901,7 @@ export function NumbersSection() {
                 width: "100%", display: "flex", alignItems: "center", justifyContent: "center",
                 gap: 6, padding: "9px 0", borderRadius: 10,
                 fontSize: 11, fontWeight: 800,
-                background: B_INDIGO,
+                background: B_TEAL,
                 color: "white", border: "none", cursor: "pointer",
               }}>
                 Follow @TataEngage <ArrowRight size={9} />
