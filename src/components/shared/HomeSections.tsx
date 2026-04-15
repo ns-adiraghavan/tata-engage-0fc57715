@@ -161,7 +161,7 @@ const PROG_CONFIG = [
     label: "Bi-annual · Global",
     stat1: "12 Editions", stat2: "50K+ Volunteers",
     colour: "#4A90C4",
-    photo: airIndia, photoPos: "center 30%",
+    photo: airIndia, photoPos: "center 25%",
   },
   {
     id: "ProEngage", route: "about-proengage",
@@ -169,20 +169,20 @@ const PROG_CONFIG = [
     label: "Skill-based · Year-round",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
     colour: "#2E7D4F",
-    photo: tataCommunications, photoPos: "center top",
+    photo: tataCommunications, photoPos: "center center",
   },
   {
     id: "Disaster Response", route: "disaster-response",
     title: "Disaster Response",
     label: "Rapid Action",
     stat1: "24 Responses", stat2: "8 States",
-    colour: "#F5A623",
-    photo: infiniti, photoPos: "center 30%",
+    colour: "#00A896",
+    photo: infiniti, photoPos: "center 20%",
   },
 ];
 
-const PROG_PASTEL = ["#EEF0FF", "#F5F3FF", "#FEF6E4"];
-const PROG_ACCENT_TEXT = ["#333399", "#5b21b6", "#B87C0A"];
+const PROG_PASTEL = ["#EEF0FF", "#F5F3FF", "#E6F8F5"];
+const PROG_ACCENT_TEXT = ["#333399", "#5b21b6", "#00A896"];
 
 //
 // PROGRAMME SPOTLIGHT
@@ -236,8 +236,9 @@ export function ProgrammeSpotlight() {
                 className="prog-img-card"
                 onClick={() => navigate(p.route)}
                 style={{
-                  borderRadius: 18, overflow: "hidden",
-                  flex: 1, minHeight: 380, position: "relative",
+                  clipPath: "polygon(0 0, 100% 0, 92% 100%, 0 100%)",
+                  borderRadius: "18px 0 0 18px",
+                  flex: 1, minHeight: 300, position: "relative",
                   boxShadow: "0 4px 24px rgba(0,0,0,0.13)",
                   cursor: "pointer",
                 }}
@@ -248,7 +249,7 @@ export function ProgrammeSpotlight() {
                     style={{
                       position: "absolute", inset: 0,
                       backgroundImage: `url(${pc.photo})`,
-                      backgroundSize: "110%",
+                      backgroundSize: "cover",
                       backgroundPosition: pc.photoPos,
                       opacity: i === idx ? 1 : 0,
                       transition: "opacity 0.7s ease",
@@ -291,7 +292,7 @@ export function ProgrammeSpotlight() {
                 justifyContent: "flex-end",
                 boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
                 cursor: "pointer",
-                minHeight: 380,
+                minHeight: 300,
                 transition: "background 0.5s ease, box-shadow 0.2s ease",
               }}
             >
@@ -346,7 +347,7 @@ export function ProgrammeSpotlight() {
               boxShadow: "0 4px 20px rgba(0,0,0,0.13)",
               position: "relative",
               overflow: "hidden",
-              minHeight: 380,
+              minHeight: 300,
             }}>
               <img src={doodleCluster3} alt="" style={{
                 position: "absolute", bottom: -20, right: -30,
