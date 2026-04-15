@@ -16,6 +16,9 @@ import doodleCluster2 from "@/assets/doodle-cluster-2.png";
 import doodleCluster3 from "@/assets/doodle-cluster-3.png";
 import doodleCluster4 from "@/assets/doodle-cluster-4.png";
 import tataElxsiImg   from "@/assets/tata-elxsi.jpg";
+import airIndia from "@/assets/air-india.jpg";
+import tataCommunications from "@/assets/tata-communications-1.jpg";
+import infiniti from "@/assets/Infiniti_2.jpg";
 
 export { SectionDivider };
 
@@ -163,7 +166,7 @@ const PROG_CONFIG = [
     label: "Bi-annual · Global",
     stat1: "12 Editions",    stat2: "50K+ Volunteers",
     desc: "A bi-annual celebration of collective action across every Tata company, worldwide.",
-    photo: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=900",
+    photo: airIndia,
   },
   {
     id: "ProEngage",        route: "about-proengage",
@@ -173,7 +176,7 @@ const PROG_CONFIG = [
     label: "Skill-based",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
     desc: "Match your professional expertise to NGO projects that need it most.",
-    photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=900",
+    photo: tataCommunications,
   },
   {
     id: "Disaster Response", route: "disaster-response",
@@ -183,7 +186,7 @@ const PROG_CONFIG = [
     label: "Rapid Action",
     stat1: "24 Responses",   stat2: "8 States",
     desc: "Volunteers deployed within 48 hours when communities need urgent support.",
-    photo: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&q=80&w=900",
+    photo: infiniti,
   },
 ];
 

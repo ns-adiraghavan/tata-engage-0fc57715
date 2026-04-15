@@ -6,6 +6,10 @@ import { useAppContext } from "@/context/AppContext";
 import { useAuth } from "@/context/AuthContext";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
+import tataAIG from "@/assets/Tata_AIG_2.jpg";
+import tataMotors1 from "@/assets/Tata_Motors_1.jpg";
+import tataMotors2 from "@/assets/tata-motors-2.jpg";
+import tajSats from "@/assets/Taj_Sats.jpeg";
 import {
   B_INDIGO, B_YELLOW, B_TEAL, B_BLUE, ACCENT_NAVY,
 } from "@/data/homeSharedData";
@@ -46,7 +50,7 @@ const InkSwish = ({ className = "", style = {} }: { className?: string; style?: 
 
 const HERO_SLIDES = [
   {
-    photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1400",
+    photo: tataAIG,
     accent: B_YELLOW, tag: "Education", cta: "story" as const,
     headline: "Teaching skills that change what young people think is possible",
     sub: "Tata volunteers are in classrooms, training centres, and communities — every day.",
@@ -58,7 +62,7 @@ const HERO_SLIDES = [
     },
   },
   {
-    photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&q=80&w=1400",
+    photo: tataMotors1,
     accent: "#E8401C", tag: "Community", cta: "video" as const,
     headline: "10,000 rural families reached through free health camps",
     sub: "When professionals volunteer their expertise, communities transform.",
@@ -70,7 +74,7 @@ const HERO_SLIDES = [
     },
   },
   {
-    photo: "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=1400",
+    photo: tataMotors2,
     accent: B_TEAL, tag: "Environment", cta: "story" as const,
     headline: "1 million trees planted across Tata campuses nationwide",
     sub: "A greener legacy, growing branch by branch.",
@@ -82,7 +86,7 @@ const HERO_SLIDES = [
     },
   },
   {
-    photo: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&q=80&w=1400",
+    photo: tajSats,
     accent: B_BLUE, tag: "Disaster Response", cta: "video" as const,
     headline: "Volunteers on-ground within 48 hours of the Kerala floods",
     sub: "Organised, rapid, human — Tata's fastest ever humanitarian response.",
@@ -175,15 +179,13 @@ const HomeView = () => {
             opacity: heroSlide === i ? 1 : 0,
             transition: "opacity 1s ease",
           }}>
-            <img
-              src={s.photo} alt={s.tag}
-              referrerPolicy="no-referrer"
+            <div
               style={{
                 position: "absolute", inset: 0,
-                width: "100%", height: "100%",
-                objectFit: "cover", objectPosition: "center",
-                // Slow horizontal pan — no scale/zoom
-                animation: heroSlide === i ? "heroPan 18s ease-in-out infinite alternate" : "none",
+                backgroundImage: `url(${s.photo})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed",
               }}
             />
           </div>
@@ -338,10 +340,6 @@ const HomeView = () => {
         </button>
 
         <style>{`
-          @keyframes heroPan {
-            0%   { object-position: 30% center; }
-            100% { object-position: 70% center; }
-          }
           @keyframes chevronBob {
             0%, 100% { transform: translateY(0); }
             50%       { transform: translateY(4px); }
