@@ -75,11 +75,20 @@ const GLOBAL_STYLES = `
   .te-bob-2 { animation: te-bob 1.6s ease-in-out infinite 0.18s;  }
   .te-bob-3 { animation: te-bob 1.6s ease-in-out infinite 0.36s;  }
 
-  /* Programme card hover — image fades in, description slides up */
-  .prog-img  { opacity: 0; transition: opacity 0.4s ease; }
-  .prog-card:hover .prog-img { opacity: 1; }
-  .prog-desc { opacity: 0; transform: translateY(10px); transition: opacity 0.35s ease, transform 0.35s ease; }
-  .prog-card:hover .prog-desc { opacity: 1; transform: translateY(0); }
+  /* Flip card */
+  .flip-card { perspective: 1000px; }
+  .flip-card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.55s ease;
+  }
+  .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: 18px; overflow: hidden;
+  }
+  .flip-back { transform: rotateY(180deg); }
   .prog-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
   .prog-card:hover { transform: translateY(-4px); box-shadow: 0 20px 56px rgba(0,0,0,0.22) !important; }
 
@@ -234,87 +243,103 @@ export function ProgrammeSpotlight() {
             <DefinerUnderline colour={B_INDIGO} width={68} />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 20, alignItems: "stretch" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "240px 1fr 260px", gap: 20, alignItems: "stretch" }}>
 
-            {/* LEFT — single cycling card */}
+            {/* LEFT — standalone photo card */}
+            <div style={{
+              borderRadius: 18,
+              overflow: "hidden",
+              backgroundImage: `url(${p.photo})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
+              transition: "background-image 0.45s ease",
+            }} />
+
+            {/* MIDDLE — single cycling flip card */}
             <div style={{ display: "flex", flexDirection: "column" }}>
               <div
-                className="prog-card"
+                className="flip-card prog-card"
                 onClick={() => navigate(p.route)}
                 style={{
                   flex: 1, borderRadius: 18, overflow: "hidden",
                   background: p.bg, cursor: "pointer", position: "relative",
                   minHeight: 400, boxShadow: "0 4px 24px rgba(0,0,0,0.14)",
                   transition: "background 0.45s ease",
-                  display: "flex", flexDirection: "row" as const,
                 }}
               >
-                {/* Photo panel */}
-                <div style={{
-                  width: "42%",
-                  flexShrink: 0,
-                  backgroundImage: `url(${p.photo})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }} />
-
-                {/* Text panel */}
-                <div style={{
-                  flex: 1,
-                  background: p.bg,
-                  padding: "36px 32px 32px",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  transition: "background 0.45s ease",
-                }}>
-                  <div>
-                    <div style={{ marginBottom: 20 }}>
-                      {p.iconFn(p.iconColour, 38)}
+                <div className="flip-card-inner">
+                  {/* Front face */}
+                  <div className="flip-front" style={{ background: p.bg, position: "relative" }}>
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.14) 100%)" }} />
+                    <div style={{ position: "relative", zIndex: 2, padding: "36px 36px 32px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                      <div style={{ marginBottom: 20 }}>
+                        {p.iconFn(p.iconColour, 38)}
+                      </div>
+                      <span style={{
+                        fontSize: 10, fontWeight: 700, letterSpacing: "1.2px",
+                        textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
+                      }}>
+                        {p.label}
+                      </span>
+                      <h3 style={{
+                        fontSize: 36, fontWeight: 900, color: "white",
+                        letterSpacing: "-0.4px", lineHeight: 1.2, margin: "10px 0 0",
+                      }}>
+                        {p.title}
+                      </h3>
                     </div>
-                    <span style={{
-                      fontSize: 10, fontWeight: 700, letterSpacing: "1.2px",
-                      textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
-                    }}>
-                      {p.label}
-                    </span>
-                    <h3 style={{
-                      fontSize: 28, fontWeight: 900, color: "white",
-                      letterSpacing: "-0.4px", lineHeight: 1.2, margin: "10px 0 0",
-                    }}>
-                      {p.title}
-                    </h3>
-                    <p className="prog-desc" style={{
-                      fontSize: 14, color: "rgba(255,255,255,0.78)",
-                      lineHeight: 1.65, margin: "14px 0 0",
-                    }}>
-                      {p.desc}
-                    </p>
                   </div>
 
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 24 }}>
-                    <div style={{ display: "flex", gap: 8 }}>
-                      {[p.stat1, p.stat2].map((s, i) => (
-                        <span key={i} style={{
-                          fontSize: 11, fontWeight: 700,
-                          color: "rgba(255,255,255,0.88)",
-                          background: "rgba(255,255,255,0.13)",
-                          backdropFilter: "blur(4px)",
-                          padding: "4px 11px", borderRadius: 100,
-                          border: "1px solid rgba(255,255,255,0.16)",
-                        }}>{s}</span>
-                      ))}
-                    </div>
-                    <div style={{
-                      display: "flex", alignItems: "center", gap: 6,
-                      fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.72)",
-                    }}>
-                      Learn more <ArrowRight size={13} />
+                  {/* Back face */}
+                  <div className="flip-back" style={{ background: p.bg, position: "relative" }}>
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(155deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.28) 100%)" }} />
+                    <div style={{ position: "relative", zIndex: 2, padding: "36px 36px 32px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                      <div>
+                        <span style={{
+                          fontSize: 10, fontWeight: 700, letterSpacing: "1.2px",
+                          textTransform: "uppercase", color: "rgba(255,255,255,0.55)",
+                        }}>
+                          {p.label}
+                        </span>
+                        <h3 style={{
+                          fontSize: 20, fontWeight: 800, color: "white",
+                          letterSpacing: "-0.4px", lineHeight: 1.2, margin: "8px 0 16px",
+                        }}>
+                          {p.title}
+                        </h3>
+                        <p style={{
+                          fontSize: 14, color: "rgba(255,255,255,0.82)",
+                          lineHeight: 1.65, margin: 0,
+                        }}>
+                          {p.desc}
+                        </p>
+                      </div>
+
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 24 }}>
+                        <div style={{ display: "flex", gap: 8 }}>
+                          {[p.stat1, p.stat2].map((s, i) => (
+                            <span key={i} style={{
+                              fontSize: 11, fontWeight: 700,
+                              color: "rgba(255,255,255,0.88)",
+                              background: "rgba(255,255,255,0.13)",
+                              backdropFilter: "blur(4px)",
+                              padding: "4px 11px", borderRadius: 100,
+                              border: "1px solid rgba(255,255,255,0.16)",
+                            }}>{s}</span>
+                          ))}
+                        </div>
+                        <div style={{
+                          display: "flex", alignItems: "center", gap: 6,
+                          fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.72)",
+                        }}>
+                          Learn more <ArrowRight size={13} />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
               {/* Dot indicators — no text labels */}
               <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 16 }}>
                 {PROG_CONFIG.map((pc, i) => (
@@ -332,7 +357,7 @@ export function ProgrammeSpotlight() {
               </div>
             </div>
 
-            {/* RIGHT — EOEO: headline + CTA dominant, steps secondary */}
+            {/* RIGHT — EOEO: headline + CTA only */}
             <div style={{
               borderRadius: 18,
               background: P_INDIGO,
@@ -340,44 +365,26 @@ export function ProgrammeSpotlight() {
               display: "flex", flexDirection: "column",
               padding: "28px 22px",
               boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
-              justifyContent: "space-between",
+              justifyContent: "flex-start",
+              gap: 24,
             }}>
-              <div>
-                <span style={{
-                  display: "inline-block", fontSize: 9, fontWeight: 800,
-                  color: B_INDIGO, background: "white",
-                  padding: "3px 9px", borderRadius: 100,
-                  border: `1px solid ${B_INDIGO}25`, marginBottom: 14,
-                  textTransform: "uppercase", letterSpacing: "0.8px",
-                }}>
-                  {EOEO.tag}
-                </span>
+              <span style={{
+                display: "inline-block", fontSize: 9, fontWeight: 800,
+                color: B_INDIGO, background: "white",
+                padding: "3px 9px", borderRadius: 100,
+                border: `1px solid ${B_INDIGO}25`,
+                textTransform: "uppercase", letterSpacing: "0.8px",
+                alignSelf: "flex-start",
+              }}>
+                {EOEO.tag}
+              </span>
 
-                <h3 style={{
-                  fontSize: 19, fontWeight: 900, color: ACCENT_NAVY,
-                  lineHeight: 1.3, margin: "0 0 20px",
-                }}>
-                  {EOEO.headline}
-                </h3>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
-                  {EOEO.steps.map((step) => (
-                    <div key={step.num} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                      <span style={{
-                        width: 22, height: 22, borderRadius: "50%",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        background: B_INDIGO, color: "white",
-                        fontSize: 9, fontWeight: 900, flexShrink: 0,
-                      }}>
-                        {step.num}
-                      </span>
-                      <p style={{ fontSize: 12, fontWeight: 600, color: "#475569", margin: 0 }}>
-                        {step.label}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <h3 style={{
+                fontSize: 19, fontWeight: 900, color: ACCENT_NAVY,
+                lineHeight: 1.3, margin: 0,
+              }}>
+                {EOEO.headline}
+              </h3>
 
               <a
                 href={EOEO.ctaUrl}
@@ -385,7 +392,7 @@ export function ProgrammeSpotlight() {
                 rel="noopener noreferrer"
                 style={{
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                  padding: "12px 0", borderRadius: 10, marginTop: 24,
+                  padding: "12px 0", borderRadius: 10,
                   fontSize: 13, fontWeight: 800, color: "white",
                   background: B_INDIGO, textDecoration: "none", cursor: "pointer",
                 }}
