@@ -6,6 +6,7 @@ export const B_YELLOW = "#F5A623";
 export const B_RED    = "#E8401C";
 export const B_TEAL   = "#00A896";
 export const B_BLUE   = "#1E6BB8";
+export const B_TICKER = "#3E7EB0";
 export const ACCENT_NAVY = "#0D1B3E";
 
 // ── Pastel surface palette ────────────────────────────────────────────────────
