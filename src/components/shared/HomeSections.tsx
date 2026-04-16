@@ -783,7 +783,7 @@ export function NumbersSection() {
                       background: "rgba(255,255,255,0.35)",
                     }} />
                     {/* "In the numbers" eyebrow — inside the tile */}
-                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: "0 0 16px", color: "rgba(13,27,62,0.55)" }}>
+                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: "0 0 16px", color: "rgba(13,27,62,0.55)", alignSelf: "flex-start", textAlign: "left" }}>
                       In the numbers
                     </p>
                     <p style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.2px", margin: "0 0 8px", color: labelColour }}>
