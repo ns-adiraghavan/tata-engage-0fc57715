@@ -481,7 +481,7 @@ export function JourneySection() {
               Our Journey
             </p>
             <h2 style={{ fontSize: 30, fontWeight: 900, color: "white", letterSpacing: "-0.5px", margin: 0 }}>
-              A decade of giving back
+              A Decade of Giving Back
             </h2>
             <div style={{ width: 48, height: 1.4, borderRadius: 2, background: B_YELLOW, marginTop: 10 }} />
           </div>
@@ -685,7 +685,7 @@ export function NumbersSection() {
                 By the numbers
               </p>
               <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
-                Community Overview
+                In the Spotlight
               </h2>
               <div style={{ width: 48, height: 1.4, borderRadius: 2, background: B_TEAL, marginTop: 10 }} />
             </div>
