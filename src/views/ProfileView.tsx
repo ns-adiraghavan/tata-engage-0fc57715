@@ -612,7 +612,7 @@ export default function ProfileView() {
   const VOLUNTEER_STATS = [
     { value: 14, label: "Projects Applied",   pastel: CP_AMBER,    accent: C_AMBER    },
     { value: 9,  label: "Projects Completed", pastel: CP_MIDBLUE,  accent: C_MIDBLUE  },
-    { value: 312, suffix: "h", label: "Hours Volunteered", pastel: CP_GREEN,   accent: C_GREEN_KPI },
+    { value: 312, label: "Hours Volunteered", pastel: CP_GREEN,   accent: C_GREEN_KPI },
     { value: 3,  label: "Badges Earned",      pastel: CP_PINK,     accent: C_PINK     },
   ];
 
