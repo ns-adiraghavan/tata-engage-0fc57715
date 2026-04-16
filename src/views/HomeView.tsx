@@ -4,7 +4,7 @@ import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { useAppContext } from "@/context/AppContext";
 import { useAuth } from "@/context/AuthContext";
-import tataLogo from "@/assets/tata-logo.png";
+import tataLogo from "@/assets/Tata-removebg-preview.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
 import tataAIG from "@/assets/Tata_AIG_2.jpg";
 import tataMotors1 from "@/assets/Tata_Motors_1.jpg";
@@ -166,29 +166,60 @@ const HomeView = () => {
   return (
     <div className="relative font-sans pb-10">
 
-      {/* ── Section dot rail ─────────────────────────────────────────────────── */}
-      <div className="fixed right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-40">
+      {/* ── Section dot rail — dotted vertical line + square label pill ──────── */}
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end" style={{ gap: 0 }}>
         {SECTION_IDS.map((id, i) => {
           const active = activeSection === i;
+          const isLast = i === SECTION_IDS.length - 1;
+          const dotColour = active
+            ? (inHero ? "white" : B_TICKER)
+            : (inHero ? "rgba(255,255,255,0.35)" : "#CBD5E1");
           return (
-            <button key={id} onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
-              className="flex items-center justify-end">
-              {active && (
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full mr-2 whitespace-nowrap shadow-sm transition-colors duration-300"
+            <div key={id} className="flex flex-col items-end">
+              <button
+                onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
+                className="flex items-center justify-end"
+                style={{ marginBottom: 0 }}
+              >
+                {active && (
+                  <span
+                    className="whitespace-nowrap shadow-sm transition-all duration-300 mr-2"
+                    style={{
+                      fontSize: 11, fontWeight: 700, letterSpacing: "0.3px",
+                      padding: "3px 9px",
+                      borderRadius: 4,
+                      backgroundColor: inHero ? "rgba(0,0,0,0.72)" : "white",
+                      border: inHero ? "1px solid rgba(255,255,255,0.22)" : `1px solid ${B_TICKER}30`,
+                      color: inHero ? "white" : B_TICKER,
+                    }}>
+                    {SECTION_LABELS[i]}
+                  </span>
+                )}
+                {/* Node dot */}
+                <span
+                  className="transition-all duration-300"
                   style={{
-                    backgroundColor: inHero ? "rgba(0,0,0,0.70)" : "white",
-                    border: inHero ? "1px solid rgba(255,255,255,0.25)" : "1px solid #e2e8f0",
-                    color: inHero ? "white" : "#334155",
-                  }}>
-                  {SECTION_LABELS[i]}
-                </span>
-              )}
-              <span className="rounded-full transition-all duration-300"
-                style={{
-                  width: active ? 10 : 7, height: active ? 10 : 7,
-                  backgroundColor: active ? (inHero ? "white" : B_TICKER) : (inHero ? "rgba(255,255,255,0.4)" : "#CBD5E1"),
+                    width: active ? 9 : 6, height: active ? 9 : 6,
+                    borderRadius: 2,
+                    backgroundColor: dotColour,
+                    display: "block",
+                    flexShrink: 0,
+                  }}
+                />
+              </button>
+
+              {/* Dotted connector line between nodes */}
+              {!isLast && (
+                <div style={{
+                  width: 1,
+                  height: 28,
+                  marginLeft: "auto",
+                  marginRight: active ? "4px" : "2.5px",
+                  backgroundImage: `repeating-linear-gradient(to bottom, ${inHero ? "rgba(255,255,255,0.3)" : "#CBD5E1"} 0px, ${inHero ? "rgba(255,255,255,0.3)" : "#CBD5E1"} 3px, transparent 3px, transparent 7px)`,
+                  transition: "all 0.3s",
                 }} />
-            </button>
+              )}
+            </div>
           );
         })}
       </div>
@@ -254,7 +285,7 @@ const HomeView = () => {
               {slide.tag}
             </span>
             {/* Definer underline — sweeps in under the eyebrow */}
-            <div style={{ height: 2, width: 80, borderRadius: 2, background: "rgba(255,255,255,0.12)", marginTop: 4, marginBottom: 20, overflow: "hidden" }}>
+            <div style={{ height: 1.4, width: 80, borderRadius: 2, background: "rgba(255,255,255,0.12)", marginTop: 4, marginBottom: 20, overflow: "hidden" }}>
               <div style={{
                 height: "100%", borderRadius: 2,
                 background: slide.accent,
@@ -283,23 +314,33 @@ const HomeView = () => {
             <div style={{ marginBottom: 36 }}>
               {slide.cta === "story" ? (
                 <button onClick={() => triggerToast("Opening full story...")}
-                  className="flex items-center gap-2 cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer cta-btn"
                   style={{
                     padding: "11px 24px", borderRadius: 10,
                     fontSize: 13, fontWeight: 800, color: "white",
                     background: "#3E7EB0", border: "none",
+                    position: "relative", overflow: "hidden",
                   }}>
-                  <BookOpen size={14} /> Read Story
+                  <BookOpen size={14} />
+                  <span style={{ position: "relative", display: "inline-block" }}>
+                    Read Story
+                    <span className="cta-shimmer" />
+                  </span>
                 </button>
               ) : (
                 <button onClick={() => triggerToast("Opening video...")}
-                  className="flex items-center gap-2 cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer cta-btn"
                   style={{
                     padding: "11px 24px", borderRadius: 10,
                     fontSize: 13, fontWeight: 800, color: "white",
                     background: "#3E7EB0", border: "none",
+                    position: "relative", overflow: "hidden",
                   }}>
-                  <Play size={14} /> Watch More
+                  <Play size={14} />
+                  <span style={{ position: "relative", display: "inline-block" }}>
+                    Watch More
+                    <span className="cta-shimmer" />
+                  </span>
                 </button>
               )}
             </div>
@@ -376,6 +417,19 @@ const HomeView = () => {
           @keyframes definerSweep {
             from { width: 0%; }
             to   { width: 100%; }
+          }
+          @keyframes ctaShimmer {
+            0%   { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+            15%  { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { transform: translateX(220%) skewX(-18deg); opacity: 0; }
+          }
+          .cta-shimmer {
+            position: absolute;
+            top: -2px; left: -4px; right: -4px; bottom: -2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.38) 50%, transparent 100%);
+            animation: ctaShimmer 2.8s ease-in-out infinite;
+            pointer-events: none;
           }
         `}</style>
       </section>
@@ -455,7 +509,7 @@ const HomeView = () => {
                 ))}
                 <span className="text-zinc-700 hover:text-zinc-400 cursor-pointer" onClick={() => navigate("admin-login")}>Admin</span>
               </div>
-              <img src={tataLogo} alt="Tata" className="h-6 object-contain brightness-0 invert opacity-40" />
+              <img src={tataLogo} alt="Tata" className="h-6 object-contain opacity-50" />
             </div>
           </div>
         </div>
