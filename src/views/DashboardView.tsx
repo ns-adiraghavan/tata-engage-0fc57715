@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Star, Zap, Award, Users, Shield, RefreshCw, Clock } from "lucide-react";
+import { Star, Zap, Award, Shield, Compass } from "lucide-react";
 import { IS_PE_SEASON } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 
@@ -169,11 +169,11 @@ const HISTORY_PROJECTS = [
 ];
 
 const BADGES = [
-  { id: "b1", name: "First Step",   symbol: "I",   desc: "First volunteering activity",       earned: "Mar 2023", color: "#65A30D" },
-  { id: "b2", name: "ProEngager",   symbol: "II",  desc: "First ProEngage project completed", earned: "Sep 2023", color: B_BLUE },
-  { id: "b3", name: "Impact Maker", symbol: "III", desc: "100+ hours volunteered",            earned: "Feb 2024", color: B_BLUE   },
-  { id: "b4", name: "Badge 4",  symbol: "IV", desc: "Coming soon", earned: "", color: "#cccccc" },
-  { id: "b5", name: "Badge 5",  symbol: "V",  desc: "Coming soon", earned: "", color: "#cccccc" },
+  { id: "b1", name: "ProEngage Veteran",    icon: Award,       desc: "Completed multiple ProEngage editions", earned: "2024", color: "#1A6B3C" },
+  { id: "b2", name: "ProEngage Ambassador", icon: Star,        desc: "Championed volunteering across teams",   earned: "2024", color: "#1E6BB8" },
+  { id: "b3", name: "ProEngage North Star", icon: Compass,     desc: "Guided NGOs through complex projects",  earned: "2024", color: "#5b21b6" },
+  { id: "b4", name: "ProEngage Pioneer",    icon: Zap,         desc: "Early adopter of ProEngage programme",  earned: "",     color: "#cccccc" },
+  { id: "b5", name: "ProEngage 23 Champion",icon: Shield,      desc: "Outstanding contribution in PE 2023",   earned: "",     color: "#cccccc" },
 ];
 
 const RESOURCES = [
@@ -195,7 +195,7 @@ const STAT_TOOLTIPS: Record<string, string> = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const BADGE_ICONS: Record<string, any> = {
-  b1: Star, b2: Zap, b3: Award, b4: Users, b5: Shield, b6: RefreshCw, b7: Clock,
+  b1: Award, b2: Star, b3: Compass, b4: Zap, b5: Shield,
 };
 
 // Activity tab config by season state
