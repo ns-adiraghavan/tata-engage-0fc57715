@@ -504,36 +504,36 @@ export const ANJALI_MEHTA = {
 };
 
 export const PRIYA_SHARMA = {
-  firstName: "Priya",
-  lastName: "Sharma",
-  email: "priya.sharma@tata.com",
+  firstName: "Shrirang",
+  lastName: "Dhavale",
+  email: "sdhavale@tata.com",
   role: "tata_employee",
-  company: "Tata Consultancy Services",
-  designation: "Senior Project Manager",
+  company: "Tata Services",
+  designation: "General Manager",
   city: "Mumbai",
   country: "India",
-  interests: ["Education", "Environment", "Health"],
-  skills: ["Finance", "Project Management", "Strategic Planning"],
+  interests: ["Education"],
+  skills: ["Coaching", "Training"],
   languages: ["English", "Hindi", "Marathi"],
-  linkedinUrl: "https://linkedin.com/in/priyasharma-tcs",
-  disasterResponseInterest: true,
+  linkedinUrl: "",
+  disasterResponseInterest: false,
   preferredMode: "Either",
   notifyProEngage: true,
   notifyTVW: true,
   badges: [
     { id: 1, name: "Early Bird", icon: "🐦", date: "Jan 2026" },
-    { id: 2, name: "Community Hero", icon: "🦸‍♀️", date: "Feb 2026" }
+    { id: 2, name: "Community Hero", icon: "🦸", date: "Feb 2026" }
   ],
   activeApplication: {
     id: 1,
-    title: "Financial Literacy for Rural Women",
-    ngo: "Pratham NGO",
+    title: "Conduct Mock Interviews",
+    ngo: "Friends of Children",
     status: "Matched",
-    date: "April 01, 2026"
+    date: "10 Dec 2025"
   },
   history: [
-    { id: 1, project: "Beach Cleanup Drive", hours: 4, date: "Feb 15, 2026" },
-    { id: 2, project: "Digital Literacy Workshop", hours: 8, date: "Jan 10, 2026" }
+    { id: 1, project: "Mock Interviews - Students", hours: 16, date: "2025" },
+    { id: 2, project: "Mock Interviews", hours: 8, date: "2024" }
   ]
 };
 
