@@ -1094,7 +1094,7 @@ export default function DashboardView() {
                 <div style={{ ...card, marginBottom: 10 }}>
                   <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 14 }}>Badges Earned</div>
                   <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                    {BADGES.slice(0, 3).map(b => {
+                    {BADGES.map(b => {
                       const Icon = BADGE_ICONS[b.id];
                       return (
                         <div key={b.id} title={`${b.name} — ${b.desc} (${b.earned})`}
