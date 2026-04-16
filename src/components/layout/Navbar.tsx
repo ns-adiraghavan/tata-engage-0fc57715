@@ -69,7 +69,7 @@ const Navbar = ({
       : "volunteer-hub";
 
   const unreadCount = notifications.filter((n) => !n.read).length;
-  const isHeroOverlayRoute = ["/", "/hub", "/ngo/hub", "/spoc/hub"].includes(location.pathname);
+  const isHeroOverlayRoute = ["/", "/hub", "/ngo/hub", "/spoc/hub", "/dashboard", "/profile"].includes(location.pathname);
   const isTransparent = isHeroOverlayRoute && !scrolled;
 
   const dotColor = (type: string) => {
