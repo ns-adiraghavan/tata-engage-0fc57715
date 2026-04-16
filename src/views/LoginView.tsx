@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Building2, ShieldCheck, Landmark, Mail, Lock, Eye, MapPin } from "lucide-react";
 import { useLocation } from "react-router-dom";

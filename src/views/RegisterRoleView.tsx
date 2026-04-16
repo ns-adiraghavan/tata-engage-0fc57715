@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Users, Building2, Briefcase, Heart } from "lucide-react";
 import doodleCluster1 from "@/assets/doodle-cluster-1.png";
