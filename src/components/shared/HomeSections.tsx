@@ -237,7 +237,7 @@ export function ProgrammeSpotlight() {
               Our Programmes
             </p>
             <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
-              Our Volunteering Opportunities
+              Volunteering Opportunities
             </h2>
             <div style={{ width: 120, height: 1.4, borderRadius: 2, background: "#e8e8f0", marginTop: 10, overflow: "hidden" }}>
               <div className="te-draw" style={{ height: "100%", background: B_INDIGO, borderRadius: 2 }} />
