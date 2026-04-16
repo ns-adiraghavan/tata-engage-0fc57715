@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Award, Star, Compass, Zap, Shield } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useAppContext } from "@/context/AppContext";
 
@@ -734,14 +735,16 @@ export default function ProfileView() {
               <div style={{ marginTop: 28, background: "#fff", border: "1px solid #e8e8f0", borderRadius: 12, padding: "16px" }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>Badges</div>
                 {[
-                  { icon: "🎖️",  name: "ProEngage Veteran",    color: C_GREEN_KPI,  bg: CP_GREEN   },
-                  { icon: "🌟",  name: "ProEngage Ambassador",  color: C_MIDBLUE,    bg: CP_MIDBLUE },
-                  { icon: "🧭",  name: "ProEngage North Star",  color: C_AMBER,      bg: CP_AMBER   },
-                  { icon: "🚀",  name: "ProEngage Pioneer",     color: C_PINK,       bg: CP_PINK    },
-                  { icon: "🏆",  name: "ProEngage 23 Champion", color: "#5b21b6",    bg: "#f3f0ff"  },
+                  { Icon: Award,   name: "ProEngage Veteran",     color: "#1A6B3C", bg: CP_GREEN   },
+                  { Icon: Star,    name: "ProEngage Ambassador",   color: "#1E6BB8", bg: CP_MIDBLUE },
+                  { Icon: Compass, name: "ProEngage North Star",   color: "#5b21b6", bg: "#f3f0ff"  },
+                  { Icon: Zap,     name: "ProEngage Pioneer",      color: "#cccccc", bg: "#f5f5fa"  },
+                  { Icon: Shield,  name: "ProEngage 23 Champion",  color: "#cccccc", bg: "#f5f5fa"  },
                 ].map(b => (
                   <div key={b.name} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: 8, background: b.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>{b.icon}</div>
+                    <div style={{ width: 32, height: 32, borderRadius: 8, background: b.bg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <b.Icon size={16} color={b.color} />
+                    </div>
                     <div style={{ fontSize: 12, fontWeight: 600, color: ACCENT_NAVY }}>{b.name}</div>
                   </div>
                 ))}
