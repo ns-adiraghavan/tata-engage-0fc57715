@@ -1407,7 +1407,7 @@ export default function DashboardView() {
                       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                         {shown.map(p => {
                           const accentColor = p.cert ? B_BLUE : "#1A6B3C";
-                          const pastel      = p.cert ? P_BLUE : "#FCE4EC";
+                          const pastel      = p.cert ? P_BLUE : "#E8F5D4";
                           return (
                             <div key={p.id}
                               style={{ ...card, display: "flex", gap: 16, alignItems: "flex-start", padding: "18px 20px", transition: "box-shadow 0.18s, transform 0.18s" }}
@@ -1432,7 +1432,7 @@ export default function DashboardView() {
                                   ))}
                                 </div>
                                 {/* Outcome */}
-                                <div style={{ background: p.cert ? "#F7FEE7" : "#FCE4EC", borderRadius: 8, padding: "9px 12px", fontSize: 12.5, color: p.cert ? "#365314" : "#1A6B3C", borderLeft: `3px solid ${p.cert ? "#84CC16" : "#1A6B3C"}`, lineHeight: 1.55 }}>{p.outcome}</div>
+                                <div style={{ background: p.cert ? "#F7FEE7" : "#EBF4FF", borderRadius: 8, padding: "9px 12px", fontSize: 12.5, color: p.cert ? "#365314" : "#1E6BB8", borderLeft: `3px solid ${p.cert ? "#84CC16" : "#1E6BB8"}`, lineHeight: 1.55 }}>{p.outcome}</div>
                               </div>
                               {/* Certificate button */}
                               {p.cert && (
