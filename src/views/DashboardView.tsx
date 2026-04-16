@@ -19,7 +19,7 @@ const P_TEAL      = "#E6F8F5";
 const P_BLUE      = "#EBF4FF";
 
 // ─── KPI colours — bold solid backgrounds matching HomeSections tiles ─────────
-const KPI_PROENGAGE  = "#3D9970";   // ProEngage green
+const KPI_PROENGAGE  = "#1A6B3C";   // ProEngage green
 const KPI_TVW        = "#3E7EB0";   // TVW blue
 const KPI_CVP        = "#F5A623";   // CVP yellow (B_YELLOW)
 const KPI_PINK       = "#F2778A";   // Did you know pink
