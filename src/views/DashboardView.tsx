@@ -423,7 +423,7 @@ function ProjectUpdateDrawer({ open, onClose }: { open: boolean; onClose: () => 
   const [submitted, setSubmitted] = useState(false);
   const reset = () => { onClose(); setSubmitted(false); setText(""); };
   return (
-    <DrawerShell open={open} onClose={reset} title="Post Your Monthly Update" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Monthly Update">
+    <DrawerShell open={open} onClose={reset} title="Post Your Monthly Update" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Monthly Update" accentColor={KPI_PROENGAGE}>
       {submitted ? (
         <div style={{ padding: "40px 28px", textAlign: "center" }}>
           <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#F7FEE7", border: "2px solid #84CC16", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
