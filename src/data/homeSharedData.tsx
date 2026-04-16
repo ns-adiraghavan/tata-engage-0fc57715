@@ -1,4 +1,5 @@
 import { Twitter, Instagram, Linkedin, type LucideIcon } from "lucide-react";
+import drPhoto from "@/assets/dr_photo.jpg";
 
 // ── Brand tokens ──────────────────────────────────────────────────────────────
 export const B_INDIGO = "#333399";
@@ -49,7 +50,7 @@ export const FLAGSHIP_PROGRAMMES = [
     title: "Disaster Response",
     desc: "Volunteers deployed within 48 hours when communities need urgent support.",
     stat1: "24 Responses", stat2: "8 States",
-    photo: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&q=80&w=900",
+    photo: drPhoto,
     tint: "rgba(127,29,29,0.68)",
     pastelBg: P_RED, accentText: B_RED,
     ctaType: "story" as const,
