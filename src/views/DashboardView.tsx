@@ -148,7 +148,7 @@ const STAT_TOOLTIPS: Record<string, string> = {
   "Badges Earned":      "Awarded for key milestones — completing a project, 100 hours, TVW participation and more.",
 };
 
-const BADGE_ICONS: Record<string, any> = {
+const BADGE_ICONS: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
   b1: Star, b2: Zap, b3: Award, b4: Users, b5: Shield, b6: RefreshCw, b7: Clock,
 };
 
@@ -325,10 +325,10 @@ function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: { 
     <>
       <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(13,27,62,0.45)", zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", transition: "opacity 0.22s", backdropFilter: "blur(2px)" }} />
       <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width: 560, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif", overflowY: "auto" }}>
-        <div style={{ background: "#FEF3C7", padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
+        <div style={{ background: "linear-gradient(135deg, #065666 0%, #0B7285 100%)", padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
           <button onClick={onClose} style={{ background: "rgba(13,27,62,0.1)", border: "none", borderRadius: 7, color: "rgba(13,27,62,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>← Close</button>
-          {accentTag && <div style={{ display: "inline-block", background: "rgba(161,98,7,0.12)", border: "1px solid rgba(161,98,7,0.25)", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#78350F", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
-          <div style={{ fontSize: 17, fontWeight: 700, color: ACCENT_NAVY, lineHeight: 1.3 }}>{title}</div>
+          {accentTag && <div style={{ display: "inline-block", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
+          <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{title}</div>
           {subtitle && <div style={{ fontSize: 12.5, color: "rgba(13,27,62,0.5)", marginTop: 5 }}>{subtitle}</div>}
         </div>
         <div style={{ flex: 1, overflowY: "auto" }}>{children}</div>
@@ -969,26 +969,26 @@ export default function DashboardView() {
       <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingBottom: 80 }}>
 
         {/* Greeting bar */}
-        <div style={{ background: "#FEF3C7", padding: "92px 40px 28px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
+        <div style={{ background: "linear-gradient(135deg, #065666 0%, #0B7285 60%, #0891b2 100%)", padding: "92px 40px 28px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
           <div>
-            <div style={{ fontSize: 24, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: -0.5 }}>Welcome back, {VOLUNTEER.firstName}</div>
-            <div style={{ fontSize: 13, color: "rgba(13,27,62,0.55)", marginTop: 4 }}>{VOLUNTEER.designation} · {VOLUNTEER.company} · {VOLUNTEER.city}</div>
+            <div style={{ fontSize: 24, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>Welcome back, {VOLUNTEER.firstName}</div>
+            <div style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", marginTop: 4 }}>{VOLUNTEER.designation} · {VOLUNTEER.company} · {VOLUNTEER.city}</div>
           </div>
           {hasActive ? (
-            <div style={{ background: "rgba(146,64,14,0.08)", border: "1px solid rgba(146,64,14,0.18)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#92400E", marginBottom: 5 }}>Active · {VOLUNTEER.activeApplication!.edition}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, lineHeight: 1.3 }}>{VOLUNTEER.activeApplication!.title}</div>
-              <div style={{ fontSize: 12.5, color: "rgba(13,27,62,0.5)", marginTop: 4 }}>{VOLUNTEER.activeApplication!.ngo} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
+            <div style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.22)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: 5 }}>Active · {VOLUNTEER.activeApplication!.edition}</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{VOLUNTEER.activeApplication!.title}</div>
+              <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.6)", marginTop: 4 }}>{VOLUNTEER.activeApplication!.ngo} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
             </div>
           ) : IS_PE_SEASON ? (
-            <div style={{ background: "rgba(13,27,62,0.08)", border: `1px solid rgba(13,27,62,0.12)`, borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(13,27,62,0.5)", marginBottom: 5 }}>ProEngage Edition 11 · Open now</div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: ACCENT_NAVY, lineHeight: 1.4 }}>Applications close 15 July. Browse projects matched to your skills below.</div>
+            <div style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.22)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.6)", marginBottom: 5 }}>ProEngage Edition 11 · Open now</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: "#fff", lineHeight: 1.4 }}>Applications close 15 July. Browse projects matched to your skills below.</div>
             </div>
           ) : (
-            <div style={{ background: "rgba(13,27,62,0.06)", border: "1px solid rgba(13,27,62,0.10)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(13,27,62,0.4)", marginBottom: 5 }}>Next ProEngage Edition</div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: ACCENT_NAVY, lineHeight: 1.4 }}>Opens January 2026. Explore TVW events and DIY activities below.</div>
+            <div style={{ background: "rgba(255,255,255,0.10)", border: "1px solid rgba(255,255,255,0.18)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 5 }}>Next ProEngage Edition</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.85)", lineHeight: 1.4 }}>Opens January 2026. Explore TVW events and DIY activities below.</div>
             </div>
           )}
         </div>
