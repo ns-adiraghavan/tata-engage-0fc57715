@@ -396,7 +396,7 @@ export function ProgrammeSpotlight() {
               {/* Tile 1 — EOI (pink) */}
               <div style={{
                 position: "absolute", inset: 0,
-                background: "#FDE8F0",
+                background: "#F2778A",
                 padding: "20px 20px 16px",
                 display: "flex", flexDirection: "column",
                 justifyContent: "flex-end",
@@ -705,7 +705,7 @@ export function NumbersSection() {
           {/* Tile 1 — "Did you know?" (dark) */}
           <div style={{
             borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
-            background: "#FDE8F0",
+            background: "#F2778A",
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
             alignSelf: "center",
           }}>
