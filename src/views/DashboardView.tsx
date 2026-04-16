@@ -350,10 +350,8 @@ function ResourceCard({ r, onClick }: { r: typeof RESOURCES[0]; onClick?: () => 
       <div style={{ height: 90, background: `url(${r.photo}) center/cover`, position: "relative" }}>
         <div style={{ position: "absolute", inset: 0, background: `${r.accentColor}88` }} />
       </div>
-      <div style={{ background: r.pastel, padding: "12px 14px" }}>
-        <div style={{ fontSize: 13, fontWeight: 900, color: ACCENT_NAVY, marginBottom: 3 }}>{r.label}</div>
-        <div style={{ fontSize: 11, color: "#6b6b7a", lineHeight: 1.4, marginBottom: 6 }}>{r.desc}</div>
-        <div style={{ fontSize: 10.5, fontWeight: 700, color: r.accentColor }}>{r.count}</div>
+      <div style={{ background: r.pastel, padding: "14px 14px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ fontSize: 14.5, fontWeight: 900, color: ACCENT_NAVY, textAlign: "center", lineHeight: 1.3 }}>{r.label}</div>
       </div>
     </div>
   );
