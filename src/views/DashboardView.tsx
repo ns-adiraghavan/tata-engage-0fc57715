@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Star, Zap, Award, Users, Shield, RefreshCw, Clock } from "lucide-react";
 import { IS_PE_SEASON } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 
@@ -16,6 +17,18 @@ const P_YELLOW    = "#FEF6E4";
 const P_RED       = "#FFF0EE";
 const P_TEAL      = "#E6F8F5";
 const P_BLUE      = "#EBF4FF";
+
+// ─── Extended KPI / design colours ────────────────────────────────────────────
+const C_PINK      = "#C2185B";
+const C_GREEN     = "#2E7D32";
+const C_MIDBLUE   = "#1565C0";
+const C_TEAL2     = "#00838F";
+const C_PINKRED   = "#AD1457";
+const CP_PINK     = "#FCE4EC";
+const CP_GREEN    = "#E8F5E9";
+const CP_MIDBLUE  = "#E3F2FD";
+const CP_TEAL2    = "#E0F7FA";
+const CP_PINKRED  = "#FCE4EC";
 const IS_NEW_VOLUNTEER = false;
 
 const NOTIFICATIONS: Record<string, boolean> = {
@@ -24,7 +37,7 @@ const NOTIFICATIONS: Record<string, boolean> = {
   proEngageProject: true,
 };
 
-const notifDot: React.CSSProperties = { position: "absolute", top: -3, right: -6, width: 6, height: 6, borderRadius: "50%", background: "#E8401C", border: "2px solid white" };
+const notifDot: React.CSSProperties = { position: "absolute", top: -3, right: -6, width: 8, height: 8, borderRadius: "50%", background: "#E8401C", boxShadow: "0 0 0 2px white" };
 
 const VOLUNTEER = {
   firstName: "Priya",
@@ -122,20 +135,24 @@ const BADGES = [
 ];
 
 const RESOURCES = [
-  { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: B_INDIGO, pastel: P_INDIGO, photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&q=80" },
-  { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: B_RED,    pastel: P_RED,    photo: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" },
-  { id: "stories", label: "Stories",  desc: "Volunteer experiences and community impact narratives",   count: "94 stories",  accentColor: B_TEAL,   pastel: P_TEAL,   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80" },
-  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: B_YELLOW, pastel: P_YELLOW, photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
-  { id: "emodule", label: "E-Module", desc: "ProEngage orientation, NGO readiness kit and dos & don'ts", count: "5 modules", accentColor: B_BLUE,   pastel: P_BLUE,   photo: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" },
+  { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: C_PINK,    pastel: CP_PINK,    photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&q=80" },
+  { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: C_PINKRED, pastel: CP_PINKRED, photo: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" },
+  { id: "stories", label: "Stories",  desc: "Volunteer experiences and community impact narratives",   count: "94 stories",  accentColor: C_TEAL2,   pastel: CP_TEAL2,   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80" },
+  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: C_GREEN,   pastel: CP_GREEN,   photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
+  { id: "emodule", label: "E-Module", desc: "ProEngage orientation, NGO readiness kit and dos & don'ts", count: "5 modules", accentColor: C_MIDBLUE, pastel: CP_MIDBLUE, photo: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" },
 ];
 
 const STAT_TOOLTIPS: Record<string, string> = {
   "Hours Volunteered":  "Total hours logged across all TVW events and ProEngage projects.",
   "Projects Applied":   "ProEngage applications submitted. You can apply to multiple projects per edition.",
-  "Completed":          "Projects where both you and the NGO have submitted feedback. Unlocks your certificate.",
+  "Projects Completed": "Projects where both you and the NGO have submitted feedback. Unlocks your certificate.",
   "Dropped":            "Projects that ended early. These remain on your record — it's part of honest volunteering.",
-  "Referred":           "Colleagues or family members who joined TataEngage via your referral link.",
+  "No of Referrals":    "Colleagues or family members who joined TataEngage via your referral link.",
   "Badges Earned":      "Awarded for key milestones — completing a project, 100 hours, TVW participation and more.",
+};
+
+const BADGE_ICONS: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
+  b1: Star, b2: Zap, b3: Award, b4: Users, b5: Shield, b6: RefreshCw, b7: Clock,
 };
 
 // Activity tab config by season state
@@ -164,8 +181,8 @@ function getActivitySlicers() {
 }
 
 const HISTORY_SLICERS = [
-  { id: "applications", label: "My Applications" },
   { id: "projects",     label: "My Projects"     },
+  { id: "applications", label: "My Applications" },
   { id: "experience",   label: "My Experience"   },
   { id: "certificates", label: "My Certificates" },
   { id: "feedback",     label: "My Feedback"     },
@@ -311,11 +328,11 @@ function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: { 
     <>
       <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(13,27,62,0.45)", zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", transition: "opacity 0.22s", backdropFilter: "blur(2px)" }} />
       <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width: 560, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif", overflowY: "auto" }}>
-        <div style={{ background: ACCENT_NAVY, padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
-          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.1)", border: "none", borderRadius: 7, color: "rgba(255,255,255,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>← Close</button>
-          {accentTag && <div style={{ display: "inline-block", background: `${B_YELLOW}22`, border: `1px solid ${B_YELLOW}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_YELLOW, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
-          <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{title}</div>
-          {subtitle && <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.45)", marginTop: 5 }}>{subtitle}</div>}
+        <div style={{ background: B_YELLOW, padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
+          <button onClick={onClose} style={{ background: "rgba(13,27,62,0.1)", border: "none", borderRadius: 7, color: "rgba(13,27,62,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>← Close</button>
+          {accentTag && <div style={{ display: "inline-block", background: `rgba(13,27,62,0.1)`, border: `1px solid rgba(13,27,62,0.15)`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: ACCENT_NAVY, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
+          <div style={{ fontSize: 17, fontWeight: 700, color: ACCENT_NAVY, lineHeight: 1.3 }}>{title}</div>
+          {subtitle && <div style={{ fontSize: 12.5, color: "rgba(13,27,62,0.5)", marginTop: 5 }}>{subtitle}</div>}
         </div>
         <div style={{ flex: 1, overflowY: "auto" }}>{children}</div>
       </div>
@@ -931,7 +948,7 @@ export default function DashboardView() {
   const [activeActivity, setActiveActivity] = useState(defaultActivity);
 
   // History state
-  const [activeHistory, setActiveHistory] = useState("applications");
+  const [activeHistory, setActiveHistory] = useState("projects");
   const [editionFilter, setEditionFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
 
@@ -949,33 +966,32 @@ export default function DashboardView() {
   const [applyProject, setApplyProject]   = useState<PEProject | null>(null);
   const [referralOpen, setReferralOpen]   = useState(false);
   const [shareOpen, setShareOpen]         = useState(false);
-  const [tvwRegModal, setTvwRegModal]     = useState<any>(null);
 
   return (
     <>
       <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
 
         {/* Greeting bar */}
-        <div style={{ background: ACCENT_NAVY, padding: "28px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
+        <div style={{ background: B_YELLOW, padding: "28px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
           <div>
-            <div style={{ fontSize: 24, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>Welcome back, {VOLUNTEER.firstName}</div>
-            <div style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", marginTop: 4 }}>{VOLUNTEER.designation} · {VOLUNTEER.company} · {VOLUNTEER.city}</div>
+            <div style={{ fontSize: 24, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: -0.5 }}>Welcome back, {VOLUNTEER.firstName}</div>
+            <div style={{ fontSize: 13, color: "rgba(13,27,62,0.55)", marginTop: 4 }}>{VOLUNTEER.designation} · {VOLUNTEER.company} · {VOLUNTEER.city}</div>
           </div>
           {hasActive ? (
-            <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
+            <div style={{ background: "rgba(13,27,62,0.08)", border: "1px solid rgba(13,27,62,0.12)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: B_TEAL, marginBottom: 5 }}>Active · {VOLUNTEER.activeApplication!.edition}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{VOLUNTEER.activeApplication!.title}</div>
-              <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>{VOLUNTEER.activeApplication!.ngo} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, lineHeight: 1.3 }}>{VOLUNTEER.activeApplication!.title}</div>
+              <div style={{ fontSize: 12.5, color: "rgba(13,27,62,0.5)", marginTop: 4 }}>{VOLUNTEER.activeApplication!.ngo} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
             </div>
           ) : IS_PE_SEASON ? (
-            <div style={{ background: `${B_INDIGO}33`, border: `1px solid ${B_INDIGO}44`, borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", marginBottom: 5 }}>ProEngage Edition 11 · Open now</div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "#fff", lineHeight: 1.4 }}>Applications close 15 July. Browse projects matched to your skills below.</div>
+            <div style={{ background: "rgba(13,27,62,0.08)", border: `1px solid rgba(13,27,62,0.12)`, borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(13,27,62,0.5)", marginBottom: 5 }}>ProEngage Edition 11 · Open now</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: ACCENT_NAVY, lineHeight: 1.4 }}>Applications close 15 July. Browse projects matched to your skills below.</div>
             </div>
           ) : (
-            <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 5 }}>Next ProEngage Edition</div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.8)", lineHeight: 1.4 }}>Opens January 2026. Explore TVW events and DIY activities below.</div>
+            <div style={{ background: "rgba(13,27,62,0.06)", border: "1px solid rgba(13,27,62,0.10)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(13,27,62,0.4)", marginBottom: 5 }}>Next ProEngage Edition</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: ACCENT_NAVY, lineHeight: 1.4 }}>Opens January 2026. Explore TVW events and DIY activities below.</div>
             </div>
           )}
         </div>
@@ -987,7 +1003,8 @@ export default function DashboardView() {
           <div style={{ flex: 1, minWidth: 0 }}>
 
             {/* ═══ 1. SNAPSHOT ════════════════════════════════════════════ */}
-            <section id="snapshot" style={{ marginBottom: 52, scrollMarginTop: 108 }}>
+            <div style={{ background: "#f0f1f8", borderRadius: 16, padding: "24px 22px", marginBottom: 52 }}>
+            <section id="snapshot" style={{ scrollMarginTop: 108 }}>
               <SectionHeading eyebrow="Your impact, at a glance" title="Engagement Snapshot" />
 
               {IS_NEW_VOLUNTEER && (
@@ -998,20 +1015,19 @@ export default function DashboardView() {
 
               {/* Stat tiles */}
               <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 16 }}>
-                <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered" pastel={P_INDIGO} accentColor={B_INDIGO} delay={0}   started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"  pastel={P_BLUE}   accentColor={B_BLUE}   delay={100} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Completed"         pastel={P_TEAL}   accentColor={B_TEAL}   delay={200} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"           pastel={P_RED}    accentColor={B_RED}    delay={300} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.referrals}                      label="Referred"          pastel={P_YELLOW} accentColor={B_YELLOW} delay={400} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"     pastel={P_INDIGO} accentColor={B_INDIGO} delay={500} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered"  pastel={CP_PINK}    accentColor={C_PINK}    delay={0}   started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={CP_GREEN}   accentColor={C_GREEN}   delay={100} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Projects Completed" pastel={CP_MIDBLUE} accentColor={C_MIDBLUE} delay={200} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={CP_TEAL2}   accentColor={C_TEAL2}   delay={300} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={P_YELLOW}   accentColor={B_YELLOW}  delay={400} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={CP_PINKRED} accentColor={C_PINKRED} delay={500} started={statsStarted} />
               </div>
 
               {/* Skills & Interests */}
               <div style={{ ...card, marginBottom: 10 }}>
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 12 }}>Skills You Bring</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
-                  {VOLUNTEER.skills.map(s    => <span key={s} style={{ background: P_INDIGO, color: B_INDIGO, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
-                  {VOLUNTEER.interests.map(s => <span key={s} style={{ background: P_TEAL,   color: B_TEAL,   fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
+                  {VOLUNTEER.skills.slice(0, 4).map(s => <span key={s} style={{ background: CP_PINK, color: C_PINK, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
                 </div>
               </div>
 
@@ -1020,18 +1036,21 @@ export default function DashboardView() {
                 <div style={{ ...card, marginBottom: 10 }}>
                   <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 14 }}>Badges Earned</div>
                   <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                    {BADGES.map(b => (
-                      <div key={b.id} title={`${b.name} — ${b.desc} (${b.earned})`}
-                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, cursor: "default", transition: "transform 0.15s" }}
-                        onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
-                        onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
-                      >
-                        <div style={{ width: 42, height: 42, borderRadius: "50%", background: b.color, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>{b.symbol}</span>
+                    {BADGES.map(b => {
+                      const Icon = BADGE_ICONS[b.id];
+                      return (
+                        <div key={b.id} title={`${b.name} — ${b.desc} (${b.earned})`}
+                          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, cursor: "default", transition: "transform 0.15s" }}
+                          onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
+                          onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+                        >
+                          <div style={{ width: 42, height: 42, borderRadius: "50%", background: b.color, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            {Icon && <Icon size={18} color="#fff" />}
+                          </div>
+                          <span style={{ fontSize: 10, fontWeight: 600, color: "#6b6b7a", textAlign: "center", lineHeight: 1.2, maxWidth: 52 }}>{b.name}</span>
                         </div>
-                        <span style={{ fontSize: 10, fontWeight: 600, color: "#6b6b7a", textAlign: "center", lineHeight: 1.2, maxWidth: 52 }}>{b.name}</span>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -1050,27 +1069,29 @@ export default function DashboardView() {
                     <div style={{ fontSize: 13, color: "#8888a0", lineHeight: 1.65, maxWidth: 380, margin: "0 auto" }}>Once you complete a ProEngage project, your NGO partner can write a testimonial about your work.</div>
                   </div>
                 ) : (
-                  <div style={{ background: ACCENT_NAVY, borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden" }}>
-                    <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 160, color: "rgba(255,255,255,0.04)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>"</div>
-                    <div style={{ display: "inline-block", background: `${B_YELLOW}22`, border: `1px solid ${B_YELLOW}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_YELLOW, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 16 }}>{TESTIMONIAL.edition}</div>
-                    <blockquote style={{ fontSize: 15, lineHeight: 1.72, color: "rgba(255,255,255,0.88)", fontStyle: "italic", fontWeight: 300, margin: "0 0 22px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
+                  <div style={{ background: "#F0FDF4", borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: "1px solid #bbf7d0" }}>
+                    <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 160, color: "rgba(22,101,52,0.06)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>"</div>
+                    <div style={{ display: "inline-block", background: "#dcfce7", border: `1px solid #bbf7d0`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#166534", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 16 }}>{TESTIMONIAL.edition}</div>
+                    <blockquote style={{ fontSize: 15, lineHeight: 1.72, color: "#166534", fontStyle: "italic", fontWeight: 300, margin: "0 0 22px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, position: "relative", zIndex: 1 }}>
                       <div style={{ width: 38, height: 38, borderRadius: "50%", background: TESTIMONIAL.avatarBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff", flexShrink: 0 }}>{TESTIMONIAL.avatarInitials}</div>
                       <div>
-                        <div style={{ fontWeight: 700, color: "#fff", fontSize: 13.5 }}>{TESTIMONIAL.author}</div>
-                        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{TESTIMONIAL.role}</div>
+                        <div style={{ fontWeight: 700, color: ACCENT_NAVY, fontSize: 13.5 }}>{TESTIMONIAL.author}</div>
+                        <div style={{ fontSize: 12, color: "#6b6b7a", marginTop: 2 }}>{TESTIMONIAL.role}</div>
                       </div>
                       <div style={{ marginLeft: "auto", textAlign: "right" }}>
-                        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.28)", lineHeight: 1.4 }}>{TESTIMONIAL.project}</div>
+                        <div style={{ fontSize: 11, color: "#6b6b7a", lineHeight: 1.4 }}>{TESTIMONIAL.project}</div>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
             </section>
+            </div>
 
             {/* ═══ 2. ACTIVITIES ══════════════════════════════════════════ */}
-            <section id="activities" style={{ marginBottom: 52, scrollMarginTop: 108 }}>
+            <div style={{ background: "#f0f1f8", borderRadius: 16, padding: "24px 22px", marginBottom: 52 }}>
+            <section id="activities" style={{ scrollMarginTop: 108 }}>
               <SectionHeading
                 eyebrow={IS_PE_SEASON ? "ProEngage Edition 11 · Open · Closes 15 Jul 2025" : "Non-ProEngage season · Next edition opens Jan 2026"}
                 title="My Activities"
@@ -1080,15 +1101,10 @@ export default function DashboardView() {
               {/* ── View Opportunities tab ─────────────────────────────── */}
               {activeActivity === "opportunities" && (
                 <div>
-                  <p style={{ fontSize: 13.5, color: "#6b6b7a", marginBottom: 18, lineHeight: 1.6 }}>
-                    {IS_PE_SEASON
-                      ? "TVW 22 events curated by Tata companies — September to October 2025. Register to secure your spot."
-                      : "Volunteering opportunities open year-round, including TVW events and community initiatives."}
-                  </p>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                     {TVW_OPPORTUNITIES.slice(0, 2).map(ev => (
                       <div key={ev.id}
-                        style={{ ...card, display: "flex", gap: 16, alignItems: "center", cursor: "pointer", transition: "box-shadow 0.18s, transform 0.18s", padding: "16px 20px" }}
+                        style={{ ...card, display: "flex", gap: 16, alignItems: "center", cursor: "pointer", transition: "box-shadow 0.18s, transform 0.18s", padding: "18px 20px" }}
                         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 16px rgba(13,27,62,0.08)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
                         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
                       >
@@ -1096,18 +1112,22 @@ export default function DashboardView() {
                           <div style={{ width: 8, height: 8, borderRadius: "50%", background: ev.accentColor }} />
                         </div>
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontWeight: 700, fontSize: 14, color: ACCENT_NAVY }}>{ev.title}</div>
-                          <div style={{ fontSize: 12.5, color: "#8888a0", marginTop: 3 }}>{ev.company} · {ev.date} · {ev.mode} · {ev.duration}</div>
-                          <span style={{ display: "inline-block", marginTop: 5, fontSize: 11, fontWeight: 600, background: ev.pastel, color: ev.accentColor, padding: "2px 9px", borderRadius: 100 }}>{ev.theme}</span>
+                          <div style={{ fontWeight: 700, fontSize: 14, color: ACCENT_NAVY, marginBottom: 8 }}>{ev.title}</div>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                            {[ev.company, ev.date, ev.mode, ev.duration].map((detail, i) => (
+                              <span key={i} style={{ background: ev.pastel, color: ev.accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, display: "inline-block" }}>{detail}</span>
+                            ))}
+                            <span style={{ background: ev.pastel, color: ev.accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{ev.theme}</span>
+                          </div>
                         </div>
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
                           <div style={{ fontSize: 12, fontWeight: 600, color: ev.spotsLeft < 10 ? B_RED : B_TEAL, marginBottom: 6 }}>{ev.spotsLeft} spots left</div>
-                          <button onClick={(e) => { e.stopPropagation(); setTvwRegModal(ev); }} style={{ background: ev.accentColor, color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Register</button>
+                          <button onClick={(e) => { e.stopPropagation(); ctxToast("Your SPOC has been notified — Rohan Desai will reach out within 24 hours."); }} style={{ background: ev.accentColor, color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Contact SPOC</button>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => navigate("/tvw")} style={{ marginTop: 14, background: "none", border: "none", fontSize: 13.5, color: B_INDIGO, fontWeight: 600, cursor: "pointer", padding: 0 }}>
+                  <button onClick={() => navigate("/tvw")} style={{ marginTop: 14, background: "none", border: "none", fontSize: 13.5, color: B_YELLOW, fontWeight: 600, cursor: "pointer", padding: 0 }}>
                     View all opportunities →
                   </button>
                 </div>
@@ -1116,7 +1136,6 @@ export default function DashboardView() {
               {/* ── DIY tab ───────────────────────────────────────────── */}
               {activeActivity === "diy" && (
                 <div>
-                  <p style={{ fontSize: 13.5, color: "#6b6b7a", marginBottom: 18, lineHeight: 1.6 }}>Organise your own activity with colleagues or family. Use the TSG DIY kit available in the Resource Library below.</p>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14 }}>
                     {DIY_ACTIVITIES.map(a => (
                       <div key={a.id}
@@ -1124,14 +1143,11 @@ export default function DashboardView() {
                         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 20px ${a.accentColor}18`; }}
                         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
                       >
-                        <span style={{ display: "inline-block", background: a.accentColor, color: "#fff", fontSize: 10.5, fontWeight: 700, padding: "2px 9px", borderRadius: 100, textTransform: "uppercase", marginBottom: 10, letterSpacing: "0.3px" }}>{a.theme} · {a.effort} effort</span>
+                        <span style={{ display: "inline-block", background: a.accentColor, color: "#fff", fontSize: 10.5, fontWeight: 700, padding: "2px 9px", borderRadius: 100, textTransform: "uppercase", marginBottom: 10, letterSpacing: "0.3px" }}>{a.theme}</span>
                         <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 7, lineHeight: 1.3 }}>{a.title}</div>
                         <div style={{ fontSize: 13, color: "#555", lineHeight: 1.55 }}>{a.desc}</div>
                       </div>
                     ))}
-                  </div>
-                  <div style={{ ...card, fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6 }}>
-                    Have your own idea? <span style={{ color: B_INDIGO, fontWeight: 600, cursor: "pointer" }}>Create a DIY activity</span> and invite colleagues and family to join.
                   </div>
                 </div>
               )}
@@ -1139,10 +1155,10 @@ export default function DashboardView() {
               {/* ── My ProEngage Project tab (PE season, active match) ── */}
               {activeActivity === "proengage" && IS_PE_SEASON && hasActive && (
                 <div>
-                  <div style={{ background: P_TEAL, border: `1px solid ${B_TEAL}33`, borderRadius: 12, padding: "16px 18px", marginBottom: 16, display: "flex", alignItems: "center", gap: 14 }}>
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: B_TEAL, flexShrink: 0, boxShadow: `0 0 0 4px ${B_TEAL}2a` }} />
+                  <div style={{ background: CP_PINKRED, border: `1px solid ${C_PINKRED}33`, borderRadius: 12, padding: "16px 18px", marginBottom: 16, display: "flex", alignItems: "center", gap: 14 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: C_PINKRED, flexShrink: 0, boxShadow: `0 0 0 4px ${C_PINKRED}2a` }} />
                     <div>
-                      <div style={{ fontSize: 10.5, fontWeight: 700, color: B_TEAL, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 2 }}>Matched · {VOLUNTEER.activeApplication!.edition}</div>
+                      <div style={{ fontSize: 10.5, fontWeight: 700, color: C_PINKRED, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 2 }}>Matched · {VOLUNTEER.activeApplication!.edition}</div>
                       <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY }}>{VOLUNTEER.activeApplication!.title}</div>
                       <div style={{ fontSize: 12.5, color: "#6b6b7a", marginTop: 2 }}>{VOLUNTEER.activeApplication!.ngo} · {VOLUNTEER.activeApplication!.mode} · {VOLUNTEER.activeApplication!.duration} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
                     </div>
@@ -1225,9 +1241,11 @@ export default function DashboardView() {
                 </button>
               </div>
             </section>
+            </div>
 
             {/* ═══ 3. HISTORY ═════════════════════════════════════════════ */}
-            <section id="history" style={{ marginBottom: 52, scrollMarginTop: 108 }}>
+            <div style={{ background: "#f0f1f8", borderRadius: 16, padding: "24px 22px", marginBottom: 52 }}>
+            <section id="history" style={{ scrollMarginTop: 108 }}>
               <SectionHeading eyebrow="Your volunteering trail" title="My History" />
 
               {IS_NEW_VOLUNTEER ? (
@@ -1237,10 +1255,15 @@ export default function DashboardView() {
                 </div>
               ) : (
                 <>
-                  <Slicers options={HISTORY_SLICERS} active={activeHistory} onChange={setActiveHistory} accentColor={B_BLUE} />
+                  <Slicers options={HISTORY_SLICERS} active={activeHistory} onChange={id => { setActiveHistory(id); setEditionFilter(""); setYearFilter(""); }} accentColor={B_YELLOW} />
 
-                  {["applications", "projects", "experience", "feedback"].includes(activeHistory) && (
-                    <HistoryFilters edition={editionFilter} setEdition={setEditionFilter} year={yearFilter} setYear={setYearFilter} />
+                  {["applications", "projects", "certificates", "feedback"].includes(activeHistory) && (
+                    <div style={{ marginBottom: 16 }}>
+                      <select value={editionFilter} onChange={e => setEditionFilter(e.target.value)} style={{ padding: "6px 12px", borderRadius: 8, border: "1.5px solid #dddde8", background: "#fff", fontSize: 13, color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif", cursor: "pointer", outline: "none" }}>
+                        <option value="">Latest Edition</option>
+                        {["ProEngage 11","ProEngage 10","ProEngage 9","ProEngage 8","TVW 22","TVW 21"].map(e => <option key={e}>{e}</option>)}
+                      </select>
+                    </div>
                   )}
 
                   {/* Applications */}
@@ -1289,11 +1312,11 @@ export default function DashboardView() {
                   {/* My Experience (testimonials) */}
                   {activeHistory === "experience" && (
                     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                      <div style={{ background: ACCENT_NAVY, borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden" }}>
-                        <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 140, color: "rgba(255,255,255,0.04)", lineHeight: 1, pointerEvents: "none" }}>"</div>
-                        <div style={{ display: "inline-block", background: `${B_YELLOW}22`, border: `1px solid ${B_YELLOW}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_YELLOW, marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.5px" }}>ProEngage Edition 11 · Pending approval</div>
-                        <blockquote style={{ fontSize: 16, lineHeight: 1.7, color: "rgba(255,255,255,0.85)", fontStyle: "italic", fontWeight: 300, margin: "0 0 18px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
-                        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>— {TESTIMONIAL.author}, {TESTIMONIAL.role}</div>
+                      <div style={{ background: "#F0FDF4", borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: "1px solid #bbf7d0" }}>
+                        <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 140, color: "rgba(22,101,52,0.06)", lineHeight: 1, pointerEvents: "none" }}>"</div>
+                        <div style={{ display: "inline-block", background: "#dcfce7", border: "1px solid #bbf7d0", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#166534", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.5px" }}>ProEngage Edition 11 · Pending approval</div>
+                        <blockquote style={{ fontSize: 16, lineHeight: 1.7, color: "#166534", fontStyle: "italic", fontWeight: 300, margin: "0 0 18px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
+                        <div style={{ fontSize: 13, color: "#166534", opacity: 0.7 }}>— {TESTIMONIAL.author}, {TESTIMONIAL.role}</div>
                       </div>
                       <div style={{ ...card, fontSize: 13.5, color: "#8888a0", lineHeight: 1.6 }}>Testimonials are written reflections by your NGO partners on your project contribution. They appear here once approved by the TSG Admin team.</div>
                     </div>
@@ -1342,8 +1365,10 @@ export default function DashboardView() {
                 </>
               )}
             </section>
+            </div>
 
             {/* ═══ 4. RESOURCES ═══════════════════════════════════════════ */}
+            <div style={{ background: "#f0f1f8", borderRadius: 16, padding: "24px 22px", marginBottom: 52 }}>
             <section id="resources" style={{ scrollMarginTop: 108 }}>
               <SectionHeading eyebrow="Learning and inspiration" title="Resource Library" />
               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
@@ -1353,6 +1378,7 @@ export default function DashboardView() {
                 }} />)}
               </div>
             </section>
+            </div>
 
           </div>
 
@@ -1364,9 +1390,9 @@ export default function DashboardView() {
                 const on = activeSection === s.id;
                 const hasNotif = s.id === "activities" && (NOTIFICATIONS.viewOpportunities || NOTIFICATIONS.diyActivities || NOTIFICATIONS.proEngageProject);
                 return (
-                  <button key={s.id} onClick={() => scrollTo(s.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: 8, border: "none", background: on ? P_INDIGO : "transparent", cursor: "pointer", textAlign: "left", transition: "background 0.18s", fontFamily: "'DM Sans', sans-serif" }}>
-                    <div style={{ width: 3, height: 16, borderRadius: 2, background: on ? B_INDIGO : "#dddde8", flexShrink: 0, transition: "background 0.18s" }} />
-                    <span style={{ position: "relative", display: "inline-flex", fontSize: 12.5, fontWeight: on ? 700 : 400, color: on ? B_INDIGO : "#aaaabc", transition: "color 0.18s" }}>{s.label}{hasNotif && <span style={notifDot} />}</span>
+                  <button key={s.id} onClick={() => scrollTo(s.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: 8, border: "none", background: on ? P_YELLOW : "transparent", cursor: "pointer", textAlign: "left", transition: "background 0.18s", fontFamily: "'DM Sans', sans-serif" }}>
+                    <div style={{ width: 2, height: 12, borderRadius: 2, background: on ? B_YELLOW : "#dddde8", flexShrink: 0, transition: "background 0.18s" }} />
+                    <span style={{ position: "relative", display: "inline-flex", fontSize: 12.5, fontWeight: on ? 700 : 400, color: on ? B_YELLOW : "#aaaabc", transition: "color 0.18s" }}>{s.label}{hasNotif && <span style={notifDot} />}</span>
                   </button>
                 );
               })}
@@ -1394,27 +1420,6 @@ export default function DashboardView() {
       <ApplyDrawer         project={applyProject} onClose={() => setApplyProject(null)} />
       <ReferralDrawer      open={referralOpen}  onClose={() => setReferralOpen(false)}  />
       <ShareDrawer         open={shareOpen}     onClose={() => setShareOpen(false)}     />
-
-      {/* TVW Registration modal */}
-      <DrawerShell open={!!tvwRegModal} onClose={() => setTvwRegModal(null)} title="Confirm Registration" subtitle={tvwRegModal?.title ?? ""} accentTag="TVW 22">
-        {tvwRegModal && (
-          <div style={{ padding: "28px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 24 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Event</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.title}</span></div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Date</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.date}</span></div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Mode</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.mode}</span></div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13.5 }}><span style={{ color: "#8888a0" }}>Venue</span><span style={{ fontWeight: 600, color: ACCENT_NAVY }}>{tvwRegModal.venue ?? tvwRegModal.company}</span></div>
-            </div>
-            <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 10, padding: "14px 16px", fontSize: 13, color: "#166534", lineHeight: 1.65, marginBottom: 28 }}>
-              You'll receive a confirmation email within 24 hours. Your spot is reserved until 48 hours before the event.
-            </div>
-            <div style={{ display: "flex", gap: 12 }}>
-              <button onClick={() => { ctxToast("Registered! Confirmation email sent to priya.sharma@tcs.com"); setTvwRegModal(null); }} style={{ flex: 1, background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Confirm Registration</button>
-              <button onClick={() => setTvwRegModal(null)} style={{ flex: 1, background: "transparent", color: "#8888a0", border: "1px solid #e0e0e8", borderRadius: 10, padding: "11px 0", fontSize: 13.5, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
-            </div>
-          </div>
-        )}
-      </DrawerShell>
     </>
   );
 }
