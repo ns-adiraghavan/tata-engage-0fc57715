@@ -167,9 +167,7 @@ const LoginView = () => {
               {/* Email/password form */}
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 <div>
-                  <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: ACCENT_NAVY, marginBottom: 6 }}>
-                    Email Address / Phone Number
-                  </label>
+                   <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: ACCENT_NAVY, marginBottom: 6 }}>Email Address</label>
                   <div style={{ position: "relative" }}>
                     <Mail size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8" }} />
                     <input type="text" placeholder="Enter email or phone" className="form-input" style={{ paddingLeft: 40 }} />
