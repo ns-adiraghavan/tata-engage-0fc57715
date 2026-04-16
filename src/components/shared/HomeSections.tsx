@@ -709,7 +709,7 @@ export function NumbersSection() {
             }}>
               {blockEyebrow("Did you know?")}
               <p style={{
-                color: "#ffffff", fontSize: 18, fontWeight: 700,
+                color: ACCENT_NAVY, fontSize: 18, fontWeight: 700,
                 lineHeight: 1.55, maxWidth: 520,
                 opacity: factFading ? 0 : 1,
                 transition: "opacity 0.28s", margin: 0,
