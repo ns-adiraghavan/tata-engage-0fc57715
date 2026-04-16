@@ -308,7 +308,7 @@ const Navbar = ({
                 Register
               </button>
               {/* Tata logo — right end */}
-              <img src={tataLogo} alt="Tata" className={`h-8 w-8 object-contain hidden md:block transition-all duration-300 ${scrolled ? "brightness-0" : "brightness-0 invert"}`} />
+              <img src={tataLogo} alt="Tata" className={`h-8 w-8 object-contain hidden md:block transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
             </div>
           )}
         </div>
