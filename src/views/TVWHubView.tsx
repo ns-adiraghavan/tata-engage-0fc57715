@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Users, Search, Globe, Calendar, MapPin, Filter, CalendarDays, List, Check, Download, FileText, Camera, BookOpen, ArrowRight } from "lucide-react";
 
 import { TVW_EVENTS } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
-import { B_INDIGO, B_YELLOW, B_RED, B_TEAL, ACCENT_NAVY } from "@/data/homeSharedData";
+import { B_YELLOW, B_RED, B_TEAL, ACCENT_NAVY } from "@/data/homeSharedData";
 import { TickerBar } from "@/components/shared/HomeSections";
+
+const COBALT = "#0047AB";
 
 
 
@@ -30,25 +32,11 @@ const DIAG_TEXTURE: React.CSSProperties = {
 };
 
 const TVWHubView = () => {
-  const { registeredEvents, setRegisteredEvents, triggerToast } = useAppContext();
+  const { registeredEvents, triggerToast } = useAppContext();
   
   const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [filters, setFilters] = useState({ location: "All", theme: "All", mode: "All" });
   const [searchQuery, setSearchQuery] = useState("");
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<any>(null);
-
-  const handleRegisterClick = (event: any) => {
-    setSelectedEvent(event);
-    setIsRegistering(true);
-  };
-
-  const confirmRegistration = () => {
-    if (!selectedEvent) return;
-    setRegisteredEvents([...registeredEvents, selectedEvent.id]);
-    setIsRegistering(false);
-    triggerToast("You're registered! A confirmation email has been sent.");
-  };
 
   const filteredEvents = TVW_EVENTS.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
