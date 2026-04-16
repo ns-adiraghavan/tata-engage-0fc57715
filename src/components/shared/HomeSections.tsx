@@ -704,19 +704,19 @@ export function NumbersSection() {
 
           {/* Tile 1 — "Did you know?" (dark) */}
           <div style={{
-            borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 220,
-            background: ACCENT_NAVY,
+            borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
+            background: "#FDE8F0",
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
             alignSelf: "center",
           }}>
             <div style={{
               position: "relative", zIndex: 10, padding: "24px 28px",
               display: "flex", flexDirection: "column",
-              justifyContent: "center", height: "100%", minHeight: 220, gap: 14,
+              justifyContent: "space-between", height: "100%", minHeight: 280, gap: 14,
             }}>
-              {blockEyebrow("Did you know?", true)}
+              {blockEyebrow("Did you know?")}
               <p style={{
-                color: "white", fontSize: 18, fontWeight: 700,
+                color: ACCENT_NAVY, fontSize: 18, fontWeight: 700,
                 lineHeight: 1.55, maxWidth: 520,
                 opacity: factFading ? 0 : 1,
                 transition: "opacity 0.28s", margin: 0,
@@ -731,10 +731,10 @@ export function NumbersSection() {
                   title="Next fact"
                   style={{
                     width: 28, height: 28, borderRadius: "50%",
-                    background: "rgba(255,255,255,0.1)",
-                    border: "1px solid rgba(255,255,255,0.18)",
+                    background: "rgba(13,27,62,0.08)",
+                    border: "1px solid rgba(13,27,62,0.15)",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    cursor: "pointer", color: "rgba(255,255,255,0.7)",
+                    cursor: "pointer", color: "rgba(13,27,62,0.6)",
                     flexShrink: 0,
                   }}
                 >
@@ -749,7 +749,7 @@ export function NumbersSection() {
           </div>
 
           {/* Tile 2 — KPI cards — pink bg, matching EOI palette */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 220, alignSelf: "center" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280, alignSelf: "center" }}>
             <div style={{ flex: 1, position: "relative" }}>
               {HERO_STATS.map((s, i) => {
                 const textColour = i === 1 ? "#0D1B3E" : "#ffffff";
@@ -759,10 +759,10 @@ export function NumbersSection() {
                   <div key={s.label} style={{
                     position: "absolute", inset: 0,
                     display: "flex",
-                    flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center",
+                    flexDirection: "column", justifyContent: "flex-start", alignItems: "center", textAlign: "center",
                     borderRadius: 18, padding: "20px 28px",
-                    background: "#9D174D",
-                    boxShadow: "0 4px 20px rgba(157,23,77,0.25)",
+                    background: B_YELLOW,
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
                     opacity: i === 0 ? 1 : 0,
                     transition: "opacity 0.5s ease",
                     animation: `kpiCycle${i} ${HERO_STATS.length * 3.5}s ${i * 3.5}s infinite`,
@@ -773,7 +773,7 @@ export function NumbersSection() {
                       background: "rgba(255,255,255,0.35)",
                     }} />
                     {/* "In the numbers" eyebrow — inside the tile */}
-                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: "0 0 12px", color: "rgba(255,255,255,0.55)", alignSelf: "flex-start", textAlign: "left" }}>
+                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: "0 0 12px", color: "rgba(13,27,62,0.55)", alignSelf: "flex-start", textAlign: "left" }}>
                       In the numbers
                     </p>
                     <p style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.2px", margin: "0 0 8px", color: labelColour }}>
