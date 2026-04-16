@@ -363,18 +363,18 @@ export function ProgrammeSpotlight() {
                 <div>
                   <span style={{
                     fontSize: 9, fontWeight: 800, textTransform: "uppercase",
-                    letterSpacing: "1px", color: `${ACCENT_NAVY}80`,
+                    letterSpacing: "1px", color: "rgba(255,255,255,0.5)",
                     display: "block", marginBottom: 8,
                   }}>
                     Company Volunteering Programme
                   </span>
                   <h3 style={{
-                    fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
+                    fontSize: 22, fontWeight: 900, color: "#ffffff",
                     lineHeight: 1.2, margin: "0 0 14px", letterSpacing: "-0.4px",
                   }}>
                     Company Curated Opportunities for You
                   </h3>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 14 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff", marginBottom: 14 }}>
                     Learn More <ArrowRight size={13} />
                   </div>
                 </div>
@@ -716,7 +716,7 @@ export function NumbersSection() {
             }}>
               {blockEyebrow("Did you know?")}
               <p style={{
-                color: ACCENT_NAVY, fontSize: 18, fontWeight: 700,
+                color: "#ffffff", fontSize: 18, fontWeight: 700,
                 lineHeight: 1.55, maxWidth: 520,
                 opacity: factFading ? 0 : 1,
                 transition: "opacity 0.28s", margin: 0,
