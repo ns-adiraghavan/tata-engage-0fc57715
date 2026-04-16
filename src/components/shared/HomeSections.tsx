@@ -703,11 +703,11 @@ export function NumbersSection() {
             alignSelf: "center",
           }}>
             <div style={{
-              position: "relative", zIndex: 10, padding: "24px 28px",
+              position: "relative", zIndex: 10, padding: "20px 28px",
               display: "flex", flexDirection: "column",
               justifyContent: "space-between", height: "100%", minHeight: 280, gap: 14,
             }}>
-              {blockEyebrow("Did you know?")}
+              {blockEyebrow("Did you know?", true)}
               <p style={{
                 color: "#ffffff", fontSize: 18, fontWeight: 700,
                 lineHeight: 1.55, maxWidth: 520,
