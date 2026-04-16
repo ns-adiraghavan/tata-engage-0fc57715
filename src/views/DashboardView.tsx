@@ -18,14 +18,13 @@ const P_RED       = "#FFF0EE";
 const P_TEAL      = "#E6F8F5";
 const P_BLUE      = "#EBF4FF";
 
-// ─── KPI colours — exact home-screen brand palette ────────────────────────────
-// Matched to B_INDIGO/P_INDIGO, B_TEAL/P_TEAL, B_RED/P_RED, B_BLUE/P_BLUE
-const C_TEAL2     = "#00A896";   const CP_TEAL2    = "#E6F8F5";   // = B_TEAL / P_TEAL
-const C_GREEN     = "#00A896";   const CP_GREEN    = "#E6F8F5";   // alias — same teal
-const C_MIDBLUE   = "#1E6BB8";   const CP_MIDBLUE  = "#EBF4FF";   // = B_BLUE / P_BLUE
-const C_AMBER     = "#E8401C";   const CP_AMBER    = "#FFF0EE";   // = B_RED  / P_RED
-const C_PINK      = "#333399";   const CP_PINK     = "#EEF0FF";   // = B_INDIGO / P_INDIGO
-const C_PINKRED   = "#333399";   const CP_PINKRED  = "#EEF0FF";   // alias
+// ─── KPI colours — bold solid backgrounds matching HomeSections tiles ─────────
+const KPI_PROENGAGE  = "#3D9970";   // ProEngage green
+const KPI_TVW        = "#3E7EB0";   // TVW blue
+const KPI_CVP        = "#F5A623";   // CVP yellow (B_YELLOW)
+const KPI_PINK       = "#F2778A";   // Did you know pink
+const KPI_NUMBERS    = "#C8850A";   // In the numbers (darker mustard)
+const KPI_TEAL       = "#00A896";   // Disaster Response teal
 const IS_NEW_VOLUNTEER = false;
 
 const NOTIFICATIONS: Record<string, boolean> = {
@@ -226,15 +225,24 @@ function StatTile({ value, suffix = "", label, pastel, accentColor, delay, start
   const isZero = value === 0;
   return (
     <div
-      style={{ background: isZero ? "#fafafa" : pastel, borderRadius: 14, padding: "20px 14px 16px", textAlign: "center", border: `1px solid ${isZero ? "#e8e8f0" : accentColor + "22"}`, transition: "transform 0.2s, box-shadow 0.2s", cursor: "default", position: "relative" }}
-      onMouseEnter={e => { if (!isZero) (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)"; if (!isZero) (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 24px ${accentColor}22`; setShowTip(true); }}
-      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; setShowTip(false); }}
+      style={{
+        background: isZero ? "#fafafa" : accentColor,
+        borderRadius: 18, padding: "22px 14px 18px", textAlign: "center",
+        border: "none",
+        boxShadow: isZero ? "none" : `0 4px 20px ${accentColor}33`,
+        transition: "transform 0.2s, box-shadow 0.2s",
+        cursor: "default", position: "relative", overflow: "hidden",
+      }}
+      onMouseEnter={e => { if (!isZero) { (e.currentTarget as HTMLElement).style.transform = "translateY(-3px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 28px ${accentColor}44`; } setShowTip(true); }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = isZero ? "none" : `0 4px 20px ${accentColor}33`; setShowTip(false); }}
     >
+      {/* Top accent line */}
+      {!isZero && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1.4, background: "rgba(255,255,255,0.35)" }} />}
       {isZero && <div style={{ position: "absolute", top: 14, left: "50%", transform: "translateX(-50%)", width: 32, height: 32, borderRadius: "50%", border: `2px dashed ${accentColor}44`, animation: "pulse-ring 2s ease-in-out infinite" }} />}
-      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: isZero ? 32 : 38, fontWeight: 900, lineHeight: 1, letterSpacing: "-2px", color: isZero ? "#ccccdd" : accentColor, position: "relative", zIndex: 1 }}>
+      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: isZero ? 32 : 38, fontWeight: 900, lineHeight: 1, letterSpacing: "-2px", color: isZero ? "#ccccdd" : "#ffffff", position: "relative", zIndex: 1 }}>
         {n}{suffix}
       </div>
-      <div style={{ fontSize: 11, fontWeight: 600, color: isZero ? "#bbbbcc" : ACCENT_NAVY, marginTop: 8, textTransform: "uppercase", letterSpacing: "0.6px", lineHeight: 1.3 }}>{label}</div>
+      <div style={{ fontSize: 10, fontWeight: 700, color: isZero ? "#bbbbcc" : "rgba(255,255,255,0.85)", marginTop: 10, textTransform: "uppercase", letterSpacing: "1px", lineHeight: 1.3 }}>{label}</div>
       {showTip && (
         <div style={{ position: "absolute", bottom: "calc(100% + 8px)", left: "50%", transform: "translateX(-50%)", background: ACCENT_NAVY, color: "rgba(255,255,255,0.88)", fontSize: 12, lineHeight: 1.5, padding: "10px 14px", borderRadius: 9, width: 200, zIndex: 50, pointerEvents: "none", boxShadow: "0 4px 20px rgba(13,27,62,0.2)", textAlign: "left", fontWeight: 400 }}>
           {STAT_TOOLTIPS[label]}
@@ -1012,12 +1020,12 @@ export default function DashboardView() {
 
               {/* Stat tiles */}
               <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 16 }}>
-                <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered"  pastel={CP_TEAL2}   accentColor={C_TEAL2}   delay={0}   started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={CP_MIDBLUE} accentColor={C_MIDBLUE}  delay={100} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Projects Completed" pastel={CP_PINK}    accentColor={C_PINK}    delay={200} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={CP_AMBER}   accentColor={C_AMBER}   delay={300} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={CP_MIDBLUE}  accentColor={C_MIDBLUE}   delay={400} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={CP_TEAL2}   accentColor={C_TEAL2}    delay={500} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered"  pastel={KPI_PROENGAGE} accentColor={KPI_PROENGAGE} delay={0}   started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={KPI_TVW}      accentColor={KPI_TVW}      delay={100} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Projects Completed" pastel={KPI_CVP}      accentColor={KPI_CVP}      delay={200} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={KPI_PINK}     accentColor={KPI_PINK}     delay={300} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={KPI_NUMBERS}  accentColor={KPI_NUMBERS}  delay={400} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={KPI_TEAL}     accentColor={KPI_TEAL}     delay={500} started={statsStarted} />
               </div>
 
               {/* Skills & Interests */}
