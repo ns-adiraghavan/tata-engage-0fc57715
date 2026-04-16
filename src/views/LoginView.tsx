@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Building2, ShieldCheck, Landmark, Mail, Lock, Eye, MapPin, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Building2, ShieldCheck, Landmark, Mail, Lock, Eye, MapPin } from "lucide-react";
 import { useLocation } from "react-router-dom";
-import tataEngageLogoNoBg from "@/assets/tata-engage-logo-nobg.png";
 import doodleCluster1 from "@/assets/doodle-cluster-1.png";
 import doodleCluster2 from "@/assets/doodle-cluster-2.png";
 import doodleCluster3 from "@/assets/doodle-cluster-3.png";
@@ -11,25 +10,7 @@ import { VIKRAM_NAIR, ROHAN_DESAI, PRIYA_SHARMA, ANJALI_MEHTA, ANJALI_GUPTA_REGI
 import { useAppContext } from "@/context/AppContext";
 import { useAuth } from "@/context/AuthContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import { ACCENT_NAVY, B_YELLOW, B_TICKER } from "@/data/homeSharedData";
-
-const QUOTES = [
-  { text: "The best way to find yourself is to lose yourself in service.", author: "Mahatma Gandhi" },
-  { text: "Volunteering is the ultimate exercise in democracy.", author: "Susan J. Ellis" },
-  { text: "No one has ever become poor by giving.", author: "Anne Frank" },
-];
-
-const STATS = [
-  { num: "50,000+", label: "Active Volunteers" },
-  { num: "2.5M+",   label: "Hours Logged"      },
-  { num: "85",       label: "NGO Partners"      },
-];
-
-const TEXTURE = {
-  backgroundImage:
-    "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
-  backgroundSize: "22px 22px",
-};
+import { ACCENT_NAVY, B_TICKER } from "@/data/homeSharedData";
 
 const DEMO_BUTTONS = [
   {
@@ -69,13 +50,7 @@ const LoginView = () => {
   const location = useLocation();
   const isAdminLogin = location.pathname === "/admin-login";
   const [isPESeason, setIsPESeason] = useState(IS_PE_SEASON);
-  const [quoteIdx, setQuoteIdx] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    const id = setInterval(() => setQuoteIdx((p) => (p + 1) % QUOTES.length), 3500);
-    return () => clearInterval(id);
-  }, []);
 
   const togglePE = () => {
     const newVal = togglePESeason();
@@ -93,51 +68,8 @@ const LoginView = () => {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#f5f5fa" }}>
 
-      {/* TOP BANNER */}
-      <div style={{ backgroundColor: B_TICKER, position: "relative", overflow: "hidden", padding: "92px 64px 28px", ...TEXTURE }}>
-        <div style={{ position: "absolute", top: -80, right: -80, width: 340, height: 340, background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -60, left: -40, width: 220, height: 220, background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <img src={doodleCluster1} alt="" style={{ position: "absolute", left: -30, top: 10, width: 200, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "-12deg" }} />
-        <img src={doodleCluster2} alt="" style={{ position: "absolute", right: -20, bottom: -30, width: 220, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "8deg" }} />
-        <img src={doodleCluster3} alt="" style={{ position: "absolute", right: "35%", top: -10, width: 140, opacity: 0.05, pointerEvents: "none", userSelect: "none", rotate: "15deg" }} />
-
-        <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32 }}>
-          {/* Left — logo + back */}
-          <div style={{ flexShrink: 0 }}>
-            <button onClick={() => navigate("home")} style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", background: "none", border: "none", cursor: "pointer", marginBottom: 12, display: "block", letterSpacing: "0.5px" }}>
-              ← Back to Home
-            </button>
-            <img src={tataEngageLogoNoBg} alt="TATA engage" style={{ height: 36, objectFit: "contain", filter: "brightness(0) invert(1)", display: "block" }} />
-          </div>
-
-          {/* Centre — rotating quote */}
-          <div style={{ flex: 1, textAlign: "center", maxWidth: 500 }}>
-            <AnimatePresence mode="wait">
-              <motion.div key={quoteIdx} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.35 }}>
-                <p style={{ fontSize: 14, fontWeight: 300, fontStyle: "italic", color: "rgba(255,255,255,0.75)", lineHeight: 1.65, margin: 0 }}>
-                  "{QUOTES[quoteIdx].text}"
-                </p>
-                <p style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "1.5px", color: "rgba(255,255,255,0.3)", marginTop: 8 }}>
-                  — {QUOTES[quoteIdx].author}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Right — stats */}
-          <div style={{ display: "flex", gap: 28, flexShrink: 0 }}>
-            {STATS.map((s) => (
-              <div key={s.label} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 20, fontWeight: 900, color: "#fff", letterSpacing: "-0.5px" }}>{s.num}</div>
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.38)", marginTop: 2, textTransform: "uppercase", letterSpacing: "0.5px" }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* MAIN CONTENT */}
-      <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", padding: "52px 32px", overflow: "hidden" }}>
+      <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 32px 52px", overflow: "hidden" }}>
 
         {/* Doodles */}
         <img src={doodleCluster1} alt="" style={{ position: "absolute", left: -48, top: "50%", transform: "translateY(-60%)", width: 280, opacity: 0.10, pointerEvents: "none", userSelect: "none", rotate: "-8deg" }} />

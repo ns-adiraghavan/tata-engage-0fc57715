@@ -8,14 +8,7 @@ import doodleCluster1 from "@/assets/doodle-cluster-1.png";
 import doodleCluster2 from "@/assets/doodle-cluster-2.png";
 import doodleCluster3 from "@/assets/doodle-cluster-3.png";
 import doodleCluster5 from "@/assets/doodle-cluster-5.png";
-import { ACCENT_NAVY, B_YELLOW, B_TICKER } from "@/data/homeSharedData";
-
-const TEXTURE = {
-  backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)`,
-  backgroundSize: "22px 22px",
-};
-
-const STEPPER = ["Your Details", "Skills & Interests", "Verify"];
+import { ACCENT_NAVY, B_TICKER } from "@/data/homeSharedData";
 
 const RegisterFormView = () => {
   const { selectedRole, formData, setFormData, handleConsentAccept, triggerToast } = useAppContext();
@@ -376,64 +369,8 @@ const RegisterFormView = () => {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
-      {/* ── TOP BANNER ─────────────────────────────────────────────────────── */}
-      <div style={{ backgroundColor: B_TICKER, position: "relative", overflow: "hidden", padding: "92px 64px 28px", ...TEXTURE }}>
-        {/* Radial glows */}
-        <div style={{ position: "absolute", top: -60, right: -60, width: 280, height: 280, background: "radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -50, left: -30, width: 200, height: 200, background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <img src={doodleCluster1} alt="" style={{ position: "absolute", left: -30, top: 10, width: 200, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "-12deg" }} />
-        <img src={doodleCluster2} alt="" style={{ position: "absolute", right: -20, bottom: -30, width: 220, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "8deg" }} />
-        <img src={doodleCluster3} alt="" style={{ position: "absolute", right: "35%", top: -10, width: 140, opacity: 0.05, pointerEvents: "none", userSelect: "none", rotate: "15deg" }} />
-
-        <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 32 }}>
-
-          {/* Left — back link */}
-          <button
-            onClick={() => navigate("register-role")}
-            style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", background: "none", border: "none", cursor: "pointer", letterSpacing: "0.5px", flexShrink: 0 }}
-          >
-            ← Back to Role Selection
-          </button>
-
-          {/* Centre — role pill + stepper */}
-          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 28 }}>
-            {roleLabel && (
-              <span style={{
-                backgroundColor: B_YELLOW, color: "#111",
-                fontSize: 11, textTransform: "uppercase" as const,
-                fontWeight: 700, letterSpacing: "0.08em",
-                padding: "5px 14px", borderRadius: 100, flexShrink: 0,
-              }}>
-                {roleLabel}
-              </span>
-            )}
-            {/* Stepper */}
-            <div style={{ display: "flex", alignItems: "center" }}>
-              {STEPPER.map((label, i) => (
-                <div key={label} style={{ display: "flex", alignItems: "center" }}>
-                  <div style={{ display: "flex", flexDirection: "column" as const, alignItems: "center" }}>
-                    <div style={{ width: 10, height: 10, borderRadius: "50%", backgroundColor: i === 0 ? B_YELLOW : "rgba(255,255,255,0.2)" }} />
-                    <span style={{ marginTop: 5, fontSize: 9.5, color: i === 0 ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.3)", whiteSpace: "nowrap" as const, letterSpacing: "0.3px" }}>
-                      {label}
-                    </span>
-                  </div>
-                  {i < STEPPER.length - 1 && (
-                    <div style={{ width: 36, height: 1, backgroundColor: "rgba(255,255,255,0.12)", margin: "0 10px 14px" }} />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right — flavour text */}
-          <p style={{ fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.45)", flexShrink: 0, fontStyle: "italic", margin: 0 }}>
-            You're almost there.
-          </p>
-        </div>
-      </div>
-
       {/* ── FORM BODY ──────────────────────────────────────────────────────── */}
-      <div style={{ flex: 1, backgroundColor: "#f5f5fa", position: "relative", display: "flex", justifyContent: "center", padding: "48px 32px", overflow: "hidden" }}>
+      <div style={{ flex: 1, backgroundColor: "#f5f5fa", position: "relative", display: "flex", justifyContent: "center", padding: "80px 32px 48px", overflow: "hidden" }}>
 
         {/* Doodles — left */}
         <img src={doodleCluster1} alt="" style={{ position: "absolute", left: -48, top: "40%", transform: "translateY(-50%)", width: 240, opacity: 0.09, pointerEvents: "none", userSelect: "none", rotate: "-8deg" }} />
