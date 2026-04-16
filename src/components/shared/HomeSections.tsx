@@ -510,10 +510,7 @@ export function JourneySection() {
     return () => obs.disconnect();
   }, []);
 
-  const milestones = JOURNEY_MILESTONES.map((m, i) => ({
-    ...m,
-    colour: JOURNEY_COLOURS[i] ?? m.colour,
-  }));
+  const milestones = JOURNEY_MILESTONES;
 
   return (
     <section ref={ref} className="section-block" style={{
