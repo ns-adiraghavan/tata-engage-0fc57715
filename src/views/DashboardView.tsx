@@ -172,8 +172,8 @@ const BADGES = [
   { id: "b1", name: "ProEngage Veteran",    icon: Award,       desc: "Completed multiple ProEngage editions", earned: "2024", color: "#1A6B3C" },
   { id: "b2", name: "ProEngage Ambassador", icon: Star,        desc: "Championed volunteering across teams",   earned: "2024", color: "#1E6BB8" },
   { id: "b3", name: "ProEngage North Star", icon: Compass,     desc: "Guided NGOs through complex projects",  earned: "2024", color: "#5b21b6" },
-  { id: "b4", name: "ProEngage Pioneer",    icon: Zap,         desc: "Early adopter of ProEngage programme",  earned: "",     color: "#cccccc" },
-  { id: "b5", name: "ProEngage 23 Champion",icon: Shield,      desc: "Outstanding contribution in PE 2023",   earned: "",     color: "#cccccc" },
+  { id: "b4", name: "ProEngage Pioneer",    icon: Zap,         desc: "Early adopter of ProEngage programme",  earned: "",     color: "#D97706" },
+  { id: "b5", name: "ProEngage 23 Champion",icon: Shield,      desc: "Outstanding contribution in PE 2023",   earned: "",     color: "#BE185D" },
 ];
 
 const RESOURCES = [
