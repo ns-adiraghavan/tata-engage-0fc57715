@@ -67,27 +67,57 @@ const SPOCHubView = () => {
     <div className="min-h-screen bg-white pb-12">
 
       {/* Dot rail */}
-      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end gap-3">
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end" style={{ gap: 0 }}>
         {DOT_SECTIONS.map((s, i) => {
           const active = activeSection === i;
+          const isLast = i === DOT_SECTIONS.length - 1;
+          const dotColor = inHero ? "white" : ACCENT;
+          const inactiveColor = inHero ? "rgba(255,255,255,0.4)" : "#CBD5E1";
+          const lineColor = inHero ? "rgba(255,255,255,0.25)" : `${ACCENT}50`;
           return (
-            <button key={s.id} onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" })}
-              className="flex items-center justify-end gap-2">
-              {active && showLabel && (
-                <span className="whitespace-nowrap transition-all duration-300" style={{
-                  fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 100,
-                  background: inHero ? "rgba(0,0,0,0.70)" : "white",
-                  border: `1px solid ${inHero ? "rgba(255,255,255,0.25)" : "#e2e8f0"}`,
-                  color: inHero ? "white" : "#334155",
-                }}>{s.label}</span>
+            <div key={s.id} className="flex flex-col items-end">
+              <button
+                onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" })}
+                className="flex items-center justify-end"
+                style={{ marginBottom: 0 }}
+              >
+                {active && showLabel && (
+                  <span
+                    className="whitespace-nowrap shadow-sm transition-all duration-300 mr-2"
+                    style={{
+                      fontSize: 11, fontWeight: 700, letterSpacing: "0.3px",
+                      padding: "3px 9px",
+                      borderRadius: 4,
+                      backgroundColor: inHero ? "rgba(0,0,0,0.85)" : "rgba(13,27,62,0.92)",
+                      border: `1px solid ${inHero ? "rgba(255,255,255,0.25)" : ACCENT}`,
+                      color: "#ffffff",
+                    }}>
+                    {s.label}
+                  </span>
+                )}
+                <span
+                  className="transition-all duration-300"
+                  style={{
+                    width: active ? 9 : 6, height: active ? 9 : 6,
+                    borderRadius: 2,
+                    backgroundColor: active ? dotColor : inactiveColor,
+                    border: `1px solid ${active ? dotColor : inactiveColor}`,
+                    display: "block",
+                    flexShrink: 0,
+                  }}
+                />
+              </button>
+              {!isLast && (
+                <div style={{
+                  width: 1,
+                  height: 28,
+                  marginLeft: "auto",
+                  marginRight: active ? "4px" : "2.5px",
+                  backgroundImage: `repeating-linear-gradient(to bottom, ${lineColor} 0px, ${lineColor} 3px, transparent 3px, transparent 7px)`,
+                  transition: "all 0.3s",
+                }} />
               )}
-              <span className="transition-all duration-300" style={{
-                width: active ? 10 : 7, height: active ? 10 : 7, borderRadius: "50%", display: "block", flexShrink: 0,
-                backgroundColor: active
-                  ? (inHero ? "white" : ACCENT)
-                  : (inHero ? "rgba(255,255,255,0.4)" : "#CBD5E1"),
-              }} />
-            </button>
+            </div>
           );
         })}
       </div>
