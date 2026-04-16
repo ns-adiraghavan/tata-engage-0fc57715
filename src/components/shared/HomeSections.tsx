@@ -289,40 +289,25 @@ export function ProgrammeSpotlight() {
                   background: PROG_PASTEL[idx],
                   padding: "36px 28px 36px 16px",
                   display: "flex", flexDirection: "column",
-                  justifyContent: "flex-end",
+                  justifyContent: "center",
                   transition: "background 0.5s ease",
                 }}>
-                  <span style={{
-                    fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
-                    textTransform: "uppercase", color: "rgba(255,255,255,0.65)",
-                    marginBottom: 8, display: "block",
-                  }}>
-                    {p.label}
-                  </span>
                   <h3 style={{
                     fontSize: 24, fontWeight: 900, color: "#ffffff",
                     letterSpacing: "-0.4px", lineHeight: 1.2, margin: "0 0 8px",
                   }}>
                     {p.title}
                   </h3>
-                  {/* Accent line alongside/under the header */}
-                  <div style={{
-                    width: 32, height: 1.4, borderRadius: 2,
-                    background: "rgba(255,255,255,0.55)", marginBottom: 14,
-                    transition: "background 0.5s ease",
-                  }} />
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>
-                    {[p.stat1, p.stat2].map((s, i) => (
-                      <span key={i} style={{
-                        fontSize: 11, fontWeight: 700, color: "#ffffff",
-                        background: "rgba(255,255,255,0.15)",
-                        padding: "4px 10px", borderRadius: 100,
-                        border: "1px solid rgba(255,255,255,0.2)",
-                      }}>{s}</span>
-                    ))}
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
-                    Learn more <ArrowRight size={13} />
+                  <p style={{
+                    fontSize: 13, color: "rgba(255,255,255,0.8)",
+                    lineHeight: 1.5, margin: "0 0 20px",
+                  }}>
+                    {PROG_SUBS[idx]}
+                  </p>
+                  <div style={{ marginTop: "auto" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
+                      Learn more <ArrowRight size={13} />
+                    </div>
                   </div>
                 </div>
               </div>
