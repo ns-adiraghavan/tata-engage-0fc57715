@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Building2, ShieldCheck, Landmark, Mail, Lock, Eye, MapPin, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Building2, ShieldCheck, Landmark, Mail, Lock, Eye, MapPin } from "lucide-react";
 import { useLocation } from "react-router-dom";
-import tataEngageLogoNoBg from "@/assets/tata-engage-logo-nobg.png";
 import doodleCluster1 from "@/assets/doodle-cluster-1.png";
 import doodleCluster2 from "@/assets/doodle-cluster-2.png";
 import doodleCluster3 from "@/assets/doodle-cluster-3.png";
@@ -11,25 +10,7 @@ import { VIKRAM_NAIR, ROHAN_DESAI, PRIYA_SHARMA, ANJALI_MEHTA, ANJALI_GUPTA_REGI
 import { useAppContext } from "@/context/AppContext";
 import { useAuth } from "@/context/AuthContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import { ACCENT_NAVY, B_YELLOW, B_TICKER } from "@/data/homeSharedData";
-
-const QUOTES = [
-  { text: "The best way to find yourself is to lose yourself in service.", author: "Mahatma Gandhi" },
-  { text: "Volunteering is the ultimate exercise in democracy.", author: "Susan J. Ellis" },
-  { text: "No one has ever become poor by giving.", author: "Anne Frank" },
-];
-
-const STATS = [
-  { num: "50,000+", label: "Active Volunteers" },
-  { num: "2.5M+",   label: "Hours Logged"      },
-  { num: "85",       label: "NGO Partners"      },
-];
-
-const TEXTURE = {
-  backgroundImage:
-    "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
-  backgroundSize: "22px 22px",
-};
+import { ACCENT_NAVY, B_TICKER } from "@/data/homeSharedData";
 
 const DEMO_BUTTONS = [
   {
@@ -69,13 +50,7 @@ const LoginView = () => {
   const location = useLocation();
   const isAdminLogin = location.pathname === "/admin-login";
   const [isPESeason, setIsPESeason] = useState(IS_PE_SEASON);
-  const [quoteIdx, setQuoteIdx] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    const id = setInterval(() => setQuoteIdx((p) => (p + 1) % QUOTES.length), 3500);
-    return () => clearInterval(id);
-  }, []);
 
   const togglePE = () => {
     const newVal = togglePESeason();

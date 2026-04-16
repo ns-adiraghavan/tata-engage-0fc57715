@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Users, Building2, Briefcase, Heart } from "lucide-react";
-import tataEngageLogoNoBg from "@/assets/tata-engage-logo-nobg.png";
 import doodleCluster1 from "@/assets/doodle-cluster-1.png";
 import doodleCluster2 from "@/assets/doodle-cluster-2.png";
 import doodleCluster3 from "@/assets/doodle-cluster-3.png";
@@ -9,35 +8,11 @@ import doodleCluster5 from "@/assets/doodle-cluster-5.png";
 import type { Role } from "@/types";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
-import { ACCENT_NAVY, B_INDIGO, B_YELLOW, B_TICKER } from "@/data/homeSharedData";
-
-const QUOTES = [
-  { text: "Volunteering is the ultimate exercise in democracy.", author: "Susan J. Ellis" },
-  { text: "The best way to find yourself is to lose yourself in service.", author: "Mahatma Gandhi" },
-  { text: "Alone we can do so little; together we can do so much.", author: "Helen Keller" },
-];
-
-const STATS = [
-  { num: "50K+",  label: "Active Volunteers" },
-  { num: "85",    label: "NGO Partners"      },
-  { num: "2.5M+", label: "Hours Logged"      },
-];
-
-const TEXTURE = {
-  backgroundImage:
-    "repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)",
-  backgroundSize: "22px 22px",
-};
+import { ACCENT_NAVY, B_YELLOW, B_TICKER } from "@/data/homeSharedData";
 
 const RegisterRoleView = () => {
   const { selectedRole, handleRoleSelect } = useAppContext();
   const navigate = useAppNavigate();
-  const [quoteIdx, setQuoteIdx] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => setQuoteIdx((p) => (p + 1) % QUOTES.length), 3500);
-    return () => clearInterval(id);
-  }, []);
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#f5f5fa" }}>

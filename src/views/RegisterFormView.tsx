@@ -8,14 +8,7 @@ import doodleCluster1 from "@/assets/doodle-cluster-1.png";
 import doodleCluster2 from "@/assets/doodle-cluster-2.png";
 import doodleCluster3 from "@/assets/doodle-cluster-3.png";
 import doodleCluster5 from "@/assets/doodle-cluster-5.png";
-import { ACCENT_NAVY, B_YELLOW, B_TICKER } from "@/data/homeSharedData";
-
-const TEXTURE = {
-  backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 22px)`,
-  backgroundSize: "22px 22px",
-};
-
-const STEPPER = ["Your Details", "Skills & Interests", "Verify"];
+import { ACCENT_NAVY, B_TICKER } from "@/data/homeSharedData";
 
 const RegisterFormView = () => {
   const { selectedRole, formData, setFormData, handleConsentAccept, triggerToast } = useAppContext();
