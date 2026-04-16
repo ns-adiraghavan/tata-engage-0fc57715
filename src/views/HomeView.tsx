@@ -138,10 +138,17 @@ const HomeView = () => {
     SECTION_IDS.forEach((id, idx) => {
       const el = document.getElementById(id);
       if (!el) return;
-      const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setActiveSection(idx); }, { threshold: 0.2 });
+      const o = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) {
+          setActiveSection(idx);
+          setShowLabel(true);
+          if (labelTimer.current) clearTimeout(labelTimer.current);
+          labelTimer.current = setTimeout(() => setShowLabel(false), 1800);
+        }
+      }, { threshold: 0.2 });
       o.observe(el); obs.push(o);
     });
-    return () => obs.forEach((o) => o.disconnect());
+    return () => { obs.forEach((o) => o.disconnect()); if (labelTimer.current) clearTimeout(labelTimer.current); };
   }, []);
 
   useEffect(() => { const t = setInterval(() => setHeroSlide((p) => (p + 1) % HERO_SLIDES.length), 6000); return () => clearInterval(t); }, []);
