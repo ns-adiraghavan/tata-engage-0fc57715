@@ -19,16 +19,13 @@ const P_TEAL      = "#E6F8F5";
 const P_BLUE      = "#EBF4FF";
 
 // ─── Extended KPI / design colours ────────────────────────────────────────────
-const C_PINK      = "#C2185B";
-const C_GREEN     = "#2E7D32";
-const C_MIDBLUE   = "#1565C0";
-const C_TEAL2     = "#00838F";
-const C_PINKRED   = "#AD1457";
-const CP_PINK     = "#FCE4EC";
-const CP_GREEN    = "#E8F5E9";
-const CP_MIDBLUE  = "#E3F2FD";
-const CP_TEAL2    = "#E0F7FA";
-const CP_PINKRED  = "#FCE4EC";
+// Fixed 4-colour KPI palette: Green · Blue · Amber · Magenta-Pink
+const C_GREEN     = "#2E7D32";   const CP_GREEN    = "#E8F5E9";   // KPI 1 — Projects Applied
+const C_MIDBLUE   = "#1565C0";   const CP_MIDBLUE  = "#E3F2FD";   // KPI 2 — Projects Completed
+const C_AMBER     = "#92400E";   const CP_AMBER    = "#FEF3C7";   // KPI 3 — Dropped / Referrals
+const C_PINK      = "#9D174D";   const CP_PINK     = "#FCE7F3";   // KPI 4 — Hours / Badges
+const C_TEAL2     = "#0B7285";   const CP_TEAL2    = "#CFFAFE";   // teal accent (certs, matched state)
+const C_PINKRED   = "#9D174D";   const CP_PINKRED  = "#FCE7F3";   // alias for matched badge
 const IS_NEW_VOLUNTEER = false;
 
 const NOTIFICATIONS: Record<string, boolean> = {
@@ -99,14 +96,14 @@ const TVW_OPPORTUNITIES = [
 ];
 
 const DIY_ACTIVITIES = [
-  { id: "d1", title: "Mentor a First-Generation College Student", desc: "1 hour/week for 4 weeks over video call. Set goals, share experience, open doors.", theme: "Education",   effort: "Low",    accentColor: B_INDIGO, pastel: P_INDIGO },
+  { id: "d1", title: "Mentor a First-Generation College Student", desc: "1 hour/week for 4 weeks over video call. Set goals, share experience, open doors.", theme: "Education",   effort: "Low",    accentColor: C_TEAL2, pastel: CP_TEAL2 },
   { id: "d2", title: "Teach Financial Literacy to Youth",         desc: "A 2-hour workshop at a local NGO or school. TSG DIY kit provides all materials.", theme: "Livelihoods", effort: "Medium", accentColor: B_BLUE,   pastel: P_BLUE   },
 ];
 
 const PE_OPPORTUNITIES = [
   { id: "p1", title: "Build a Fundraising Dashboard for Child Rights NGO",  ngo: "Butterflies India",     skillArea: "Finance / Data",   duration: "3 months", mode: "Online",          closes: "15 Jul 2025", applicants: 14, match: 94, accentColor: B_BLUE,   pastel: P_BLUE   },
   { id: "p2", title: "Marketing Strategy for Women's Skilling Programme",   ngo: "Stree Mukti Sanghatna", skillArea: "Marketing",        duration: "4 months", mode: "Hybrid · Mumbai", closes: "20 Jul 2025", applicants: 9,  match: 89, accentColor: "#65A30D", pastel: "#F7FEE7" },
-  { id: "p3", title: "Product Roadmap for Disability Employment Platform",  ngo: "Samarthanam Trust",     skillArea: "Product Strategy", duration: "6 months", mode: "Online",          closes: "30 Jul 2025", applicants: 6,  match: 97, accentColor: B_INDIGO, pastel: P_INDIGO },
+  { id: "p3", title: "Product Roadmap for Disability Employment Platform",  ngo: "Samarthanam Trust",     skillArea: "Product Strategy", duration: "6 months", mode: "Online",          closes: "30 Jul 2025", applicants: 6,  match: 97, accentColor: C_TEAL2, pastel: CP_TEAL2 },
 ];
 
 const HISTORY_APPLICATIONS = [
@@ -1016,18 +1013,18 @@ export default function DashboardView() {
               {/* Stat tiles */}
               <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 16 }}>
                 <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered"  pastel={CP_PINK}    accentColor={C_PINK}    delay={0}   started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={"#FEF9C3"} accentColor={"#A16207"}   delay={100} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={CP_GREEN}  accentColor={C_GREEN}    delay={100} started={statsStarted} />
                 <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Projects Completed" pastel={CP_MIDBLUE} accentColor={C_MIDBLUE} delay={200} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={P_RED}      accentColor={B_RED}   delay={300} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={P_YELLOW}   accentColor={B_YELLOW}  delay={400} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={CP_PINKRED} accentColor={C_PINKRED} delay={500} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={CP_AMBER}   accentColor={C_AMBER}  delay={300} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={CP_TEAL2}   accentColor={C_TEAL2}   delay={400} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={CP_PINK}    accentColor={C_PINK}    delay={500} started={statsStarted} />
               </div>
 
               {/* Skills & Interests */}
               <div style={{ ...card, marginBottom: 10 }}>
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 12 }}>Skills You Bring</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
-                  {VOLUNTEER.skills.slice(0, 4).map(s => <span key={s} style={{ background: CP_PINK, color: C_PINK, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
+                  {VOLUNTEER.skills.slice(0, 4).map(s => <span key={s} style={{ background: CP_TEAL2, color: C_TEAL2, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
                 </div>
               </div>
 
@@ -1096,7 +1093,7 @@ export default function DashboardView() {
                 eyebrow={IS_PE_SEASON ? "ProEngage Edition 11 · Open · Closes 15 Jul 2025" : "Non-ProEngage season · Next edition opens Jan 2026"}
                 title="My Activities"
               />
-              <Slicers options={activitySlicers} active={activeActivity} onChange={setActiveActivity} accentColor={B_INDIGO} notifications={{ opportunities: NOTIFICATIONS.viewOpportunities, diy: NOTIFICATIONS.diyActivities, proengage: NOTIFICATIONS.proEngageProject, apply: NOTIFICATIONS.proEngageProject, early: NOTIFICATIONS.proEngageProject }} />
+              <Slicers options={activitySlicers} active={activeActivity} onChange={setActiveActivity} accentColor={C_TEAL2} notifications={{ opportunities: NOTIFICATIONS.viewOpportunities, diy: NOTIFICATIONS.diyActivities, proengage: NOTIFICATIONS.proEngageProject, apply: NOTIFICATIONS.proEngageProject, early: NOTIFICATIONS.proEngageProject }} />
 
               {/* ── View Opportunities tab ─────────────────────────────── */}
               {activeActivity === "opportunities" && (
@@ -1154,10 +1151,10 @@ export default function DashboardView() {
               {/* ── My ProEngage Project tab (PE season, active match) ── */}
               {activeActivity === "proengage" && IS_PE_SEASON && hasActive && (
                 <div>
-                  <div style={{ background: CP_PINKRED, border: `1px solid ${C_PINKRED}33`, borderRadius: 12, padding: "16px 18px", marginBottom: 16, display: "flex", alignItems: "center", gap: 14 }}>
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: C_PINKRED, flexShrink: 0, boxShadow: `0 0 0 4px ${C_PINKRED}2a` }} />
+                  <div style={{ background: CP_TEAL2, border: `1px solid ${C_TEAL2}33`, borderRadius: 12, padding: "16px 18px", marginBottom: 16, display: "flex", alignItems: "center", gap: 14 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: C_TEAL2, flexShrink: 0, boxShadow: `0 0 0 4px ${C_TEAL2}2a` }} />
                     <div>
-                      <div style={{ fontSize: 10.5, fontWeight: 700, color: C_PINKRED, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 2 }}>Matched · {VOLUNTEER.activeApplication!.edition}</div>
+                      <div style={{ fontSize: 10.5, fontWeight: 700, color: C_TEAL2, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 2 }}>Matched · {VOLUNTEER.activeApplication!.edition}</div>
                       <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY }}>{VOLUNTEER.activeApplication!.title}</div>
                       <div style={{ fontSize: 12.5, color: "#6b6b7a", marginTop: 2 }}>{VOLUNTEER.activeApplication!.ngo} · {VOLUNTEER.activeApplication!.mode} · {VOLUNTEER.activeApplication!.duration} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
                     </div>
