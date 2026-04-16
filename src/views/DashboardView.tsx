@@ -142,7 +142,7 @@ const STAT_TOOLTIPS: Record<string, string> = {
   "Hours Volunteered":  "Total hours logged across all TVW events and ProEngage projects.",
   "Projects Applied":   "ProEngage applications submitted. You can apply to multiple projects per edition.",
   "Projects Completed": "Projects where both you and the NGO have submitted feedback. Unlocks your certificate.",
-  "Dropped":            "Projects that ended early. These remain on your record — it's part of honest volunteering.",
+  "DROPPED OUT":        "Projects that ended early. These remain on your record — it's part of honest volunteering.",
   "No of Referrals":    "Colleagues or family members who joined TataEngage via your referral link.",
   "Badges Earned":      "Awarded for key milestones — completing a project, 100 hours, TVW participation and more.",
 };
@@ -1021,10 +1021,10 @@ export default function DashboardView() {
 
               {/* Stat tiles */}
               <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 16 }}>
-                <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered"  pastel={KPI_PROENGAGE} accentColor={KPI_PROENGAGE} delay={0}   started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.hoursVolunteered} label="Hours Volunteered"  pastel={KPI_PROENGAGE} accentColor={KPI_PROENGAGE} delay={0}   started={statsStarted} />
                 <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={KPI_TVW}      accentColor={KPI_TVW}      delay={100} started={statsStarted} />
                 <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Projects Completed" pastel={KPI_CVP}      accentColor={KPI_CVP}      delay={200} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={KPI_PINK}     accentColor={KPI_PINK}     delay={300} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="DROPPED OUT"        pastel={KPI_PINK}     accentColor={KPI_PINK}     delay={300} started={statsStarted} />
                 <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={KPI_NUMBERS}  accentColor={KPI_NUMBERS}  delay={400} started={statsStarted} />
                 <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={KPI_TEAL}     accentColor={KPI_TEAL}     delay={500} started={statsStarted} />
               </div>
