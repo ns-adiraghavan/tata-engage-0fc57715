@@ -1,21 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useAppContext } from "@/context/AppContext";
 
 // ─── Brand tokens ──────────────────────────────────────────────────────────────
-const B_INDIGO    = "#333399";
-const B_YELLOW    = "#F5A623";
-const B_TEAL      = "#00A896";
-const B_RED       = "#E8401C";
-const B_BLUE      = "#1E6BB8";
-const B_ORANGE    = "#C14D00";
-const ACCENT_NAVY = "#0D1B3E";
-const P_INDIGO    = "#EEF0FF";
-const P_TEAL      = "#E6F8F5";
-const P_BLUE      = "#EBF4FF";
-const P_YELLOW    = "#FEF6E4";
-const P_RED       = "#FFF0EE";
-const P_ORANGE    = "#FFF0E6";
+const FOREST        = "#1A6B3C";   // primary banner / subheaders
+const LIME          = "#A8C94A";   // accent — section BG active states, pills, highlights
+const LIME_LIGHT    = "#F3F9E0";   // very light lime for backgrounds
+const LIME_MID      = "#E8F5C0";   // mid lime for pill backgrounds
+const B_INDIGO      = "#333399";
+const B_RED         = "#E8401C";
+const B_BLUE        = "#1E6BB8";
+const B_ORANGE      = "#C14D00";
+const ACCENT_NAVY   = "#0D1B3E";
+const P_INDIGO      = "#EEF0FF";
+const P_RED         = "#FFF0EE";
+const P_ORANGE      = "#FFF0E6";
+// KPI / badge palette (kept varied per spec)
+const C_PINK        = "#C2185B";   const CP_PINK    = "#FCE4EC";
+const C_GREEN_KPI   = "#2E7D32";   const CP_GREEN   = "#E8F5E9";
+const C_MIDBLUE     = "#1565C0";   const CP_MIDBLUE = "#E3F2FD";
+const C_AMBER       = "#A16207";   const CP_AMBER   = "#FEF9C3";
+const C_TEAL_CERT   = "#1A6B3C";   const CP_TEAL_CERT = "#E6F5EE"; // forest green for certs
 
 // ─── Dropdown data ─────────────────────────────────────────────────────────────
 const TITLES         = ["Mr","Ms","Mrs","Dr","Prof"];
@@ -31,7 +36,6 @@ const INTERESTS_LIST = ["Adult Literacy","Advocacy","Animals","Architecture and 
 const LANGUAGES_LIST = ["English","Hindi","Marathi","Tamil","Telugu","Kannada","Bengali","Gujarati","Malayalam","Punjabi","Odia","Urdu","Others"];
 const GEOGRAPHIES    = ["Global","North India","South India","West India","East India","UK & Europe","Americas","APAC"];
 const NGO_AREAS      = ["Education","Health","Environment","Livelihoods","Technology","Finance","Gender Equality","Disability","Children","Others"];
-const NGO_TIERS      = ["Lead Partner","Partner NGO"];
 
 // ─── Shared field components ───────────────────────────────────────────────────
 function FieldLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
@@ -50,7 +54,7 @@ function TextInput({ value, onChange, placeholder, type = "text" }: { value: str
   return (
     <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
       style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 13px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", boxSizing: "border-box" }}
-      onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+      onFocus={e => (e.target.style.borderColor = FOREST)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
   );
 }
 
@@ -58,7 +62,7 @@ function SelectInput({ value, onChange, options }: { value: string; onChange: (v
   return (
     <select value={value} onChange={e => onChange(e.target.value)}
       style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 9, padding: "10px 13px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, outline: "none", appearance: "none", background: "#fff", cursor: "pointer", boxSizing: "border-box" }}
-      onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")}>
+      onFocus={e => (e.target.style.borderColor = FOREST)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")}>
       {options.map(o => <option key={o}>{o}</option>)}
     </select>
   );
@@ -67,7 +71,7 @@ function SelectInput({ value, onChange, options }: { value: string; onChange: (v
 function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
   return (
     <div onClick={() => onChange(!on)}
-      style={{ position: "relative", width: 40, height: 22, borderRadius: 11, background: on ? B_INDIGO : "#d0d0e0", cursor: "pointer", transition: "background 0.2s", flexShrink: 0 }}>
+      style={{ position: "relative", width: 40, height: 22, borderRadius: 11, background: on ? FOREST : "#d0d0e0", cursor: "pointer", transition: "background 0.2s", flexShrink: 0 }}>
       <div style={{ position: "absolute", top: 3, left: on ? 21 : 3, width: 16, height: 16, borderRadius: "50%", background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.2)", transition: "left 0.2s" }} />
     </div>
   );
@@ -79,7 +83,7 @@ function MultiSelectList({ selected, onChange, options, maxH = 160 }: { selected
     <div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10, minHeight: 32 }}>
         {selected.map(s => (
-          <span key={s} style={{ background: P_INDIGO, color: B_INDIGO, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100, display: "flex", alignItems: "center", gap: 6 }}>
+          <span key={s} style={{ background: LIME_MID, color: FOREST, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100, display: "flex", alignItems: "center", gap: 6 }}>
             {s}<span onClick={() => toggle(s)} style={{ cursor: "pointer", opacity: 0.6, fontSize: 13, lineHeight: 1 }}>×</span>
           </span>
         ))}
@@ -88,8 +92,8 @@ function MultiSelectList({ selected, onChange, options, maxH = 160 }: { selected
       <div style={{ border: "1.5px solid #e0e0e8", borderRadius: 9, maxHeight: maxH, overflowY: "auto" }}>
         {options.map(o => (
           <div key={o} onClick={() => toggle(o)}
-            style={{ padding: "9px 14px", fontSize: 13, cursor: "pointer", color: ACCENT_NAVY, display: "flex", alignItems: "center", gap: 10, background: selected.includes(o) ? P_INDIGO : "transparent", transition: "background 0.1s" }}>
-            <div style={{ width: 15, height: 15, borderRadius: 4, border: `2px solid ${selected.includes(o) ? B_INDIGO : "#dddde8"}`, background: selected.includes(o) ? B_INDIGO : "#fff", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            style={{ padding: "9px 14px", fontSize: 13, cursor: "pointer", color: ACCENT_NAVY, display: "flex", alignItems: "center", gap: 10, background: selected.includes(o) ? LIME_LIGHT : "transparent", transition: "background 0.1s" }}>
+            <div style={{ width: 15, height: 15, borderRadius: 4, border: `2px solid ${selected.includes(o) ? FOREST : "#dddde8"}`, background: selected.includes(o) ? FOREST : "#fff", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
               {selected.includes(o) && <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5l2.5 2.5L8 1" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>}
             </div>
             {o}
@@ -104,21 +108,31 @@ function MultiSelectList({ selected, onChange, options, maxH = 160 }: { selected
 function SectionHeading({ label, accent }: { label: string; accent?: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18, marginTop: 30 }}>
-      <div style={{ width: 3, height: 18, borderRadius: 2, background: accent ?? B_INDIGO }} />
-      <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY }}>{label}</div>
+      <div style={{ width: 3, height: 18, borderRadius: 2, background: accent ?? FOREST }} />
+      <div style={{ fontSize: 14, fontWeight: 700, color: FOREST }}>{label}</div>
     </div>
   );
 }
 
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, [string, string]> = {
-    Active:   [P_TEAL,   B_TEAL],
+    Active:   [LIME_LIGHT, FOREST],
     Inactive: ["#f0f0f4", "#888"],
-    Pending:  [P_YELLOW, "#9a6500"],
-    Approved: [P_TEAL,   B_TEAL],
+    Pending:  ["#FEF6E4", "#9a6500"],
+    Approved: [LIME_LIGHT, FOREST],
   };
   const [bg, color] = map[status] ?? ["#f0f0f0", "#555"];
   return <span style={{ background: bg, color, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, whiteSpace: "nowrap" }}>{status}</span>;
+}
+
+// ─── KPI Stat Tile ─────────────────────────────────────────────────────────────
+function KpiTile({ value, label, pastel, accent }: { value: string | number; label: string; pastel: string; accent: string }) {
+  return (
+    <div style={{ background: pastel, border: `1px solid ${accent}22`, borderRadius: 12, padding: "16px 14px", textAlign: "center", flex: 1 }}>
+      <div style={{ fontSize: 26, fontWeight: 900, color: accent, letterSpacing: -1 }}>{value}</div>
+      <div style={{ fontSize: 10.5, fontWeight: 700, color: accent, marginTop: 4, textTransform: "uppercase", letterSpacing: "0.5px", opacity: 0.8, lineHeight: 1.3 }}>{label}</div>
+    </div>
+  );
 }
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
@@ -225,7 +239,6 @@ function initNGOProfile(): NGOProfileState {
   };
 }
 
-// ─── Tab types ────────────────────────────────────────────────────────────────
 type VolTab = "personal" | "professional" | "volunteering" | "spoc" | "notification";
 type NGOTab = "contact" | "organisation" | "notification";
 
@@ -236,32 +249,36 @@ export default function ProfileView() {
   const { show: toast, msg: toastMsg } = useToast();
 
   const IS_SPOC = user?.role === "corporate_spoc" || user?.role === "regional_spoc";
-  const IS_NGO  = user?.role === "ngo" || (user == null && false); // NGO persona — Anjali
+  const IS_NGO  = user?.role === "ngo" || (user == null && false);
 
-  // ─── Volunteer / SPOC profile ────────────────────────────────────────────
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const [isEditing, setIsEditing]  = useState(false);
   const [volTab, setVolTab]  = useState<VolTab>("personal");
   const [profile, setProfile]      = useState<ProfileState>(() => initProfile(user?.role));
   const [saved, setSaved]          = useState<ProfileState>(() => initProfile(user?.role));
   const [spocDir, setSpocDir]      = useState(SPOC_DIRECTORY);
 
-  // ─── NGO profile ─────────────────────────────────────────────────────────
   const [ngoTab, setNgoTab] = useState<NGOTab>("contact");
   const [ngoProfile, setNgoProfile] = useState<NGOProfileState>(initNGOProfile);
   const [ngoSaved, setNgoSaved]     = useState<NGOProfileState>(initNGOProfile);
 
-  const set = (field: keyof ProfileState, val: any) => setProfile(p => ({ ...p, [field]: val }));
+  const set  = (field: keyof ProfileState, val: any) => setProfile(p => ({ ...p, [field]: val }));
   const setN = (field: keyof NGOProfileState, val: any) => setNgoProfile(p => ({ ...p, [field]: val }));
 
-  const handleSave = () => { setSaved({ ...profile }); setIsEditing(false); toast("Profile saved successfully."); };
-  const handleCancel = () => { setProfile({ ...saved }); setIsEditing(false); };
+  const handleSave    = () => { setSaved({ ...profile }); setIsEditing(false); toast("Profile saved successfully."); };
+  const handleCancel  = () => { setProfile({ ...saved }); setIsEditing(false); };
   const handleNGOSave = () => { setNgoSaved({ ...ngoProfile }); setIsEditing(false); toast("NGO profile saved successfully."); };
   const handleNGOCancel = () => { setNgoProfile({ ...ngoSaved }); setIsEditing(false); };
 
   const gridRow: React.CSSProperties = { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 };
   const col: React.CSSProperties     = { display: "flex", flexDirection: "column" };
 
-  // ─── Volunteer tabs config ────────────────────────────────────────────────
   const VOL_TABS: { id: VolTab; label: string; spocOnly?: boolean }[] = [
     { id: "personal",      label: "Personal Information" },
     { id: "professional",  label: "Professional Details" },
@@ -270,7 +287,6 @@ export default function ProfileView() {
     { id: "notification",  label: "Notification Settings" },
   ];
 
-  // ─── NGO tab config ───────────────────────────────────────────────────────
   const NGO_TABS: { id: NGOTab; label: string }[] = [
     { id: "contact",      label: "Contact Details" },
     { id: "organisation", label: "Organisation Info" },
@@ -338,9 +354,11 @@ export default function ProfileView() {
       </div>
       <SectionHeading label="Profile Photo" />
       <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-        <div style={{ width: 72, height: 72, borderRadius: "50%", background: P_INDIGO, border: `2px dashed #c8c6f0`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 700, color: B_INDIGO, flexShrink: 0 }}>RD</div>
+        <div style={{ width: 72, height: 72, borderRadius: "50%", background: LIME_MID, border: `2px dashed ${LIME}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 700, color: FOREST, flexShrink: 0 }}>
+          {profile.firstName.charAt(0)}{profile.lastName.charAt(0)}
+        </div>
         {isEditing ? (
-          <div><button onClick={() => toast("Photo upload coming soon.")} style={{ fontSize: 13, fontWeight: 600, color: B_INDIGO, background: P_INDIGO, border: `1px solid #c8c6f0`, borderRadius: 9, padding: "8px 16px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Upload Photo</button><div style={{ fontSize: 11, color: "#aaaabc", marginTop: 5 }}>JPG or PNG, max 2MB. Square crop recommended.</div></div>
+          <div><button onClick={() => toast("Photo upload coming soon.")} style={{ fontSize: 13, fontWeight: 600, color: FOREST, background: LIME_LIGHT, border: `1px solid ${LIME}`, borderRadius: 9, padding: "8px 16px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Upload Photo</button><div style={{ fontSize: 11, color: "#aaaabc", marginTop: 5 }}>JPG or PNG, max 2MB. Square crop recommended.</div></div>
         ) : <div style={{ fontSize: 13, color: "#6b6b7a" }}>No photo uploaded. Edit profile to add one.</div>}
       </div>
     </div>
@@ -392,20 +410,20 @@ export default function ProfileView() {
       <FieldLabel>Select all that apply</FieldLabel>
       {isEditing ? <MultiSelectList selected={profile.skills} onChange={v => set("skills", v)} options={SKILLS_LIST} maxH={180} /> : (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-          {profile.skills.map(s => <span key={s} style={{ background: P_INDIGO, color: B_INDIGO, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
+          {profile.skills.map(s => <span key={s} style={{ background: LIME_MID, color: FOREST, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
         </div>
       )}
       <SectionHeading label="Areas of Interest" />
       <FieldLabel>Causes you care about</FieldLabel>
       {isEditing ? <MultiSelectList selected={profile.interests} onChange={v => set("interests", v)} options={INTERESTS_LIST} maxH={180} /> : (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-          {profile.interests.map(s => <span key={s} style={{ background: P_TEAL, color: B_TEAL, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
+          {profile.interests.map(s => <span key={s} style={{ background: LIME_LIGHT, color: FOREST, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
         </div>
       )}
       <SectionHeading label="Languages" />
       {isEditing ? <MultiSelectList selected={profile.languages} onChange={v => set("languages", v)} options={LANGUAGES_LIST} maxH={140} /> : (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-          {profile.languages.map(l => <span key={l} style={{ background: P_BLUE, color: B_BLUE, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{l}</span>)}
+          {profile.languages.map(l => <span key={l} style={{ background: "#EBF4FF", color: B_BLUE, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{l}</span>)}
         </div>
       )}
       <SectionHeading label="Mode & Availability" />
@@ -416,7 +434,7 @@ export default function ProfileView() {
             <div style={{ display: "flex", gap: 10 }}>
               {["Remote","In-Person","Either"].map(m => (
                 <label key={m} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, cursor: "pointer", color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif" }}>
-                  <input type="radio" name="mode" checked={profile.preferredMode === m} onChange={() => set("preferredMode", m)} style={{ accentColor: B_INDIGO }} />{m}
+                  <input type="radio" name="mode" checked={profile.preferredMode === m} onChange={() => set("preferredMode", m)} style={{ accentColor: FOREST }} />{m}
                 </label>
               ))}
             </div>
@@ -438,10 +456,10 @@ export default function ProfileView() {
   // ─── Tab: SPOC Profile ────────────────────────────────────────────────────
   const SPOCTab = () => (
     <div>
-      <div style={{ background: P_INDIGO, border: `1.5px solid #c8c6f0`, borderRadius: 12, padding: "16px 20px", marginBottom: 24, display: "flex", alignItems: "center", gap: 14 }}>
+      <div style={{ background: LIME_LIGHT, border: `1.5px solid ${LIME}`, borderRadius: 12, padding: "16px 20px", marginBottom: 24, display: "flex", alignItems: "center", gap: 14 }}>
         <div style={{ fontSize: 24 }}>🧑‍💼</div>
         <div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: B_INDIGO }}>Corporate SPOC — Tata Consultancy Services</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: FOREST }}>Corporate SPOC — Tata Consultancy Services</div>
           <div style={{ fontSize: 12, color: "#6b6b7a", marginTop: 3 }}>This role was assigned by TSG Admin. Contact Admin to change your SPOC tier or geography.</div>
         </div>
       </div>
@@ -458,13 +476,13 @@ export default function ProfileView() {
       <div style={{ background: "#fafafa", border: "1px solid #e8e8f0", borderRadius: 12, padding: "16px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
           <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>SPOC Orientation Module</div>
-          <span style={{ background: P_YELLOW, color: "#9a6500", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>2 of 5 complete</span>
+          <span style={{ background: "#FEF6E4", color: "#9a6500", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>2 of 5 complete</span>
         </div>
         <div style={{ height: 8, background: "#e8e8f0", borderRadius: 4, overflow: "hidden", marginBottom: 10 }}>
-          <div style={{ height: "100%", width: "40%", background: B_INDIGO, borderRadius: 4 }} />
+          <div style={{ height: "100%", width: "40%", background: FOREST, borderRadius: 4 }} />
         </div>
         <div style={{ fontSize: 12, color: "#6b6b7a", marginBottom: 12 }}>Complete all 5 modules to receive your SPOC certification. Admin tracks progress.</div>
-        <button onClick={() => toast("Opening orientation module 3…")} style={{ fontSize: 13, fontWeight: 600, color: "#fff", background: B_INDIGO, border: "none", borderRadius: 9, padding: "8px 18px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Continue Orientation →</button>
+        <button onClick={() => toast("Opening orientation module 3…")} style={{ fontSize: 13, fontWeight: 600, color: "#fff", background: FOREST, border: "none", borderRadius: 9, padding: "8px 18px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Continue Orientation →</button>
       </div>
       <SectionHeading label="Regional SPOCs Under Me" />
       <div style={{ border: "1px solid #e8e8f0", borderRadius: 12, overflow: "hidden", marginBottom: 12 }}>
@@ -481,12 +499,12 @@ export default function ProfileView() {
           </div>
         ))}
       </div>
-      <button onClick={() => toast("Opening add Regional SPOC form…")} style={{ fontSize: 13, fontWeight: 600, color: B_INDIGO, background: P_INDIGO, border: `1px solid #c8c6f0`, borderRadius: 9, padding: "8px 16px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>+ Add Regional SPOC</button>
+      <button onClick={() => toast("Opening add Regional SPOC form…")} style={{ fontSize: 13, fontWeight: 600, color: FOREST, background: LIME_LIGHT, border: `1px solid ${LIME}`, borderRadius: 9, padding: "8px 16px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>+ Add Regional SPOC</button>
       <SectionHeading label="Family Members Linked" />
       <div style={{ border: "1px solid #e8e8f0", borderRadius: 12, overflow: "hidden" }}>
         {FAMILY_MEMBERS.map((f, i) => (
           <div key={f.id} style={{ display: "flex", alignItems: "center", gap: 14, padding: "12px 16px", borderBottom: i < FAMILY_MEMBERS.length - 1 ? "1px solid #f0f0f8" : "none" }}>
-            <div style={{ width: 36, height: 36, borderRadius: "50%", background: P_INDIGO, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: B_INDIGO, flexShrink: 0 }}>{f.name.split(" ").map(n => n[0]).join("")}</div>
+            <div style={{ width: 36, height: 36, borderRadius: "50%", background: LIME_MID, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: FOREST, flexShrink: 0 }}>{f.name.split(" ").map(n => n[0]).join("")}</div>
             <div style={{ flex: 1 }}><div style={{ fontSize: 13, fontWeight: 600, color: ACCENT_NAVY }}>{f.name}</div><div style={{ fontSize: 11, color: "#6b6b7a" }}>{f.relationship} · Joined {f.joinedDate}</div></div>
             <StatusBadge status={f.status} />
           </div>
@@ -495,7 +513,7 @@ export default function ProfileView() {
     </div>
   );
 
-  // ─── Notification tabs (shared pattern, accent colour differs) ──────────
+  // ─── Notification tab ─────────────────────────────────────────────────────
   const NotificationTab = ({ isNGO = false }: { isNGO?: boolean }) => {
     const items = isNGO ? [
       { key: "notifyProEngage", label: "ProEngage notifications", desc: "Application updates, volunteer selections, project status changes and certificate triggers." },
@@ -507,10 +525,9 @@ export default function ProfileView() {
       { key: "notifyEmail",     label: "Email notifications",     desc: "All platform notifications will also be sent to your registered email address." },
       ...(IS_SPOC ? [{ key: "notifySPOC", label: "SPOC notifications", desc: "Pending approvals, at-risk volunteer alerts, leaderboard updates and Admin communications." }] : []),
     ];
-    const accent = isNGO ? B_ORANGE : B_INDIGO;
     return (
       <div>
-        <SectionHeading label="Notification Preferences" accent={accent} />
+        <SectionHeading label="Notification Preferences" />
         {items.map(({ key, label, desc }) => (
           <div key={key} style={{ display: "flex", alignItems: "flex-start", gap: 16, padding: "16px 0", borderBottom: "1px solid #f0f0f8" }}>
             <div style={{ flex: 1 }}>
@@ -525,7 +542,7 @@ export default function ProfileView() {
     );
   };
 
-  // ─── NGO: Contact tab ─────────────────────────────────────────────────────
+  // ─── NGO tabs ─────────────────────────────────────────────────────────────
   const NGOContactTab = () => (
     <div>
       <SectionHeading label="Primary Contact" accent={B_ORANGE} />
@@ -549,7 +566,6 @@ export default function ProfileView() {
     </div>
   );
 
-  // ─── NGO: Organisation tab ────────────────────────────────────────────────
   const NGOOrgTab = () => (
     <div>
       <SectionHeading label="Organisation Details" accent={B_ORANGE} />
@@ -574,79 +590,167 @@ export default function ProfileView() {
         <div style={col}><FieldLabel required>City</FieldLabel>{isEditing ? <TextInput value={ngoProfile.city} onChange={v => setN("city", v)} /> : <ReadOnly value={ngoProfile.city} />}</div>
         <div style={col}><FieldLabel required>State</FieldLabel>{isEditing ? <TextInput value={ngoProfile.state} onChange={v => setN("state", v)} /> : <ReadOnly value={ngoProfile.state} />}</div>
         <div style={col}><FieldLabel required>Country</FieldLabel>{isEditing ? <SelectInput value={ngoProfile.country} onChange={v => setN("country", v)} options={COUNTRIES} /> : <ReadOnly value={ngoProfile.country} />}</div>
-        <div style={col}><FieldLabel>PIN Code</FieldLabel>{isEditing ? <TextInput value={ngoProfile.pincode} onChange={v => setN("pincode", v)} placeholder="400001" /> : <ReadOnly value={ngoProfile.pincode} />}</div>
+        <div style={col}><FieldLabel>PIN Code</FieldLabel>{isEditing ? <TextInput value={ngoProfile.pincode} onChange={v => setN("pincode", v)} placeholder="400001" /> : <ReadOnly value={ngoProfile.pincode} /></div>
       </div>
     </div>
   );
 
-  // ─── Hero accent colour per role ──────────────────────────────────────────
-  const heroAccent = IS_NGO ? B_ORANGE : IS_SPOC ? B_INDIGO : B_TEAL;
-  const heroBadgeBg = IS_NGO ? P_ORANGE : IS_SPOC ? "#EEEDFE" : P_TEAL;
-  const heroBadgeColor = IS_NGO ? B_ORANGE : IS_SPOC ? "#3C3489" : B_TEAL;
+  // ─── Stats for banner ──────────────────────────────────────────────────────
+  const VOLUNTEER_STATS = [
+    { value: 14, label: "Projects Applied",   pastel: CP_AMBER,    accent: C_AMBER    },
+    { value: 9,  label: "Projects Completed", pastel: CP_MIDBLUE,  accent: C_MIDBLUE  },
+    { value: 312, suffix: "h", label: "Hours Volunteered", pastel: CP_GREEN,   accent: C_GREEN_KPI },
+    { value: 3,  label: "Badges Earned",      pastel: CP_PINK,     accent: C_PINK     },
+  ];
 
   // ─── RENDER ───────────────────────────────────────────────────────────────
   return (
-    <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
-      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 40px" }}>
+    <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingBottom: 80 }}>
 
-        {/* ── Hero banner ── */}
-        <div style={{ background: ACCENT_NAVY, borderRadius: "0 0 20px 20px", padding: "32px 40px", marginBottom: 32, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 20 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <div style={{ width: 64, height: 64, borderRadius: IS_NGO ? 14 : "50%", background: heroAccent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 700, color: "#fff", flexShrink: 0, border: "3px solid rgba(255,255,255,0.15)" }}>
-              {IS_NGO ? (ngoData.organization?.charAt(0) ?? "P") : `${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}`}
+      {/* ── Full-bleed hero banner — bleeds under navbar ── */}
+      <div style={{
+        background: `linear-gradient(135deg, ${FOREST} 0%, #145530 60%, #0f4226 100%)`,
+        padding: "96px 0 0",
+        position: "relative",
+        overflow: "hidden",
+      }}>
+        {/* Subtle diagonal texture */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "repeating-linear-gradient(135deg, rgba(168,201,74,0.06) 0px, rgba(168,201,74,0.06) 1px, transparent 1px, transparent 40px)", pointerEvents: "none" }} />
+        {/* Radial glow top-right */}
+        <div style={{ position: "absolute", top: -60, right: -60, width: 360, height: 360, borderRadius: "50%", background: `radial-gradient(circle, ${LIME}28 0%, transparent 70%)`, pointerEvents: "none" }} />
+
+        <div style={{ maxWidth: 1080, margin: "0 auto", padding: "32px 40px 0", position: "relative", zIndex: 1 }}>
+          {/* Avatar + name row */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 20, marginBottom: 28 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+              <div style={{ width: 72, height: 72, borderRadius: IS_NGO ? 16 : "50%", background: LIME, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, fontWeight: 900, color: FOREST, flexShrink: 0, border: "3px solid rgba(255,255,255,0.2)", boxShadow: `0 4px 20px rgba(0,0,0,0.25)` }}>
+                {IS_NGO ? (ngoData.organization?.charAt(0) ?? "P") : `${profile.firstName.charAt(0)}${profile.lastName.charAt(0)}`}
+              </div>
+              <div>
+                <div style={{ fontSize: 24, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>
+                  {IS_NGO ? (ngoData.organization ?? "Pratham Foundation") : `${profile.firstName} ${profile.lastName}`}
+                </div>
+                <div style={{ fontSize: 13.5, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>
+                  {IS_NGO ? `${ngoProfile.designation} · ${ngoProfile.email}` : `${profile.designationDetail || profile.designation} · ${profile.company}`}
+                </div>
+                <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+                  {IS_NGO ? (
+                    <>
+                      <span style={{ background: "rgba(168,201,74,0.22)", border: "1px solid rgba(168,201,74,0.35)", color: LIME, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>{ngoData.tier ?? "Lead Partner"}</span>
+                      <span style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>Verified NGO ✓</span>
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ background: "rgba(168,201,74,0.22)", border: "1px solid rgba(168,201,74,0.35)", color: LIME, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>Tata Employee</span>
+                      {IS_SPOC && <span style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>Corporate SPOC</span>}
+                      <span style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.85)", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>Verified ✓</span>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
-            <div>
-              <div style={{ fontSize: 22, fontWeight: 900, color: "#fff" }}>
-                {IS_NGO ? (ngoData.organization ?? "Pratham Foundation") : `${profile.firstName} ${profile.lastName}`}
-              </div>
-              <div style={{ fontSize: 13.5, color: "rgba(255,255,255,0.5)", marginTop: 4 }}>
-                {IS_NGO ? `${ngoProfile.designation} · ${ngoProfile.email}` : `${profile.designationDetail || profile.designation} · ${profile.company}`}
-              </div>
-              <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
-                {IS_NGO ? (
-                  <>
-                    <span style={{ background: heroBadgeBg, color: heroBadgeColor, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>{ngoData.tier ?? "Lead Partner"}</span>
-                    <span style={{ background: P_TEAL, color: B_TEAL, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>Verified NGO</span>
-                  </>
-                ) : (
-                  <>
-                    <span style={{ background: P_INDIGO, color: B_INDIGO, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>Tata Employee</span>
-                    {IS_SPOC && <span style={{ background: heroBadgeBg, color: heroBadgeColor, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>Corporate SPOC</span>}
-                    <span style={{ background: P_TEAL, color: B_TEAL, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100 }}>Verified</span>
-                  </>
-                )}
-              </div>
+            {/* Edit / Save buttons */}
+            <div style={{ display: "flex", gap: 10, alignItems: "flex-start", paddingTop: 4 }}>
+              {isEditing ? (
+                <>
+                  <button onClick={IS_NGO ? handleNGOSave : handleSave} style={{ fontSize: 13.5, fontWeight: 700, color: FOREST, background: LIME, border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Save Changes</button>
+                  <button onClick={IS_NGO ? handleNGOCancel : handleCancel} style={{ fontSize: 13.5, fontWeight: 700, color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 10, padding: "10px 18px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
+                </>
+              ) : (
+                <button onClick={() => setIsEditing(true)} style={{ fontSize: 13.5, fontWeight: 700, color: FOREST, background: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Edit Profile</button>
+              )}
             </div>
           </div>
-          <div style={{ display: "flex", gap: 10 }}>
-            {isEditing ? (
-              <>
-                <button onClick={IS_NGO ? handleNGOSave : handleSave} style={{ fontSize: 13.5, fontWeight: 700, color: "#fff", background: B_TEAL, border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Save Changes</button>
-                <button onClick={IS_NGO ? handleNGOCancel : handleCancel} style={{ fontSize: 13.5, fontWeight: 700, color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 10, padding: "10px 18px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
-              </>
-            ) : (
-              <button onClick={() => setIsEditing(true)} style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY, background: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Edit Profile</button>
-            )}
-          </div>
+
+          {/* KPI strip — sits at bottom of banner, partially overlapping into content */}
+          {!IS_NGO && (
+            <div style={{ display: "flex", gap: 12, background: "rgba(0,0,0,0.18)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "14px 14px 0 0", padding: "20px 24px", marginTop: 8 }}>
+              {VOLUNTEER_STATS.map(s => (
+                <div key={s.label} style={{ flex: 1, textAlign: "center", borderRight: "1px solid rgba(255,255,255,0.1)", paddingRight: 16, marginRight: 4, lastChild: { borderRight: "none" } }}>
+                  <div style={{ fontSize: 28, fontWeight: 900, color: LIME, letterSpacing: -1 }}>{s.value}{(s as any).suffix}</div>
+                  <div style={{ fontSize: 10.5, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.6px", marginTop: 3 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+      </div>
+
+      {/* ── Body ── */}
+      <div style={{ maxWidth: 1080, margin: "0 auto", padding: "32px 40px" }}>
+
+        {/* Standalone KPI tiles (for NGO or if no strip) — coloured tiles */}
+        {IS_NGO && (
+          <div style={{ display: "flex", gap: 12, marginBottom: 28 }}>
+            <KpiTile value={12} label="Projects Posted" pastel={CP_MIDBLUE} accent={C_MIDBLUE} />
+            <KpiTile value={8}  label="Active Projects" pastel={CP_GREEN}   accent={C_GREEN_KPI} />
+            <KpiTile value={94} label="Volunteers Matched" pastel={CP_AMBER} accent={C_AMBER} />
+            <KpiTile value="Lead" label="Partner Tier"   pastel={CP_PINK}   accent={C_PINK} />
+          </div>
+        )}
 
         {/* ── Layout: left tabs + right content ── */}
         <div style={{ display: "flex", gap: 28, alignItems: "flex-start" }}>
 
           {/* Tab nav */}
-          <div style={{ width: 200, flexShrink: 0 }}>
+          <div style={{ width: 204, flexShrink: 0 }}>
             {(IS_NGO ? NGO_TABS : VOL_TABS).map((t: any) => {
               const isActive = IS_NGO ? ngoTab === t.id : volTab === t.id;
-              const accent = IS_NGO ? B_ORANGE : B_INDIGO;
-              const pastel = IS_NGO ? P_ORANGE : P_INDIGO;
+              const accentBg = IS_NGO ? P_ORANGE : LIME_LIGHT;
+              const accentColor = IS_NGO ? B_ORANGE : FOREST;
               return (
-                <div key={t.id} onClick={() => IS_NGO ? setNgoTab(t.id as NGOTab) : setVolTab(t.id as VolTab)}
-                  style={{ padding: "11px 16px", borderRadius: 10, cursor: "pointer", fontSize: 13.5, fontWeight: isActive ? 700 : 400, color: isActive ? accent : "#6b6b7a", background: isActive ? pastel : "transparent", marginBottom: 4, transition: "all 0.15s", display: "flex", alignItems: "center", gap: 8 }}>
+                <div key={t.id}
+                  onClick={() => IS_NGO ? setNgoTab(t.id as NGOTab) : setVolTab(t.id as VolTab)}
+                  style={{
+                    padding: "11px 16px", borderRadius: 10, cursor: "pointer",
+                    fontSize: 13.5, fontWeight: isActive ? 700 : 400,
+                    color: isActive ? accentColor : "#6b6b7a",
+                    background: isActive ? accentBg : "transparent",
+                    borderLeft: isActive ? `3px solid ${accentColor}` : "3px solid transparent",
+                    marginBottom: 4, transition: "all 0.15s",
+                    display: "flex", alignItems: "center", gap: 8,
+                  }}>
                   {(t as any).spocOnly && <span style={{ fontSize: 11 }}>🧑‍💼</span>}
                   {t.label}
                 </div>
               );
             })}
+
+            {/* Badges shelf — below nav */}
+            {!IS_NGO && (
+              <div style={{ marginTop: 28, background: "#fff", border: "1px solid #e8e8f0", borderRadius: 12, padding: "16px" }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>Badges</div>
+                {[
+                  { symbol: "I",   name: "First Step", color: C_GREEN_KPI,  bg: CP_GREEN   },
+                  { symbol: "II",  name: "50 Club",    color: C_MIDBLUE,    bg: CP_MIDBLUE },
+                  { symbol: "VII", name: "300 Club",   color: C_AMBER,      bg: CP_AMBER   },
+                ].map(b => (
+                  <div key={b.symbol} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                    <div style={{ width: 32, height: 32, borderRadius: 8, background: b.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 900, color: b.color, flexShrink: 0 }}>{b.symbol}</div>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: ACCENT_NAVY }}>{b.name}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Certificates — forest green tint */}
+            {!IS_NGO && (
+              <div style={{ marginTop: 12, background: CP_TEAL_CERT, border: `1px solid ${C_TEAL_CERT}22`, borderRadius: 12, padding: "14px 16px" }}>
+                <div style={{ fontSize: 10, fontWeight: 700, color: C_TEAL_CERT, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 10 }}>My Certificates</div>
+                {[
+                  { edition: "ProEngage 10", date: "Mar 2025" },
+                  { edition: "ProEngage 8",  date: "Oct 2023" },
+                ].map(c => (
+                  <div key={c.edition} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                    <div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: C_TEAL_CERT }}>{c.edition}</div>
+                      <div style={{ fontSize: 10.5, color: "#6b8c6b" }}>{c.date}</div>
+                    </div>
+                    <button onClick={() => toast(`Downloading ${c.edition} certificate…`)} style={{ fontSize: 10.5, fontWeight: 700, color: C_TEAL_CERT, background: "rgba(26,107,60,0.1)", border: `1px solid ${C_TEAL_CERT}30`, borderRadius: 6, padding: "3px 9px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>PDF</button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Content panel */}
@@ -670,7 +774,7 @@ export default function ProfileView() {
             {/* Save row inside panel */}
             {isEditing && (
               <div style={{ display: "flex", gap: 10, marginTop: 28, paddingTop: 20, borderTop: "1px solid #e8e8f0" }}>
-                <button onClick={IS_NGO ? handleNGOSave : handleSave} style={{ fontSize: 13.5, fontWeight: 700, color: "#fff", background: IS_NGO ? B_ORANGE : B_INDIGO, border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Save Changes</button>
+                <button onClick={IS_NGO ? handleNGOSave : handleSave} style={{ fontSize: 13.5, fontWeight: 700, color: "#fff", background: IS_NGO ? B_ORANGE : FOREST, border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Save Changes</button>
                 <button onClick={IS_NGO ? handleNGOCancel : handleCancel} style={{ fontSize: 13.5, fontWeight: 700, color: "#6b6b7a", background: "#f8f8fc", border: "1px solid #e0e0e8", borderRadius: 10, padding: "10px 18px", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Cancel</button>
               </div>
             )}

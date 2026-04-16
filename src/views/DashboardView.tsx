@@ -969,10 +969,10 @@ export default function DashboardView() {
 
   return (
     <>
-      <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
+      <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingBottom: 80 }}>
 
         {/* Greeting bar */}
-        <div style={{ background: "#FEF3C7", padding: "28px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
+        <div style={{ background: "#FEF3C7", padding: "92px 40px 28px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
           <div>
             <div style={{ fontSize: 24, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: -0.5 }}>Welcome back, {VOLUNTEER.firstName}</div>
             <div style={{ fontSize: 13, color: "rgba(13,27,62,0.55)", marginTop: 4 }}>{VOLUNTEER.designation} · {VOLUNTEER.company} · {VOLUNTEER.city}</div>
