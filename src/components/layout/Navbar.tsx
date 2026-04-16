@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Bell, ChevronDown, User, LogOut, Share2, LayoutDashboard, Search } from "lucide-react";
 import tataLogo from "@/assets/Tata-removebg-preview.png";
 import tataEngageLogo from "@/assets/tata-engage-logo.png";
@@ -17,6 +18,7 @@ const Navbar = ({
   onLogout: () => void;
   user: any;
 }) => {
+  const location = useLocation();
   const { triggerToast } = useAppContext();
   const getRoleNotifications = () => {
     if (!user) return NOTIFICATIONS_VOLUNTEER;
@@ -67,6 +69,8 @@ const Navbar = ({
       : "volunteer-hub";
 
   const unreadCount = notifications.filter((n) => !n.read).length;
+  const isHeroOverlayRoute = ["/", "/hub", "/ngo/hub", "/spoc/hub"].includes(location.pathname);
+  const isTransparent = isHeroOverlayRoute && !scrolled;
 
   const dotColor = (type: string) => {
     if (type === "match" || type === "approval") return "bg-green-500";
@@ -101,7 +105,7 @@ const Navbar = ({
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${scrolled ? "bg-white border-b border-zinc-100 shadow-sm" : "bg-black/20 backdrop-blur-sm border-b border-transparent"}`}>
+      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${isTransparent ? "bg-black/20 backdrop-blur-sm border-b border-transparent" : "bg-white border-b border-zinc-100 shadow-sm"}`}>
 
         {/* ── LEFT: TataEngage logo ── */}
         <div className="flex-shrink-0">
@@ -114,11 +118,10 @@ const Navbar = ({
         </div>
 
         {/* ── CENTRE: public nav links ── */}
-        {!isLoggedIn && (
-          <div className="hidden md:flex items-center gap-10 lg:gap-[60px]">
+        <div className="hidden md:flex items-center gap-10 lg:gap-[60px]">
             <span
               onClick={() => onNavigate("home")}
-              className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${scrolled ? "text-zinc-500 hover:text-zinc-900" : "text-white/90 hover:text-white"}`}
+              className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${isTransparent ? "text-white/90 hover:text-white" : "text-zinc-500 hover:text-zinc-900"}`}
             >
               Home
             </span>
@@ -185,7 +188,7 @@ const Navbar = ({
               },
             ].map((nav) => (
               <div key={nav.label} className="relative group">
-                <span className={`text-sm font-medium transition-colors duration-300 cursor-pointer flex items-center gap-1 ${scrolled ? "text-zinc-500 hover:text-zinc-900" : "text-white/90 hover:text-white"}`}>
+                <span className={`text-sm font-medium transition-colors duration-300 cursor-pointer flex items-center gap-1 ${isTransparent ? "text-white/90 hover:text-white" : "text-zinc-500 hover:text-zinc-900"}`}>
                   {nav.label} <ChevronDown size={12} />
                 </span>
                 <div className="absolute top-full left-0 mt-2 bg-white border border-zinc-100 rounded-xl shadow-sm py-2 w-52 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150">
@@ -199,9 +202,8 @@ const Navbar = ({
               </div>
             ))}
 
-            <Search size={18} className={`cursor-pointer transition-colors duration-300 ${scrolled ? "text-zinc-400 hover:text-zinc-700" : "text-white/80 hover:text-white"}`} />
+            <Search size={18} className={`cursor-pointer transition-colors duration-300 ${isTransparent ? "text-white/80 hover:text-white" : "text-zinc-400 hover:text-zinc-700"}`} />
           </div>
-        )}
 
         {/* ── RIGHT ── */}
         <div className="flex items-center gap-4">
@@ -210,10 +212,10 @@ const Navbar = ({
               {/* Bell */}
               <div className="relative" ref={notifRef}>
                 <button onClick={() => setNotifOpen((o) => !o)}
-                  className={`p-2 rounded-full cursor-pointer relative transition-colors duration-300 ${scrolled ? "hover:bg-zinc-100" : "hover:bg-white/10"}`}>
-                  <Bell size={20} className={`transition-colors duration-300 ${scrolled ? "text-zinc-700" : "text-white/90"}`} />
+                  className={`p-2 rounded-full cursor-pointer relative transition-colors duration-300 ${isTransparent ? "hover:bg-white/10" : "hover:bg-zinc-100"}`}>
+                  <Bell size={20} className={`transition-colors duration-300 ${isTransparent ? "text-white/90" : "text-zinc-700"}`} />
                   {unreadCount > 0 && (
-                    <span className={`absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 ${scrolled ? "border-white" : "border-transparent"}`} />
+                    <span className={`absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 ${isTransparent ? "border-transparent" : "border-white"}`} />
                   )}
                 </button>
 
@@ -261,7 +263,7 @@ const Navbar = ({
                   <div className="w-9 h-9 rounded-full bg-[#3E7EB0] text-white flex items-center justify-center text-sm font-bold">
                     {user?.firstName?.[0]}{user?.lastName?.[0]}
                   </div>
-                  <ChevronDown size={14} className={`transition-colors duration-300 ${scrolled ? "text-zinc-400 group-hover:text-zinc-600" : "text-white/60 group-hover:text-white"}`} />
+                  <ChevronDown size={14} className={`transition-colors duration-300 ${isTransparent ? "text-white/60 group-hover:text-white" : "text-zinc-400 group-hover:text-zinc-600"}`} />
                 </button>
 
                 {dropdownOpen && (
@@ -293,13 +295,13 @@ const Navbar = ({
               </div>
 
               {/* Tata logo — right side when logged in */}
-              <img src={tataLogo} alt="Tata" className={`h-8 w-8 object-contain hidden md:block transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
+              <img src={tataLogo} alt="Tata" className={`h-8 w-8 object-contain hidden md:block transition-all duration-300 ${isTransparent ? "brightness-0 invert" : ""}`} />
             </>
           ) : (
             /* ── Public right: Log In + Register + Tata logo ── */
             <div className="flex items-center gap-4">
               <span onClick={() => onNavigate("login")}
-                className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${scrolled ? "text-zinc-600 hover:text-zinc-900" : "text-white/90 hover:text-white"}`}>
+                className={`text-sm font-medium transition-colors duration-300 cursor-pointer ${isTransparent ? "text-white/90 hover:text-white" : "text-zinc-600 hover:text-zinc-900"}`}>
                 Log In
               </span>
               <button onClick={() => onNavigate("register-role")}
@@ -308,7 +310,7 @@ const Navbar = ({
                 Register
               </button>
               {/* Tata logo — right end */}
-              <img src={tataLogo} alt="Tata" className={`h-8 w-8 object-contain hidden md:block transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
+              <img src={tataLogo} alt="Tata" className={`h-8 w-8 object-contain hidden md:block transition-all duration-300 ${isTransparent ? "brightness-0 invert" : ""}`} />
             </div>
           )}
         </div>
