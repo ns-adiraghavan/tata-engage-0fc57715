@@ -5,18 +5,19 @@ import { IS_PE_SEASON } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
-const B_INDIGO    = "#333399";
 const B_YELLOW    = "#F5A623";
 const B_TEAL      = "#00A896";
+const B_TEAL_DARK = "#00756B";   // darker teal — testimonial bg
 const B_RED       = "#E8401C";
-const B_BLUE      = "#1E6BB8";
+const B_BLUE      = "#1E6BB8";   // cobalt blue — primary interactive (replaces indigo)
 const ACCENT_NAVY = "#0D1B3E";
 
-const P_INDIGO    = "#EEF0FF";
+// P_BLUE is the cobalt pastel — used wherever P_BLUE was
 const P_YELLOW    = "#FEF6E4";
 const P_RED       = "#FFF0EE";
 const P_TEAL      = "#E6F8F5";
-const P_BLUE      = "#EBF4FF";
+const P_TEAL_DARK = "#C8EDE9";   // darker teal pastel — testimonial text area
+const P_BLUE      = "#EBF4FF";   // cobalt pastel — replaces P_BLUE everywhere
 
 // ─── KPI colours — bold solid backgrounds matching HomeSections tiles ─────────
 const KPI_PROENGAGE  = "#1A6B3C";   // ProEngage green
@@ -84,7 +85,7 @@ const TESTIMONIAL = {
   role: "Executive Director, Uday Foundation",
   project: "Digital Marketing Strategy for Livelihood NGO",
   edition: "ProEngage Edition 11",
-  avatarBg: B_RED,
+  avatarBg: "#166534",   // dark green
   avatarInitials: "RI",
 };
 
@@ -95,8 +96,26 @@ const TVW_OPPORTUNITIES = [
 ];
 
 const DIY_ACTIVITIES = [
-  { id: "d1", title: "Mentor a First-Generation College Student", desc: "1 hour/week for 4 weeks over video call. Set goals, share experience, open doors.", theme: "Education",   effort: "Low",    accentColor: B_TEAL, pastel: P_TEAL },
-  { id: "d2", title: "Teach Financial Literacy to Youth",         desc: "A 2-hour workshop at a local NGO or school. TSG DIY kit provides all materials.", theme: "Livelihoods", effort: "Medium", accentColor: B_BLUE,   pastel: P_BLUE   },
+  {
+    id: "d1",
+    title: "Create Awareness on Social Entitlements",
+    desc: "TCS' 'Each One Empowers One' initiative. Help citizens understand key entitlements and empower semi-literate individuals with legal and social literacy — enhancing their dignity and confidence.",
+    theme: "Citizen Empowerment",
+    org: "TCS Empowers",
+    effort: "Low",
+    accentColor: B_TEAL,
+    pastel: P_TEAL,
+  },
+  {
+    id: "d2",
+    title: "Donate Blood, Save Lives",
+    desc: "By choosing to donate blood you're not just giving blood — you're giving hope and a chance at life to someone in need. Sign up at your nearest Tata blood drive.",
+    theme: "Health",
+    org: "SDG Goal 3",
+    effort: "Low",
+    accentColor: "#65A30D",
+    pastel: "#F7FEE7",
+  },
 ];
 
 const PE_OPPORTUNITIES = [
@@ -106,35 +125,69 @@ const PE_OPPORTUNITIES = [
 ];
 
 const HISTORY_APPLICATIONS = [
-  { id: "a1", project: "Digital Marketing Strategy — Uday Foundation", edition: "ProEngage 11", year: "2025", status: "Matched",   date: "10 Mar 2025", type: "ProEngage", ngo: "Uday Foundation",     skillArea: "Marketing",      timeline: [{ label: "Applied", date: "10 Mar 2025", done: true }, { label: "Under Review", date: "14 Mar 2025", done: true }, { label: "Shortlisted", date: "18 Mar 2025", done: true }, { label: "Matched", date: "22 Mar 2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
-  { id: "a2", project: "Website Redesign — Red Dot Foundation",        edition: "ProEngage 10", year: "2024", status: "Completed", date: "Aug 2024",    type: "ProEngage", ngo: "Red Dot Foundation",  skillArea: "UX / Marketing", timeline: [{ label: "Applied", date: "2 Aug 2024", done: true }, { label: "Under Review", date: "6 Aug 2024", done: true }, { label: "Shortlisted", date: "10 Aug 2024", done: true }, { label: "Matched", date: "15 Aug 2024", done: true }, { label: "Project Complete", date: "12 Nov 2024", done: true }] },
-  { id: "a3", project: "Aarey Tree Plantation Drive",                  edition: "TVW 22",       year: "2024", status: "Completed", date: "14 Sep 2024", type: "TVW",       ngo: "Tata Motors CSR",     skillArea: "Environment",    timeline: [{ label: "Registered", date: "10 Sep 2024", done: true }, { label: "Confirmed", date: "11 Sep 2024", done: true }, { label: "Participated", date: "14 Sep 2024", done: true }] },
-  { id: "a4", project: "Financial Literacy for Rural Women — SEWA",    edition: "ProEngage 9",  year: "2024", status: "Completed", date: "Feb 2024",    type: "ProEngage", ngo: "SEWA",                skillArea: "Finance",        timeline: [{ label: "Applied", date: "5 Jan 2024", done: true }, { label: "Under Review", date: "10 Jan 2024", done: true }, { label: "Shortlisted", date: "16 Jan 2024", done: true }, { label: "Matched", date: "22 Jan 2024", done: true }, { label: "Project Complete", date: "28 Apr 2024", done: true }] },
-  { id: "a5", project: "Blood Donation Drive — Tata Steel",            edition: "TVW 21",       year: "2024", status: "Completed", date: "22 Mar 2024", type: "TVW",       ngo: "Tata Steel CSR",      skillArea: "Health",         timeline: [{ label: "Registered", date: "18 Mar 2024", done: true }, { label: "Confirmed", date: "19 Mar 2024", done: true }, { label: "Participated", date: "22 Mar 2024", done: true }] },
-  { id: "a6", project: "Brand Strategy — Rhizome Cooperative",         edition: "ProEngage 8",  year: "2023", status: "Dropped",   date: "Sep 2023",    type: "ProEngage", ngo: "Rhizome Cooperative", skillArea: "Marketing",      timeline: [{ label: "Applied", date: "4 Sep 2023", done: true }, { label: "Under Review", date: "8 Sep 2023", done: true }, { label: "Matched", date: "14 Sep 2023", done: true }, { label: "Project Dropped", date: "2 Oct 2023", done: true }] },
+  // PE 23 (latest)
+  { id: "a0",  project: "AI Strategy for Rural Skilling NGO",                edition: "ProEngage 23", year: "2025", status: "Matched",   date: "10 Mar 2025", type: "ProEngage", ngo: "Pratham",             skillArea: "Product Strategy", timeline: [{ label: "Applied", date: "10 Mar 2025", done: true }, { label: "Under Review", date: "14 Mar 2025", done: true }, { label: "Shortlisted", date: "18 Mar 2025", done: true }, { label: "Matched", date: "22 Mar 2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  // PE 22
+  { id: "a00", project: "Communications Strategy for Climate NGO",            edition: "ProEngage 22", year: "2024", status: "Completed", date: "Sep 2024",    type: "ProEngage", ngo: "Asha Foundation",     skillArea: "Marketing",        timeline: [{ label: "Applied", date: "1 Sep 2024", done: true }, { label: "Under Review", date: "5 Sep 2024", done: true }, { label: "Shortlisted", date: "10 Sep 2024", done: true }, { label: "Matched", date: "16 Sep 2024", done: true }, { label: "Project Complete", date: "20 Dec 2024", done: true }] },
+  // PE 21
+  { id: "a01", project: "Impact Measurement Framework for Livelihood NGO",    edition: "ProEngage 21", year: "2024", status: "Completed", date: "Jun 2024",    type: "ProEngage", ngo: "Grameen Solutions",    skillArea: "Data Analytics",   timeline: [{ label: "Applied", date: "2 Jun 2024", done: true }, { label: "Under Review", date: "6 Jun 2024", done: true }, { label: "Matched", date: "14 Jun 2024", done: true }, { label: "Project Complete", date: "10 Sep 2024", done: true }] },
+  // PE 20
+  { id: "a02", project: "Fundraising Dashboard for Education Trust",          edition: "ProEngage 20", year: "2024", status: "Completed", date: "Mar 2024",    type: "ProEngage", ngo: "Teach For India",      skillArea: "Finance / Data",   timeline: [{ label: "Applied", date: "4 Mar 2024", done: true }, { label: "Under Review", date: "8 Mar 2024", done: true }, { label: "Matched", date: "15 Mar 2024", done: true }, { label: "Project Complete", date: "5 Jun 2024", done: true }] },
+  // PE 19
+  { id: "a03", project: "Leadership Training Design for Women's Cooperative",  edition: "ProEngage 19", year: "2024", status: "Completed", date: "Jan 2024",    type: "ProEngage", ngo: "SEWA",                skillArea: "Training / L&D",   timeline: [{ label: "Applied", date: "6 Jan 2024", done: true }, { label: "Under Review", date: "10 Jan 2024", done: true }, { label: "Matched", date: "18 Jan 2024", done: true }, { label: "Project Complete", date: "8 Apr 2024", done: true }] },
+  // TVW 22
+  { id: "a3",  project: "Aarey Tree Plantation Drive",                        edition: "TVW 22",       year: "2024", status: "Completed", date: "14 Sep 2024", type: "TVW",       ngo: "Tata Motors CSR",     skillArea: "Environment",      timeline: [{ label: "Registered", date: "10 Sep 2024", done: true }, { label: "Confirmed", date: "11 Sep 2024", done: true }, { label: "Participated", date: "14 Sep 2024", done: true }] },
+  // PE 18
+  { id: "a04", project: "Product Roadmap for Disability Tech Platform",       edition: "ProEngage 18", year: "2023", status: "Completed", date: "Oct 2023",    type: "ProEngage", ngo: "Samarthanam Trust",    skillArea: "Product Strategy", timeline: [{ label: "Applied", date: "2 Oct 2023", done: true }, { label: "Under Review", date: "7 Oct 2023", done: true }, { label: "Matched", date: "14 Oct 2023", done: true }, { label: "Project Complete", date: "10 Jan 2024", done: true }] },
+  // PE 17
+  { id: "a05", project: "Brand Identity for Tribal Art Collective",           edition: "ProEngage 17", year: "2023", status: "Completed", date: "Jul 2023",    type: "ProEngage", ngo: "Dastkar",              skillArea: "Marketing",        timeline: [{ label: "Applied", date: "4 Jul 2023", done: true }, { label: "Under Review", date: "8 Jul 2023", done: true }, { label: "Matched", date: "15 Jul 2023", done: true }, { label: "Project Complete", date: "5 Oct 2023", done: true }] },
+  // PE 16
+  { id: "a06", project: "Digital Strategy for Child Rights NGO",              edition: "ProEngage 16", year: "2023", status: "Completed", date: "Apr 2023",    type: "ProEngage", ngo: "Butterflies India",    skillArea: "Finance / Data",   timeline: [{ label: "Applied", date: "2 Apr 2023", done: true }, { label: "Under Review", date: "6 Apr 2023", done: true }, { label: "Matched", date: "14 Apr 2023", done: true }, { label: "Project Complete", date: "5 Jul 2023", done: true }] },
+  // TVW 21
+  { id: "a5",  project: "Blood Donation Drive — Tata Steel",                  edition: "TVW 21",       year: "2024", status: "Completed", date: "22 Mar 2024", type: "TVW",       ngo: "Tata Steel CSR",      skillArea: "Health",           timeline: [{ label: "Registered", date: "18 Mar 2024", done: true }, { label: "Confirmed", date: "19 Mar 2024", done: true }, { label: "Participated", date: "22 Mar 2024", done: true }] },
+  // PE 15
+  { id: "a07", project: "Finance Training for Rural Microfinance Group",      edition: "ProEngage 15", year: "2023", status: "Dropped",   date: "Jan 2023",    type: "ProEngage", ngo: "Grameen Solutions",    skillArea: "Finance",          timeline: [{ label: "Applied", date: "4 Jan 2023", done: true }, { label: "Under Review", date: "8 Jan 2023", done: true }, { label: "Matched", date: "16 Jan 2023", done: true }, { label: "Project Dropped", date: "15 Feb 2023", done: true }] },
+  // PE 14
+  { id: "a08", project: "Volunteer Management System Design",                 edition: "ProEngage 14", year: "2022", status: "Completed", date: "Oct 2022",    type: "ProEngage", ngo: "iVolunteer",           skillArea: "Product Strategy", timeline: [{ label: "Applied", date: "2 Oct 2022", done: true }, { label: "Under Review", date: "7 Oct 2022", done: true }, { label: "Matched", date: "15 Oct 2022", done: true }, { label: "Project Complete", date: "5 Jan 2023", done: true }] },
+  // PE 13
+  { id: "a09", project: "Marketing Plan for Organic Farmers Collective",      edition: "ProEngage 13", year: "2022", status: "Completed", date: "Jul 2022",    type: "ProEngage", ngo: "Navdanya",             skillArea: "Marketing",        timeline: [{ label: "Applied", date: "4 Jul 2022", done: true }, { label: "Under Review", date: "9 Jul 2022", done: true }, { label: "Matched", date: "18 Jul 2022", done: true }, { label: "Project Complete", date: "10 Oct 2022", done: true }] },
+  // PE 12
+  { id: "a10", project: "Analytics Dashboard for Women's Health NGO",         edition: "ProEngage 12", year: "2022", status: "Completed", date: "Apr 2022",    type: "ProEngage", ngo: "MAMTA",                skillArea: "Data Analytics",   timeline: [{ label: "Applied", date: "3 Apr 2022", done: true }, { label: "Under Review", date: "8 Apr 2022", done: true }, { label: "Matched", date: "16 Apr 2022", done: true }, { label: "Project Complete", date: "6 Jul 2022", done: true }] },
+  // PE 11
+  { id: "a1",  project: "Digital Marketing Strategy — Uday Foundation",       edition: "ProEngage 11", year: "2022", status: "Matched",   date: "10 Mar 2022", type: "ProEngage", ngo: "Uday Foundation",     skillArea: "Marketing",        timeline: [{ label: "Applied", date: "10 Mar 2022", done: true }, { label: "Under Review", date: "14 Mar 2022", done: true }, { label: "Shortlisted", date: "18 Mar 2022", done: true }, { label: "Matched", date: "22 Mar 2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
 ];
 
 const HISTORY_PROJECTS = [
-  { id: "p1", title: "Website Redesign",              ngo: "Red Dot Foundation",   edition: "ProEngage 10", year: "2024", hours: 48, outcome: "Launched new donation portal — 60% uplift in online donations within 8 weeks of go-live.",   skills: ["UX", "Marketing"], cert: true  },
-  { id: "p2", title: "Financial Literacy Curriculum", ngo: "SEWA",                 edition: "ProEngage 9",  year: "2024", hours: 72, outcome: "Trained 150 rural women entrepreneurs in bookkeeping and basic financial planning.",        skills: ["Finance", "Training"], cert: true  },
-  { id: "p3", title: "Brand Strategy",                ngo: "Rhizome Cooperative",  edition: "ProEngage 8",  year: "2023", hours: 12, outcome: "Project paused due to personal reasons. Partial brand audit delivered to the NGO.",        skills: ["Marketing"],       cert: false },
+  { id: "p0",  title: "AI Strategy for Rural Skilling",        ngo: "Pratham",             edition: "ProEngage 23", year: "2025", hours: 0,  outcome: "Project in progress. AI-powered curriculum design underway.",                                       skills: ["Product Strategy", "Data Analytics"], cert: false },
+  { id: "p00", title: "Communications for Climate NGO",        ngo: "Asha Foundation",     edition: "ProEngage 22", year: "2024", hours: 56, outcome: "Launched new donor comms strategy — 35% increase in recurring donor sign-ups.",                      skills: ["Marketing"], cert: true  },
+  { id: "p01", title: "Impact Measurement Framework",          ngo: "Grameen Solutions",   edition: "ProEngage 21", year: "2024", hours: 62, outcome: "Delivered M&E framework adopted across 3 state programmes, covering 12,000 beneficiaries.",           skills: ["Data Analytics", "Finance"], cert: true  },
+  { id: "p02", title: "Fundraising Dashboard",                 ngo: "Teach For India",     edition: "ProEngage 20", year: "2024", hours: 44, outcome: "Dashboard went live — 60% uplift in online donations within 8 weeks of go-live.",                    skills: ["Finance / Data"], cert: true  },
+  { id: "p03", title: "Leadership Training Design",            ngo: "SEWA",                edition: "ProEngage 19", year: "2024", hours: 52, outcome: "Trained 150 rural women entrepreneurs in bookkeeping and leadership fundamentals.",                   skills: ["Training / L&D", "Finance"], cert: true  },
+  { id: "p04", title: "Product Roadmap for Disability Tech",   ngo: "Samarthanam Trust",   edition: "ProEngage 18", year: "2023", hours: 60, outcome: "Roadmap adopted by tech team — v1 app released for 4,000 users with disabilities.",                  skills: ["Product Strategy"], cert: true  },
+  { id: "p05", title: "Brand Identity for Tribal Art",         ngo: "Dastkar",             edition: "ProEngage 17", year: "2023", hours: 48, outcome: "New brand identity increased artisan sales by 28% at annual craft mela.",                            skills: ["Marketing"], cert: true  },
+  { id: "p06", title: "Digital Strategy for Child Rights NGO", ngo: "Butterflies India",   edition: "ProEngage 16", year: "2023", hours: 40, outcome: "Social strategy delivered — Instagram reach grew 3× within 60 days of implementation.",              skills: ["Marketing", "Data Analytics"], cert: true  },
+  { id: "p07", title: "Finance Training — Microfinance Group", ngo: "Grameen Solutions",   edition: "ProEngage 15", year: "2023", hours: 12, outcome: "Project ended early due to NGO restructuring. Partial curriculum delivered.",                         skills: ["Finance"], cert: false },
+  { id: "p08", title: "Volunteer Management System Design",    ngo: "iVolunteer",          edition: "ProEngage 14", year: "2022", hours: 58, outcome: "System design spec delivered — implemented across 12 chapters, managing 2,400 volunteers.",           skills: ["Product Strategy"], cert: true  },
+  { id: "p09", title: "Marketing Plan for Organic Farmers",    ngo: "Navdanya",            edition: "ProEngage 13", year: "2022", hours: 46, outcome: "Marketing plan delivered — farmers' collective revenue grew 22% in next harvest season.",              skills: ["Marketing"], cert: true  },
+  { id: "p10", title: "Analytics Dashboard for Women's Health",ngo: "MAMTA",               edition: "ProEngage 12", year: "2022", hours: 50, outcome: "Dashboard deployed — programme team now tracks 8 health KPIs monthly across all 6 districts.",         skills: ["Data Analytics"], cert: true  },
+  { id: "p1",  title: "Digital Marketing Strategy",            ngo: "Uday Foundation",     edition: "ProEngage 11", year: "2022", hours: 48, outcome: "Launched new donation portal — 40% uplift in donor engagement within 8 weeks of go-live.",            skills: ["Marketing"], cert: true  },
 ];
 
 const BADGES = [
   { id: "b1", name: "First Step",   symbol: "I",   desc: "First volunteering activity",       earned: "Mar 2023", color: "#65A30D" },
-  { id: "b2", name: "ProEngager",   symbol: "II",  desc: "First ProEngage project completed", earned: "Sep 2023", color: B_INDIGO },
+  { id: "b2", name: "ProEngager",   symbol: "II",  desc: "First ProEngage project completed", earned: "Sep 2023", color: B_BLUE },
   { id: "b3", name: "Impact Maker", symbol: "III", desc: "100+ hours volunteered",            earned: "Feb 2024", color: B_BLUE   },
   { id: "b4", name: "Connector",    symbol: "IV",  desc: "Referred 3 volunteers",             earned: "Apr 2024", color: "#65A30D" },
   { id: "b5", name: "TVW Champion", symbol: "V",   desc: "3 TVW editions participated",       earned: "Sep 2024", color: B_RED    },
-  { id: "b6", name: "Repeat Hero",  symbol: "VI",  desc: "3 ProEngage projects completed",    earned: "Mar 2025", color: B_INDIGO },
+  { id: "b6", name: "Repeat Hero",  symbol: "VI",  desc: "3 ProEngage projects completed",    earned: "Mar 2025", color: B_BLUE },
   { id: "b7", name: "300 Club",     symbol: "VII", desc: "300+ volunteering hours",           earned: "Mar 2025", color: B_YELLOW },
 ];
 
 const RESOURCES = [
-  { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: B_INDIGO, pastel: P_INDIGO, photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&q=80" },
+  { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: B_BLUE, pastel: P_BLUE, photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&q=80" },
   { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: B_TEAL,   pastel: P_TEAL,   photo: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" },
   { id: "stories", label: "Stories",  desc: "Volunteer experiences and community impact narratives",   count: "94 stories",  accentColor: "#65A30D", pastel: "#F7FEE7",   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80" },
-  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: B_INDIGO, pastel: P_INDIGO, photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
+  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: B_BLUE, pastel: P_BLUE, photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
   { id: "emodule", label: "E-Module", desc: "ProEngage orientation, NGO readiness kit and dos & don'ts", count: "5 modules", accentColor: B_BLUE, pastel: P_BLUE, photo: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" },
 ];
 
@@ -255,7 +308,7 @@ function StatTile({ value, suffix = "", label, pastel, accentColor, delay, start
 }
 
 // ─── Pill slicers ─────────────────────────────────────────────────────────────
-function Slicers({ options, active, onChange, accentColor = B_INDIGO, notifications }: { options: { id: string; label: string }[]; active: string; onChange: (id: string) => void; accentColor?: string; notifications?: Record<string, boolean> }) {
+function Slicers({ options, active, onChange, accentColor = B_BLUE, notifications }: { options: { id: string; label: string }[]; active: string; onChange: (id: string) => void; accentColor?: string; notifications?: Record<string, boolean> }) {
   return (
     <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 22 }}>
       {options.map(o => (
@@ -270,7 +323,7 @@ function Slicers({ options, active, onChange, accentColor = B_INDIGO, notificati
 
 // ─── Status badge ─────────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: string }) {
-  const map: Record<string, [string, string]> = { Matched: ["#F7FEE7", "#65A30D"], Completed: [P_BLUE, B_BLUE], Dropped: [P_RED, B_RED], Applied: [P_INDIGO, B_INDIGO], Pending: ["#EBF4FF", "#1E6BB8"] };
+  const map: Record<string, [string, string]> = { Matched: ["#F7FEE7", "#65A30D"], Completed: [P_BLUE, B_BLUE], Dropped: [P_RED, B_RED], Applied: [P_BLUE, B_BLUE], Pending: [P_TEAL, B_TEAL] };
   const [bg, color] = map[status] ?? ["#f0f0f0", "#555"];
   return <span style={{ background: bg, color, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, letterSpacing: "0.3px", whiteSpace: "nowrap" }}>{status}</span>;
 }
@@ -292,11 +345,11 @@ function HistoryFilters({ edition, setEdition, year, setYear }: { edition: strin
     <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
       <select value={edition} onChange={e => setEdition(e.target.value)} style={sel}>
         <option value="">All Editions</option>
-        {["ProEngage 11","ProEngage 10","ProEngage 9","ProEngage 8","TVW 22","TVW 21"].map(e => <option key={e}>{e}</option>)}
+        {["ProEngage 23","ProEngage 22","ProEngage 21","ProEngage 20","ProEngage 19","TVW 22","ProEngage 18","ProEngage 17","ProEngage 16","TVW 21","ProEngage 15","ProEngage 14","ProEngage 13","ProEngage 12","ProEngage 11"].map(e => <option key={e}>{e}</option>)}
       </select>
       <select value={year} onChange={e => setYear(e.target.value)} style={sel}>
         <option value="">All Years</option>
-        {["2025","2024","2023"].map(y => <option key={y}>{y}</option>)}
+        {["2025","2024","2023","2022"].map(y => <option key={y}>{y}</option>)}
       </select>
     </div>
   );
@@ -361,7 +414,7 @@ function ApplicationDrawer({ app, onClose }: { app: AppRecord | null; onClose: (
               <div style={{ position: "absolute", left: 11, top: 0, bottom: 0, width: 2, background: "#e8e8f0" }} />
               {app.timeline.map((step, i) => (
                 <div key={i} style={{ display: "flex", gap: 18, marginBottom: 24, position: "relative" }}>
-                  <div style={{ width: 24, height: 24, borderRadius: "50%", background: step.done ? B_INDIGO : "#fff", border: `2.5px solid ${step.done ? B_INDIGO : "#dddde8"}`, flexShrink: 0, zIndex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 24, height: 24, borderRadius: "50%", background: step.done ? B_BLUE : "#fff", border: `2.5px solid ${step.done ? B_BLUE : "#dddde8"}`, flexShrink: 0, zIndex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {step.done && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                   </div>
                   <div style={{ paddingTop: 2 }}>
@@ -409,13 +462,13 @@ function ProjectUpdateDrawer({ open, onClose }: { open: boolean; onClose: () => 
           <p style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6, marginBottom: 22 }}>Share a brief progress note with TSG and your NGO partner. This helps track the health of your project.</p>
           <div style={{ marginBottom: 16 }}>
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Update</label>
-            <textarea value={text} onChange={e => setText(e.target.value)} placeholder="What progress have you made this week? Any blockers or next steps?" rows={6} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "vertical", outline: "none", lineHeight: 1.6, boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+            <textarea value={text} onChange={e => setText(e.target.value)} placeholder="What progress have you made this week? Any blockers or next steps?" rows={6} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "vertical", outline: "none", lineHeight: 1.6, boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
           </div>
           <div style={{ marginBottom: 22 }}>
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Attachment (optional)</label>
             <div style={{ border: "1.5px dashed #dddde8", borderRadius: 10, padding: "16px", textAlign: "center", fontSize: 13, color: "#aaaabc", cursor: "pointer" }}>Drop a file here or click to browse</div>
           </div>
-          <button disabled={!text.trim()} onClick={() => setSubmitted(true)} style={{ width: "100%", background: text.trim() ? B_INDIGO : "#e0e0e8", color: text.trim() ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: text.trim() ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Post Update</button>
+          <button disabled={!text.trim()} onClick={() => setSubmitted(true)} style={{ width: "100%", background: text.trim() ? B_BLUE : "#e0e0e8", color: text.trim() ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: text.trim() ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Post Update</button>
         </div>
       )}
     </DrawerShell>
@@ -487,7 +540,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
       ) : (
         <div style={{ padding: "24px 28px" }}>
           {/* Instructions */}
-          <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 10, padding: "12px 16px", marginBottom: 24, fontSize: 13, color: B_INDIGO, lineHeight: 1.6 }}>
+          <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 10, padding: "12px 16px", marginBottom: 24, fontSize: 13, color: B_BLUE, lineHeight: 1.6 }}>
             We request you to fill in this feedback form to help us understand about your ProEngage volunteering journey and experience. All fields marked * are mandatory.
           </div>
 
@@ -497,8 +550,8 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
             <label style={{ ...label, marginBottom: 12 }}>1. Were you able to successfully complete the project? *</label>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {[["yes", "Yes"], ["no", "No"]].map(([val, lbl]) => (
-                <label key={val} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 13.5, color: completed === val ? B_INDIGO : ACCENT_NAVY, fontWeight: completed === val ? 600 : 400 }}>
-                  <div onClick={() => setCompleted(val as "yes" | "no")} style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${completed === val ? B_INDIGO : "#dddde8"}`, background: completed === val ? B_INDIGO : "#fff", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer" }}>
+                <label key={val} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 13.5, color: completed === val ? B_BLUE : ACCENT_NAVY, fontWeight: completed === val ? 600 : 400 }}>
+                  <div onClick={() => setCompleted(val as "yes" | "no")} style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${completed === val ? B_BLUE : "#dddde8"}`, background: completed === val ? B_BLUE : "#fff", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer" }}>
                     {completed === val && <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff" }} />}
                   </div>
                   {lbl}
@@ -563,7 +616,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
                 <div style={{ background: "#EBF4FF", border: "1px solid #1E6BB822", borderRadius: 8, padding: "10px 12px", fontSize: 12, color: "#1E3A5F", lineHeight: 1.5, marginBottom: 10 }}>
                   Tata Engage Team will send the token to this address. If you live abroad, please provide your India address or Indian office address.
                 </div>
-                <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder="Flat / Floor, House No., Building, Company, Apartment" style={{ ...inp, marginBottom: 8 }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+                <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder="Flat / Floor, House No., Building, Company, Apartment" style={{ ...inp, marginBottom: 8 }} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
                 <div style={{ fontSize: 11.5, color: "#8888a0", marginBottom: 4 }}>* Please update your mobile no. through 'Edit Profile' for any project related queries, write to tataengage@tata.com</div>
               </div>
 
@@ -580,7 +633,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
               {/* Q8 */}
               <div style={{ marginBottom: 22 }}>
                 <label style={label}>8. Do you have any suggestions for the Tata Engage Team regarding the way ProEngage is conducted?</label>
-                <textarea value={suggestions} onChange={e => setSuggestions(e.target.value)} rows={3} placeholder="Suggestions if any" style={{ ...inp, resize: "none" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+                <textarea value={suggestions} onChange={e => setSuggestions(e.target.value)} rows={3} placeholder="Suggestions if any" style={{ ...inp, resize: "none" }} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
               </div>
             </>
           )}
@@ -594,8 +647,8 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
                 <label style={label}>2. Reason of no completion *</label>
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {dropoutReasons.map((r, i) => (
-                    <label key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer", fontSize: 13, color: dropoutReason === r ? B_INDIGO : ACCENT_NAVY, fontWeight: dropoutReason === r ? 600 : 400, lineHeight: 1.5 }}>
-                      <div onClick={() => setDropoutReason(r)} style={{ width: 18, height: 18, minWidth: 18, borderRadius: "50%", border: `2px solid ${dropoutReason === r ? B_INDIGO : "#dddde8"}`, background: dropoutReason === r ? B_INDIGO : "#fff", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer", marginTop: 2 }}>
+                    <label key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer", fontSize: 13, color: dropoutReason === r ? B_BLUE : ACCENT_NAVY, fontWeight: dropoutReason === r ? 600 : 400, lineHeight: 1.5 }}>
+                      <div onClick={() => setDropoutReason(r)} style={{ width: 18, height: 18, minWidth: 18, borderRadius: "50%", border: `2px solid ${dropoutReason === r ? B_BLUE : "#dddde8"}`, background: dropoutReason === r ? B_BLUE : "#fff", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer", marginTop: 2 }}>
                         {dropoutReason === r && <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff" }} />}
                       </div>
                       {r}
@@ -606,7 +659,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
             </>
           )}
 
-          <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ width: "100%", background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", marginTop: 8, transition: "background 0.2s" }}>Submit Feedback</button>
+          <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ width: "100%", background: canSubmit ? B_BLUE : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", marginTop: 8, transition: "background 0.2s" }}>Submit Feedback</button>
         </div>
       )}
     </DrawerShell>
@@ -638,8 +691,8 @@ function GrievanceDrawer({ open, onClose }: { open: boolean; onClose: () => void
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 10 }}>Category *</label>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {categories.map(c => (
-                <label key={c} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 13.5, color: category === c ? B_INDIGO : ACCENT_NAVY, fontWeight: category === c ? 600 : 400 }}>
-                  <div onClick={() => setCategory(c)} style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${category === c ? B_INDIGO : "#dddde8"}`, background: category === c ? B_INDIGO : "#fff", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer" }}>
+                <label key={c} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 13.5, color: category === c ? B_BLUE : ACCENT_NAVY, fontWeight: category === c ? 600 : 400 }}>
+                  <div onClick={() => setCategory(c)} style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${category === c ? B_BLUE : "#dddde8"}`, background: category === c ? B_BLUE : "#fff", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer" }}>
                     {category === c && <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff" }} />}
                   </div>
                   {c}
@@ -649,13 +702,13 @@ function GrievanceDrawer({ open, onClose }: { open: boolean; onClose: () => void
           </div>
           <div style={{ marginBottom: 22 }}>
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Describe the issue *</label>
-            <textarea value={text} onChange={e => setText(e.target.value)} rows={5} placeholder="Provide as much detail as possible so the team can investigate effectively." style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "none", outline: "none", lineHeight: 1.6, boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+            <textarea value={text} onChange={e => setText(e.target.value)} rows={5} placeholder="Provide as much detail as possible so the team can investigate effectively." style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "none", outline: "none", lineHeight: 1.6, boxSizing: "border-box" }} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
           </div>
           <div style={{ marginBottom: 22 }}>
             <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Supporting file (optional)</label>
             <div style={{ border: "1.5px dashed #dddde8", borderRadius: 10, padding: "14px", textAlign: "center", fontSize: 13, color: "#aaaabc", cursor: "pointer" }}>Drop a file here or click to browse</div>
           </div>
-          <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ width: "100%", background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Submit Grievance</button>
+          <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ width: "100%", background: canSubmit ? B_BLUE : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Submit Grievance</button>
         </div>
       )}
     </DrawerShell>
@@ -724,7 +777,7 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
         ) : (
           <div style={{ padding: "24px 28px" }}>
             {/* Project meta summary */}
-            <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 10, padding: "12px 16px", marginBottom: 24 }}>
+            <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 10, padding: "12px 16px", marginBottom: 24 }}>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 24px" }}>
                 {[["Mode", project.mode], ["Duration", project.duration], ["Closes", project.closes], ["Applicants", `${project.applicants} applied`]].map(([k, v]) => (
                   <div key={k}>
@@ -746,7 +799,7 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
                   </div>
                 ))}
               </div>
-              <div style={{ fontSize: 11.5, color: B_INDIGO, marginTop: 8 }}>* Please update your location and mobile no. through 'Edit Profile'. For any project related queries, write to <span style={{ textDecoration: "underline" }}>tataengage@tata.com</span></div>
+              <div style={{ fontSize: 11.5, color: B_BLUE, marginTop: 8 }}>* Please update your location and mobile no. through 'Edit Profile'. For any project related queries, write to <span style={{ textDecoration: "underline" }}>tataengage@tata.com</span></div>
             </div>
 
             {/* Section: Application Details */}
@@ -758,7 +811,7 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
               <select value={designation} onChange={e => setDesignation(e.target.value)} style={{ ...sel, marginBottom: 8 }}>
                 {["Senior Product Manager", "Product Manager", "Software Engineer", "Business Analyst", "Finance Manager", "HR Manager", "Others"].map(d => <option key={d}>{d}</option>)}
               </select>
-              <input type="text" value={designationDetail} onChange={e => setDesignationDetail(e.target.value)} placeholder="Specify if 'Others'" style={inp} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+              <input type="text" value={designationDetail} onChange={e => setDesignationDetail(e.target.value)} placeholder="Specify if 'Others'" style={inp} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
             </div>
 
             {/* Project-specific skills */}
@@ -767,7 +820,7 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
               <div style={{ border: "1.5px solid #e0e0e8", borderRadius: 10, overflow: "hidden" }}>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6, padding: "10px 12px", borderBottom: "1px solid #e8e8f0" }}>
                   {skills.map(s => (
-                    <span key={s} style={{ background: P_INDIGO, color: B_INDIGO, fontSize: 12, fontWeight: 600, padding: "3px 10px", borderRadius: 100, display: "flex", alignItems: "center", gap: 5 }}>
+                    <span key={s} style={{ background: P_BLUE, color: B_BLUE, fontSize: 12, fontWeight: 600, padding: "3px 10px", borderRadius: 100, display: "flex", alignItems: "center", gap: 5 }}>
                       {s} <span onClick={() => setSkills(skills.filter(x => x !== s))} style={{ cursor: "pointer", opacity: 0.6 }}>×</span>
                     </span>
                   ))}
@@ -775,7 +828,7 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
                 </div>
                 <div style={{ maxHeight: 140, overflowY: "auto" }}>
                   {SKILL_OPTIONS.filter(o => !skills.includes(o)).map(o => (
-                    <div key={o} onClick={() => setSkills([...skills, o])} style={{ padding: "8px 14px", fontSize: 13, color: ACCENT_NAVY, cursor: "pointer", transition: "background 0.1s" }} onMouseEnter={e => (e.currentTarget.style.background = P_INDIGO)} onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>{o}</div>
+                    <div key={o} onClick={() => setSkills([...skills, o])} style={{ padding: "8px 14px", fontSize: 13, color: ACCENT_NAVY, cursor: "pointer", transition: "background 0.1s" }} onMouseEnter={e => (e.currentTarget.style.background = P_BLUE)} onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>{o}</div>
                   ))}
                 </div>
               </div>
@@ -784,7 +837,7 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
             {/* Attributes */}
             <div style={{ marginBottom: 16 }}>
               <label style={label}>Attributes relevant to project</label>
-              <textarea value={attributes} onChange={e => setAttributes(e.target.value)} rows={2} placeholder="Describe relevant attributes" style={{ ...inp, resize: "none" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+              <textarea value={attributes} onChange={e => setAttributes(e.target.value)} rows={2} placeholder="Describe relevant attributes" style={{ ...inp, resize: "none" }} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
             </div>
 
             {/* Education */}
@@ -793,13 +846,13 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
               <select value={eduQual} onChange={e => setEduQual(e.target.value)} style={{ ...sel, marginBottom: 8 }}>
                 {["MBA", "B.Tech / B.E.", "CA", "LLB", "MBBS", "M.Tech", "BA / B.Com / B.Sc", "Others"].map(q => <option key={q}>{q}</option>)}
               </select>
-              <input type="text" placeholder="Specify institution or additional detail" style={inp} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+              <input type="text" placeholder="Specify institution or additional detail" style={inp} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
             </div>
 
             {/* Work experience */}
             <div style={{ marginBottom: 16 }}>
               <label style={label}>Total Years of Work Experience *</label>
-              <input type="number" value={workExp} onChange={e => setWorkExp(e.target.value)} min="0" max="50" style={inp} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+              <input type="number" value={workExp} onChange={e => setWorkExp(e.target.value)} min="0" max="50" style={inp} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
             </div>
 
             {/* Similar task */}
@@ -807,8 +860,8 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
               <label style={label}>Have you done a similar task before? *</label>
               <div style={{ display: "flex", gap: 24 }}>
                 {[["yes", "Yes"], ["no", "No"]].map(([val, lbl]) => (
-                  <label key={val} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", fontSize: 13.5, color: similarTask === val ? B_INDIGO : ACCENT_NAVY, fontWeight: similarTask === val ? 600 : 400 }}>
-                    <div onClick={() => setSimilarTask(val as "yes" | "no")} style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${similarTask === val ? B_INDIGO : "#dddde8"}`, background: similarTask === val ? B_INDIGO : "#fff", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer" }}>
+                  <label key={val} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", fontSize: 13.5, color: similarTask === val ? B_BLUE : ACCENT_NAVY, fontWeight: similarTask === val ? 600 : 400 }}>
+                    <div onClick={() => setSimilarTask(val as "yes" | "no")} style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${similarTask === val ? B_BLUE : "#dddde8"}`, background: similarTask === val ? B_BLUE : "#fff", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s", cursor: "pointer" }}>
                       {similarTask === val && <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#fff" }} />}
                     </div>
                     {lbl}
@@ -820,13 +873,13 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
             {/* Why best fit */}
             <div style={{ marginBottom: 16 }}>
               <label style={label}>Why are you the best fit for this project? *</label>
-              <textarea value={whyBestFit} onChange={e => setWhyBestFit(e.target.value)} rows={4} placeholder="Describe your motivation and relevant experience" style={{ ...inp, resize: "none" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+              <textarea value={whyBestFit} onChange={e => setWhyBestFit(e.target.value)} rows={4} placeholder="Describe your motivation and relevant experience" style={{ ...inp, resize: "none" }} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
             </div>
 
             {/* 3 steps */}
             <div style={{ marginBottom: 16 }}>
               <label style={label}>Describe in 3 steps how you will ensure you complete this project *</label>
-              <textarea value={threeSteps} onChange={e => setThreeSteps(e.target.value)} rows={4} placeholder="Step 1: ... Step 2: ... Step 3: ..." style={{ ...inp, resize: "none" }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+              <textarea value={threeSteps} onChange={e => setThreeSteps(e.target.value)} rows={4} placeholder="Step 1: ... Step 2: ... Step 3: ..." style={{ ...inp, resize: "none" }} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
             </div>
 
             {/* Manager Details */}
@@ -836,11 +889,11 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 <div>
                   <label style={{ ...label, marginBottom: 6 }}>Full Name</label>
-                  <input type="text" value={managerName} onChange={e => setManagerName(e.target.value)} placeholder="Manager's full name" style={inp} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+                  <input type="text" value={managerName} onChange={e => setManagerName(e.target.value)} placeholder="Manager's full name" style={inp} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
                 </div>
                 <div>
                   <label style={{ ...label, marginBottom: 6 }}>Official Email ID</label>
-                  <input type="email" value={managerEmail} onChange={e => setManagerEmail(e.target.value)} placeholder="manager@tata.com" style={inp} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+                  <input type="email" value={managerEmail} onChange={e => setManagerEmail(e.target.value)} placeholder="manager@tata.com" style={inp} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
                 </div>
               </div>
             </div>
@@ -852,20 +905,20 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
               <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7 }}>
                 {undertakingPoints.map((pt, i) => (
                   <li key={i} style={{ display: "flex", gap: 10, fontSize: 12.5, color: "#555", lineHeight: 1.5 }}>
-                    <span style={{ color: B_INDIGO, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>•</span>
+                    <span style={{ color: B_BLUE, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>•</span>
                     {pt}
                   </li>
                 ))}
               </ul>
               <label style={{ display: "flex", alignItems: "flex-start", gap: 10, marginTop: 16, cursor: "pointer" }}>
-                <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} style={{ marginTop: 3, accentColor: B_INDIGO, width: 15, height: 15, flexShrink: 0 }} />
-                <span style={{ fontSize: 13, color: B_INDIGO, fontWeight: 600, lineHeight: 1.5 }}>I agree to the above mentioned terms of submitting an application under ProEngage</span>
+                <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} style={{ marginTop: 3, accentColor: B_BLUE, width: 15, height: 15, flexShrink: 0 }} />
+                <span style={{ fontSize: 13, color: B_BLUE, fontWeight: 600, lineHeight: 1.5 }}>I agree to the above mentioned terms of submitting an application under ProEngage</span>
               </label>
             </div>
 
             <div style={{ display: "flex", gap: 10 }}>
               <button onClick={reset} style={{ flex: 1, background: "#fff", border: "1.5px solid #dddde8", borderRadius: 10, padding: "12px", fontSize: 13.5, fontWeight: 600, color: "#6b6b7a", cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Save for Later</button>
-              <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ flex: 2, background: canSubmit ? B_INDIGO : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "12px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Submit Application</button>
+              <button disabled={!canSubmit} onClick={() => setSubmitted(true)} style={{ flex: 2, background: canSubmit ? B_BLUE : "#e0e0e8", color: canSubmit ? "#fff" : "#aaa", border: "none", borderRadius: 10, padding: "12px", fontSize: 14, fontWeight: 700, cursor: canSubmit ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", transition: "background 0.2s" }}>Submit Application</button>
             </div>
           </div>
         )
@@ -883,9 +936,9 @@ function ReferralDrawer({ open, onClose }: { open: boolean; onClose: () => void 
     <DrawerShell open={open} onClose={onClose} title="Refer a Colleague or Family Member" subtitle="Share your unique referral link below" accentTag="Referral">
       <div style={{ padding: "28px 28px" }}>
         <p style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6, marginBottom: 22 }}>When someone joins TataEngage using your referral link, your Referred count goes up and you're one step closer to earning the Connector badge.</p>
-        <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 10, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-          <span style={{ flex: 1, fontSize: 13.5, fontWeight: 600, color: B_INDIGO, wordBreak: "break-all" }}>{refLink}</span>
-          <button onClick={copy} style={{ background: copied ? "#65A30D" : B_INDIGO, color: "#fff", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", transition: "background 0.2s" }}>{copied ? "Copied!" : "Copy Link"}</button>
+        <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 10, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+          <span style={{ flex: 1, fontSize: 13.5, fontWeight: 600, color: B_BLUE, wordBreak: "break-all" }}>{refLink}</span>
+          <button onClick={copy} style={{ background: copied ? "#65A30D" : B_BLUE, color: "#fff", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", transition: "background 0.2s" }}>{copied ? "Copied!" : "Copy Link"}</button>
         </div>
         <div style={{ fontSize: 12, color: "#aaaabc" }}>Link expires in 30 days. You have referred 3 people so far.</div>
       </div>
@@ -906,13 +959,13 @@ function ShareDrawer({ open, onClose }: { open: boolean; onClose: () => void }) 
       <div style={{ padding: "28px 28px" }}>
         <div style={{ display: "flex", gap: 8, marginBottom: 18 }}>
           {[["linkedin", "LinkedIn"], ["twitter", "Twitter"], ["whatsapp", "WhatsApp"]].map(([id, lbl]) => (
-            <button key={id} onClick={() => setActive(id)} style={{ flex: 1, padding: "8px", borderRadius: 8, border: `1.5px solid ${active === id ? B_INDIGO : "#dddde8"}`, background: active === id ? P_INDIGO : "#fff", color: active === id ? B_INDIGO : "#6b6b7a", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>{lbl}</button>
+            <button key={id} onClick={() => setActive(id)} style={{ flex: 1, padding: "8px", borderRadius: 8, border: `1.5px solid ${active === id ? B_BLUE : "#dddde8"}`, background: active === id ? P_BLUE : "#fff", color: active === id ? B_BLUE : "#6b6b7a", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>{lbl}</button>
           ))}
         </div>
         <label style={{ fontSize: 11, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", display: "block", marginBottom: 8 }}>Pre-written caption (you can edit)</label>
-        <textarea defaultValue={captions[active]} rows={5} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "none", outline: "none", lineHeight: 1.6, boxSizing: "border-box", marginBottom: 16 }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
+        <textarea defaultValue={captions[active]} rows={5} style={{ width: "100%", border: "1.5px solid #e0e0e8", borderRadius: 10, padding: "12px 14px", fontSize: 13.5, fontFamily: "'DM Sans', sans-serif", color: ACCENT_NAVY, resize: "none", outline: "none", lineHeight: 1.6, boxSizing: "border-box", marginBottom: 16 }} onFocus={e => (e.target.style.borderColor = B_BLUE)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
         <div style={{ fontSize: 12, color: "#aaaabc", marginBottom: 20 }}>The platform never auto-posts on your behalf. You'll be taken to the platform to paste and post.</div>
-        <button style={{ width: "100%", background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Open {["linkedin","twitter","whatsapp"].includes(active) ? active.charAt(0).toUpperCase() + active.slice(1) : ""}</button>
+        <button style={{ width: "100%", background: B_BLUE, color: "#fff", border: "none", borderRadius: 10, padding: "13px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Open {["linkedin","twitter","whatsapp"].includes(active) ? active.charAt(0).toUpperCase() + active.slice(1) : ""}</button>
       </div>
     </DrawerShell>
   );
@@ -1014,7 +1067,7 @@ export default function DashboardView() {
               <SectionHeading eyebrow="Your impact, at a glance" title="Engagement Snapshot" />
 
               {IS_NEW_VOLUNTEER && (
-                <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 12, padding: "14px 18px", marginBottom: 16, fontSize: 13.5, color: B_INDIGO, lineHeight: 1.6 }}>
+                <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 12, padding: "14px 18px", marginBottom: 16, fontSize: 13.5, color: B_BLUE, lineHeight: 1.6 }}>
                   You're just getting started. Hover over any number below to see how you can earn it.
                 </div>
               )}
@@ -1075,10 +1128,10 @@ export default function DashboardView() {
                     <div style={{ fontSize: 13, color: "#8888a0", lineHeight: 1.65, maxWidth: 380, margin: "0 auto" }}>Once you complete a ProEngage project, your NGO partner can write a testimonial about your work.</div>
                   </div>
                 ) : (
-                  <div style={{ background: "#F7FEE7", borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: "1px solid #d9f99d" }}>
-                    <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 160, color: "rgba(22,101,52,0.06)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>"</div>
-                    <div style={{ display: "inline-block", background: "#ecfccb", border: "1px solid #d9f99d", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#365314", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 16 }}>{TESTIMONIAL.edition}</div>
-                    <blockquote style={{ fontSize: 15, lineHeight: 1.72, color: "#365314", fontStyle: "italic", fontWeight: 300, margin: "0 0 22px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
+                  <div style={{ background: P_TEAL_DARK, borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: `1px solid ${B_TEAL_DARK}33` }}>
+                    <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 160, color: `${B_TEAL_DARK}0d`, lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>"</div>
+                    <div style={{ display: "inline-block", background: `${B_TEAL_DARK}18`, border: `1px solid ${B_TEAL_DARK}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_TEAL_DARK, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 16 }}>{TESTIMONIAL.edition}</div>
+                    <blockquote style={{ fontSize: 15, lineHeight: 1.72, color: B_TEAL_DARK, fontStyle: "italic", fontWeight: 300, margin: "0 0 22px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, position: "relative", zIndex: 1 }}>
                       <div style={{ width: 38, height: 38, borderRadius: "50%", background: TESTIMONIAL.avatarBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff", flexShrink: 0 }}>{TESTIMONIAL.avatarInitials}</div>
                       <div>
@@ -1138,19 +1191,26 @@ export default function DashboardView() {
                 </div>
               )}
 
-              {/* ── DIY tab ───────────────────────────────────────────── */}
               {activeActivity === "diy" && (
                 <div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14 }}>
                     {DIY_ACTIVITIES.map(a => (
                       <div key={a.id}
-                        style={{ background: a.pastel, border: "1px solid #e8e8f0", borderRadius: 12, padding: "20px", cursor: "pointer", transition: "transform 0.18s, box-shadow 0.18s" }}
+                        style={{ ...card, padding: "20px", cursor: "pointer", transition: "transform 0.18s, box-shadow 0.18s", display: "flex", gap: 14, alignItems: "flex-start" }}
                         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 20px ${a.accentColor}18`; }}
                         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
                       >
-                        <span style={{ display: "inline-block", background: a.accentColor, color: "#fff", fontSize: 10.5, fontWeight: 700, padding: "2px 9px", borderRadius: 100, textTransform: "uppercase", marginBottom: 10, letterSpacing: "0.3px" }}>{a.theme}</span>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 7, lineHeight: 1.3 }}>{a.title}</div>
-                        <div style={{ fontSize: 13, color: "#555", lineHeight: 1.55 }}>{a.desc}</div>
+                        <div style={{ width: 44, height: 44, borderRadius: 10, background: a.pastel, border: `1px solid ${a.accentColor}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <div style={{ width: 8, height: 8, borderRadius: "50%", background: a.accentColor }} />
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 7 }}>
+                            <span style={{ background: a.pastel, color: a.accentColor, fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>{a.theme}</span>
+                            <span style={{ background: a.pastel, color: a.accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{a.org}</span>
+                          </div>
+                          <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 6, lineHeight: 1.3 }}>{a.title}</div>
+                          <div style={{ fontSize: 12.5, color: "#555", lineHeight: 1.55 }}>{a.desc}</div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -1160,27 +1220,38 @@ export default function DashboardView() {
               {/* ── My ProEngage Project tab (PE season, active match) ── */}
               {activeActivity === "proengage" && IS_PE_SEASON && hasActive && (
                 <div>
-                  <div style={{ background: P_TEAL, border: `1px solid ${B_TEAL}33`, borderRadius: 12, padding: "16px 18px", marginBottom: 16, display: "flex", alignItems: "center", gap: 14 }}>
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: B_TEAL, flexShrink: 0, boxShadow: `0 0 0 4px ${B_TEAL}2a` }} />
-                    <div>
-                      <div style={{ fontSize: 10.5, fontWeight: 700, color: B_TEAL, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 2 }}>Matched · {VOLUNTEER.activeApplication!.edition}</div>
-                      <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY }}>{VOLUNTEER.activeApplication!.title}</div>
-                      <div style={{ fontSize: 12.5, color: "#6b6b7a", marginTop: 2 }}>{VOLUNTEER.activeApplication!.ngo} · {VOLUNTEER.activeApplication!.mode} · {VOLUNTEER.activeApplication!.duration} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
+                  {/* Matched project header — white card with teal dot icon */}
+                  <div style={{ ...card, marginBottom: 16, display: "flex", gap: 16, alignItems: "center", padding: "18px 20px" }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 10, background: P_TEAL, border: `1px solid ${B_TEAL}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: B_TEAL }} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 6 }}>
+                        <span style={{ background: P_TEAL, color: B_TEAL, fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 100, textTransform: "uppercase", letterSpacing: "0.5px" }}>Matched</span>
+                        <span style={{ background: P_TEAL, color: B_TEAL, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{VOLUNTEER.activeApplication!.edition}</span>
+                        <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{VOLUNTEER.activeApplication!.mode}</span>
+                        <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{VOLUNTEER.activeApplication!.duration}</span>
+                      </div>
+                      <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 2 }}>{VOLUNTEER.activeApplication!.title}</div>
+                      <div style={{ fontSize: 12.5, color: "#6b6b7a" }}>{VOLUNTEER.activeApplication!.ngo} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
                     </div>
                   </div>
+                  {/* 4 action tiles — white bg, coloured dot icon square */}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                     {[
-                      { label: "Post Your Monthly Update", desc: "Share progress with TSG and your NGO partner.", color: B_INDIGO, pastel: P_INDIGO, action: () => setUpdateOpen(true),   disabled: false },
-                      { label: "Access E-Module",        desc: "Orientation, roles and responsibilities.",      color: B_BLUE,   pastel: P_BLUE,   action: () => {},                   disabled: false },
-                      { label: "Submit Feedback",        desc: "Rate your experience and share learnings.",     color: "#65A30D", pastel: "#F7FEE7", action: () => setFeedbackOpen(true), disabled: false },
-                      { label: "Download Certificate",   desc: "Available once both sides submit feedback.",    color: "#bbb",   pastel: "#f8f8fc", action: () => {},                   disabled: true  },
+                      { label: "Post Your Monthly Update", desc: "Share progress with TSG and your NGO partner.", color: B_BLUE,    pastel: P_BLUE,    action: () => setUpdateOpen(true),           disabled: false },
+                      { label: "Access E-Module",          desc: "Orientation, roles and responsibilities.",      color: B_TEAL,    pastel: P_TEAL,    action: () => setShowOrientationModal(true),  disabled: false },
+                      { label: "Submit Feedback",          desc: "Rate your experience and share learnings.",     color: "#65A30D", pastel: "#F7FEE7", action: () => setFeedbackOpen(true),          disabled: false },
+                      { label: "Download Certificate",     desc: "Available once both sides submit feedback.",    color: "#bbb",    pastel: "#f8f8fc", action: () => {},                             disabled: true  },
                     ].map(a => (
                       <button key={a.label} disabled={a.disabled} onClick={a.action}
-                        style={{ background: a.pastel, border: `1px solid ${a.disabled ? "#e8e8f0" : a.color + "22"}`, borderRadius: 12, padding: "18px", textAlign: "left", cursor: a.disabled ? "not-allowed" : "pointer", opacity: a.disabled ? 0.5 : 1, transition: "transform 0.18s, box-shadow 0.18s", fontFamily: "'DM Sans', sans-serif" }}
-                        onMouseEnter={e => { if (!a.disabled) { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 20px ${a.color}22`; }}}
+                        style={{ background: "#fff", border: `1px solid ${a.disabled ? "#e8e8f0" : a.color + "22"}`, borderRadius: 14, padding: "18px 18px 16px", textAlign: "left", cursor: a.disabled ? "not-allowed" : "pointer", opacity: a.disabled ? 0.55 : 1, transition: "transform 0.18s, box-shadow 0.18s", fontFamily: "'DM Sans', sans-serif" }}
+                        onMouseEnter={e => { if (!a.disabled) { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 20px ${a.color}18`; }}}
                         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
                       >
-                        <div style={{ width: 7, height: 7, borderRadius: "50%", background: a.disabled ? "#ccc" : a.color, marginBottom: 10 }} />
+                        <div style={{ width: 40, height: 40, borderRadius: 9, background: a.pastel, border: `1px solid ${a.disabled ? "#e8e8f0" : a.color + "22"}`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+                          <div style={{ width: 8, height: 8, borderRadius: "50%", background: a.disabled ? "#ccc" : a.color }} />
+                        </div>
                         <div style={{ fontSize: 13.5, fontWeight: 700, color: a.disabled ? "#aaa" : ACCENT_NAVY, marginBottom: 4 }}>{a.label}</div>
                         <div style={{ fontSize: 12, color: a.disabled ? "#ccc" : "#6b6b7a", lineHeight: 1.45 }}>{a.desc}</div>
                         {a.disabled && <div style={{ fontSize: 11, color: "#ccc", marginTop: 6, fontStyle: "italic" }}>Awaiting feedback submission</div>}
@@ -1193,8 +1264,8 @@ export default function DashboardView() {
               {/* ── Apply for a Project (PE season, no match) ─────────── */}
               {activeActivity === "apply" && IS_PE_SEASON && !hasActive && (
                 <div>
-                  <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 12, padding: "16px 18px", marginBottom: 20 }}>
-                    <div style={{ fontSize: 13.5, fontWeight: 700, color: B_INDIGO, marginBottom: 4 }}>Applications close 15 July 2025</div>
+                  <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 12, padding: "16px 18px", marginBottom: 20 }}>
+                    <div style={{ fontSize: 13.5, fontWeight: 700, color: B_BLUE, marginBottom: 4 }}>Applications close 15 July 2025</div>
                     <div style={{ fontSize: 13, color: "#555", lineHeight: 1.6 }}>ProEngage Edition 11 is open. The AI has matched these projects to your skills and interests. Apply to up to 3 projects — the first NGO that selects you gets to work with you.</div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -1219,7 +1290,7 @@ export default function DashboardView() {
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => navigate("/proengage")} style={{ marginTop: 14, background: "none", border: "none", fontSize: 13.5, color: B_INDIGO, fontWeight: 600, cursor: "pointer", padding: 0 }}>Browse all ProEngage projects →</button>
+                  <button onClick={() => navigate("/proengage")} style={{ marginTop: 14, background: "none", border: "none", fontSize: 13.5, color: B_BLUE, fontWeight: 600, cursor: "pointer", padding: 0 }}>Browse all ProEngage projects →</button>
                 </div>
               )}
 
@@ -1228,15 +1299,15 @@ export default function DashboardView() {
                 <div style={{ ...card, textAlign: "center", padding: "36px 32px" }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 8 }}>ProEngage applications open in January 2026</div>
                   <div style={{ fontSize: 13.5, color: "#8888a0", lineHeight: 1.65, maxWidth: 380, margin: "0 auto 20px" }}>The next edition isn't open yet, but you can register your interest early and be first to know when projects are listed.</div>
-                  <button style={{ background: B_INDIGO, color: "#fff", border: "none", borderRadius: 10, padding: "10px 24px", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Register Early Interest</button>
+                  <button style={{ background: B_BLUE, color: "#fff", border: "none", borderRadius: 10, padding: "10px 24px", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>Register Early Interest</button>
                 </div>
               )}
 
               {/* Refer + Share — always below active tab */}
               <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
-                <button onClick={() => setReferralOpen(true)} style={{ flex: 1, background: P_INDIGO, border: `1.5px solid ${B_INDIGO}22`, borderRadius: 10, padding: "13px 16px", fontSize: 13.5, fontWeight: 600, color: B_INDIGO, cursor: "pointer", transition: "border-color 0.18s, transform 0.18s", fontFamily: "'DM Sans', sans-serif" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = B_INDIGO; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `${B_INDIGO}22`; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+                <button onClick={() => setReferralOpen(true)} style={{ flex: 1, background: P_TEAL, border: `1.5px solid ${B_TEAL}33`, borderRadius: 10, padding: "13px 16px", fontSize: 13.5, fontWeight: 600, color: B_TEAL, cursor: "pointer", transition: "border-color 0.18s, transform 0.18s", fontFamily: "'DM Sans', sans-serif" }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = B_TEAL; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `${B_TEAL}33`; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
                   Refer a Colleague or Family Member
                 </button>
                 <button onClick={() => setShareOpen(true)} style={{ flex: 1, background: P_BLUE, border: `1.5px solid ${B_BLUE}22`, borderRadius: 10, padding: "13px 16px", fontSize: 13.5, fontWeight: 600, color: B_BLUE, cursor: "pointer", transition: "border-color 0.18s, transform 0.18s", fontFamily: "'DM Sans', sans-serif" }}
@@ -1280,7 +1351,7 @@ export default function DashboardView() {
                           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 14px rgba(13,27,62,0.08)"; (e.currentTarget as HTMLElement).style.transform = "translateX(2px)"; }}
                           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; (e.currentTarget as HTMLElement).style.transform = "translateX(0)"; }}
                         >
-                          <span style={{ fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 6, whiteSpace: "nowrap", background: a.type === "ProEngage" ? P_INDIGO : "#F7FEE7", color: a.type === "ProEngage" ? B_INDIGO : "#65A30D" }}>{a.type}</span>
+                          <span style={{ fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 6, whiteSpace: "nowrap", background: a.type === "ProEngage" ? P_BLUE : "#F7FEE7", color: a.type === "ProEngage" ? B_BLUE : "#65A30D" }}>{a.type}</span>
                           <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontSize: 13.5, fontWeight: 600, color: ACCENT_NAVY, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.project}</div>
                             <div style={{ fontSize: 12, color: "#aaaabc", marginTop: 2 }}>{a.edition} · {a.date}</div>
@@ -1305,10 +1376,10 @@ export default function DashboardView() {
                               <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY }}>{p.title}</div>
                               <div style={{ fontSize: 12.5, color: "#8888a0", marginTop: 3 }}>{p.ngo} · {p.edition} · {p.hours} hrs</div>
                             </div>
-                            {p.cert && <button style={{ background: P_INDIGO, color: B_INDIGO, border: "none", borderRadius: 8, padding: "6px 13px", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Download Certificate</button>}
+                            {p.cert && <button style={{ background: P_BLUE, color: B_BLUE, border: "none", borderRadius: 8, padding: "6px 13px", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Download Certificate</button>}
                           </div>
                           <div style={{ background: p.cert ? "#F7FEE7" : P_RED, borderRadius: 9, padding: "11px 14px", fontSize: 13, color: p.cert ? "#365314" : "#7f1d1d", borderLeft: `3px solid ${p.cert ? "#84CC16" : B_RED}`, lineHeight: 1.55 }}>{p.outcome}</div>
-                          <div style={{ marginTop: 10, display: "flex", gap: 6 }}>{p.skills.map(s => <span key={s} style={{ background: P_INDIGO, color: B_INDIGO, fontSize: 11.5, fontWeight: 600, padding: "3px 10px", borderRadius: 100 }}>{s}</span>)}</div>
+                          <div style={{ marginTop: 10, display: "flex", gap: 6 }}>{p.skills.map(s => <span key={s} style={{ background: P_BLUE, color: B_BLUE, fontSize: 11.5, fontWeight: 600, padding: "3px 10px", borderRadius: 100 }}>{s}</span>)}</div>
                         </div>
                       ))}
                     </div>
@@ -1331,8 +1402,8 @@ export default function DashboardView() {
                   {activeHistory === "certificates" && (
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                       {HISTORY_PROJECTS.filter(p => p.cert).map(p => (
-                        <div key={p.id} style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 14, padding: "22px 20px" }}>
-                          <div style={{ fontSize: 10.5, fontWeight: 700, color: B_INDIGO, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>Certificate of Completion</div>
+                        <div key={p.id} style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 14, padding: "22px 20px" }}>
+                          <div style={{ fontSize: 10.5, fontWeight: 700, color: B_BLUE, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>Certificate of Completion</div>
                           <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 3 }}>{p.title}</div>
                           <div style={{ fontSize: 12.5, color: "#8888a0", marginBottom: 18 }}>{p.ngo} · {p.edition}</div>
                           <div style={{ display: "flex", gap: 8 }}>
