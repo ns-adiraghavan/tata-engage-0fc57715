@@ -187,6 +187,11 @@ const PROG_CONFIG = [
 
 const PROG_PASTEL = ["#3E7EB0", "#3D9970", "#00A896"];
 const PROG_ACCENT_TEXT = ["#ffffff", "#ffffff", "#ffffff"];
+const PROG_SUBS = [
+  "Volunteering together, amplifying community impact",
+  "Where professional expertise creates lasting change.",
+  "Standing together when communities need it most.",
+];
 
 //
 // PROGRAMME SPOTLIGHT
@@ -289,40 +294,25 @@ export function ProgrammeSpotlight() {
                   background: PROG_PASTEL[idx],
                   padding: "36px 28px 36px 16px",
                   display: "flex", flexDirection: "column",
-                  justifyContent: "flex-end",
+                  justifyContent: "center",
                   transition: "background 0.5s ease",
                 }}>
-                  <span style={{
-                    fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
-                    textTransform: "uppercase", color: "rgba(255,255,255,0.65)",
-                    marginBottom: 8, display: "block",
-                  }}>
-                    {p.label}
-                  </span>
                   <h3 style={{
                     fontSize: 24, fontWeight: 900, color: "#ffffff",
                     letterSpacing: "-0.4px", lineHeight: 1.2, margin: "0 0 8px",
                   }}>
                     {p.title}
                   </h3>
-                  {/* Accent line alongside/under the header */}
-                  <div style={{
-                    width: 32, height: 1.4, borderRadius: 2,
-                    background: "rgba(255,255,255,0.55)", marginBottom: 14,
-                    transition: "background 0.5s ease",
-                  }} />
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>
-                    {[p.stat1, p.stat2].map((s, i) => (
-                      <span key={i} style={{
-                        fontSize: 11, fontWeight: 700, color: "#ffffff",
-                        background: "rgba(255,255,255,0.15)",
-                        padding: "4px 10px", borderRadius: 100,
-                        border: "1px solid rgba(255,255,255,0.2)",
-                      }}>{s}</span>
-                    ))}
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
-                    Learn more <ArrowRight size={13} />
+                  <p style={{
+                    fontSize: 13, color: "rgba(255,255,255,0.8)",
+                    lineHeight: 1.5, margin: "0 0 20px",
+                  }}>
+                    {PROG_SUBS[idx]}
+                  </p>
+                  <div style={{ marginTop: "auto" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
+                      Learn more <ArrowRight size={13} />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -351,34 +341,33 @@ export function ProgrammeSpotlight() {
               <div style={{
                 position: "absolute", inset: 0,
                 background: B_YELLOW,
-                padding: "20px 20px 16px",
+                padding: "28px 20px 16px",
                 display: "flex", flexDirection: "column",
-                justifyContent: "flex-end",
+                justifyContent: "center",
                 borderRadius: 14,
                 opacity: rightBox === 0 ? 1 : 0,
                 transform: rightBox === 0 ? "translateY(0)" : "translateY(-24px)",
                 transition: "opacity 0.3s ease, transform 0.3s ease",
                 pointerEvents: rightBox === 0 ? "auto" : "none",
               }}>
-                <div>
-                  <span style={{
-                    fontSize: 9, fontWeight: 800, textTransform: "uppercase",
-                    letterSpacing: "1px", color: "rgba(255,255,255,0.5)",
-                    display: "block", marginBottom: 8,
-                  }}>
-                    Company Volunteering Programme
-                  </span>
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <h3 style={{
                     fontSize: 22, fontWeight: 900, color: "#ffffff",
-                    lineHeight: 1.2, margin: "0 0 14px", letterSpacing: "-0.4px",
+                    lineHeight: 1.2, margin: "0 0 8px", letterSpacing: "-0.4px",
                   }}>
-                    Company Curated Opportunities for You
+                    Company Volunteering Programme (CVP)
                   </h3>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff", marginBottom: 14 }}>
+                  <p style={{
+                    fontSize: 13, color: "rgba(255,255,255,0.8)",
+                    lineHeight: 1.5, margin: "0 0 0",
+                  }}>
+                    Company led volunteering programme or opportunities customised for operating context and needs of the local communities
+                  </p>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 16 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
                     Learn More <ArrowRight size={13} />
                   </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                   <button
                     onClick={(e) => { e.stopPropagation(); setRightBox(1); }}
                     style={{
@@ -397,34 +386,33 @@ export function ProgrammeSpotlight() {
               <div style={{
                 position: "absolute", inset: 0,
                 background: "#F2778A",
-                padding: "20px 20px 16px",
+                padding: "28px 20px 16px",
                 display: "flex", flexDirection: "column",
-                justifyContent: "flex-end",
+                justifyContent: "center",
                 borderRadius: 14,
                 opacity: rightBox === 1 ? 1 : 0,
                 transform: rightBox === 1 ? "translateY(0)" : "translateY(24px)",
                 transition: "opacity 0.3s ease, transform 0.3s ease",
                 pointerEvents: rightBox === 1 ? "auto" : "none",
               }}>
-                <div>
-                  <span style={{
-                    fontSize: 9, fontWeight: 800, textTransform: "uppercase",
-                    letterSpacing: "1px", color: "rgba(255,255,255,0.5)",
-                    display: "block", marginBottom: 8,
-                  }}>
-                    Employee's Own Initiative
-                  </span>
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
                   <h3 style={{
                     fontSize: 22, fontWeight: 900, color: "#ffffff",
-                    lineHeight: 1.2, margin: "0 0 14px", letterSpacing: "-0.4px",
+                    lineHeight: 1.2, margin: "0 0 8px", letterSpacing: "-0.4px",
                   }}>
-                    Dream Big with Personal Volunteering Efforts
+                    Employees' Own Initiatives (EOI)
                   </h3>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff", marginBottom: 14 }}>
+                  <p style={{
+                    fontSize: 13, color: "rgba(255,255,255,0.8)",
+                    lineHeight: 1.5, margin: "0 0 0",
+                  }}>
+                    Empowering employees to volunteer their way for causes close to their heart
+                  </p>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 16 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
                     Learn More <ArrowRight size={13} />
                   </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                   <button
                     onClick={(e) => { e.stopPropagation(); setRightBox(0); }}
                     style={{
