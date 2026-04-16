@@ -698,7 +698,7 @@ export function NumbersSection() {
           {/* Tile 1 — "Did you know?" (dark) */}
           <div style={{
             borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
-            background: "#ffffff",
+            background: "#F2778A",
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
             alignSelf: "center",
           }}>
@@ -709,7 +709,7 @@ export function NumbersSection() {
             }}>
               {blockEyebrow("Did you know?")}
               <p style={{
-                color: ACCENT_NAVY, fontSize: 18, fontWeight: 700,
+                color: "#ffffff", fontSize: 18, fontWeight: 700,
                 lineHeight: 1.55, maxWidth: 520,
                 opacity: factFading ? 0 : 1,
                 transition: "opacity 0.28s", margin: 0,
