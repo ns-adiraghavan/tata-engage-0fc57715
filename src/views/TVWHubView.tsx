@@ -223,7 +223,7 @@ const TVWHubView = () => {
                     <span className="text-sm font-bold text-slate-300 group-hover:text-zinc-900 transition-colors">{day}</span>
                     {hasEvent && (
                       <div
-                        onClick={() => handleRegisterClick(hasEvent)}
+                        onClick={() => triggerToast("Please contact your SPOC to register for this event.")}
                         className="mt-2 p-2 rounded-lg cursor-pointer transition-all"
                         style={{ backgroundColor: `${COBALT}0d`, border: `1px solid ${COBALT}1a` }}
                       >
