@@ -338,22 +338,6 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   );
 }
 
-// ─── History filters ──────────────────────────────────────────────────────────
-function HistoryFilters({ edition, setEdition, year, setYear }: { edition: string; setEdition: (v: string) => void; year: string; setYear: (v: string) => void; }) {
-  const sel: React.CSSProperties = { padding: "6px 12px", borderRadius: 8, border: "1.5px solid #dddde8", background: "#fff", fontSize: 13, color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif", cursor: "pointer", outline: "none" };
-  return (
-    <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-      <select value={edition} onChange={e => setEdition(e.target.value)} style={sel}>
-        <option value="">All Editions</option>
-        {["ProEngage 23","ProEngage 22","ProEngage 21","ProEngage 20","ProEngage 19","TVW 22","ProEngage 18","ProEngage 17","ProEngage 16","TVW 21","ProEngage 15","ProEngage 14","ProEngage 13","ProEngage 12","ProEngage 11"].map(e => <option key={e}>{e}</option>)}
-      </select>
-      <select value={year} onChange={e => setYear(e.target.value)} style={sel}>
-        <option value="">All Years</option>
-        {["2025","2024","2023","2022"].map(y => <option key={y}>{y}</option>)}
-      </select>
-    </div>
-  );
-}
 
 // ─── Resource card ────────────────────────────────────────────────────────────
 function ResourceCard({ r, onClick }: { r: typeof RESOURCES[0]; onClick?: () => void }) {
@@ -1010,12 +994,35 @@ export default function DashboardView() {
   const [activeHistory, setActiveHistory] = useState("projects");
   const [editionFilter, setEditionFilter] = useState("");
   const [yearFilter, setYearFilter] = useState("");
+  const [projectsExpanded, setProjectsExpanded] = useState(false);
+  const [appsExpanded, setAppsExpanded]         = useState(false);
+  const [certsExpanded, setCertsExpanded]       = useState(false);
+  const [feedbackExpanded, setFeedbackExpanded] = useState(false);
 
+  const PE_ONLY_EDITIONS = [
+    "ProEngage 23","ProEngage 22","ProEngage 21","ProEngage 20","ProEngage 19",
+    "ProEngage 18","ProEngage 17","ProEngage 16","ProEngage 15","ProEngage 14",
+    "ProEngage 13","ProEngage 12","ProEngage 11",
+  ];
+
+  // Filter helpers — all keyed to same editionFilter
   const filteredApplications = HISTORY_APPLICATIONS.filter(a => {
+    if (a.type === "TVW") return false;                           // no TVW in PE history
     if (editionFilter && a.edition !== editionFilter) return false;
     if (yearFilter && a.year !== yearFilter) return false;
     return true;
   });
+
+  const filteredProjects = HISTORY_PROJECTS.filter(p => {
+    if (editionFilter && p.edition !== editionFilter) return false;
+    if (yearFilter && p.year !== yearFilter) return false;
+    return true;
+  });
+
+  const filteredCerts = filteredProjects.filter(p => p.cert);
+  const filteredFeedback = filteredProjects.filter(p => p.cert);
+
+  const COLLAPSE = 5;
 
   // Drawer states
   const [drawerApp, setDrawerApp]         = useState<AppRecord | null>(null);
@@ -1220,20 +1227,22 @@ export default function DashboardView() {
               {/* ── My ProEngage Project tab (PE season, active match) ── */}
               {activeActivity === "proengage" && IS_PE_SEASON && hasActive && (
                 <div>
-                  {/* Matched project header — white card with teal dot icon */}
-                  <div style={{ ...card, marginBottom: 16, display: "flex", gap: 16, alignItems: "center", padding: "18px 20px" }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 10, background: P_TEAL, border: `1px solid ${B_TEAL}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {/* Matched project header — Opportunities style: icon left, title top, pills below */}
+                  <div style={{ ...card, marginBottom: 16, display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 22px" }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 10, background: P_TEAL, border: `1px solid ${B_TEAL}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2 }}>
                       <div style={{ width: 8, height: 8, borderRadius: "50%", background: B_TEAL }} />
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 6 }}>
-                        <span style={{ background: P_TEAL, color: B_TEAL, fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 100, textTransform: "uppercase", letterSpacing: "0.5px" }}>Matched</span>
+                      {/* Title first */}
+                      <div style={{ fontWeight: 700, fontSize: 14.5, color: ACCENT_NAVY, marginBottom: 10 }}>{VOLUNTEER.activeApplication!.title}</div>
+                      {/* Pills row */}
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                        <span style={{ background: P_TEAL, color: B_TEAL, fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 100, textTransform: "uppercase", letterSpacing: "0.4px" }}>Matched</span>
                         <span style={{ background: P_TEAL, color: B_TEAL, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{VOLUNTEER.activeApplication!.edition}</span>
                         <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{VOLUNTEER.activeApplication!.mode}</span>
                         <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{VOLUNTEER.activeApplication!.duration}</span>
+                        <span style={{ background: "#f5f5fa", color: "#8888a0", fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{VOLUNTEER.activeApplication!.ngo} · Matched {VOLUNTEER.activeApplication!.matchDate}</span>
                       </div>
-                      <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 2 }}>{VOLUNTEER.activeApplication!.title}</div>
-                      <div style={{ fontSize: 12.5, color: "#6b6b7a" }}>{VOLUNTEER.activeApplication!.ngo} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
                     </div>
                   </div>
                   {/* 4 action tiles — white bg, coloured dot icon square */}
@@ -1331,59 +1340,103 @@ export default function DashboardView() {
                 </div>
               ) : (
                 <>
-                  <Slicers options={HISTORY_SLICERS} active={activeHistory} onChange={id => { setActiveHistory(id); setEditionFilter(""); setYearFilter(""); }} accentColor={"#1E6BB8"} />
+                  <Slicers options={HISTORY_SLICERS} active={activeHistory} onChange={id => { setActiveHistory(id); setEditionFilter(""); setYearFilter(""); setProjectsExpanded(false); setAppsExpanded(false); setCertsExpanded(false); setFeedbackExpanded(false); }} accentColor={"#1E6BB8"} />
 
                   {["applications", "projects", "certificates", "feedback"].includes(activeHistory) && (
                     <div style={{ marginBottom: 16 }}>
-                      <select value={editionFilter} onChange={e => setEditionFilter(e.target.value)} style={{ padding: "6px 12px", borderRadius: 8, border: "1.5px solid #dddde8", background: "#fff", fontSize: 13, color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif", cursor: "pointer", outline: "none" }}>
-                        <option value="">Latest Edition</option>
-                        {["ProEngage 11","ProEngage 10","ProEngage 9","ProEngage 8","TVW 22","TVW 21"].map(e => <option key={e}>{e}</option>)}
+                      <select value={editionFilter} onChange={e => { setEditionFilter(e.target.value); setProjectsExpanded(false); setAppsExpanded(false); setCertsExpanded(false); setFeedbackExpanded(false); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1.5px solid #dddde8", background: "#fff", fontSize: 13, color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif", cursor: "pointer", outline: "none" }}>
+                        <option value="">Latest Edition (PE 23)</option>
+                        {PE_ONLY_EDITIONS.map(e => <option key={e}>{e}</option>)}
                       </select>
                     </div>
                   )}
 
                   {/* Applications */}
-                  {activeHistory === "applications" && (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                      {filteredApplications.map(a => (
-                        <div key={a.id} onClick={() => setDrawerApp(a)}
-                          style={{ ...card, display: "flex", gap: 14, alignItems: "center", cursor: "pointer", transition: "box-shadow 0.15s, transform 0.15s", padding: "13px 18px" }}
-                          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 14px rgba(13,27,62,0.08)"; (e.currentTarget as HTMLElement).style.transform = "translateX(2px)"; }}
-                          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; (e.currentTarget as HTMLElement).style.transform = "translateX(0)"; }}
-                        >
-                          <span style={{ fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 6, whiteSpace: "nowrap", background: a.type === "ProEngage" ? P_BLUE : "#F7FEE7", color: a.type === "ProEngage" ? B_BLUE : "#65A30D" }}>{a.type}</span>
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ fontSize: 13.5, fontWeight: 600, color: ACCENT_NAVY, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.project}</div>
-                            <div style={{ fontSize: 12, color: "#aaaabc", marginTop: 2 }}>{a.edition} · {a.date}</div>
+                  {activeHistory === "applications" && (() => {
+                    const shown = appsExpanded ? filteredApplications : filteredApplications.slice(0, COLLAPSE);
+                    return (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                        {shown.map(a => (
+                          <div key={a.id} onClick={() => setDrawerApp(a)}
+                            style={{ ...card, display: "flex", gap: 14, alignItems: "center", cursor: "pointer", transition: "box-shadow 0.15s, transform 0.15s", padding: "13px 18px" }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 14px rgba(13,27,62,0.08)"; (e.currentTarget as HTMLElement).style.transform = "translateX(2px)"; }}
+                            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; (e.currentTarget as HTMLElement).style.transform = "translateX(0)"; }}
+                          >
+                            <span style={{ fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 100, whiteSpace: "nowrap", background: P_BLUE, color: B_BLUE }}>{a.edition}</span>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ fontSize: 13.5, fontWeight: 600, color: ACCENT_NAVY, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.project}</div>
+                              <div style={{ fontSize: 12, color: "#aaaabc", marginTop: 2 }}>{a.ngo} · {a.date}</div>
+                            </div>
+                            <StatusBadge status={a.status} />
+                            <span style={{ fontSize: 18, color: "#dddde8", marginLeft: 4 }}>›</span>
                           </div>
-                          <StatusBadge status={a.status} />
-                          <span style={{ fontSize: 18, color: "#dddde8", marginLeft: 4 }}>›</span>
-                        </div>
-                      ))}
-                      {filteredApplications.length === 0 && (
-                        <div style={{ ...card, textAlign: "center", padding: "28px", color: "#aaaabc", fontSize: 13.5 }}>No applications match this filter.</div>
-                      )}
-                    </div>
-                  )}
+                        ))}
+                        {filteredApplications.length === 0 && (
+                          <div style={{ ...card, textAlign: "center", padding: "28px", color: "#aaaabc", fontSize: 13.5 }}>No applications for this edition.</div>
+                        )}
+                        {filteredApplications.length > COLLAPSE && (
+                          <button onClick={() => setAppsExpanded(x => !x)} style={{ background: "none", border: "none", fontSize: 13, color: B_BLUE, fontWeight: 600, cursor: "pointer", padding: "6px 0", textAlign: "left" }}>
+                            {appsExpanded ? "Show less ↑" : `Show all ${filteredApplications.length} applications ↓`}
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })()}
 
                   {/* Projects */}
-                  {activeHistory === "projects" && (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                      {HISTORY_PROJECTS.map(p => (
-                        <div key={p.id} style={{ ...card }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
-                            <div>
-                              <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY }}>{p.title}</div>
-                              <div style={{ fontSize: 12.5, color: "#8888a0", marginTop: 3 }}>{p.ngo} · {p.edition} · {p.hours} hrs</div>
+                  {activeHistory === "projects" && (() => {
+                    const shown = projectsExpanded ? filteredProjects : filteredProjects.slice(0, COLLAPSE);
+                    return (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                        {shown.map(p => {
+                          const accentColor = p.cert ? B_BLUE : B_RED;
+                          const pastel      = p.cert ? P_BLUE : P_RED;
+                          return (
+                            <div key={p.id}
+                              style={{ ...card, display: "flex", gap: 16, alignItems: "flex-start", padding: "18px 20px", transition: "box-shadow 0.18s, transform 0.18s" }}
+                              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 16px rgba(13,27,62,0.08)"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+                              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}
+                            >
+                              {/* Icon square */}
+                              <div style={{ width: 44, height: 44, borderRadius: 10, background: pastel, border: `1px solid ${accentColor}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2 }}>
+                                <div style={{ width: 8, height: 8, borderRadius: "50%", background: accentColor }} />
+                              </div>
+                              {/* Content */}
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                {/* Title */}
+                                <div style={{ fontWeight: 700, fontSize: 14, color: ACCENT_NAVY, marginBottom: 8 }}>{p.title}</div>
+                                {/* Pills row */}
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
+                                  <span style={{ background: pastel, color: accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{p.ngo}</span>
+                                  <span style={{ background: pastel, color: accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{p.edition}</span>
+                                  <span style={{ background: pastel, color: accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{p.hours} hrs</span>
+                                  {p.skills.map(s => (
+                                    <span key={s} style={{ background: pastel, color: accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{s}</span>
+                                  ))}
+                                </div>
+                                {/* Outcome */}
+                                <div style={{ background: p.cert ? "#F7FEE7" : P_RED, borderRadius: 8, padding: "9px 12px", fontSize: 12.5, color: p.cert ? "#365314" : "#7f1d1d", borderLeft: `3px solid ${p.cert ? "#84CC16" : B_RED}`, lineHeight: 1.55 }}>{p.outcome}</div>
+                              </div>
+                              {/* Certificate button */}
+                              {p.cert && (
+                                <div style={{ flexShrink: 0 }}>
+                                  <button style={{ background: B_BLUE, color: "#fff", border: "none", borderRadius: 8, padding: "6px 13px", fontSize: 12, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap" }}>Download Certificate</button>
+                                </div>
+                              )}
                             </div>
-                            {p.cert && <button style={{ background: P_BLUE, color: B_BLUE, border: "none", borderRadius: 8, padding: "6px 13px", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Download Certificate</button>}
-                          </div>
-                          <div style={{ background: p.cert ? "#F7FEE7" : P_RED, borderRadius: 9, padding: "11px 14px", fontSize: 13, color: p.cert ? "#365314" : "#7f1d1d", borderLeft: `3px solid ${p.cert ? "#84CC16" : B_RED}`, lineHeight: 1.55 }}>{p.outcome}</div>
-                          <div style={{ marginTop: 10, display: "flex", gap: 6 }}>{p.skills.map(s => <span key={s} style={{ background: P_BLUE, color: B_BLUE, fontSize: 11.5, fontWeight: 600, padding: "3px 10px", borderRadius: 100 }}>{s}</span>)}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                          );
+                        })}
+                        {filteredProjects.length === 0 && (
+                          <div style={{ ...card, textAlign: "center", padding: "28px", color: "#aaaabc", fontSize: 13.5 }}>No projects for this edition.</div>
+                        )}
+                        {filteredProjects.length > COLLAPSE && (
+                          <button onClick={() => setProjectsExpanded(x => !x)} style={{ background: "none", border: "none", fontSize: 13, color: B_BLUE, fontWeight: 600, cursor: "pointer", padding: "6px 0", textAlign: "left" }}>
+                            {projectsExpanded ? "Show less ↑" : `Show all ${filteredProjects.length} projects ↓`}
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })()}
 
                   {/* My Experience (testimonials) */}
                   {activeHistory === "experience" && (
@@ -1399,45 +1452,80 @@ export default function DashboardView() {
                   )}
 
                   {/* Certificates */}
-                  {activeHistory === "certificates" && (
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                      {HISTORY_PROJECTS.filter(p => p.cert).map(p => (
-                        <div key={p.id} style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 14, padding: "22px 20px" }}>
-                          <div style={{ fontSize: 10.5, fontWeight: 700, color: B_BLUE, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>Certificate of Completion</div>
-                          <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 3 }}>{p.title}</div>
-                          <div style={{ fontSize: 12.5, color: "#8888a0", marginBottom: 18 }}>{p.ngo} · {p.edition}</div>
-                          <div style={{ display: "flex", gap: 8 }}>
-                            <button style={{ flex: 1, background: ACCENT_NAVY, color: "#fff", border: "none", borderRadius: 8, padding: "8px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Download PDF</button>
-                            <button style={{ background: "#0077b5", color: "#fff", border: "none", borderRadius: 8, padding: "8px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Share</button>
-                          </div>
+                  {activeHistory === "certificates" && (() => {
+                    const shown = certsExpanded ? filteredCerts : filteredCerts.slice(0, COLLAPSE);
+                    return (
+                      <div>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                          {shown.map(p => (
+                            <div key={p.id} style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 14, padding: "22px 20px" }}>
+                              <div style={{ fontSize: 10.5, fontWeight: 700, color: B_BLUE, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>Certificate of Completion</div>
+                              <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 3 }}>{p.title}</div>
+                              <div style={{ fontSize: 12.5, color: "#8888a0", marginBottom: 14 }}>{p.ngo} · {p.edition}</div>
+                              <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
+                                <span style={{ background: "#fff", color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_BLUE}22` }}>{p.edition}</span>
+                                <span style={{ background: "#fff", color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_BLUE}22` }}>{p.hours} hrs</span>
+                              </div>
+                              <div style={{ display: "flex", gap: 8 }}>
+                                <button style={{ flex: 1, background: ACCENT_NAVY, color: "#fff", border: "none", borderRadius: 8, padding: "8px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Download PDF</button>
+                                <button style={{ background: "#0077b5", color: "#fff", border: "none", borderRadius: 8, padding: "8px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Share</button>
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  )}
+                        {filteredCerts.length === 0 && (
+                          <div style={{ ...card, textAlign: "center", padding: "28px", color: "#aaaabc", fontSize: 13.5 }}>No certificates for this edition.</div>
+                        )}
+                        {filteredCerts.length > COLLAPSE && (
+                          <button onClick={() => setCertsExpanded(x => !x)} style={{ background: "none", border: "none", fontSize: 13, color: B_BLUE, fontWeight: 600, cursor: "pointer", padding: "10px 0", textAlign: "left" }}>
+                            {certsExpanded ? "Show less ↑" : `Show all ${filteredCerts.length} certificates ↓`}
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })()}
 
                   {/* Feedback */}
-                  {activeHistory === "feedback" && (
-                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                      {HISTORY_PROJECTS.filter(p => p.cert).map(p => (
-                        <div key={p.id} style={{ ...card }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
-                            <div>
-                              <div style={{ fontSize: 14, fontWeight: 600, color: ACCENT_NAVY }}>{p.title}</div>
-                              <div style={{ fontSize: 12.5, color: "#8888a0", marginTop: 3 }}>{p.ngo} · {p.edition}</div>
+                  {activeHistory === "feedback" && (() => {
+                    const shown = feedbackExpanded ? filteredFeedback : filteredFeedback.slice(0, COLLAPSE);
+                    return (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                        {shown.map(p => (
+                          <div key={p.id}
+                            style={{ ...card, display: "flex", gap: 16, alignItems: "flex-start", padding: "18px 20px" }}
+                          >
+                            <div style={{ width: 44, height: 44, borderRadius: 10, background: P_BLUE, border: `1px solid ${B_BLUE}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2 }}>
+                              <div style={{ width: 8, height: 8, borderRadius: "50%", background: B_BLUE }} />
                             </div>
-                            <span style={{ background: "#F7FEE7", color: "#65A30D", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, whiteSpace: "nowrap" }}>Submitted</span>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 7 }}>{p.title}</div>
+                              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
+                                <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{p.ngo}</span>
+                                <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{p.edition}</span>
+                                <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{p.hours} hrs</span>
+                              </div>
+                              <div style={{ display: "flex", gap: 2 }}>{[1,2,3,4,5].map(i => <span key={i} style={{ color: B_TEAL, fontSize: 18, lineHeight: 1 }}>★</span>)}</div>
+                            </div>
+                            <span style={{ background: "#F7FEE7", color: "#65A30D", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, whiteSpace: "nowrap", flexShrink: 0 }}>Submitted</span>
                           </div>
-                          <div style={{ marginTop: 10, display: "flex", gap: 2 }}>{[1,2,3,4,5].map(i => <span key={i} style={{ color: "#0B7285", fontSize: 20, lineHeight: 1 }}>★</span>)}</div>
-                        </div>
-                      ))}
-                      {hasActive && (
-                        <div style={{ background: "#EBF4FF", border: "1px solid #1E6BB822", borderRadius: 12, padding: "16px 18px" }}>
-                          <div style={{ fontSize: 13.5, fontWeight: 600, color: ACCENT_NAVY, marginBottom: 4 }}>{VOLUNTEER.activeApplication!.title}</div>
-                          <div style={{ fontSize: 13, color: "#1E3A5F", lineHeight: 1.5 }}>Feedback can be submitted once your project is marked complete by the NGO.</div>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                        ))}
+                        {hasActive && (
+                          <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 12, padding: "16px 18px" }}>
+                            <div style={{ fontSize: 13.5, fontWeight: 600, color: ACCENT_NAVY, marginBottom: 4 }}>{VOLUNTEER.activeApplication!.title}</div>
+                            <div style={{ fontSize: 13, color: B_BLUE, lineHeight: 1.5 }}>Feedback can be submitted once your project is marked complete by the NGO.</div>
+                          </div>
+                        )}
+                        {filteredFeedback.length === 0 && !hasActive && (
+                          <div style={{ ...card, textAlign: "center", padding: "28px", color: "#aaaabc", fontSize: 13.5 }}>No feedback for this edition.</div>
+                        )}
+                        {filteredFeedback.length > COLLAPSE && (
+                          <button onClick={() => setFeedbackExpanded(x => !x)} style={{ background: "none", border: "none", fontSize: 13, color: B_BLUE, fontWeight: 600, cursor: "pointer", padding: "6px 0", textAlign: "left" }}>
+                            {feedbackExpanded ? "Show less ↑" : `Show all ${filteredFeedback.length} feedback entries ↓`}
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </>
               )}
             </section>
