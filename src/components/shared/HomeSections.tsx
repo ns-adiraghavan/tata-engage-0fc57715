@@ -703,11 +703,11 @@ export function NumbersSection() {
             alignSelf: "center",
           }}>
             <div style={{
-              position: "relative", zIndex: 10, padding: "24px 28px",
+              position: "relative", zIndex: 10, padding: "20px 28px",
               display: "flex", flexDirection: "column",
               justifyContent: "space-between", height: "100%", minHeight: 280, gap: 14,
             }}>
-              {blockEyebrow("Did you know?")}
+              {blockEyebrow("Did you know?", true)}
               <p style={{
                 color: "#ffffff", fontSize: 18, fontWeight: 700,
                 lineHeight: 1.55, maxWidth: 520,
@@ -745,9 +745,9 @@ export function NumbersSection() {
           <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280, alignSelf: "center" }}>
             <div style={{ flex: 1, position: "relative" }}>
               {HERO_STATS.map((s, i) => {
-                const textColour = i === 1 ? "#0D1B3E" : "#ffffff";
-                const subColour  = i === 1 ? "rgba(13,27,62,0.6)"  : "rgba(255,255,255,0.75)";
-                const labelColour = i === 1 ? "rgba(13,27,62,0.75)" : "rgba(255,255,255,0.9)";
+                const textColour = "#ffffff";
+                const subColour  = "rgba(255,255,255,0.75)";
+                const labelColour = "rgba(255,255,255,0.9)";
                   return (
                   <div key={s.label} style={{
                     position: "absolute", inset: 0,
