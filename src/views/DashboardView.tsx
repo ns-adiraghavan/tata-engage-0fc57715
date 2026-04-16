@@ -16,7 +16,8 @@ const ACCENT_NAVY = "#0D1B3E";
 const P_YELLOW    = "#FEF6E4";
 const P_RED       = "#FFF0EE";
 const P_TEAL      = "#E6F8F5";
-const P_TEAL_DARK = "#C8EDE9";   // darker teal pastel — testimonial text area
+const P_TEAL_DARK = "#E8F5D4";   // lime green pastel — testimonial bg
+const B_LIME_DARK = "#3D6B1E";   // dark green — testimonial text
 const P_BLUE      = "#EBF4FF";   // cobalt pastel — replaces P_BLUE everywhere
 
 // ─── KPI colours — bold solid backgrounds matching HomeSections tiles ─────────
@@ -1135,10 +1136,10 @@ export default function DashboardView() {
                     <div style={{ fontSize: 13, color: "#8888a0", lineHeight: 1.65, maxWidth: 380, margin: "0 auto" }}>Once you complete a ProEngage project, your NGO partner can write a testimonial about your work.</div>
                   </div>
                 ) : (
-                  <div style={{ background: P_TEAL_DARK, borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: `1px solid ${B_TEAL_DARK}33` }}>
-                    <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 160, color: `${B_TEAL_DARK}0d`, lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>"</div>
-                    <div style={{ display: "inline-block", background: `${B_TEAL_DARK}18`, border: `1px solid ${B_TEAL_DARK}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_TEAL_DARK, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 16 }}>{TESTIMONIAL.edition}</div>
-                    <blockquote style={{ fontSize: 15, lineHeight: 1.72, color: B_TEAL_DARK, fontStyle: "italic", fontWeight: 300, margin: "0 0 22px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
+                  <div style={{ background: P_TEAL_DARK, borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: `1px solid ${B_LIME_DARK}33` }}>
+                    <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 160, color: `${B_LIME_DARK}0d`, lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>"</div>
+                    <div style={{ display: "inline-block", background: `${B_LIME_DARK}18`, border: `1px solid ${B_LIME_DARK}44`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: B_LIME_DARK, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 16 }}>{TESTIMONIAL.edition}</div>
+                    <blockquote style={{ fontSize: 15, lineHeight: 1.72, color: B_LIME_DARK, fontStyle: "italic", fontWeight: 300, margin: "0 0 22px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, position: "relative", zIndex: 1 }}>
                       <div style={{ width: 38, height: 38, borderRadius: "50%", background: TESTIMONIAL.avatarBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff", flexShrink: 0 }}>{TESTIMONIAL.avatarInitials}</div>
                       <div>
