@@ -1402,7 +1402,7 @@ export default function DashboardView() {
 
                   {/* Projects */}
                   {activeHistory === "projects" && (() => {
-                    const shown = projectsExpanded ? filteredProjects : filteredProjects.slice(0, COLLAPSE);
+                    const shown = projectsExpanded ? filteredProjects : filteredProjects.slice(0, COLLAPSE_PROJECTS);
                     return (
                       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                         {shown.map(p => {
@@ -1446,7 +1446,7 @@ export default function DashboardView() {
                         {filteredProjects.length === 0 && (
                           <div style={{ ...card, textAlign: "center", padding: "28px", color: "#aaaabc", fontSize: 13.5 }}>No projects for this edition.</div>
                         )}
-                        {filteredProjects.length > COLLAPSE && (
+                        {filteredProjects.length > COLLAPSE_PROJECTS && (
                           <button onClick={() => setProjectsExpanded(x => !x)} style={{ background: "none", border: "none", fontSize: 13, color: B_BLUE, fontWeight: 600, cursor: "pointer", padding: "6px 0", textAlign: "left" }}>
                             {projectsExpanded ? "Show less ↑" : `Show all ${filteredProjects.length} projects ↓`}
                           </button>
