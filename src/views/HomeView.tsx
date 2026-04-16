@@ -124,6 +124,8 @@ const HomeView = () => {
   const { isLoggedIn }   = useAuth();
 
   const [activeSection,  setActiveSection]  = useState(0);
+  const [showLabel,      setShowLabel]      = useState(false);
+  const labelTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [heroSlide,      setHeroSlide]      = useState(0);
   const [subOpen,        setSubOpen]        = useState(false);
   const [subName,        setSubName]        = useState("");
