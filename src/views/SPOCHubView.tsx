@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
@@ -6,10 +7,16 @@ import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
 import heroImg from "@/assets/Voltas.JPG";
-import { B_TICKER, B_YELLOW, ACCENT_NAVY } from "@/data/homeSharedData";
+import { B_TICKER, B_YELLOW, B_INDIGO } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
-const P_SPOC = "#EEEDFE";
+const DOT_SECTIONS = [
+  { id: "hub-hero", label: "Home" },
+  { id: "programmes", label: "Programmes" },
+  { id: "journey", label: "Journey" },
+  { id: "numbers", label: "Numbers" },
+];
+const ACCENT = B_INDIGO;
 
 const greeting = () => {
   const h = new Date().getHours();
