@@ -187,7 +187,7 @@ const HomeView = () => {
                 className="flex items-center justify-end"
                 style={{ marginBottom: 0 }}
               >
-                {active && (
+                {active && showLabel && (
                   <span
                     className="whitespace-nowrap shadow-sm transition-all duration-300 mr-2"
                     style={{
