@@ -1023,7 +1023,8 @@ export default function DashboardView() {
   const filteredCerts = filteredProjects.filter(p => p.cert);
   const filteredFeedback = filteredProjects.filter(p => p.cert);
 
-  const COLLAPSE = 5;
+  const COLLAPSE = 3;
+  const COLLAPSE_PROJECTS = 2;
 
   // Drawer states
   const [drawerApp, setDrawerApp]         = useState<AppRecord | null>(null);
@@ -1223,7 +1224,7 @@ export default function DashboardView() {
                     ))}
                   </div>
                   <button
-                    onClick={() => triggerToast("Please contact your SPOC to sign up for a DIY activity.")}
+                    onClick={() => ctxToast("Please contact your SPOC to sign up for a DIY activity.")}
                     style={{ width: "100%", background: B_TEAL, color: "#fff", border: "none", borderRadius: 12, padding: "13px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "opacity 0.18s" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.9"; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
