@@ -1467,17 +1467,17 @@ export default function DashboardView() {
                       <div>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                           {shown.map(p => (
-                            <div key={p.id} style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 14, padding: "22px 20px" }}>
-                              <div style={{ fontSize: 10.5, fontWeight: 700, color: B_BLUE, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>Certificate of Completion</div>
-                              <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 3 }}>{p.title}</div>
+                            <div key={p.id} style={{ background: "#fff", border: `1px solid ${B_TEAL}33`, borderRadius: 14, padding: "22px 20px" }}>
+                              <div style={{ fontSize: 10.5, fontWeight: 700, color: B_TEAL, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>Certificate of Completion</div>
+                              <div style={{ fontSize: 14.5, fontWeight: 700, color: B_BLUE, marginBottom: 3 }}>{p.title}</div>
                               <div style={{ fontSize: 12.5, color: "#8888a0", marginBottom: 14 }}>{p.ngo} · {p.edition}</div>
                               <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
-                                <span style={{ background: "#fff", color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_BLUE}22` }}>{p.edition}</span>
-                                <span style={{ background: "#fff", color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_BLUE}22` }}>{p.hours} hrs</span>
+                                <span style={{ background: "#fff", color: B_TEAL, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_TEAL}33` }}>{p.edition}</span>
+                                <span style={{ background: "#fff", color: B_TEAL, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_TEAL}33` }}>{p.hours} hrs</span>
                               </div>
                               <div style={{ display: "flex", gap: 8 }}>
-                                <button style={{ flex: 1, background: ACCENT_NAVY, color: "#fff", border: "none", borderRadius: 8, padding: "8px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Download PDF</button>
-                                <button style={{ background: "#0077b5", color: "#fff", border: "none", borderRadius: 8, padding: "8px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Share</button>
+                                <button style={{ flex: 1, background: B_BLUE, color: "#fff", border: "none", borderRadius: 8, padding: "8px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Download PDF</button>
+                                <button style={{ background: B_TEAL, color: "#fff", border: "none", borderRadius: 8, padding: "8px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Share</button>
                               </div>
                             </div>
                           ))}
