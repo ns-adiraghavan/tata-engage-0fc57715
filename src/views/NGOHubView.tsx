@@ -22,29 +22,28 @@ const NGOHubView = () => {
   const navigate = useAppNavigate();
 
   return (
-    <div className="pt-20 min-h-screen bg-white pb-12">
+    <div className="min-h-screen bg-white pb-12">
 
-      {/* HERO */}
-      <div className="px-6 md:px-12 pt-8 pb-0 max-w-7xl mx-auto">
-        <div className="relative rounded-2xl overflow-hidden" style={{ minHeight: 480 }}>
+      {/* HERO — full-bleed edge-to-edge */}
+      <section className="relative w-full overflow-hidden" style={{ minHeight: "92vh" }}>
 
-          {/* Background image */}
-          <img
-            src={heroImg}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ objectPosition: "center 40%" }}
-          />
+        {/* Background image */}
+        <img
+          src={heroImg}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ objectPosition: "center 40%" }}
+        />
 
-          {/* Left-heavy dark gradient */}
-          <div className="absolute inset-0" style={{
-            background: "linear-gradient(105deg, rgba(20,8,5,0.92) 0%, rgba(20,8,5,0.78) 35%, rgba(20,8,5,0.38) 62%, rgba(20,8,5,0.08) 100%)"
-          }} />
-          <div className="absolute inset-0" style={{
-            background: "linear-gradient(to top, rgba(20,8,5,0.55) 0%, transparent 40%)"
-          }} />
+        {/* Left-heavy dark gradient */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(105deg, rgba(20,8,5,0.92) 0%, rgba(20,8,5,0.78) 35%, rgba(20,8,5,0.38) 62%, rgba(20,8,5,0.08) 100%)"
+        }} />
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to top, rgba(20,8,5,0.55) 0%, transparent 40%)"
+        }} />
 
-          <div className="relative z-10 flex flex-col justify-between px-8 md:px-12 py-8" style={{ minHeight: 480 }}>
+        <div className="relative z-10 flex flex-col justify-between px-8 md:px-16 py-8" style={{ minHeight: "92vh", paddingTop: 80 }}>
 
             {/* Top — greeting */}
             <div>
@@ -78,9 +77,8 @@ const NGOHubView = () => {
                 My Space <ArrowRight size={15} />
               </button>
             </div>
-          </div>
         </div>
-      </div>
+      </section>
 
       <SectionDivider />
       <ProgrammeSpotlight />
