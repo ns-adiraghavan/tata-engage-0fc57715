@@ -18,14 +18,14 @@ const P_RED       = "#FFF0EE";
 const P_TEAL      = "#E6F8F5";
 const P_BLUE      = "#EBF4FF";
 
-// ─── Extended KPI / design colours ────────────────────────────────────────────
-// Fixed 4-colour KPI palette: Green · Blue · Amber · Magenta-Pink
-const C_GREEN     = "#2E7D32";   const CP_GREEN    = "#E8F5E9";   // KPI 1 — Projects Applied
-const C_MIDBLUE   = "#1565C0";   const CP_MIDBLUE  = "#E3F2FD";   // KPI 2 — Projects Completed
-const C_AMBER     = "#92400E";   const CP_AMBER    = "#FEF3C7";   // KPI 3 — Dropped / Referrals
-const C_PINK      = "#9D174D";   const CP_PINK     = "#FCE7F3";   // KPI 4 — Hours / Badges
-const C_TEAL2     = "#0B7285";   const CP_TEAL2    = "#CFFAFE";   // teal accent (certs, matched state)
-const C_PINKRED   = "#9D174D";   const CP_PINKRED  = "#FCE7F3";   // alias for matched badge
+// ─── KPI colours — exact home-screen brand palette ────────────────────────────
+// Matched to B_INDIGO/P_INDIGO, B_TEAL/P_TEAL, B_RED/P_RED, B_BLUE/P_BLUE
+const C_TEAL2     = "#00A896";   const CP_TEAL2    = "#E6F8F5";   // = B_TEAL / P_TEAL
+const C_GREEN     = "#00A896";   const CP_GREEN    = "#E6F8F5";   // alias — same teal
+const C_MIDBLUE   = "#1E6BB8";   const CP_MIDBLUE  = "#EBF4FF";   // = B_BLUE / P_BLUE
+const C_AMBER     = "#E8401C";   const CP_AMBER    = "#FFF0EE";   // = B_RED  / P_RED
+const C_PINK      = "#333399";   const CP_PINK     = "#EEF0FF";   // = B_INDIGO / P_INDIGO
+const C_PINKRED   = "#333399";   const CP_PINKRED  = "#EEF0FF";   // alias
 const IS_NEW_VOLUNTEER = false;
 
 const NOTIFICATIONS: Record<string, boolean> = {
@@ -148,7 +148,7 @@ const STAT_TOOLTIPS: Record<string, string> = {
   "Badges Earned":      "Awarded for key milestones — completing a project, 100 hours, TVW participation and more.",
 };
 
-const BADGE_ICONS: Record<string, any> = {
+const BADGE_ICONS: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
   b1: Star, b2: Zap, b3: Award, b4: Users, b5: Shield, b6: RefreshCw, b7: Clock,
 };
 
@@ -261,7 +261,7 @@ function Slicers({ options, active, onChange, accentColor = B_INDIGO, notificati
 
 // ─── Status badge ─────────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: string }) {
-  const map: Record<string, [string, string]> = { Matched: ["#F7FEE7", "#65A30D"], Completed: [P_BLUE, B_BLUE], Dropped: [P_RED, B_RED], Applied: [P_INDIGO, B_INDIGO], Pending: [P_YELLOW, "#9a6500"] };
+  const map: Record<string, [string, string]> = { Matched: ["#F7FEE7", "#65A30D"], Completed: [P_BLUE, B_BLUE], Dropped: [P_RED, B_RED], Applied: [P_INDIGO, B_INDIGO], Pending: ["#EBF4FF", "#1E6BB8"] };
   const [bg, color] = map[status] ?? ["#f0f0f0", "#555"];
   return <span style={{ background: bg, color, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, letterSpacing: "0.3px", whiteSpace: "nowrap" }}>{status}</span>;
 }
@@ -442,7 +442,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
       <div style={{ display: "flex", gap: 4 }}>
         {Array.from({ length: count }, (_, i) => i + 1).map(i => (
           <span key={i} onMouseEnter={() => onHov(i)} onMouseLeave={() => onHov(0)} onClick={() => onSet(i)}
-            style={{ fontSize: count === 10 ? 22 : 26, cursor: "pointer", color: i <= (hover || value) ? B_YELLOW : "#e0e0e8", transition: "color 0.1s", lineHeight: 1 }}>★</span>
+            style={{ fontSize: count === 10 ? 22 : 26, cursor: "pointer", color: i <= (hover || value) ? "#0B7285" : "#e0e0e8", transition: "color 0.1s", lineHeight: 1 }}>★</span>
         ))}
       </div>
     );
@@ -551,7 +551,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
               {/* Q6 */}
               <div style={{ marginBottom: 18 }}>
                 <label style={label}>6. Please provide your current residential or office address *</label>
-                <div style={{ background: P_YELLOW, border: `1px solid ${B_YELLOW}33`, borderRadius: 8, padding: "10px 12px", fontSize: 12, color: "#78350f", lineHeight: 1.5, marginBottom: 10 }}>
+                <div style={{ background: "#EBF4FF", border: "1px solid #1E6BB822", borderRadius: 8, padding: "10px 12px", fontSize: 12, color: "#1E3A5F", lineHeight: 1.5, marginBottom: 10 }}>
                   Tata Engage Team will send the token to this address. If you live abroad, please provide your India address or Indian office address.
                 </div>
                 <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder="Flat / Floor, House No., Building, Company, Apartment" style={{ ...inp, marginBottom: 8 }} onFocus={e => (e.target.style.borderColor = B_INDIGO)} onBlur={e => (e.target.style.borderColor = "#e0e0e8")} />
@@ -1012,19 +1012,19 @@ export default function DashboardView() {
 
               {/* Stat tiles */}
               <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 16 }}>
-                <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered"  pastel={CP_PINK}    accentColor={C_PINK}    delay={0}   started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={CP_GREEN}  accentColor={C_GREEN}    delay={100} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Projects Completed" pastel={CP_MIDBLUE} accentColor={C_MIDBLUE} delay={200} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={CP_AMBER}   accentColor={C_AMBER}  delay={300} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={CP_TEAL2}   accentColor={C_TEAL2}   delay={400} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={CP_PINK}    accentColor={C_PINK}    delay={500} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered"  pastel={CP_TEAL2}   accentColor={C_TEAL2}   delay={0}   started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={CP_MIDBLUE} accentColor={C_MIDBLUE}  delay={100} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Projects Completed" pastel={CP_PINK}    accentColor={C_PINK}    delay={200} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={CP_AMBER}   accentColor={C_AMBER}   delay={300} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={CP_MIDBLUE}  accentColor={C_MIDBLUE}   delay={400} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={CP_TEAL2}   accentColor={C_TEAL2}    delay={500} started={statsStarted} />
               </div>
 
               {/* Skills & Interests */}
               <div style={{ ...card, marginBottom: 10 }}>
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 12 }}>Skills You Bring</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
-                  {VOLUNTEER.skills.slice(0, 4).map(s => <span key={s} style={{ background: CP_TEAL2, color: C_TEAL2, fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
+                  {VOLUNTEER.skills.slice(0, 4).map(s => <span key={s} style={{ background: "#EBF4FF", color: "#1E6BB8", fontSize: 12.5, fontWeight: 600, padding: "4px 12px", borderRadius: 100 }}>{s}</span>)}
                 </div>
               </div>
 
@@ -1123,7 +1123,7 @@ export default function DashboardView() {
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => navigate("/tvw")} style={{ marginTop: 14, background: "none", border: "none", fontSize: 13.5, color: B_YELLOW, fontWeight: 600, cursor: "pointer", padding: 0 }}>
+                  <button onClick={() => navigate("/tvw")} style={{ marginTop: 14, background: "none", border: "none", fontSize: 13.5, color: "#0B7285", fontWeight: 600, cursor: "pointer", padding: 0 }}>
                     View all opportunities →
                   </button>
                 </div>
@@ -1251,7 +1251,7 @@ export default function DashboardView() {
                 </div>
               ) : (
                 <>
-                  <Slicers options={HISTORY_SLICERS} active={activeHistory} onChange={id => { setActiveHistory(id); setEditionFilter(""); setYearFilter(""); }} accentColor={B_YELLOW} />
+                  <Slicers options={HISTORY_SLICERS} active={activeHistory} onChange={id => { setActiveHistory(id); setEditionFilter(""); setYearFilter(""); }} accentColor={"#1E6BB8"} />
 
                   {["applications", "projects", "certificates", "feedback"].includes(activeHistory) && (
                     <div style={{ marginBottom: 16 }}>
@@ -1347,13 +1347,13 @@ export default function DashboardView() {
                             </div>
                             <span style={{ background: "#F7FEE7", color: "#65A30D", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, whiteSpace: "nowrap" }}>Submitted</span>
                           </div>
-                          <div style={{ marginTop: 10, display: "flex", gap: 2 }}>{[1,2,3,4,5].map(i => <span key={i} style={{ color: B_YELLOW, fontSize: 20, lineHeight: 1 }}>★</span>)}</div>
+                          <div style={{ marginTop: 10, display: "flex", gap: 2 }}>{[1,2,3,4,5].map(i => <span key={i} style={{ color: "#0B7285", fontSize: 20, lineHeight: 1 }}>★</span>)}</div>
                         </div>
                       ))}
                       {hasActive && (
-                        <div style={{ background: P_YELLOW, border: `1px solid ${B_YELLOW}44`, borderRadius: 12, padding: "16px 18px" }}>
+                        <div style={{ background: "#EBF4FF", border: "1px solid #1E6BB822", borderRadius: 12, padding: "16px 18px" }}>
                           <div style={{ fontSize: 13.5, fontWeight: 600, color: ACCENT_NAVY, marginBottom: 4 }}>{VOLUNTEER.activeApplication!.title}</div>
-                          <div style={{ fontSize: 13, color: "#78350f", lineHeight: 1.5 }}>Feedback can be submitted once your project is marked complete by the NGO.</div>
+                          <div style={{ fontSize: 13, color: "#1E3A5F", lineHeight: 1.5 }}>Feedback can be submitted once your project is marked complete by the NGO.</div>
                         </div>
                       )}
                     </div>
@@ -1386,9 +1386,9 @@ export default function DashboardView() {
                 const on = activeSection === s.id;
                 const hasNotif = s.id === "activities" && (NOTIFICATIONS.viewOpportunities || NOTIFICATIONS.diyActivities || NOTIFICATIONS.proEngageProject);
                 return (
-                  <button key={s.id} onClick={() => scrollTo(s.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: 8, border: "none", background: on ? P_YELLOW : "transparent", cursor: "pointer", textAlign: "left", transition: "background 0.18s", fontFamily: "'DM Sans', sans-serif" }}>
-                    <div style={{ width: 2, height: 12, borderRadius: 2, background: on ? B_YELLOW : "#dddde8", flexShrink: 0, transition: "background 0.18s" }} />
-                    <span style={{ position: "relative", display: "inline-flex", fontSize: 12.5, fontWeight: on ? 700 : 400, color: on ? B_YELLOW : "#aaaabc", transition: "color 0.18s" }}>{s.label}{hasNotif && <span style={notifDot} />}</span>
+                  <button key={s.id} onClick={() => scrollTo(s.id)} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 10px", borderRadius: 8, border: "none", background: on ? "#EBF4FF" : "transparent", cursor: "pointer", textAlign: "left", transition: "background 0.18s", fontFamily: "'DM Sans', sans-serif" }}>
+                    <div style={{ width: 2, height: 12, borderRadius: 2, background: on ? "#0891b2" : "#dddde8", flexShrink: 0, transition: "background 0.18s" }} />
+                    <span style={{ position: "relative", display: "inline-flex", fontSize: 12.5, fontWeight: on ? 700 : 400, color: on ? "#0B7285" : "#aaaabc", transition: "color 0.18s" }}>{s.label}{hasNotif && <span style={notifDot} />}</span>
                   </button>
                 );
               })}
