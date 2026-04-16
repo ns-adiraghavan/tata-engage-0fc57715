@@ -611,9 +611,9 @@ export default function ProfileView() {
   // ─── Stats for banner ──────────────────────────────────────────────────────
   const VOLUNTEER_STATS = [
     { value: 14, label: "Projects Applied",   pastel: CP_AMBER,    accent: C_AMBER    },
-    { value: 9,  label: "Projects Completed", pastel: CP_MIDBLUE,  accent: C_MIDBLUE  },
-    { value: 312, label: "Hours Volunteered", pastel: CP_GREEN,   accent: C_GREEN_KPI },
-    { value: 3,  label: "Badges Earned",      pastel: CP_PINK,     accent: C_PINK     },
+    { value: 8,  label: "Projects Completed", pastel: CP_MIDBLUE,  accent: C_MIDBLUE  },
+    { value: 120, label: "Hours Volunteered", pastel: CP_GREEN,    accent: C_GREEN_KPI },
+    { value: 5,  label: "Badges Earned",      pastel: CP_PINK,     accent: C_PINK     },
   ];
 
   // ─── RENDER ───────────────────────────────────────────────────────────────
@@ -734,12 +734,14 @@ export default function ProfileView() {
               <div style={{ marginTop: 28, background: "#fff", border: "1px solid #e8e8f0", borderRadius: 12, padding: "16px" }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>Badges</div>
                 {[
-                  { symbol: "I",   name: "First Step", color: C_GREEN_KPI,  bg: CP_GREEN   },
-                  { symbol: "II",  name: "50 Club",    color: C_MIDBLUE,    bg: CP_MIDBLUE },
-                  { symbol: "VII", name: "300 Club",   color: C_AMBER,      bg: CP_AMBER   },
+                  { icon: "🎖️",  name: "ProEngage Veteran",    color: C_GREEN_KPI,  bg: CP_GREEN   },
+                  { icon: "🌟",  name: "ProEngage Ambassador",  color: C_MIDBLUE,    bg: CP_MIDBLUE },
+                  { icon: "🧭",  name: "ProEngage North Star",  color: C_AMBER,      bg: CP_AMBER   },
+                  { icon: "🚀",  name: "ProEngage Pioneer",     color: C_PINK,       bg: CP_PINK    },
+                  { icon: "🏆",  name: "ProEngage 23 Champion", color: "#5b21b6",    bg: "#f3f0ff"  },
                 ].map(b => (
-                  <div key={b.symbol} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: 8, background: b.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 900, color: b.color, flexShrink: 0 }}>{b.symbol}</div>
+                  <div key={b.name} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                    <div style={{ width: 32, height: 32, borderRadius: 8, background: b.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, flexShrink: 0 }}>{b.icon}</div>
                     <div style={{ fontSize: 12, fontWeight: 600, color: ACCENT_NAVY }}>{b.name}</div>
                   </div>
                 ))}
@@ -751,8 +753,8 @@ export default function ProfileView() {
               <div style={{ marginTop: 12, background: CP_TEAL_CERT, border: `1px solid ${C_TEAL_CERT}22`, borderRadius: 12, padding: "14px 16px" }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: C_TEAL_CERT, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 10 }}>My Certificates</div>
                 {[
-                  { edition: "ProEngage 10", date: "Mar 2025" },
-                  { edition: "ProEngage 8",  date: "Oct 2023" },
+                  { edition: "Mock Interviews - Students · ProEngage 2025 | 01", date: "2025" },
+                  { edition: "Mock Interviews · ProEngage 2024 | 02",            date: "2024" },
                 ].map(c => (
                   <div key={c.edition} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                     <div>
