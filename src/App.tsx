@@ -131,7 +131,7 @@ export default function App() {
       setIsLoggedIn(true);
       setUser(PRIYA_SHARMA);
       navigate("dashboard");
-      triggerToast("Login Successful! Welcome back, Priya.");
+      triggerToast("Login Successful! Welcome back, Shrirang.");
     } else {
       navigate("otp");
     }
