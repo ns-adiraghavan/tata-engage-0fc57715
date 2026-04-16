@@ -353,7 +353,7 @@ export function ProgrammeSpotlight() {
                 background: B_YELLOW,
                 padding: "20px 20px 16px",
                 display: "flex", flexDirection: "column",
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
                 borderRadius: 14,
                 opacity: rightBox === 0 ? 1 : 0,
                 transform: rightBox === 0 ? "translateY(0)" : "translateY(-24px)",
@@ -370,12 +370,15 @@ export function ProgrammeSpotlight() {
                   </span>
                   <h3 style={{
                     fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
-                    lineHeight: 1.2, margin: 0, letterSpacing: "-0.4px",
+                    lineHeight: 1.2, margin: "0 0 14px", letterSpacing: "-0.4px",
                   }}>
                     Company Curated Opportunities for You
                   </h3>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 14 }}>
+                    Learn More <ArrowRight size={13} />
+                  </div>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: 14 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                   <button
                     onClick={(e) => { e.stopPropagation(); setRightBox(1); }}
                     style={{
@@ -396,7 +399,7 @@ export function ProgrammeSpotlight() {
                 background: "#FDE8F0",
                 padding: "20px 20px 16px",
                 display: "flex", flexDirection: "column",
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
                 borderRadius: 14,
                 opacity: rightBox === 1 ? 1 : 0,
                 transform: rightBox === 1 ? "translateY(0)" : "translateY(24px)",
@@ -413,12 +416,15 @@ export function ProgrammeSpotlight() {
                   </span>
                   <h3 style={{
                     fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
-                    lineHeight: 1.2, margin: 0, letterSpacing: "-0.4px",
+                    lineHeight: 1.2, margin: "0 0 14px", letterSpacing: "-0.4px",
                   }}>
                     Dream Big with Personal Volunteering Efforts
                   </h3>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#9D174D", marginBottom: 14 }}>
+                    Learn More <ArrowRight size={13} />
+                  </div>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: 14 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                   <button
                     onClick={(e) => { e.stopPropagation(); setRightBox(0); }}
                     style={{
