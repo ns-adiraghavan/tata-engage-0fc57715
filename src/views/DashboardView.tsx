@@ -503,7 +503,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
   ];
 
   return (
-    <DrawerShell open={open} onClose={reset} title="ProEngage Volunteer Feedback" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Project Feedback">
+    <DrawerShell open={open} onClose={reset} title="ProEngage Volunteer Feedback" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Project Feedback" accentColor={KPI_CVP}>
       {submitted ? (
         <div style={{ padding: "40px 28px", textAlign: "center" }}>
           <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#F7FEE7", border: "2px solid #84CC16", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
@@ -650,7 +650,7 @@ function GrievanceDrawer({ open, onClose }: { open: boolean; onClose: () => void
   const categories = ["Communication issues with NGO", "Project scope changed unexpectedly", "Scheduling conflict", "Platform issue", "Other"];
   const canSubmit = category && text.trim().length > 10;
   return (
-    <DrawerShell open={open} onClose={reset} title="Raise a Grievance" subtitle="Your concern will be reviewed by the TSG Admin team" accentTag="Grievance">
+    <DrawerShell open={open} onClose={reset} title="Raise a Grievance" subtitle="Your concern will be reviewed by the TSG Admin team" accentTag="Grievance" accentColor={B_RED}>
       {submitted ? (
         <div style={{ padding: "40px 28px", textAlign: "center" }}>
           <div style={{ width: 56, height: 56, borderRadius: "50%", background: P_YELLOW, border: `2px solid ${B_YELLOW}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
@@ -908,7 +908,7 @@ function ReferralDrawer({ open, onClose }: { open: boolean; onClose: () => void 
   const refLink = "https://tataengage.com/join?ref=PS7842";
   const copy = () => { setCopied(true); setTimeout(() => setCopied(false), 2000); };
   return (
-    <DrawerShell open={open} onClose={onClose} title="Refer a Colleague or Family Member" subtitle="Share your unique referral link below" accentTag="Referral">
+    <DrawerShell open={open} onClose={onClose} title="Refer a Colleague or Family Member" subtitle="Share your unique referral link below" accentTag="Referral" accentColor={B_TEAL}>
       <div style={{ padding: "28px 28px" }}>
         <p style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6, marginBottom: 22 }}>When someone joins TataEngage using your referral link, your Referred count goes up and you're one step closer to earning the Connector badge.</p>
         <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 10, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
@@ -930,7 +930,7 @@ function ShareDrawer({ open, onClose }: { open: boolean; onClose: () => void }) 
   };
   const [active, setActive] = useState("linkedin");
   return (
-    <DrawerShell open={open} onClose={onClose} title="Share Your Story" subtitle="Let your network know about your volunteering journey" accentTag="Social Share">
+    <DrawerShell open={open} onClose={onClose} title="Share Your Story" subtitle="Let your network know about your volunteering journey" accentTag="Social Share" accentColor={B_BLUE}>
       <div style={{ padding: "28px 28px" }}>
         <div style={{ display: "flex", gap: 8, marginBottom: 18 }}>
           {[["linkedin", "LinkedIn"], ["twitter", "Twitter"], ["whatsapp", "WhatsApp"]].map(([id, lbl]) => (
