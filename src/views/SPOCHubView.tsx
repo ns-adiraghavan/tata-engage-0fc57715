@@ -7,7 +7,7 @@ import { Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
 import heroImg from "@/assets/Voltas.JPG";
-import { B_TICKER, B_YELLOW, B_INDIGO } from "@/data/homeSharedData";
+import { B_TICKER, B_YELLOW, B_INDIGO, ACCENT_NAVY } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
 const DOT_SECTIONS = [
