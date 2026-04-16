@@ -60,11 +60,11 @@ const VOLUNTEER = {
   linkedinUrl: "",
   stats: {
     hoursVolunteered: IS_NEW_VOLUNTEER ? 0 : 120,
-    projectsApplied:  IS_NEW_VOLUNTEER ? 0 : 6,
-    projectsCompleted:IS_NEW_VOLUNTEER ? 0 : 4,
-    projectsDropped:  IS_NEW_VOLUNTEER ? 0 : 1,
-    referrals:        IS_NEW_VOLUNTEER ? 0 : 3,
-    badgesEarned:     IS_NEW_VOLUNTEER ? 0 : 7,
+   projectsApplied:  IS_NEW_VOLUNTEER ? 0 : 14,
+   projectsCompleted:IS_NEW_VOLUNTEER ? 0 : 8,
+   projectsDropped:  IS_NEW_VOLUNTEER ? 0 : 1,
+   referrals:        IS_NEW_VOLUNTEER ? 0 : 2,
+   badgesEarned:     IS_NEW_VOLUNTEER ? 0 : 5,
   },
   activeApplication: IS_NEW_VOLUNTEER ? null : {
     title: "Conduct Mock Interviews",
@@ -172,10 +172,8 @@ const BADGES = [
   { id: "b1", name: "First Step",   symbol: "I",   desc: "First volunteering activity",       earned: "Mar 2023", color: "#65A30D" },
   { id: "b2", name: "ProEngager",   symbol: "II",  desc: "First ProEngage project completed", earned: "Sep 2023", color: B_BLUE },
   { id: "b3", name: "Impact Maker", symbol: "III", desc: "100+ hours volunteered",            earned: "Feb 2024", color: B_BLUE   },
-  { id: "b4", name: "Connector",    symbol: "IV",  desc: "Referred 3 volunteers",             earned: "Apr 2024", color: "#65A30D" },
-  { id: "b5", name: "TVW Champion", symbol: "V",   desc: "3 TVW editions participated",       earned: "Sep 2024", color: B_RED    },
-  { id: "b6", name: "Repeat Hero",  symbol: "VI",  desc: "3 ProEngage projects completed",    earned: "Mar 2025", color: B_BLUE },
-  { id: "b7", name: "300 Club",     symbol: "VII", desc: "300+ volunteering hours",           earned: "Mar 2025", color: B_YELLOW },
+  { id: "b4", name: "Badge 4",  symbol: "IV", desc: "Coming soon", earned: "", color: "#cccccc" },
+  { id: "b5", name: "Badge 5",  symbol: "V",  desc: "Coming soon", earned: "", color: "#cccccc" },
 ];
 
 const RESOURCES = [
