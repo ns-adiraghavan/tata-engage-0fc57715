@@ -477,7 +477,7 @@ export function JourneySection() {
         {/* Header + train icon row */}
         <div style={{ marginBottom: 40 }}>
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "0 0 8px" }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: "#ffffff", margin: "0 0 8px" }}>
               Our Journey
             </p>
             <h2 style={{ fontSize: 30, fontWeight: 900, color: "white", letterSpacing: "-0.5px", margin: 0 }}>
@@ -667,7 +667,7 @@ export function NumbersSection() {
     <span style={{
       fontSize: 10, fontWeight: 800, letterSpacing: "1.4px",
       textTransform: "uppercase",
-      color: dark ? "rgba(255,255,255,0.55)" : "#64748b",
+      color: dark ? "#ffffff" : "#64748b",
       display: "block",
       marginBottom: 10,
     }}>
@@ -766,7 +766,7 @@ export function NumbersSection() {
                       background: "rgba(255,255,255,0.35)",
                     }} />
                     {/* "In the numbers" eyebrow — inside the tile */}
-                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: 0, color: "rgba(13,27,62,0.55)", alignSelf: "flex-start", textAlign: "left" }}>
+                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: 0, color: "#ffffff", alignSelf: "flex-start", textAlign: "left" }}>
                       In the numbers
                     </p>
                     <div style={{ flex: 1 }} />

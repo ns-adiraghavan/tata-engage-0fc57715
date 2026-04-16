@@ -285,7 +285,7 @@ const HomeView = () => {
               display: "inline-block",
               fontSize: 10, fontWeight: 800, letterSpacing: "2px",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,0.55)",
+              color: "#ffffff",
               marginBottom: 0,
               fontFamily: "'DM Mono', monospace",
             }}>
