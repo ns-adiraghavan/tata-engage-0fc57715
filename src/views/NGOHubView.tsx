@@ -89,7 +89,7 @@ const NGOHubView = () => {
                       padding: "3px 9px",
                       borderRadius: 4,
                       backgroundColor: inHero ? "rgba(0,0,0,0.85)" : "rgba(13,27,62,0.92)",
-                      border: `1px solid ${inHero ? "rgba(255,255,255,0.25)" : ACCENT}`,
+                      border: `1px solid ${inHero ? "rgba(255,255,255,0.25)" : ACCENT_NAVY}`,
                       color: "#ffffff",
                     }}>
                     {s.label}
