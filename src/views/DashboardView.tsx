@@ -1222,6 +1222,14 @@ export default function DashboardView() {
                       </div>
                     ))}
                   </div>
+                  <button
+                    onClick={() => triggerToast("Please contact your SPOC to sign up for a DIY activity.")}
+                    style={{ width: "100%", background: B_TEAL, color: "#fff", border: "none", borderRadius: 12, padding: "13px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "opacity 0.18s" }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.9"; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+                  >
+                    Contact SPOC to Sign Up
+                  </button>
                 </div>
               )}
 
