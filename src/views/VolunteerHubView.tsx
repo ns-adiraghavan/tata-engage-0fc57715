@@ -126,10 +126,10 @@ const VolunteerHubView = () => {
                 <RoleToggle activeView="volunteer" className="mb-3" />
               )}
               <p className="text-white/50 text-sm font-medium tracking-wide mb-1">
-                {greeting()},
+                {"\n"}
               </p>
               <p className="text-white/90 text-5xl font-sans font-light" style={{ letterSpacing: "-0.5px", lineHeight: 1.1 }}>
-                <span className="font-bold text-white">{user?.firstName ?? "there"}!</span>
+                <span className="font-bold text-white">{greeting()}, {user?.firstName ?? "there"}!</span>
               </p>
               <p className="text-white/30 text-xs mt-2 font-medium">{user?.company} · {user?.designation}</p>
             </div>
