@@ -185,7 +185,7 @@ const HomeView = () => {
                       fontSize: 11, fontWeight: 700, letterSpacing: "0.3px",
                       padding: "3px 9px",
                       borderRadius: 4,
-                      backgroundColor: "rgba(13,27,62,0.18)",
+                      backgroundColor: "rgba(13,27,62,0.92)",
                       border: `1px solid ${ACCENT_NAVY}`,
                       color: "#ffffff",
                     }}>
