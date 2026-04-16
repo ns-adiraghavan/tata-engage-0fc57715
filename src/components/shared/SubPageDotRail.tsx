@@ -48,7 +48,8 @@ const SubPageDotRail = ({ sections, accentColor }: SubPageDotRailProps) => {
               style={{
                 width: active ? 10 : 7,
                 height: active ? 10 : 7,
-                backgroundColor: active ? accentColor : "#CBD5E1",
+                backgroundColor: "#0D1B3E",
+                border: "1px solid rgba(13,27,62,0.15)",
               }}
             />
           </button>
