@@ -344,152 +344,93 @@ export function ProgrammeSpotlight() {
               </div>
             </div>
 
-            {/* RIGHT col: CVP/EOI single switching box + EOEO box */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {/* RIGHT col: 2 full tiles with chevron navigation */}
+            <div style={{ position: "relative", overflow: "hidden", borderRadius: 14, minHeight: 340 }}>
 
-              {/* CVP / EOI — one box, switches between the two */}
-              <div style={{ position: "relative", overflow: "hidden", borderRadius: 14, minHeight: 188 }}>
-
-                {/* CVP Card — yellow */}
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: B_YELLOW,
-                  padding: "20px 20px 16px",
-                  display: "flex", flexDirection: "column",
-                  justifyContent: "space-between",
-                  borderRadius: 14,
-                  opacity: rightBox === 0 ? 1 : 0,
-                  transform: rightBox === 0 ? "translateX(0)" : "translateX(-24px)",
-                  transition: "opacity 0.3s ease, transform 0.3s ease",
-                  pointerEvents: rightBox === 0 ? "auto" : "none",
-                }}>
-                  <div>
-                    {/* Eyebrow — same style as EOEO tag */}
-                    <span style={{
-                      fontSize: 9, fontWeight: 800, textTransform: "uppercase",
-                      letterSpacing: "1px", color: `${ACCENT_NAVY}80`,
-                      display: "block", marginBottom: 8,
-                    }}>
-                      Company Volunteering Programme
-                    </span>
-                    {/* Punchy 2-3 word headline only — no subtitle */}
-                    <h3 style={{
-                      fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
-                      lineHeight: 1.2, margin: 0, letterSpacing: "-0.4px",
-                    }}>
-                      Give Back Together
-                    </h3>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 14 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, color: ACCENT_NAVY, cursor: "pointer" }}>
-                      Explore More <ArrowRight size={11} />
-                    </div>
-                    {/* Arrow to switch to EOI */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setRightBox(1); }}
-                      style={{
-                        width: 26, height: 26, borderRadius: "50%",
-                        background: `${ACCENT_NAVY}18`, border: `1px solid ${ACCENT_NAVY}28`,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        cursor: "pointer", color: ACCENT_NAVY,
-                      }}
-                    >
-                      <ArrowRight size={10} />
-                    </button>
-                  </div>
-                </div>
-
-                {/* EOI Card — light pink */}
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: "#FFF0EE",
-                  padding: "20px 20px 16px",
-                  display: "flex", flexDirection: "column",
-                  justifyContent: "space-between",
-                  borderRadius: 14,
-                  opacity: rightBox === 1 ? 1 : 0,
-                  transform: rightBox === 1 ? "translateX(0)" : "translateX(24px)",
-                  transition: "opacity 0.3s ease, transform 0.3s ease",
-                  pointerEvents: rightBox === 1 ? "auto" : "none",
-                }}>
-                  <div>
-                    <span style={{
-                      fontSize: 9, fontWeight: 800, textTransform: "uppercase",
-                      letterSpacing: "1px", color: `${B_RED}90`,
-                      display: "block", marginBottom: 8,
-                    }}>
-                      Employee's Own Initiative
-                    </span>
-                    <h3 style={{
-                      fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
-                      lineHeight: 1.2, margin: 0, letterSpacing: "-0.4px",
-                    }}>
-                      Volunteer Your Way
-                    </h3>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 14 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, color: ACCENT_NAVY, cursor: "pointer" }}>
-                      Explore More <ArrowRight size={11} />
-                    </div>
-                    {/* Arrow back to CVP */}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setRightBox(0); }}
-                      style={{
-                        width: 26, height: 26, borderRadius: "50%",
-                        background: `${B_RED}15`, border: `1px solid ${B_RED}28`,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        cursor: "pointer", color: B_RED, transform: "rotate(180deg)",
-                      }}
-                    >
-                      <ArrowRight size={10} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* EOEO Box */}
+              {/* Tile 0 — CVP (yellow) */}
               <div style={{
-                borderRadius: 14,
-                background: ACCENT_NAVY,
+                position: "absolute", inset: 0,
+                background: B_YELLOW,
                 padding: "20px 20px 16px",
                 display: "flex", flexDirection: "column",
                 justifyContent: "space-between",
-                position: "relative", overflow: "hidden",
-                flex: 1,
+                borderRadius: 14,
+                opacity: rightBox === 0 ? 1 : 0,
+                transform: rightBox === 0 ? "translateY(0)" : "translateY(-24px)",
+                transition: "opacity 0.3s ease, transform 0.3s ease",
+                pointerEvents: rightBox === 0 ? "auto" : "none",
               }}>
-                <img src={doodleCluster3} alt="" style={{
-                  position: "absolute", bottom: -20, right: -30,
-                  width: 140, opacity: 0.07,
-                  pointerEvents: "none", userSelect: "none",
-                  transform: "rotate(-10deg)",
-                }} />
                 <div>
                   <span style={{
-                    fontSize: 9, fontWeight: 800,
-                    color: "rgba(255,255,255,0.5)",
-                    textTransform: "uppercase", letterSpacing: "1px",
+                    fontSize: 9, fontWeight: 800, textTransform: "uppercase",
+                    letterSpacing: "1px", color: `${ACCENT_NAVY}80`,
                     display: "block", marginBottom: 8,
                   }}>
-                    {EOEO.tag}
+                    Company Volunteering Programme
                   </span>
-                  <h3 style={{ fontSize: 22, fontWeight: 900, color: "white", lineHeight: 1.2, margin: 0, letterSpacing: "-0.4px" }}>
-                    {EOEO.headline}
+                  <h3 style={{
+                    fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
+                    lineHeight: 1.2, margin: 0, letterSpacing: "-0.4px",
+                  }}>
+                    Company Curated for You
                   </h3>
                 </div>
-                <a
-                  href={EOEO.ctaUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={e => e.stopPropagation()}
-                  style={{
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    padding: "9px 0", borderRadius: 8, marginTop: 14,
-                    fontSize: 12, fontWeight: 800, color: ACCENT_NAVY,
-                    background: B_YELLOW, textDecoration: "none", cursor: "pointer",
-                  }}
-                >
-                  {EOEO.cta}
-                </a>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: 14 }}>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setRightBox(1); }}
+                    style={{
+                      width: 26, height: 26, borderRadius: "50%",
+                      background: `${ACCENT_NAVY}18`, border: `1px solid ${ACCENT_NAVY}28`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      cursor: "pointer", color: ACCENT_NAVY,
+                    }}
+                  >
+                    <ChevronDown size={14} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Tile 1 — EOI (pink) */}
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "#FDE8F0",
+                padding: "20px 20px 16px",
+                display: "flex", flexDirection: "column",
+                justifyContent: "space-between",
+                borderRadius: 14,
+                opacity: rightBox === 1 ? 1 : 0,
+                transform: rightBox === 1 ? "translateY(0)" : "translateY(24px)",
+                transition: "opacity 0.3s ease, transform 0.3s ease",
+                pointerEvents: rightBox === 1 ? "auto" : "none",
+              }}>
+                <div>
+                  <span style={{
+                    fontSize: 9, fontWeight: 800, textTransform: "uppercase",
+                    letterSpacing: "1px", color: "#9D174D80",
+                    display: "block", marginBottom: 8,
+                  }}>
+                    Employee's Own Initiative
+                  </span>
+                  <h3 style={{
+                    fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
+                    lineHeight: 1.2, margin: 0, letterSpacing: "-0.4px",
+                  }}>
+                    Dream Big with Personal Volunteering Efforts
+                  </h3>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: 14 }}>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setRightBox(0); }}
+                    style={{
+                      width: 26, height: 26, borderRadius: "50%",
+                      background: "#F9A8D460", border: "1px solid #F9A8D4",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      cursor: "pointer", color: "#9D174D",
+                    }}
+                  >
+                    <ChevronUp size={14} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -761,16 +702,17 @@ export function NumbersSection() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, alignItems: "start" }}>
 
           {/* Tile 1 — "Did you know?" (dark) */}
           <div style={{
             borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
             background: ACCENT_NAVY,
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
+            alignSelf: "start",
           }}>
             <div style={{
-              position: "relative", zIndex: 10, padding: 28,
+              position: "relative", zIndex: 10, padding: "20px 28px 28px 28px",
               display: "flex", flexDirection: "column",
               justifyContent: "space-between", height: "100%", minHeight: 280,
             }}>
@@ -811,18 +753,18 @@ export function NumbersSection() {
           </div>
 
           {/* Tile 2 — KPI cards — all mustard bg, varied text colour */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280, alignSelf: "start" }}>
             <div style={{ flex: 1, position: "relative" }}>
               {HERO_STATS.map((s, i) => {
                 const textColour = KPI_TEXT_COLOURS[i];
                 const subColour = i === 1 ? "rgba(13,27,62,0.6)" : "rgba(255,255,255,0.7)";
                 const labelColour = i === 1 ? "rgba(13,27,62,0.75)" : "rgba(255,255,255,0.85)";
-                return (
+                  return (
                   <div key={s.label} style={{
                     position: "absolute", inset: 0,
                     display: "flex",
-                    flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center",
-                    borderRadius: 18, padding: 28,
+                    flexDirection: "column", justifyContent: "flex-start", alignItems: "center", textAlign: "center",
+                    borderRadius: 18, padding: "20px 28px 28px",
                     background: B_YELLOW,
                     boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
                     opacity: i === 0 ? 1 : 0,
@@ -841,7 +783,7 @@ export function NumbersSection() {
                     <p style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.2px", margin: "0 0 8px", color: labelColour }}>
                       {s.label}
                     </p>
-                    <p style={{ fontSize: 52, fontWeight: 900, color: textColour, letterSpacing: "-1.5px", lineHeight: 1, margin: 0 }}>
+                    <p style={{ fontSize: 62, fontWeight: 900, color: textColour, letterSpacing: "-1.5px", lineHeight: 1, margin: 0 }}>
                       {s.num}
                     </p>
                     <p style={{ fontSize: 12, margin: "8px 0 0", color: subColour }}>{s.sub}</p>
@@ -858,6 +800,7 @@ export function NumbersSection() {
               overflow: "hidden", position: "relative",
               boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04)",
               border: "1px solid #f0f0f5", display: "flex", flexDirection: "column",
+              alignSelf: "start",
             }}
             onMouseEnter={() => setShimmer(true)}
             onMouseLeave={() => setShimmer(false)}
