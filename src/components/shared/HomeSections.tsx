@@ -304,6 +304,7 @@ export function ProgrammeSpotlight() {
                     }}>
                       {p.title}
                     </h3>
+                    <div style={{ width: 40, height: 2, background: "rgba(255,255,255,0.6)", borderRadius: 1, margin: "6px 0 10px" }} />
                     <p style={{
                       fontSize: 13, color: "rgba(255,255,255,0.8)",
                       lineHeight: 1.5, margin: "0 0 0",
@@ -359,6 +360,7 @@ export function ProgrammeSpotlight() {
                   }}>
                     Company Volunteering Programme (CVP)
                   </h3>
+                  <div style={{ width: 40, height: 2, background: "rgba(255,255,255,0.6)", borderRadius: 1, margin: "6px 0 10px" }} />
                   <p style={{
                     fontSize: 13, color: "rgba(255,255,255,0.8)",
                     lineHeight: 1.5, margin: "0 0 0",
@@ -404,6 +406,7 @@ export function ProgrammeSpotlight() {
                   }}>
                     Employees' Own Initiatives (EOI)
                   </h3>
+                  <div style={{ width: 40, height: 2, background: "rgba(255,255,255,0.6)", borderRadius: 1, margin: "6px 0 10px" }} />
                   <p style={{
                     fontSize: 13, color: "rgba(255,255,255,0.8)",
                     lineHeight: 1.5, margin: "0 0 0",
