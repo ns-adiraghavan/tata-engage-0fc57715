@@ -322,10 +322,7 @@ const HomeView = () => {
                     position: "relative", overflow: "hidden",
                   }}>
                   <BookOpen size={14} />
-                  <span style={{ position: "relative", display: "inline-block" }}>
-                    Read Story
-                    <span className="cta-shimmer" />
-                  </span>
+                  <span className="cta-shimmer">Read Story</span>
                 </button>
               ) : (
                 <button onClick={() => triggerToast("Opening video...")}
@@ -337,10 +334,7 @@ const HomeView = () => {
                     position: "relative", overflow: "hidden",
                   }}>
                   <Play size={14} />
-                  <span style={{ position: "relative", display: "inline-block" }}>
-                    Watch More
-                    <span className="cta-shimmer" />
-                  </span>
+                  <span className="cta-shimmer">Watch More</span>
                 </button>
               )}
             </div>
@@ -418,18 +412,14 @@ const HomeView = () => {
             from { width: 0%; }
             to   { width: 100%; }
           }
-          @keyframes ctaShimmer {
-            0%   { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
-            15%  { opacity: 1; }
-            85%  { opacity: 1; }
-            100% { transform: translateX(220%) skewX(-18deg); opacity: 0; }
+          @keyframes ctaWordBounce {
+            0%, 100% { transform: translateY(0); }
+            45%       { transform: translateY(-2px); }
+            65%       { transform: translateY(-1px); }
           }
           .cta-shimmer {
-            position: absolute;
-            top: -2px; left: -4px; right: -4px; bottom: -2px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.38) 50%, transparent 100%);
-            animation: ctaShimmer 2.8s ease-in-out infinite;
-            pointer-events: none;
+            display: inline-block;
+            animation: ctaWordBounce 2.6s ease-in-out infinite;
           }
         `}</style>
       </section>
