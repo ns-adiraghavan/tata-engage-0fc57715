@@ -1024,7 +1024,7 @@ export default function DashboardView() {
   const filteredFeedback = filteredProjects.filter(p => p.cert);
 
   const COLLAPSE = 3;
-  const COLLAPSE_PROJECTS = 2;
+  const COLLAPSE_CERTS = 2;
 
   // Drawer states
   const [drawerApp, setDrawerApp]         = useState<AppRecord | null>(null);
@@ -1402,7 +1402,7 @@ export default function DashboardView() {
 
                   {/* Projects */}
                   {activeHistory === "projects" && (() => {
-                    const shown = projectsExpanded ? filteredProjects : filteredProjects.slice(0, COLLAPSE_PROJECTS);
+                    const shown = projectsExpanded ? filteredProjects : filteredProjects.slice(0, COLLAPSE);
                     return (
                       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                         {shown.map(p => {
@@ -1446,7 +1446,7 @@ export default function DashboardView() {
                         {filteredProjects.length === 0 && (
                           <div style={{ ...card, textAlign: "center", padding: "28px", color: "#aaaabc", fontSize: 13.5 }}>No projects for this edition.</div>
                         )}
-                        {filteredProjects.length > COLLAPSE_PROJECTS && (
+                        {filteredProjects.length > COLLAPSE && (
                           <button onClick={() => setProjectsExpanded(x => !x)} style={{ background: "none", border: "none", fontSize: 13, color: B_BLUE, fontWeight: 600, cursor: "pointer", padding: "6px 0", textAlign: "left" }}>
                             {projectsExpanded ? "Show less ↑" : `Show all ${filteredProjects.length} projects ↓`}
                           </button>
@@ -1470,7 +1470,7 @@ export default function DashboardView() {
 
                   {/* Certificates */}
                   {activeHistory === "certificates" && (() => {
-                    const shown = certsExpanded ? filteredCerts : filteredCerts.slice(0, COLLAPSE);
+                    const shown = certsExpanded ? filteredCerts : filteredCerts.slice(0, COLLAPSE_CERTS);
                     return (
                       <div>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -1493,7 +1493,7 @@ export default function DashboardView() {
                         {filteredCerts.length === 0 && (
                           <div style={{ ...card, textAlign: "center", padding: "28px", color: "#aaaabc", fontSize: 13.5 }}>No certificates for this edition.</div>
                         )}
-                        {filteredCerts.length > COLLAPSE && (
+                        {filteredCerts.length > COLLAPSE_CERTS && (
                           <button onClick={() => setCertsExpanded(x => !x)} style={{ background: "none", border: "none", fontSize: 13, color: B_BLUE, fontWeight: 600, cursor: "pointer", padding: "10px 0", textAlign: "left" }}>
                             {certsExpanded ? "Show less ↑" : `Show all ${filteredCerts.length} certificates ↓`}
                           </button>
