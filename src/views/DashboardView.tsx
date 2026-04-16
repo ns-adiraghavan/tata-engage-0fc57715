@@ -1228,6 +1228,7 @@ export default function DashboardView() {
                         >
                           Contact SPOC
                         </button>
+                      </div>
                     ))}
                   </div>
                 </div>
