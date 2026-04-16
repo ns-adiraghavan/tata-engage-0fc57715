@@ -745,9 +745,9 @@ export function NumbersSection() {
           <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280, alignSelf: "center" }}>
             <div style={{ flex: 1, position: "relative" }}>
               {HERO_STATS.map((s, i) => {
-                const textColour = i === 1 ? "#0D1B3E" : "#ffffff";
-                const subColour  = i === 1 ? "rgba(13,27,62,0.6)"  : "rgba(255,255,255,0.75)";
-                const labelColour = i === 1 ? "rgba(13,27,62,0.75)" : "rgba(255,255,255,0.9)";
+                const textColour = "#ffffff";
+                const subColour  = "rgba(255,255,255,0.75)";
+                const labelColour = "rgba(255,255,255,0.9)";
                   return (
                   <div key={s.label} style={{
                     position: "absolute", inset: 0,
