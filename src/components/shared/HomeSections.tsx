@@ -708,14 +708,14 @@ export function NumbersSection() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, alignItems: "center" }}>
 
           {/* Tile 1 — "Did you know?" (dark) */}
           <div style={{
             borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
             background: ACCENT_NAVY,
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
-            alignSelf: "start",
+            alignSelf: "center",
           }}>
             <div style={{
               position: "relative", zIndex: 10, padding: "20px 28px 28px 28px",
@@ -759,7 +759,7 @@ export function NumbersSection() {
           </div>
 
           {/* Tile 2 — KPI cards — all mustard bg, varied text colour */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280, alignSelf: "start" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280, alignSelf: "center" }}>
             <div style={{ flex: 1, position: "relative" }}>
               {HERO_STATS.map((s, i) => {
                 const textColour = KPI_TEXT_COLOURS[i];
