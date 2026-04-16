@@ -171,9 +171,6 @@ const HomeView = () => {
         {SECTION_IDS.map((id, i) => {
           const active = activeSection === i;
           const isLast = i === SECTION_IDS.length - 1;
-          const dotColour = active
-            ? (inHero ? "white" : B_TICKER)
-            : (inHero ? "rgba(255,255,255,0.35)" : "#CBD5E1");
           return (
             <div key={id} className="flex flex-col items-end">
               <button
@@ -188,9 +185,9 @@ const HomeView = () => {
                       fontSize: 11, fontWeight: 700, letterSpacing: "0.3px",
                       padding: "3px 9px",
                       borderRadius: 4,
-                      backgroundColor: inHero ? "rgba(0,0,0,0.72)" : "white",
-                      border: inHero ? "1px solid rgba(255,255,255,0.22)" : `1px solid ${B_TICKER}30`,
-                      color: inHero ? "white" : B_TICKER,
+                      backgroundColor: "rgba(13,27,62,0.18)",
+                      border: `1px solid ${ACCENT_NAVY}`,
+                      color: "#ffffff",
                     }}>
                     {SECTION_LABELS[i]}
                   </span>
@@ -201,7 +198,8 @@ const HomeView = () => {
                   style={{
                     width: active ? 9 : 6, height: active ? 9 : 6,
                     borderRadius: 2,
-                    backgroundColor: dotColour,
+                    backgroundColor: ACCENT_NAVY,
+                    border: `1px solid rgba(13,27,62,0.25)`,
                     display: "block",
                     flexShrink: 0,
                   }}
@@ -215,7 +213,7 @@ const HomeView = () => {
                   height: 28,
                   marginLeft: "auto",
                   marginRight: active ? "4px" : "2.5px",
-                  backgroundImage: `repeating-linear-gradient(to bottom, ${inHero ? "rgba(255,255,255,0.3)" : "#CBD5E1"} 0px, ${inHero ? "rgba(255,255,255,0.3)" : "#CBD5E1"} 3px, transparent 3px, transparent 7px)`,
+                  backgroundImage: `repeating-linear-gradient(to bottom, ${ACCENT_NAVY}50 0px, ${ACCENT_NAVY}50 3px, transparent 3px, transparent 7px)`,
                   transition: "all 0.3s",
                 }} />
               )}
