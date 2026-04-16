@@ -151,7 +151,7 @@ const STAT_TOOLTIPS: Record<string, string> = {
   "Badges Earned":      "Awarded for key milestones — completing a project, 100 hours, TVW participation and more.",
 };
 
-const BADGE_ICONS: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
+const BADGE_ICONS: Record<string, any> = {
   b1: Star, b2: Zap, b3: Award, b4: Users, b5: Shield, b6: RefreshCw, b7: Clock,
 };
 
