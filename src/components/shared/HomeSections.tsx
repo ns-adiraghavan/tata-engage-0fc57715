@@ -40,9 +40,9 @@ const GLOBAL_STYLES = `
   .hover-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
   .hover-lift:hover { transform: translateY(-3px); }
 
-  /* Definer underline — track + animated fill */
+  /* Definer underline — track + animated fill (thinner: 2px → 1.4px, rounded to 1px for hero) */
   .te-definer-track {
-    height: 2px; border-radius: 2px;
+    height: 1.4px; border-radius: 2px;
     background: #e8e8f0; margin-top: 5px; overflow: hidden;
   }
   .te-definer-fill {
@@ -50,6 +50,13 @@ const GLOBAL_STYLES = `
     transition: width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .te-definer-fill.on { width: 100%; }
+
+  /* Definer draw animation — for section headings */
+  @keyframes te-draw {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+  .te-draw { animation: te-draw 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
 
   /* Ticker marquee */
   @keyframes te-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -86,6 +93,13 @@ const GLOBAL_STYLES = `
   /* Programme image card hover */
   .prog-img-card { transition: transform 0.3s ease; }
   .prog-img-card:hover { transform: scale(1.012); }
+
+  /* CVP/EOI card mini-scroll indicator */
+  .prog-extra-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    display: inline-block;
+    transition: all 0.3s;
+  }
 `;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -149,7 +163,7 @@ const PROG_CONFIG = [
     title: "Tata Volunteering Week",
     label: "Bi-annual · Global",
     stat1: "12 Editions", stat2: "50K+ Volunteers",
-    colour: "#1A4731",
+    colour: "#3E7EB0",    // Ticker Blue
     photo: airIndia, photoPos: "center 25%",
   },
   {
@@ -157,7 +171,7 @@ const PROG_CONFIG = [
     title: "ProEngage",
     label: "Skill-based · Year-round",
     stat1: "1,200+ Projects", stat2: "85 NGO Partners",
-    colour: "#003580",
+    colour: "#1A7A52",    // Light Green
     photo: tataCommunications, photoPos: "center center",
   },
   {
@@ -165,23 +179,23 @@ const PROG_CONFIG = [
     title: "Disaster Response",
     label: "Rapid Action",
     stat1: "24 Responses", stat2: "8 States",
-    colour: "#C8850A",
+    colour: "#00A896",    // Teal (B_TEAL)
     photo: infiniti, photoPos: "center 20%",
   },
 ];
 
-const PROG_PASTEL = ["#1A4731", "#003580", "#C8850A"];
+const PROG_PASTEL = ["#3E7EB0", "#1A7A52", "#00A896"];
 const PROG_ACCENT_TEXT = ["#ffffff", "#ffffff", "#ffffff"];
 
 //
 // PROGRAMME SPOTLIGHT
 // Single card, auto-cycles every 5s. Dot indicators only (no text labels).
-// Solid dark coloured bg. Hover: image fades in, desc slides up.
-// EOEO panel fixed to the right: headline + CTA dominant.
+// Merged image+text tile (angled cut on left). Two right boxes: CVP + EOI.
 // ─────────────────────────────────────────────────────────────────────────────
 export function ProgrammeSpotlight() {
   const navigate        = useAppNavigate();
   const [idx, setIdx]   = useState(0);
+  const [rightBox, setRightBox] = useState(0); // 0 = CVP, 1 = EOI
   const timerRef        = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const resetTimer = (nextIdx?: number) => {
@@ -210,6 +224,8 @@ export function ProgrammeSpotlight() {
         }} />
 
         <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
+
+          {/* ── Section header ── */}
           <div className="section-header">
             <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: B_INDIGO, margin: "0 0 8px", opacity: 0.7 }}>
               Our Programmes
@@ -217,52 +233,111 @@ export function ProgrammeSpotlight() {
             <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
               Our Volunteering Opportunities
             </h2>
-            <div style={{ width: 48, height: 3, borderRadius: 2, background: B_INDIGO, marginTop: 10 }} />
+            <div style={{ width: 120, height: 1.4, borderRadius: 2, background: "#e8e8f0", marginTop: 10, overflow: "hidden" }}>
+              <div className="te-draw" style={{ height: "100%", background: B_INDIGO, borderRadius: 2 }} />
+            </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 0.85fr 260px", gap: 16, alignItems: "stretch" }}>
+          {/* ── Main grid: [merged-tile, right-col] ── */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 260px", gap: 16, alignItems: "start" }}>
 
-            {/* COL 1 — Image tile */}
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            {/* LEFT col: merged image+text tile + dots */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+
+              {/* Merged image + text tile */}
               <div
-                className="prog-img-card"
                 onClick={() => navigate(p.route)}
                 style={{
-                  clipPath: "polygon(0 0, 100% 0, 92% 100%, 0 100%)",
-                  borderRadius: "18px 0 0 18px",
-                  flex: 1, minHeight: 300, position: "relative",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 0.9fr",
+                  gap: 0,
+                  minHeight: 340,
+                  borderRadius: 18,
+                  overflow: "hidden",
                   boxShadow: "0 4px 24px rgba(0,0,0,0.13)",
                   cursor: "pointer",
                 }}
               >
-                {PROG_CONFIG.map((pc, i) => (
-                  <div
-                    key={pc.id}
-                    style={{
-                      position: "absolute", inset: 0,
-                      backgroundImage: `url(${pc.photo})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: pc.photoPos,
-                      opacity: i === idx ? 1 : 0,
-                      transition: "opacity 0.7s ease",
-                    }}
-                  />
-                ))}
+                {/* Image portion — angled right edge (juts left into text) */}
+                <div
+                  className="prog-img-card"
+                  style={{
+                    position: "relative",
+                    clipPath: "polygon(0 0, 100% 0, 88% 100%, 0 100%)",
+                    zIndex: 1,
+                  }}
+                >
+                  {PROG_CONFIG.map((pc, i) => (
+                    <div
+                      key={pc.id}
+                      style={{
+                        position: "absolute", inset: 0,
+                        backgroundImage: `url(${pc.photo})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: pc.photoPos,
+                        opacity: i === idx ? 1 : 0,
+                        transition: "opacity 0.7s ease",
+                      }}
+                    />
+                  ))}
+                  {/* Top accent bar */}
+                  <div style={{
+                    position: "absolute", top: 0, left: 0, right: 0, height: 2,
+                    background: p.colour, zIndex: 2,
+                    transition: "background 0.5s ease",
+                  }} />
+                </div>
+
+                {/* Text portion */}
                 <div style={{
-                  position: "absolute", top: 0, left: 0, right: 0, height: 4,
-                  background: p.colour, zIndex: 2,
+                  background: PROG_PASTEL[idx],
+                  padding: "36px 28px 36px 16px",
+                  display: "flex", flexDirection: "column",
+                  justifyContent: "flex-end",
                   transition: "background 0.5s ease",
-                }} />
+                }}>
+                  <div style={{
+                    width: 2, height: 22, borderRadius: 2,
+                    background: "rgba(255,255,255,0.45)", marginBottom: 14,
+                  }} />
+                  <span style={{
+                    fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
+                    textTransform: "uppercase", color: "rgba(255,255,255,0.65)",
+                    marginBottom: 8, display: "block",
+                  }}>
+                    {p.label}
+                  </span>
+                  <h3 style={{
+                    fontSize: 24, fontWeight: 900, color: "#ffffff",
+                    letterSpacing: "-0.4px", lineHeight: 1.2, margin: "0 0 10px",
+                  }}>
+                    {p.title}
+                  </h3>
+                  <div style={{ width: 36, height: 1.4, borderRadius: 2, background: "rgba(255,255,255,0.5)", marginBottom: 14 }} />
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>
+                    {[p.stat1, p.stat2].map((s, i) => (
+                      <span key={i} style={{
+                        fontSize: 11, fontWeight: 700, color: "#ffffff",
+                        background: "rgba(255,255,255,0.15)",
+                        padding: "4px 10px", borderRadius: 100,
+                        border: "1px solid rgba(255,255,255,0.2)",
+                      }}>{s}</span>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
+                    Learn more <ArrowRight size={13} />
+                  </div>
+                </div>
               </div>
 
-              {/* Dot indicators */}
-              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 14 }}>
+              {/* Dot indicators below merged tile */}
+              <div style={{ display: "flex", gap: 8, paddingLeft: 4 }}>
                 {PROG_CONFIG.map((pc, i) => (
                   <button
                     key={i}
                     onClick={() => resetTimer(i)}
                     style={{
-                      width: i === idx ? 24 : 8, height: 8,
+                      width: i === idx ? 24 : 8, height: 7,
                       borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
                       background: i === idx ? pc.colour : "#d1d5db",
                       transition: "all 0.35s ease",
@@ -272,112 +347,145 @@ export function ProgrammeSpotlight() {
               </div>
             </div>
 
-            {/* COL 2 — Text tile */}
-            <div
-              onClick={() => navigate(p.route)}
-              style={{
-                borderRadius: 18,
-                background: PROG_PASTEL[idx],
-                border: "none",
-                padding: "36px 32px",
+            {/* RIGHT col: CVP/EOI carousel + EOEO box */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+
+              {/* CVP / EOI carousel */}
+              <div style={{ position: "relative", overflow: "hidden", borderRadius: 14, minHeight: 180 }}>
+
+                {/* CVP Card */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: B_YELLOW,
+                  padding: "22px 20px",
+                  display: "flex", flexDirection: "column",
+                  justifyContent: "space-between",
+                  borderRadius: 14,
+                  opacity: rightBox === 0 ? 1 : 0,
+                  transform: rightBox === 0 ? "translateY(0)" : "translateY(-16px)",
+                  transition: "opacity 0.35s ease, transform 0.35s ease",
+                  pointerEvents: rightBox === 0 ? "auto" : "none",
+                }}>
+                  <div>
+                    <div style={{ width: 2, height: 18, borderRadius: 2, background: `${ACCENT_NAVY}55`, marginBottom: 10 }} />
+                    <h3 style={{ fontSize: 15, fontWeight: 900, color: ACCENT_NAVY, lineHeight: 1.25, margin: "0 0 8px", letterSpacing: "-0.2px" }}>
+                      Company Volunteering Programme
+                    </h3>
+                    <p style={{ fontSize: 11, color: `${ACCENT_NAVY}cc`, lineHeight: 1.55, margin: 0 }}>
+                      Company-led volunteering aligned to CSR — curating opportunities for employees to give back to local communities during or outside work hours.
+                    </p>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, color: ACCENT_NAVY, cursor: "pointer" }}>
+                      Explore More <ArrowRight size={11} />
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", display: "inline-block", background: rightBox === 0 ? ACCENT_NAVY : `${ACCENT_NAVY}40`, transition: "all 0.3s" }} />
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", display: "inline-block", background: rightBox === 1 ? ACCENT_NAVY : `${ACCENT_NAVY}40`, transition: "all 0.3s" }} />
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setRightBox(1); }}
+                        style={{
+                          marginLeft: 3, width: 20, height: 20, borderRadius: "50%",
+                          background: `${ACCENT_NAVY}18`, border: `1px solid ${ACCENT_NAVY}25`,
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          cursor: "pointer", color: ACCENT_NAVY,
+                        }}
+                      >
+                        <ArrowRight size={9} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* EOI Card */}
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "#FFF0EE",
+                  padding: "22px 20px",
+                  display: "flex", flexDirection: "column",
+                  justifyContent: "space-between",
+                  borderRadius: 14,
+                  opacity: rightBox === 1 ? 1 : 0,
+                  transform: rightBox === 1 ? "translateY(0)" : "translateY(16px)",
+                  transition: "opacity 0.35s ease, transform 0.35s ease",
+                  pointerEvents: rightBox === 1 ? "auto" : "none",
+                }}>
+                  <div>
+                    <div style={{ width: 2, height: 18, borderRadius: 2, background: `${B_RED}50`, marginBottom: 10 }} />
+                    <h3 style={{ fontSize: 15, fontWeight: 900, color: ACCENT_NAVY, lineHeight: 1.25, margin: "0 0 8px", letterSpacing: "-0.2px" }}>
+                      Employee's Own Initiative
+                    </h3>
+                    <p style={{ fontSize: 11, color: `${ACCENT_NAVY}cc`, lineHeight: 1.55, margin: 0 }}>
+                      Personal volunteering by employees for causes they're passionate about — with the company as an enabler, democratising impact beyond official programmes.
+                    </p>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 12 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, color: ACCENT_NAVY, cursor: "pointer" }}>
+                      Explore More <ArrowRight size={11} />
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", display: "inline-block", background: rightBox === 0 ? ACCENT_NAVY : `${ACCENT_NAVY}40`, transition: "all 0.3s" }} />
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", display: "inline-block", background: rightBox === 1 ? ACCENT_NAVY : `${ACCENT_NAVY}40`, transition: "all 0.3s" }} />
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setRightBox(0); }}
+                        style={{
+                          marginLeft: 3, width: 20, height: 20, borderRadius: "50%",
+                          background: `${ACCENT_NAVY}18`, border: `1px solid ${ACCENT_NAVY}25`,
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          cursor: "pointer", color: ACCENT_NAVY, transform: "rotate(180deg)",
+                        }}
+                      >
+                        <ArrowRight size={9} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* EOEO Box */}
+              <div style={{
+                borderRadius: 14,
+                background: ACCENT_NAVY,
+                padding: "22px 20px",
                 display: "flex", flexDirection: "column",
-                justifyContent: "flex-end",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-                cursor: "pointer",
-                minHeight: 300,
-                transition: "background 0.5s ease, box-shadow 0.2s ease",
-              }}
-            >
-              <div style={{
-                width: 3, height: 32, borderRadius: 2,
-                background: "rgba(255,255,255,0.4)",
-                marginBottom: 20,
-                transition: "background 0.5s ease",
-              }} />
-              <span style={{
-                fontSize: 10, fontWeight: 700, letterSpacing: "1.5px",
-                textTransform: "uppercase", color: "rgba(255,255,255,0.6)",
-                marginBottom: 10, display: "block",
-                transition: "opacity 0.4s ease",
+                justifyContent: "space-between",
+                position: "relative", overflow: "hidden",
+                minHeight: 160,
               }}>
-                {p.label}
-              </span>
-              <h3 style={{
-                fontSize: 28, fontWeight: 900, color: "#ffffff",
-                letterSpacing: "-0.4px", lineHeight: 1.2,
-                margin: "0 0 8px",
-              }}>
-                {p.title}
-              </h3>
-              <div style={{ width: 36, height: 3, borderRadius: 2, background: "rgba(255,255,255,0.5)", marginBottom: 16 }} />
-              <div style={{ display: "flex", gap: 8, marginBottom: 28 }}>
-                {[p.stat1, p.stat2].map((s, i) => (
-                  <span key={i} style={{
-                    fontSize: 11, fontWeight: 700, color: "#ffffff",
-                    background: "rgba(255,255,255,0.15)",
-                    padding: "4px 12px", borderRadius: 100,
-                    border: "1px solid rgba(255,255,255,0.2)",
-                  }}>{s}</span>
-                ))}
+                <img src={doodleCluster3} alt="" style={{
+                  position: "absolute", bottom: -20, right: -30,
+                  width: 150, opacity: 0.07,
+                  pointerEvents: "none", userSelect: "none",
+                  transform: "rotate(-10deg)",
+                }} />
+                <div>
+                  <span style={{
+                    fontSize: 9, fontWeight: 800,
+                    color: "rgba(255,255,255,0.5)",
+                    textTransform: "uppercase", letterSpacing: "1px",
+                    display: "block", marginBottom: 8,
+                  }}>
+                    {EOEO.tag}
+                  </span>
+                  <h3 style={{ fontSize: 15, fontWeight: 900, color: "white", lineHeight: 1.3, margin: 0 }}>
+                    {EOEO.headline}
+                  </h3>
+                </div>
+                <a
+                  href={EOEO.ctaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={e => e.stopPropagation()}
+                  style={{
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    padding: "9px 0", borderRadius: 8, marginTop: 14,
+                    fontSize: 12, fontWeight: 800, color: ACCENT_NAVY,
+                    background: B_YELLOW, textDecoration: "none", cursor: "pointer",
+                  }}
+                >
+                  {EOEO.cta}
+                </a>
               </div>
-              <div style={{
-                display: "flex", alignItems: "center", gap: 6,
-                fontSize: 13, fontWeight: 700, color: PROG_ACCENT_TEXT[idx],
-                transition: "color 0.5s ease",
-              }}>
-                Learn more <ArrowRight size={13} />
-              </div>
-            </div>
-
-            {/* COL 3 — EOEO tile */}
-            <div style={{
-              borderRadius: 18,
-              background: ACCENT_NAVY,
-              padding: "28px 22px",
-              display: "flex", flexDirection: "column",
-              justifyContent: "flex-start",
-              gap: 20,
-              boxShadow: "0 4px 20px rgba(0,0,0,0.13)",
-              position: "relative",
-              overflow: "hidden",
-              minHeight: 300,
-            }}>
-              <img src={doodleCluster3} alt="" style={{
-                position: "absolute", bottom: -20, right: -30,
-                width: 200, opacity: 0.08,
-                pointerEvents: "none", userSelect: "none",
-                transform: "rotate(-10deg)",
-              }} />
-
-              <span style={{
-                display: "inline-block", fontSize: 9, fontWeight: 800,
-                color: "rgba(255,255,255,0.5)",
-                textTransform: "uppercase", letterSpacing: "1px",
-                alignSelf: "flex-start",
-              }}>
-                {EOEO.tag}
-              </span>
-
-              <h3 style={{
-                fontSize: 28, fontWeight: 900, color: "white",
-                lineHeight: 1.3, margin: 0, flex: 1,
-              }}>
-                {EOEO.headline}
-              </h3>
-
-              <a
-                href={EOEO.ctaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                  padding: "12px 0", borderRadius: 10,
-                  fontSize: 13, fontWeight: 800, color: ACCENT_NAVY,
-                  background: B_YELLOW, textDecoration: "none", cursor: "pointer",
-                }}
-              >
-                {EOEO.cta} <ExternalLink size={12} />
-              </a>
             </div>
           </div>
         </div>
@@ -386,12 +494,6 @@ export function ProgrammeSpotlight() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// JOURNEY SECTION
-// Two-row alternating layout (above / spine / below).
-// Spine: dashed SVG trail that animates draw-on via stroke-dashoffset.
-// Milestone dots stagger-reveal. Geo icons in brand palette colours.
-// ─────────────────────────────────────────────────────────────────────────────
 export function JourneySection() {
   const navigate    = useAppNavigate();
   const ref         = useRef<HTMLElement>(null);
@@ -408,221 +510,205 @@ export function JourneySection() {
     return () => obs.disconnect();
   }, []);
 
-  // No yellow/orange on icons — using indigo, teal, blue, red
-  const milestoneExtra = [
-    { metric: "100K+", label: "Sign-ups",   iconFn: GeoIcon.diamond,  iconColour: B_INDIGO },
-    { metric: "1st",   label: "Edition",    iconFn: GeoIcon.hexagon,  iconColour: B_TEAL   },
-    { metric: "425+",  label: "Projects",   iconFn: GeoIcon.triangle, iconColour: B_BLUE   },
-    { metric: "35K",   label: "Volunteers", iconFn: GeoIcon.diamond,  iconColour: B_RED    },
-    { metric: "47K",   label: "Volunteers", iconFn: GeoIcon.hexagon,  iconColour: B_INDIGO },
-    { metric: "8.02M", label: "Hours",      iconFn: GeoIcon.circle,   iconColour: B_TEAL   },
-  ];
+  const milestones = JOURNEY_MILESTONES.map((m, i) => ({
+    ...m,
+    colour: JOURNEY_COLOURS[i] ?? m.colour,
+  }));
 
   return (
-    <section ref={ref} className="section-block" style={{ background: "#F7F9FF", position: "relative", overflow: "hidden" }}>
-      {/* Background photo */}
-      <img src={tajSatsImg} alt="" style={{
-        position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover",
-        pointerEvents: "none", userSelect: "none",
-      }} />
-      {/* Dark overlay for readability */}
+    <section ref={ref} className="section-block" style={{
+      backgroundImage: `url('/src/assets/titan.jpeg')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      position: "relative", overflow: "hidden",
+      padding: "56px 48px",
+    }}>
+      {/* Dark overlay */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(135deg, rgba(5,5,20,0.82) 0%, rgba(5,5,20,0.75) 50%, rgba(5,5,20,0.70) 100%)",
+        background: "linear-gradient(135deg, rgba(5,5,20,0.88) 0%, rgba(5,5,20,0.80) 100%)",
         pointerEvents: "none",
       }} />
 
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
-        <div className="section-header">
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "0 0 8px" }}>
-            Our Journey
-          </p>
-          <h2 style={{ fontSize: 30, fontWeight: 900, color: "white", letterSpacing: "-0.5px", margin: 0 }}>
-            A decade of giving back
-          </h2>
-          <div style={{ width: 48, height: 3, borderRadius: 2, background: B_YELLOW, marginTop: 10 }} />
+
+        {/* Header + train icon row */}
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 40 }}>
+          <div>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.6px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "0 0 8px" }}>
+              Our Journey
+            </p>
+            <h2 style={{ fontSize: 30, fontWeight: 900, color: "white", letterSpacing: "-0.5px", margin: 0 }}>
+              A decade of giving back
+            </h2>
+            <div style={{ width: 48, height: 1.4, borderRadius: 2, background: B_YELLOW, marginTop: 10 }} />
+          </div>
+
+          {/* Subtle train icon vector */}
+          <div style={{ opacity: 0.22, marginTop: 4, flexShrink: 0 }}>
+            <svg width="72" height="44" viewBox="0 0 72 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="8" width="52" height="24" rx="5" fill="white" />
+              <rect x="54" y="12" width="14" height="20" rx="3" fill="white" />
+              <rect x="7"  y="13" width="10" height="8" rx="2" fill="#0D1B3E" opacity="0.6" />
+              <rect x="22" y="13" width="10" height="8" rx="2" fill="#0D1B3E" opacity="0.6" />
+              <rect x="37" y="13" width="10" height="8" rx="2" fill="#0D1B3E" opacity="0.6" />
+              <rect x="57" y="16" width="8"  height="7" rx="1.5" fill="#0D1B3E" opacity="0.6" />
+              <circle cx="14" cy="35" r="5" fill="white" />
+              <circle cx="14" cy="35" r="2" fill="#0D1B3E" opacity="0.5" />
+              <circle cx="36" cy="35" r="5" fill="white" />
+              <circle cx="36" cy="35" r="2" fill="#0D1B3E" opacity="0.5" />
+              <circle cx="58" cy="35" r="5" fill="white" />
+              <circle cx="58" cy="35" r="2" fill="#0D1B3E" opacity="0.5" />
+              <rect x="44" y="2" width="6" height="8" rx="1.5" fill="white" />
+            </svg>
+          </div>
         </div>
 
-        {/* ── DESKTOP: 3-row flex ── */}
+        {/* ── DESKTOP: Train track ── */}
         <div className="hidden lg:block">
 
-          {/* ROW 1 — even milestones above spine */}
-          <div style={{ display: "flex" }}>
-            {JOURNEY_MILESTONES.map((m, i) => {
-              const ex = milestoneExtra[i];
+          {/* ROW 1 — even milestones above track (title + stem) */}
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
+            {milestones.map((m, i) => {
               const isAbove = i % 2 === 0;
               return (
                 <div
                   key={`top-${i}`}
-                  className={`te-jcard up${vis ? " on" : ""}`}
                   style={{
-                    flex: 1, display: "flex", flexDirection: "column",
-                    alignItems: "center", textAlign: "center", padding: "0 8px",
+                    flex: 1,
+                    display: "flex", flexDirection: "column",
+                    alignItems: "center", textAlign: "center",
                     visibility: isAbove ? "visible" : "hidden",
-                    transitionDelay: `${i * 0.08}s`,
+                    minHeight: 70,
+                    opacity: vis ? 1 : 0,
+                    transform: vis ? "translateY(0)" : "translateY(-10px)",
+                    transition: `opacity 0.45s ease ${i * 0.09}s, transform 0.45s ease ${i * 0.09}s`,
                   }}
                 >
-                  {/* Year — prominent */}
-                  <div style={{
-                    display: "inline-block",
-                    fontSize: 22, fontWeight: 900, color: m.colour,
-                    letterSpacing: "-0.5px", lineHeight: 1,
-                    background: `${m.colour}12`,
-                    borderRadius: 8, padding: "4px 10px",
-                    marginBottom: 8,
-                  }}>
-                    {m.year}
-                  </div>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 4 }}>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 8 }}>
                     {m.title}
                   </div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.7)", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
-                  <div style={{ fontSize: 18, fontWeight: 900, color: m.colour }}>{ex.metric}</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.65)", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
-                    {ex.label}
-                  </div>
+                  {/* Stem line from title down to track */}
+                  <div style={{
+                    width: 1.5, flex: 1, minHeight: 18,
+                    background: `linear-gradient(to bottom, ${m.colour}, ${m.colour}55)`,
+                    opacity: vis ? 1 : 0,
+                    transition: `opacity 0.55s ease ${i * 0.09 + 0.25}s`,
+                  }} />
                 </div>
               );
             })}
           </div>
 
-          {/* SPINE — curved SVG path + dots */}
-          {(() => {
-            // 6 columns → 6 dot positions evenly spaced across full width
-            // SVG: wide aspect, curve arcs up for even-index segments (connecting above→below), down for odd
-            const n = JOURNEY_MILESTONES.length;
-            const W = 1000, H = 80;
-            const xStep = W / (n - 1);
-            // Dots sit at y=40 (centre). Curve arcs to y=10 (up) between col 0-1, y=70 (down) between col 1-2, etc.
-            const pts = JOURNEY_MILESTONES.map((_, i) => ({ x: i * xStep, y: H / 2 }));
-            // Build smooth cubic bezier path through all 6 points with alternating arcs
-            let d = `M ${pts[0].x} ${pts[0].y}`;
-            for (let i = 0; i < n - 1; i++) {
-              const x1 = pts[i].x, x2 = pts[i + 1].x;
-              const midX = (x1 + x2) / 2;
-              // arc up (negative offset) for even segments (0,2,4), down for odd (1,3)
-              const arcY = i % 2 === 0 ? H * 0.18 : H * 0.82;
-              d += ` C ${midX} ${arcY}, ${midX} ${arcY}, ${x2} ${pts[i + 1].y}`;
-            }
-            return (
-              <div style={{ position: "relative", margin: "12px 0", height: H }}>
-                <svg
-                  width="100%" height={H}
-                  viewBox={`0 0 ${W} ${H}`}
-                  preserveAspectRatio="none"
-                  style={{ position: "absolute", top: 0, left: 0 }}
-                >
-                  <defs>
-                    <linearGradient id="jt-spine" x1="0" y1="0" x2="1" y2="0">
-                      {JOURNEY_MILESTONES.map((m, i) => (
-                        <stop key={i} offset={`${(i / (n - 1)) * 100}%`} stopColor={m.colour} stopOpacity="0.45" />
-                      ))}
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d={d}
-                    fill="none"
-                    stroke="url(#jt-spine)"
-                    strokeWidth="2"
-                    strokeDasharray="6 5"
-                    strokeLinecap="round"
-                    className={`te-trail${vis ? " on" : ""}`}
+          {/* TRACK — two parallel rails + cross-ties */}
+          <div style={{ position: "relative", height: 26 }}>
+            <svg width="100%" height="26" viewBox="0 0 1000 26" preserveAspectRatio="none"
+              style={{ position: "absolute", top: 0, left: 0 }}>
+              {/* Cross-ties (sleepers) */}
+              {Array.from({ length: 20 }, (_, i) => (
+                <rect
+                  key={i}
+                  x={i * 50 + 10} y="6" width="22" height="14"
+                  rx="1.5"
+                  fill="rgba(255,255,255,0.08)"
+                  opacity={vis ? 1 : 0}
+                  style={{ transition: `opacity 0.35s ease ${i * 0.025}s` }}
+                />
+              ))}
+              {/* Rail 1 */}
+              <line x1="0" y1="9" x2="1000" y2="9"
+                stroke="rgba(255,255,255,0.32)" strokeWidth="1.4" />
+              {/* Rail 2 */}
+              <line x1="0" y1="17" x2="1000" y2="17"
+                stroke="rgba(255,255,255,0.32)" strokeWidth="1.4" />
+              {/* Station dots at each milestone */}
+              {milestones.map((m, i) => {
+                const cx = (i / (milestones.length - 1)) * 1000;
+                return (
+                  <circle
+                    key={i}
+                    cx={cx} cy="13" r="5"
+                    fill={m.colour}
+                    stroke="rgba(255,255,255,0.3)" strokeWidth="1.5"
+                    opacity={vis ? 1 : 0}
+                    style={{ transition: `opacity 0.35s ease ${i * 0.1 + 0.35}s` }}
                   />
-                  {/* Dots */}
-                  {JOURNEY_MILESTONES.map((m, i) => (
-                    <circle
-                      key={i}
-                      cx={pts[i].x}
-                      cy={pts[i].y}
-                      r="5"
-                      fill={m.colour}
-                      opacity={vis ? 1 : 0}
-                      style={{ transition: `opacity 0.35s ease ${i * 0.11}s` }}
-                    />
-                  ))}
-                </svg>
-              </div>
-            );
-          })()}
+                );
+              })}
+            </svg>
+          </div>
 
-          {/* ROW 3 — odd milestones below spine */}
-          <div style={{ display: "flex" }}>
-            {JOURNEY_MILESTONES.map((m, i) => {
-              const ex = milestoneExtra[i];
+          {/* ROW 3 — odd milestones below track (stem + title) */}
+          <div style={{ display: "flex", alignItems: "flex-start" }}>
+            {milestones.map((m, i) => {
               const isBelow = i % 2 !== 0;
               return (
                 <div
                   key={`bot-${i}`}
-                  className={`te-jcard down${vis ? " on" : ""}`}
                   style={{
-                    flex: 1, display: "flex", flexDirection: "column",
-                    alignItems: "center", textAlign: "center", padding: "0 8px",
+                    flex: 1,
+                    display: "flex", flexDirection: "column",
+                    alignItems: "center", textAlign: "center",
                     visibility: isBelow ? "visible" : "hidden",
-                    transitionDelay: `${i * 0.08}s`,
+                    minHeight: 70,
+                    opacity: vis ? 1 : 0,
+                    transform: vis ? "translateY(0)" : "translateY(10px)",
+                    transition: `opacity 0.45s ease ${i * 0.09}s, transform 0.45s ease ${i * 0.09}s`,
                   }}
                 >
+                  {/* Stem from track down */}
                   <div style={{
-                    display: "inline-block",
-                    fontSize: 22, fontWeight: 900, color: m.colour,
-                    letterSpacing: "-0.5px", lineHeight: 1,
-                    background: `${m.colour}12`,
-                    borderRadius: 8, padding: "4px 10px",
-                    marginBottom: 8,
-                  }}>
-                    {m.year}
-                  </div>
-                  <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 4 }}>
+                    width: 1.5, flex: 1, minHeight: 18,
+                    background: `linear-gradient(to bottom, ${m.colour}55, ${m.colour})`,
+                    opacity: vis ? 1 : 0,
+                    transition: `opacity 0.55s ease ${i * 0.09 + 0.25}s`,
+                  }} />
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginTop: 8 }}>
                     {m.title}
-                  </div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.7)", lineHeight: 1.5, marginBottom: 6 }}>{m.desc}</div>
-                  <div style={{ fontSize: 18, fontWeight: 900, color: m.colour }}>{ex.metric}</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.65)", textTransform: "uppercase", letterSpacing: "0.8px", fontWeight: 700 }}>
-                    {ex.label}
                   </div>
                 </div>
               );
             })}
           </div>
-        </div>
 
-        {/* ── MOBILE: stacked list ── */}
-        <div className="lg:hidden" style={{ paddingLeft: 28, position: "relative" }}>
-          <div style={{
-            position: "absolute", left: 10, top: 0, bottom: 0, width: 2,
-            background: `linear-gradient(180deg, ${B_INDIGO}40, ${B_TEAL}40, ${B_RED}40)`,
-            borderRadius: 2,
-          }} />
-          {JOURNEY_MILESTONES.map((m, i) => {
-            const ex = milestoneExtra[i];
-            return (
-              <div key={i} style={{ position: "relative", marginBottom: 20 }}>
-                <div style={{
-                  position: "absolute", left: -24, top: 6, width: 10, height: 10,
-                  borderRadius: "50%", background: m.colour,
-                  border: "2px solid white", boxShadow: `0 0 0 2px ${m.colour}30`,
-                }} />
-                <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 12, padding: "14px 16px", border: "1px solid rgba(255,255,255,0.1)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                    {ex.iconFn(ex.iconColour, 13)}
-                    <span style={{ fontSize: 9, fontWeight: 900, color: m.colour, textTransform: "uppercase", letterSpacing: "1.2px" }}>
-                      {m.year}
-                    </span>
-                  </div>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: "white" }}>{m.title}</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", marginTop: 3, lineHeight: 1.5 }}>{m.desc}</div>
-                  <div style={{ fontSize: 16, fontWeight: 900, color: m.colour, marginTop: 6 }}>
-                    {ex.metric}{" "}
-                    <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.65)", textTransform: "uppercase" }}>
-                      {ex.label}
-                    </span>
-                  </div>
-                </div>
+          {/* Year labels row */}
+          <div style={{ display: "flex", marginTop: 16 }}>
+            {milestones.map((m, i) => (
+              <div key={`yr-${i}`} style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+                <span style={{
+                  fontSize: 17, fontWeight: 900, color: m.colour,
+                  background: `${m.colour}14`,
+                  borderRadius: 6, padding: "3px 8px",
+                  letterSpacing: "-0.3px",
+                  opacity: vis ? 1 : 0,
+                  transition: `opacity 0.4s ease ${i * 0.09 + 0.5}s`,
+                }}>
+                  {m.year}
+                </span>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
-        <div style={{ marginTop: 44, display: "flex", justifyContent: "center" }}>
+        {/* ── MOBILE ── */}
+        <div className="lg:hidden" style={{ paddingLeft: 24, position: "relative" }}>
+          <div style={{
+            position: "absolute", left: 8, top: 0, bottom: 0, width: 1.5,
+            background: `linear-gradient(180deg, ${B_TICKER}60, ${B_TEAL}60)`,
+          }} />
+          {milestones.map((m, i) => (
+            <div key={i} style={{ position: "relative", marginBottom: 18 }}>
+              <div style={{
+                position: "absolute", left: -20, top: 6, width: 8, height: 8,
+                borderRadius: "50%", background: m.colour,
+              }} />
+              <span style={{ fontSize: 16, fontWeight: 900, color: m.colour }}>{m.year}</span>
+              <div style={{ fontSize: 12, fontWeight: 800, color: "white", marginTop: 2 }}>{m.title}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ marginTop: 40, display: "flex", justifyContent: "center" }}>
           <button
             onClick={() => navigate("journey")}
             className="hover-lift"
@@ -645,25 +731,20 @@ export function JourneySection() {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // NUMBERS SECTION
-// Designer's 2fr/1fr grid: big insight panel left, KPI stat + social stacked right.
-// No orange on any decorative element. Geo icons on KPI cards.
-// B_YELLOW retained ONLY on white-on-dark contrast badges (insight pill, fact dots).
+// 3-column: "Did you know?" insight (dark) | KPI stat cards (mustard, varied text) | Social feed
+// Consistent block headers across all three tiles.
 // ─────────────────────────────────────────────────────────────────────────────
+
+// KPI text colour variants — white, black, muted-blue — varied per card
+const KPI_TEXT_COLOURS = ["#ffffff", "#0D1B3E", "#EEF0FF"];
+
 export function NumbersSection() {
   const { triggerToast } = useAppContext();
   const [factIdx,    setFactIdx]    = useState(0);
   const [factFading, setFactFading] = useState(false);
   const [socialIdx,  setSocialIdx]  = useState(0);
   const [shimmer,    setShimmer]    = useState(false);
-  const [statIdx,    setStatIdx]    = useState(0);
 
-  useEffect(() => {
-    const t = setInterval(() => setStatIdx((p) => (p + 1) % HERO_STATS.length), 3500);
-    return () => clearInterval(t);
-  }, []);
-  useEffect(() => {
-    // No auto-rotate — advance only on "Next" click
-  }, []);
   useEffect(() => {
     const t = setInterval(() => setSocialIdx((p) => (p + 1) % SOCIAL_POSTS.length), 4000);
     return () => clearInterval(t);
@@ -674,12 +755,18 @@ export function NumbersSection() {
     setTimeout(() => { setFactIdx((p) => (p + 1) % FUN_FACTS.length); setFactFading(false); }, 280);
   };
 
-  // Geo icons for stat cards — brand colours, no orange
-  const statIcons = [
-    { fn: GeoIcon.diamond,  colour: "#8BC9A3" },
-    { fn: GeoIcon.hexagon,  colour: "#7EB3E0" },
-    { fn: GeoIcon.triangle, colour: "#F5C842" },
-  ];
+  // Shared block header style — eyebrow label above each tile
+  const blockEyebrow = (label: string, dark = false) => (
+    <span style={{
+      fontSize: 10, fontWeight: 800, letterSpacing: "1.4px",
+      textTransform: "uppercase",
+      color: dark ? "rgba(255,255,255,0.55)" : "#64748b",
+      display: "block",
+      marginBottom: 10,
+    }}>
+      {label}
+    </span>
+  );
 
   return (
     <section className="section-block" style={{ background: "#ffffff" }}>
@@ -693,7 +780,7 @@ export function NumbersSection() {
               <h2 style={{ fontSize: 30, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: "-0.5px", margin: 0 }}>
                 Community Overview
               </h2>
-              <div style={{ width: 48, height: 3, borderRadius: 2, background: B_TEAL, marginTop: 10 }} />
+              <div style={{ width: 48, height: 1.4, borderRadius: 2, background: B_TEAL, marginTop: 10 }} />
             </div>
             <div style={{
               display: "flex", alignItems: "center", gap: 6,
@@ -712,7 +799,7 @@ export function NumbersSection() {
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
 
-          {/* Tile 1 — Insight (dark, no photo) */}
+          {/* Tile 1 — "Did you know?" (dark) */}
           <div style={{
             borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
             background: ACCENT_NAVY,
@@ -724,22 +811,10 @@ export function NumbersSection() {
               justifyContent: "space-between", height: "100%", minHeight: 280,
             }}>
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-                  <span style={{
-                    display: "inline-flex", alignItems: "center", gap: 5,
-                    fontSize: 10, fontWeight: 800,
-                    background: B_YELLOW, color: ACCENT_NAVY,
-                    padding: "4px 12px", borderRadius: 100,
-                  }}>
-                    ✨ Insight
-                  </span>
-                  <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.8px" }}>
-                    {"\n"}
-                  </span>
-                </div>
+                {blockEyebrow("Did you know?", true)}
                 <p style={{
-                  color: "white", fontSize: 22, fontWeight: 700,
-                  lineHeight: 1.5, maxWidth: 520,
+                  color: "white", fontSize: 18, fontWeight: 700,
+                  lineHeight: 1.55, maxWidth: 520,
                   opacity: factFading ? 0 : 1,
                   transition: "opacity 0.28s", margin: 0,
                 }}>
@@ -761,65 +836,65 @@ export function NumbersSection() {
                     />
                   ))}
                 </div>
-                <button onClick={cycleFact} style={{
-                  display: "flex", alignItems: "center", gap: 5,
-                  fontSize: 11, color: "rgba(255,255,255,0.7)", fontWeight: 700,
-                  background: "none", border: "none", cursor: "pointer",
-                }}>
-                  Next
+                {/* Subtle refresh symbol — no "Next" text */}
+                <button
+                  onClick={cycleFact}
+                  title="Next fact"
+                  style={{
+                    width: 28, height: 28, borderRadius: "50%",
+                    background: "rgba(255,255,255,0.1)",
+                    border: "1px solid rgba(255,255,255,0.18)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    cursor: "pointer", color: "rgba(255,255,255,0.7)",
+                    flexShrink: 0,
+                  }}
+                >
+                  {/* Refresh / rotate arrow SVG */}
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                    <path d="M11 6.5A4.5 4.5 0 1 1 6.5 2c1.2 0 2.3.47 3.1 1.24" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                    <polyline points="9.5,1 9.5,3.5 12,3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Tile 2 — KPI stat card */}
-          <div style={{ position: "relative", minHeight: 280 }}>
-            {HERO_STATS.map((s, i) => {
-              const sg = statIcons[i];
-              return (
-                <div key={s.label} style={{
-                  display: i === statIdx ? "flex" : "none",
-                  flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" as const,
-                  borderRadius: 18, padding: 28, position: "relative", overflow: "hidden",
-                  background: s.colour, minHeight: 280,
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
-                  border: "none",
-                }}>
-                  <div style={{
-                    position: "absolute", top: 0, left: 0, right: 0, height: 3,
-                    background: "rgba(255,255,255,0.3)",
-                  }} />
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 12 }}>
-                      <p style={{ fontSize: 13, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.2px", margin: 0, color: "rgba(255,255,255,0.85)" }}>
-                        {s.label}
-                      </p>
-                      <div style={{
-                        width: 28, height: 28, borderRadius: 8,
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        background: "rgba(255,255,255,0.15)",
-                      }}>
-                        {sg.fn(sg.colour, 16)}
-                      </div>
-                    </div>
-                    <p style={{ fontSize: 48, fontWeight: 900, color: "#ffffff", letterSpacing: "-1px", lineHeight: 1, margin: 0 }}>
+          {/* Tile 2 — "In the numbers" KPI cards — all mustard bg, varied text colour */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280 }}>
+            {blockEyebrow("In the numbers")}
+            <div style={{ flex: 1, position: "relative" }}>
+              {HERO_STATS.map((s, i) => {
+                const textColour = KPI_TEXT_COLOURS[i];
+                const subColour = i === 1 ? "rgba(13,27,62,0.6)" : "rgba(255,255,255,0.7)";
+                const labelColour = i === 1 ? "rgba(13,27,62,0.75)" : "rgba(255,255,255,0.85)";
+                return (
+                  <div key={s.label} style={{
+                    position: "absolute", inset: 0,
+                    display: "flex",
+                    flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center",
+                    borderRadius: 18, padding: 28,
+                    background: B_YELLOW,
+                    boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
+                    opacity: i === 0 ? 1 : 0,
+                    transition: "opacity 0.5s ease",
+                    animation: `kpiCycle${i} ${HERO_STATS.length * 3.5}s ${i * 3.5}s infinite`,
+                  }}>
+                    {/* Top accent line — thinner */}
+                    <div style={{
+                      position: "absolute", top: 0, left: 0, right: 0, height: 1.4,
+                      background: "rgba(255,255,255,0.35)",
+                    }} />
+                    <p style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.2px", margin: "0 0 8px", color: labelColour }}>
+                      {s.label}
+                    </p>
+                    <p style={{ fontSize: 52, fontWeight: 900, color: textColour, letterSpacing: "-1.5px", lineHeight: 1, margin: 0 }}>
                       {s.num}
                     </p>
-                    <p style={{ fontSize: 12, margin: "8px 0 0", color: "rgba(255,255,255,0.7)" }}>{s.sub}</p>
+                    <p style={{ fontSize: 12, margin: "8px 0 0", color: subColour }}>{s.sub}</p>
                   </div>
-                  <div style={{ display: "flex", gap: 5, justifyContent: "center", marginTop: 12 }}>
-                    {HERO_STATS.map((_, j) => (
-                      <button key={j} onClick={() => setStatIdx(j)} style={{
-                        width: j === statIdx ? 16 : 6, height: 4,
-                        borderRadius: 100, border: "none", cursor: "pointer", padding: 0,
-                        background: j === statIdx ? "#ffffff" : "rgba(255,255,255,0.3)",
-                        transition: "all 0.2s",
-                      }} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
           {/* Tile 3 — Social feed */}
@@ -846,9 +921,7 @@ export function NumbersSection() {
               padding: "16px 20px 12px", borderBottom: "1px solid #f0f0f5",
               display: "flex", alignItems: "center", justifyContent: "space-between",
             }}>
-              <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.8px", color: "#1e293b" }}>
-                Social Feed
-              </span>
+              {blockEyebrow("Social Feed")}
               <div style={{ display: "flex", gap: 6 }}>
                 {[{ Icon: Twitter, c: "#0EA5E9" }, { Icon: Instagram, c: "#EC4899" }, { Icon: Linkedin, c: "#1D4ED8" }].map(({ Icon, c }) => (
                   <div key={c} style={{
@@ -914,6 +987,13 @@ export function NumbersSection() {
           </div>
         </div>
       </div>
+
+      {/* KPI cycle keyframes — staggered opacity cycling for 3 cards */}
+      <style>{`
+        @keyframes kpiCycle0 { 0%,30%{opacity:1} 33%,96%{opacity:0} 100%{opacity:1} }
+        @keyframes kpiCycle1 { 0%,30%{opacity:0} 33%,63%{opacity:1} 66%,100%{opacity:0} }
+        @keyframes kpiCycle2 { 0%,63%{opacity:0} 66%,96%{opacity:1} 100%{opacity:0} }
+      `}</style>
     </section>
   );
 }
