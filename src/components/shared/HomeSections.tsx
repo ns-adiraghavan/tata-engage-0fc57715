@@ -20,7 +20,7 @@ import airIndia from "@/assets/air-india.jpg";
 import tataCommunications from "@/assets/tata-communications-1.jpg";
 import infiniti from "@/assets/Infiniti_2.jpg";
 import tajSatsImg from "@/assets/tata-motors-2.jpg";
-import titanImg from "@/assets/Infiniti_2.jpg";
+import titanImg from "@/assets/titain.jpeg";
 
 export { SectionDivider };
 
@@ -542,24 +542,18 @@ export function JourneySection() {
             })}
           </div>
 
-          {/* TRACK — railway-path style */}
-          <div style={{ position: "relative", height: 26 }}>
-            <svg width="100%" height="26" viewBox="0 0 1000 26" preserveAspectRatio="none"
+          {/* TRACK — single thin line */}
+          <div style={{ position: "relative", height: 18 }}>
+            <svg width="100%" height="18" viewBox="0 0 1000 18" preserveAspectRatio="none"
               style={{ position: "absolute", top: 0, left: 0 }}>
-              {/* Outer rail 1 */}
-              <line x1="0" y1="5" x2="1000" y2="5" stroke="rgba(255,255,255,0.28)" strokeWidth="1.8" />
-              {/* Dashed centre line */}
-              <line x1="0" y1="13" x2="1000" y2="13"
-                stroke="rgba(255,255,255,0.18)" strokeWidth="1.2"
-                strokeDasharray="8 7" strokeLinecap="round" />
-              {/* Outer rail 2 */}
-              <line x1="0" y1="21" x2="1000" y2="21" stroke="rgba(255,255,255,0.28)" strokeWidth="1.8" />
+              {/* Single thin line */}
+              <line x1="0" y1="9" x2="1000" y2="9" stroke="rgba(255,255,255,0.30)" strokeWidth="1.2" />
               {/* Milestone dots */}
               {milestones.map((m, i) => {
                 const cx = (i / (milestones.length - 1)) * 1000;
                 return (
-                  <circle key={i} cx={cx} cy="13" r="6"
-                    fill={m.colour} stroke="rgba(255,255,255,0.4)" strokeWidth="2"
+                  <circle key={i} cx={cx} cy="9" r="5"
+                    fill={m.colour} stroke="rgba(255,255,255,0.5)" strokeWidth="1.5"
                     opacity={vis ? 1 : 0}
                     style={{ transition: `opacity 0.35s ease ${i * 0.1 + 0.35}s` }}
                   />
@@ -657,8 +651,6 @@ export function JourneySection() {
 // Consistent block headers across all three tiles.
 // ─────────────────────────────────────────────────────────────────────────────
 
-// KPI text colour variants — white, black, muted-blue — varied per card
-const KPI_TEXT_COLOURS = ["#ffffff", "#0D1B3E", "#EEF0FF"];
 
 export function NumbersSection() {
   const { triggerToast } = useAppContext();
@@ -712,29 +704,27 @@ export function NumbersSection() {
 
           {/* Tile 1 — "Did you know?" (dark) */}
           <div style={{
-            borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
+            borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 220,
             background: ACCENT_NAVY,
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
             alignSelf: "center",
           }}>
             <div style={{
-              position: "relative", zIndex: 10, padding: "20px 28px 28px 28px",
+              position: "relative", zIndex: 10, padding: "24px 28px",
               display: "flex", flexDirection: "column",
-              justifyContent: "space-between", height: "100%", minHeight: 280,
+              justifyContent: "center", height: "100%", minHeight: 220, gap: 14,
             }}>
-              <div>
-                {blockEyebrow("Did you know?", true)}
-                <p style={{
-                  color: "white", fontSize: 18, fontWeight: 700,
-                  lineHeight: 1.55, maxWidth: 520,
-                  opacity: factFading ? 0 : 1,
-                  transition: "opacity 0.28s", margin: 0,
-                }}>
-                  {FUN_FACTS[factIdx]}
-                </p>
-              </div>
+              {blockEyebrow("Did you know?", true)}
+              <p style={{
+                color: "white", fontSize: 18, fontWeight: 700,
+                lineHeight: 1.55, maxWidth: 520,
+                opacity: factFading ? 0 : 1,
+                transition: "opacity 0.28s", margin: 0,
+              }}>
+                {FUN_FACTS[factIdx]}
+              </p>
 
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: 24 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                 {/* Refresh only — no dot indicators */}
                 <button
                   onClick={cycleFact}
@@ -758,32 +748,32 @@ export function NumbersSection() {
             </div>
           </div>
 
-          {/* Tile 2 — KPI cards — all mustard bg, varied text colour */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 280, alignSelf: "center" }}>
+          {/* Tile 2 — KPI cards — pink bg, matching EOI palette */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 0, minHeight: 220, alignSelf: "center" }}>
             <div style={{ flex: 1, position: "relative" }}>
               {HERO_STATS.map((s, i) => {
-                const textColour = KPI_TEXT_COLOURS[i];
-                const subColour = i === 1 ? "rgba(13,27,62,0.6)" : "rgba(255,255,255,0.7)";
-                const labelColour = i === 1 ? "rgba(13,27,62,0.75)" : "rgba(255,255,255,0.85)";
+                const textColour = i === 1 ? "#0D1B3E" : "#ffffff";
+                const subColour  = i === 1 ? "rgba(13,27,62,0.6)"  : "rgba(255,255,255,0.75)";
+                const labelColour = i === 1 ? "rgba(13,27,62,0.75)" : "rgba(255,255,255,0.9)";
                   return (
                   <div key={s.label} style={{
                     position: "absolute", inset: 0,
                     display: "flex",
-                    flexDirection: "column", justifyContent: "flex-start", alignItems: "center", textAlign: "center",
-                    borderRadius: 18, padding: "20px 28px 28px",
-                    background: B_YELLOW,
-                    boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
+                    flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center",
+                    borderRadius: 18, padding: "20px 28px",
+                    background: "#9D174D",
+                    boxShadow: "0 4px 20px rgba(157,23,77,0.25)",
                     opacity: i === 0 ? 1 : 0,
                     transition: "opacity 0.5s ease",
                     animation: `kpiCycle${i} ${HERO_STATS.length * 3.5}s ${i * 3.5}s infinite`,
                   }}>
-                    {/* Top accent line — thinner */}
+                    {/* Top accent line */}
                     <div style={{
                       position: "absolute", top: 0, left: 0, right: 0, height: 1.4,
                       background: "rgba(255,255,255,0.35)",
                     }} />
                     {/* "In the numbers" eyebrow — inside the tile */}
-                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: "0 0 16px", color: "rgba(13,27,62,0.55)", alignSelf: "flex-start", textAlign: "left" }}>
+                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: "0 0 12px", color: "rgba(255,255,255,0.55)", alignSelf: "flex-start", textAlign: "left" }}>
                       In the numbers
                     </p>
                     <p style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.2px", margin: "0 0 8px", color: labelColour }}>
