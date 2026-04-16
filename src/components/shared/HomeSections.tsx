@@ -19,6 +19,7 @@ import tataElxsiImg   from "@/assets/tata-elxsi.jpg";
 import airIndia from "@/assets/air-india.jpg";
 import tataCommunications from "@/assets/tata-communications-1.jpg";
 import infiniti from "@/assets/Infiniti_2.jpg";
+import drPhoto from "@/assets/dr_photo.jpg";
 import tajSatsImg from "@/assets/tata-motors-2.jpg";
 import titanImg from "@/assets/titain.jpeg";
 
@@ -181,7 +182,7 @@ const PROG_CONFIG = [
     label: "Rapid Action",
     stat1: "24 Responses", stat2: "8 States",
     colour: "#00A896",    // Teal (B_TEAL)
-    photo: infiniti, photoPos: "center 20%",
+    photo: drPhoto, photoPos: "center 20%",
   },
 ];
 
