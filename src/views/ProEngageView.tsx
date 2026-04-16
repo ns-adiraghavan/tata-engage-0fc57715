@@ -24,13 +24,13 @@ const CATEGORIES = [
   { name: "IT Enabled Services",             icon: Monitor,       color: B_INDIGO, pastel: P_INDIGO },
   { name: "Content Writing / Documentation", icon: FileText,      color: B_BLUE,   pastel: P_BLUE   },
   { name: "Marketing & Communications",      icon: Megaphone,     color: B_RED,    pastel: P_RED    },
-  { name: "Coaching & Training",             icon: GraduationCap, color: B_TEAL,   pastel: P_TEAL   },
+  { name: "Coaching & Training",             icon: GraduationCap, color: "#65A30D", pastel: "#F7FEE7" },
   { name: "Research",                        icon: Search,        color: B_BLUE,   pastel: P_BLUE   },
   { name: "Accounting & Finance",            icon: TrendingUp,    color: B_INDIGO, pastel: P_INDIGO },
   { name: "Fundraising",                     icon: Heart,         color: B_RED,    pastel: P_RED    },
   { name: "Management & Strategy",           icon: Package,       color: B_INDIGO, pastel: P_INDIGO },
   { name: "Legal",                           icon: Scale,         color: B_BLUE,   pastel: P_BLUE   },
-  { name: "HR & People",                     icon: Users,         color: B_TEAL,   pastel: P_TEAL   },
+  { name: "HR & People",                     icon: Users,         color: "#65A30D", pastel: "#F7FEE7" },
   { name: "Others",                          icon: Plus,          color: "#888",   pastel: "#f5f5f5"},
 ];
 
@@ -109,7 +109,7 @@ function ProjectDetailPanel({ project, onClose, onApply }: { project: any; onClo
             <div style={{ fontSize:11, fontWeight:700, letterSpacing:"1.5px", textTransform:"uppercase", color:"#aaaabc", marginBottom:10 }}>Expected Learning for the Volunteer</div>
             <ul style={{ margin:0, padding:0, listStyle:"none", display:"flex", flexDirection:"column", gap:7 }}>
               {["Experience co-creating solutions alongside NGO team/s and community","Apply and strengthen your technical expertise in a different context","Gain project management experience","Strengthen your sense of social responsibility and broaden your perspective on community impact","Build appreciation for different organisational cultures and ways of working"].map(pt=>(
-                <li key={pt} style={{ display:"flex", gap:10, fontSize:13, color:"#555", lineHeight:1.5 }}><span style={{ color:B_TEAL, flexShrink:0 }}>•</span>{pt}</li>
+                <li key={pt} style={{ display:"flex", gap:10, fontSize:13, color:"#555", lineHeight:1.5 }}><span style={{ color:"#65A30D", flexShrink:0 }}>•</span>{pt}</li>
               ))}
             </ul>
           </div>
@@ -205,14 +205,14 @@ function ApplyModal({ project, onClose }: { project:any; onClose:()=>void }) {
     <DrawerShell open={!!project} onClose={reset} title={project.title} subtitle={`${project.ngo} · ${project.area}`} accentTag="ProEngage Application">
       {submitted?(
         <div style={{ padding:"40px 28px", textAlign:"center" }}>
-          <div style={{ background:P_TEAL, borderRadius:12, padding:"18px", marginBottom:20, textAlign:"left" }}>
+          <div style={{ background:"#FEFCE8", border:"1px solid #FDE68A", borderRadius:12, padding:"18px", marginBottom:20, textAlign:"left" }}>
             <div style={{ fontSize:13.5, color:"#064e3b", lineHeight:1.7 }}>
               <p style={{ marginBottom:6 }}>This being an <strong>{project.mode.toLowerCase().includes("remote")?"ONLINE":"ON-SITE"}</strong> project, you will be required to work {project.mode.toLowerCase().includes("remote")?"remotely":"in person"} and deliver it to: <strong>{project.ngo}</strong></p>
               <p>Commitment: <strong>{project.commitment||"Flexible"}</strong></p>
             </div>
           </div>
-          <div style={{ width:56,height:56,borderRadius:"50%",background:P_TEAL,border:`2px solid ${B_TEAL}`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 16px" }}>
-            <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke={B_TEAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <div style={{ width:56,height:56,borderRadius:"50%",background:"#F7FEE7",border:"2px solid #84CC16",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 16px" }}>
+            <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke="#65A30D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </div>
           <div style={{ fontSize:16, fontWeight:700, color:ACCENT_NAVY, marginBottom:8 }}>Application submitted!</div>
           <div style={{ fontSize:13.5, color:"#6b6b7a", lineHeight:1.6 }}>Your application has been sent to {project.ngo}. You'll receive an email confirmation shortly.</div>

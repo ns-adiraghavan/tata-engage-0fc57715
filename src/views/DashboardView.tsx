@@ -93,7 +93,7 @@ const TESTIMONIAL = {
 };
 
 const TVW_OPPORTUNITIES = [
-  { id: "t1", title: "Tree Plantation Drive — Aarey Forest",         company: "Tata Motors",              date: "22 Sep 2025", mode: "In-person · Mumbai",  duration: "Half day", spotsLeft: 12, theme: "Environment",  accentColor: B_TEAL,   pastel: P_TEAL   },
+  { id: "t1", title: "Tree Plantation Drive — Aarey Forest",         company: "Tata Motors",              date: "22 Sep 2025", mode: "In-person · Mumbai",  duration: "Half day", spotsLeft: 12, theme: "Environment",  accentColor: "#65A30D", pastel: "#F7FEE7" },
   { id: "t2", title: "Digital Literacy Workshop for Senior Citizens", company: "Tata Consultancy Services", date: "28 Sep 2025", mode: "Online · Pan-India",  duration: "3 hours",  spotsLeft: 45, theme: "Education",    accentColor: B_BLUE,   pastel: P_BLUE   },
   { id: "t3", title: "Healthcare Camp — Blood Donation Drive",        company: "Tata Steel",               date: "4 Oct 2025",  mode: "In-person · Pune",    duration: "Half day", spotsLeft: 8,  theme: "Health",      accentColor: B_RED,    pastel: P_RED    },
 ];
@@ -105,7 +105,7 @@ const DIY_ACTIVITIES = [
 
 const PE_OPPORTUNITIES = [
   { id: "p1", title: "Build a Fundraising Dashboard for Child Rights NGO",  ngo: "Butterflies India",     skillArea: "Finance / Data",   duration: "3 months", mode: "Online",          closes: "15 Jul 2025", applicants: 14, match: 94, accentColor: B_BLUE,   pastel: P_BLUE   },
-  { id: "p2", title: "Marketing Strategy for Women's Skilling Programme",   ngo: "Stree Mukti Sanghatna", skillArea: "Marketing",        duration: "4 months", mode: "Hybrid · Mumbai", closes: "20 Jul 2025", applicants: 9,  match: 89, accentColor: B_TEAL,   pastel: P_TEAL   },
+  { id: "p2", title: "Marketing Strategy for Women's Skilling Programme",   ngo: "Stree Mukti Sanghatna", skillArea: "Marketing",        duration: "4 months", mode: "Hybrid · Mumbai", closes: "20 Jul 2025", applicants: 9,  match: 89, accentColor: "#65A30D", pastel: "#F7FEE7" },
   { id: "p3", title: "Product Roadmap for Disability Employment Platform",  ngo: "Samarthanam Trust",     skillArea: "Product Strategy", duration: "6 months", mode: "Online",          closes: "30 Jul 2025", applicants: 6,  match: 97, accentColor: B_INDIGO, pastel: P_INDIGO },
 ];
 
@@ -125,10 +125,10 @@ const HISTORY_PROJECTS = [
 ];
 
 const BADGES = [
-  { id: "b1", name: "First Step",   symbol: "I",   desc: "First volunteering activity",       earned: "Mar 2023", color: B_TEAL   },
+  { id: "b1", name: "First Step",   symbol: "I",   desc: "First volunteering activity",       earned: "Mar 2023", color: "#65A30D" },
   { id: "b2", name: "ProEngager",   symbol: "II",  desc: "First ProEngage project completed", earned: "Sep 2023", color: B_INDIGO },
   { id: "b3", name: "Impact Maker", symbol: "III", desc: "100+ hours volunteered",            earned: "Feb 2024", color: B_BLUE   },
-  { id: "b4", name: "Connector",    symbol: "IV",  desc: "Referred 3 volunteers",             earned: "Apr 2024", color: B_TEAL   },
+  { id: "b4", name: "Connector",    symbol: "IV",  desc: "Referred 3 volunteers",             earned: "Apr 2024", color: "#65A30D" },
   { id: "b5", name: "TVW Champion", symbol: "V",   desc: "3 TVW editions participated",       earned: "Sep 2024", color: B_RED    },
   { id: "b6", name: "Repeat Hero",  symbol: "VI",  desc: "3 ProEngage projects completed",    earned: "Mar 2025", color: B_INDIGO },
   { id: "b7", name: "300 Club",     symbol: "VII", desc: "300+ volunteering hours",           earned: "Mar 2025", color: B_YELLOW },
@@ -136,9 +136,9 @@ const BADGES = [
 
 const RESOURCES = [
   { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: C_PINK,    pastel: CP_PINK,    photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&q=80" },
-  { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: C_PINKRED, pastel: CP_PINKRED, photo: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" },
-  { id: "stories", label: "Stories",  desc: "Volunteer experiences and community impact narratives",   count: "94 stories",  accentColor: C_TEAL2,   pastel: CP_TEAL2,   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80" },
-  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: C_GREEN,   pastel: CP_GREEN,   photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
+  { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: C_GREEN,   pastel: CP_GREEN,   photo: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" },
+  { id: "stories", label: "Stories",  desc: "Volunteer experiences and community impact narratives",   count: "94 stories",  accentColor: "#65A30D", pastel: "#F7FEE7",   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80" },
+  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: C_PINKRED, pastel: CP_PINKRED, photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
   { id: "emodule", label: "E-Module", desc: "ProEngage orientation, NGO readiness kit and dos & don'ts", count: "5 modules", accentColor: C_MIDBLUE, pastel: CP_MIDBLUE, photo: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" },
 ];
 
@@ -264,7 +264,7 @@ function Slicers({ options, active, onChange, accentColor = B_INDIGO, notificati
 
 // ─── Status badge ─────────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: string }) {
-  const map: Record<string, [string, string]> = { Matched: [P_TEAL, B_TEAL], Completed: [P_BLUE, B_BLUE], Dropped: [P_RED, B_RED], Applied: [P_INDIGO, B_INDIGO], Pending: [P_YELLOW, "#9a6500"] };
+  const map: Record<string, [string, string]> = { Matched: ["#F7FEE7", "#65A30D"], Completed: [P_BLUE, B_BLUE], Dropped: [P_RED, B_RED], Applied: [P_INDIGO, B_INDIGO], Pending: [P_YELLOW, "#9a6500"] };
   const [bg, color] = map[status] ?? ["#f0f0f0", "#555"];
   return <span style={{ background: bg, color, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, letterSpacing: "0.3px", whiteSpace: "nowrap" }}>{status}</span>;
 }
@@ -328,9 +328,9 @@ function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: { 
     <>
       <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(13,27,62,0.45)", zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", transition: "opacity 0.22s", backdropFilter: "blur(2px)" }} />
       <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width: 560, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif", overflowY: "auto" }}>
-        <div style={{ background: B_YELLOW, padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
+        <div style={{ background: "#FEF3C7", padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
           <button onClick={onClose} style={{ background: "rgba(13,27,62,0.1)", border: "none", borderRadius: 7, color: "rgba(13,27,62,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>← Close</button>
-          {accentTag && <div style={{ display: "inline-block", background: `rgba(13,27,62,0.1)`, border: `1px solid rgba(13,27,62,0.15)`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: ACCENT_NAVY, letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
+          {accentTag && <div style={{ display: "inline-block", background: "rgba(161,98,7,0.12)", border: "1px solid rgba(161,98,7,0.25)", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#78350F", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
           <div style={{ fontSize: 17, fontWeight: 700, color: ACCENT_NAVY, lineHeight: 1.3 }}>{title}</div>
           {subtitle && <div style={{ fontSize: 12.5, color: "rgba(13,27,62,0.5)", marginTop: 5 }}>{subtitle}</div>}
         </div>
@@ -389,11 +389,11 @@ function ProjectUpdateDrawer({ open, onClose }: { open: boolean; onClose: () => 
   const [submitted, setSubmitted] = useState(false);
   const reset = () => { onClose(); setSubmitted(false); setText(""); };
   return (
-    <DrawerShell open={open} onClose={reset} title="Post a Project Update" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Project Update">
+    <DrawerShell open={open} onClose={reset} title="Post Your Monthly Update" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Monthly Update">
       {submitted ? (
         <div style={{ padding: "40px 28px", textAlign: "center" }}>
-          <div style={{ width: 56, height: 56, borderRadius: "50%", background: P_TEAL, border: `2px solid ${B_TEAL}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
-            <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke={B_TEAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#F7FEE7", border: "2px solid #84CC16", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+            <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke="#65A30D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </div>
           <div style={{ fontSize: 16, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 8 }}>Update posted</div>
           <div style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6 }}>Your update has been shared with TSG and your NGO partner at {VOLUNTEER.activeApplication?.ngo}.</div>
@@ -472,8 +472,8 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
     <DrawerShell open={open} onClose={reset} title="ProEngage Volunteer Feedback" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Project Feedback">
       {submitted ? (
         <div style={{ padding: "40px 28px", textAlign: "center" }}>
-          <div style={{ width: 56, height: 56, borderRadius: "50%", background: P_TEAL, border: `2px solid ${B_TEAL}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
-            <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke={B_TEAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#F7FEE7", border: "2px solid #84CC16", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+            <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke="#65A30D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </div>
           <div style={{ fontSize: 16, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 8 }}>Feedback submitted</div>
           <div style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6 }}>Thank you. Once the NGO also submits feedback, your certificate will be generated within 24 hours.</div>
@@ -702,15 +702,15 @@ function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose:
         submitted ? (
           <div style={{ padding: "40px 28px", textAlign: "center" }}>
             {/* Confirmation matching live site modal */}
-            <div style={{ background: P_TEAL, borderRadius: 12, padding: "20px", marginBottom: 20, textAlign: "left" }}>
+            <div style={{ background: "#FEFCE8", border: "1px solid #FDE68A", borderRadius: 12, padding: "20px", marginBottom: 20, textAlign: "left" }}>
               <div style={{ fontSize: 13, color: "#064e3b", lineHeight: 1.7 }}>
                 <p style={{ marginBottom: 6 }}>Project will start from <strong>{project.closes.replace("15 ", "15-")}</strong></p>
                 <p style={{ marginBottom: 6 }}>You will be required to put in <strong>{project.duration.split(" ")[0]} hours</strong> every weekend, for a duration of <strong>{project.duration}</strong></p>
                 <p>This being an <strong>{project.mode.includes("Hybrid") ? "HYBRID" : "ONLINE"}</strong> project, you will be required to work on the project remotely and deliver it to the partner organisation: <strong>{project.ngo}</strong></p>
               </div>
             </div>
-            <div style={{ width: 56, height: 56, borderRadius: "50%", background: P_TEAL, border: `2px solid ${B_TEAL}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
-              <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke={B_TEAL} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#F7FEE7", border: "2px solid #84CC16", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+              <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><path d="M2 9l7 7L20 2" stroke="#65A30D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </div>
             <div style={{ fontSize: 16, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 8 }}>Application submitted!</div>
             <div style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6 }}>Your application has been sent to {project.ngo}. You'll receive an email confirmation shortly.</div>
@@ -879,7 +879,7 @@ function ReferralDrawer({ open, onClose }: { open: boolean; onClose: () => void 
         <p style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6, marginBottom: 22 }}>When someone joins TataEngage using your referral link, your Referred count goes up and you're one step closer to earning the Connector badge.</p>
         <div style={{ background: P_INDIGO, border: `1px solid ${B_INDIGO}22`, borderRadius: 10, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
           <span style={{ flex: 1, fontSize: 13.5, fontWeight: 600, color: B_INDIGO, wordBreak: "break-all" }}>{refLink}</span>
-          <button onClick={copy} style={{ background: copied ? B_TEAL : B_INDIGO, color: "#fff", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", transition: "background 0.2s" }}>{copied ? "Copied!" : "Copy Link"}</button>
+          <button onClick={copy} style={{ background: copied ? "#65A30D" : B_INDIGO, color: "#fff", border: "none", borderRadius: 8, padding: "8px 16px", fontSize: 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", transition: "background 0.2s" }}>{copied ? "Copied!" : "Copy Link"}</button>
         </div>
         <div style={{ fontSize: 12, color: "#aaaabc" }}>Link expires in 30 days. You have referred 3 people so far.</div>
       </div>
@@ -972,14 +972,14 @@ export default function DashboardView() {
       <div style={{ background: "#f8f9ff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif", paddingTop: 80, paddingBottom: 80 }}>
 
         {/* Greeting bar */}
-        <div style={{ background: B_YELLOW, padding: "28px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
+        <div style={{ background: "#FEF3C7", padding: "28px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
           <div>
             <div style={{ fontSize: 24, fontWeight: 900, color: ACCENT_NAVY, letterSpacing: -0.5 }}>Welcome back, {VOLUNTEER.firstName}</div>
             <div style={{ fontSize: 13, color: "rgba(13,27,62,0.55)", marginTop: 4 }}>{VOLUNTEER.designation} · {VOLUNTEER.company} · {VOLUNTEER.city}</div>
           </div>
           {hasActive ? (
-            <div style={{ background: "rgba(13,27,62,0.08)", border: "1px solid rgba(13,27,62,0.12)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: B_TEAL, marginBottom: 5 }}>Active · {VOLUNTEER.activeApplication!.edition}</div>
+            <div style={{ background: "rgba(146,64,14,0.08)", border: "1px solid rgba(146,64,14,0.18)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#92400E", marginBottom: 5 }}>Active · {VOLUNTEER.activeApplication!.edition}</div>
               <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, lineHeight: 1.3 }}>{VOLUNTEER.activeApplication!.title}</div>
               <div style={{ fontSize: 12.5, color: "rgba(13,27,62,0.5)", marginTop: 4 }}>{VOLUNTEER.activeApplication!.ngo} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
             </div>
@@ -1016,9 +1016,9 @@ export default function DashboardView() {
               {/* Stat tiles */}
               <div ref={statsRef} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 16 }}>
                 <StatTile value={VOLUNTEER.stats.hoursVolunteered} suffix=" hrs" label="Hours Volunteered"  pastel={CP_PINK}    accentColor={C_PINK}    delay={0}   started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={CP_GREEN}   accentColor={C_GREEN}   delay={100} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsApplied}                label="Projects Applied"   pastel={"#FEF9C3"} accentColor={"#A16207"}   delay={100} started={statsStarted} />
                 <StatTile value={VOLUNTEER.stats.projectsCompleted}              label="Projects Completed" pastel={CP_MIDBLUE} accentColor={C_MIDBLUE} delay={200} started={statsStarted} />
-                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={CP_TEAL2}   accentColor={C_TEAL2}   delay={300} started={statsStarted} />
+                <StatTile value={VOLUNTEER.stats.projectsDropped}                label="Dropped"            pastel={P_RED}      accentColor={B_RED}   delay={300} started={statsStarted} />
                 <StatTile value={VOLUNTEER.stats.referrals}                      label="No of Referrals"    pastel={P_YELLOW}   accentColor={B_YELLOW}  delay={400} started={statsStarted} />
                 <StatTile value={VOLUNTEER.stats.badgesEarned}                   label="Badges Earned"      pastel={CP_PINKRED} accentColor={C_PINKRED} delay={500} started={statsStarted} />
               </div>
@@ -1036,7 +1036,7 @@ export default function DashboardView() {
                 <div style={{ ...card, marginBottom: 10 }}>
                   <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 14 }}>Badges Earned</div>
                   <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                    {BADGES.map(b => {
+                    {BADGES.slice(0, 3).map(b => {
                       const Icon = BADGE_ICONS[b.id];
                       return (
                         <div key={b.id} title={`${b.name} — ${b.desc} (${b.earned})`}
@@ -1069,10 +1069,10 @@ export default function DashboardView() {
                     <div style={{ fontSize: 13, color: "#8888a0", lineHeight: 1.65, maxWidth: 380, margin: "0 auto" }}>Once you complete a ProEngage project, your NGO partner can write a testimonial about your work.</div>
                   </div>
                 ) : (
-                  <div style={{ background: "#F0FDF4", borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: "1px solid #bbf7d0" }}>
+                  <div style={{ background: "#F7FEE7", borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: "1px solid #d9f99d" }}>
                     <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 160, color: "rgba(22,101,52,0.06)", lineHeight: 1, userSelect: "none", pointerEvents: "none" }}>"</div>
-                    <div style={{ display: "inline-block", background: "#dcfce7", border: `1px solid #bbf7d0`, borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#166534", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 16 }}>{TESTIMONIAL.edition}</div>
-                    <blockquote style={{ fontSize: 15, lineHeight: 1.72, color: "#166534", fontStyle: "italic", fontWeight: 300, margin: "0 0 22px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
+                    <div style={{ display: "inline-block", background: "#ecfccb", border: "1px solid #d9f99d", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#365314", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 16 }}>{TESTIMONIAL.edition}</div>
+                    <blockquote style={{ fontSize: 15, lineHeight: 1.72, color: "#365314", fontStyle: "italic", fontWeight: 300, margin: "0 0 22px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, position: "relative", zIndex: 1 }}>
                       <div style={{ width: 38, height: 38, borderRadius: "50%", background: TESTIMONIAL.avatarBg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: "#fff", flexShrink: 0 }}>{TESTIMONIAL.avatarInitials}</div>
                       <div>
@@ -1121,8 +1121,7 @@ export default function DashboardView() {
                           </div>
                         </div>
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
-                          <div style={{ fontSize: 12, fontWeight: 600, color: ev.spotsLeft < 10 ? B_RED : B_TEAL, marginBottom: 6 }}>{ev.spotsLeft} spots left</div>
-                          <button onClick={(e) => { e.stopPropagation(); ctxToast("Your SPOC has been notified — Rohan Desai will reach out within 24 hours."); }} style={{ background: ev.accentColor, color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Contact SPOC</button>
+                                                    <button onClick={(e) => { e.stopPropagation(); ctxToast("Your SPOC has been notified — Rohan Desai will reach out within 24 hours."); }} style={{ background: ev.accentColor, color: "#fff", border: "none", borderRadius: 8, padding: "6px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Contact SPOC</button>
                         </div>
                       </div>
                     ))}
@@ -1165,9 +1164,9 @@ export default function DashboardView() {
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                     {[
-                      { label: "Post a Project Update", desc: "Share progress with TSG and your NGO partner.", color: B_INDIGO, pastel: P_INDIGO, action: () => setUpdateOpen(true),   disabled: false },
+                      { label: "Post Your Monthly Update", desc: "Share progress with TSG and your NGO partner.", color: B_INDIGO, pastel: P_INDIGO, action: () => setUpdateOpen(true),   disabled: false },
                       { label: "Access E-Module",        desc: "Orientation, roles and responsibilities.",      color: B_BLUE,   pastel: P_BLUE,   action: () => {},                   disabled: false },
-                      { label: "Submit Feedback",        desc: "Rate your experience and share learnings.",     color: B_TEAL,   pastel: P_TEAL,   action: () => setFeedbackOpen(true), disabled: false },
+                      { label: "Submit Feedback",        desc: "Rate your experience and share learnings.",     color: "#65A30D", pastel: "#F7FEE7", action: () => setFeedbackOpen(true), disabled: false },
                       { label: "Download Certificate",   desc: "Available once both sides submit feedback.",    color: "#bbb",   pastel: "#f8f8fc", action: () => {},                   disabled: true  },
                     ].map(a => (
                       <button key={a.label} disabled={a.disabled} onClick={a.action}
@@ -1275,7 +1274,7 @@ export default function DashboardView() {
                           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 14px rgba(13,27,62,0.08)"; (e.currentTarget as HTMLElement).style.transform = "translateX(2px)"; }}
                           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; (e.currentTarget as HTMLElement).style.transform = "translateX(0)"; }}
                         >
-                          <span style={{ fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 6, whiteSpace: "nowrap", background: a.type === "ProEngage" ? P_INDIGO : P_TEAL, color: a.type === "ProEngage" ? B_INDIGO : B_TEAL }}>{a.type}</span>
+                          <span style={{ fontSize: 10.5, fontWeight: 700, padding: "3px 9px", borderRadius: 6, whiteSpace: "nowrap", background: a.type === "ProEngage" ? P_INDIGO : "#F7FEE7", color: a.type === "ProEngage" ? B_INDIGO : "#65A30D" }}>{a.type}</span>
                           <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontSize: 13.5, fontWeight: 600, color: ACCENT_NAVY, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.project}</div>
                             <div style={{ fontSize: 12, color: "#aaaabc", marginTop: 2 }}>{a.edition} · {a.date}</div>
@@ -1302,7 +1301,7 @@ export default function DashboardView() {
                             </div>
                             {p.cert && <button style={{ background: P_INDIGO, color: B_INDIGO, border: "none", borderRadius: 8, padding: "6px 13px", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Download Certificate</button>}
                           </div>
-                          <div style={{ background: p.cert ? P_TEAL : P_RED, borderRadius: 9, padding: "11px 14px", fontSize: 13, color: p.cert ? "#064e3b" : "#7f1d1d", borderLeft: `3px solid ${p.cert ? B_TEAL : B_RED}`, lineHeight: 1.55 }}>{p.outcome}</div>
+                          <div style={{ background: p.cert ? "#F7FEE7" : P_RED, borderRadius: 9, padding: "11px 14px", fontSize: 13, color: p.cert ? "#365314" : "#7f1d1d", borderLeft: `3px solid ${p.cert ? "#84CC16" : B_RED}`, lineHeight: 1.55 }}>{p.outcome}</div>
                           <div style={{ marginTop: 10, display: "flex", gap: 6 }}>{p.skills.map(s => <span key={s} style={{ background: P_INDIGO, color: B_INDIGO, fontSize: 11.5, fontWeight: 600, padding: "3px 10px", borderRadius: 100 }}>{s}</span>)}</div>
                         </div>
                       ))}
@@ -1312,11 +1311,11 @@ export default function DashboardView() {
                   {/* My Experience (testimonials) */}
                   {activeHistory === "experience" && (
                     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                      <div style={{ background: "#F0FDF4", borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: "1px solid #bbf7d0" }}>
+                      <div style={{ background: "#F7FEE7", borderRadius: 14, padding: "28px 32px", position: "relative", overflow: "hidden", border: "1px solid #d9f99d" }}>
                         <div style={{ position: "absolute", top: -20, left: 20, fontFamily: "Georgia, serif", fontSize: 140, color: "rgba(22,101,52,0.06)", lineHeight: 1, pointerEvents: "none" }}>"</div>
-                        <div style={{ display: "inline-block", background: "#dcfce7", border: "1px solid #bbf7d0", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#166534", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.5px" }}>ProEngage Edition 11 · Pending approval</div>
-                        <blockquote style={{ fontSize: 16, lineHeight: 1.7, color: "#166534", fontStyle: "italic", fontWeight: 300, margin: "0 0 18px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
-                        <div style={{ fontSize: 13, color: "#166534", opacity: 0.7 }}>— {TESTIMONIAL.author}, {TESTIMONIAL.role}</div>
+                        <div style={{ display: "inline-block", background: "#ecfccb", border: "1px solid #d9f99d", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#365314", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.5px" }}>ProEngage Edition 11 · Pending approval</div>
+                        <blockquote style={{ fontSize: 16, lineHeight: 1.7, color: "#365314", fontStyle: "italic", fontWeight: 300, margin: "0 0 18px", position: "relative", zIndex: 1 }}>"{TESTIMONIAL.quote}"</blockquote>
+                        <div style={{ fontSize: 13, color: "#365314", opacity: 0.7 }}>— {TESTIMONIAL.author}, {TESTIMONIAL.role}</div>
                       </div>
                       <div style={{ ...card, fontSize: 13.5, color: "#8888a0", lineHeight: 1.6 }}>Testimonials are written reflections by your NGO partners on your project contribution. They appear here once approved by the TSG Admin team.</div>
                     </div>
@@ -1349,7 +1348,7 @@ export default function DashboardView() {
                               <div style={{ fontSize: 14, fontWeight: 600, color: ACCENT_NAVY }}>{p.title}</div>
                               <div style={{ fontSize: 12.5, color: "#8888a0", marginTop: 3 }}>{p.ngo} · {p.edition}</div>
                             </div>
-                            <span style={{ background: P_TEAL, color: B_TEAL, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, whiteSpace: "nowrap" }}>Submitted</span>
+                            <span style={{ background: "#F7FEE7", color: "#65A30D", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, whiteSpace: "nowrap" }}>Submitted</span>
                           </div>
                           <div style={{ marginTop: 10, display: "flex", gap: 2 }}>{[1,2,3,4,5].map(i => <span key={i} style={{ color: B_YELLOW, fontSize: 20, lineHeight: 1 }}>★</span>)}</div>
                         </div>
