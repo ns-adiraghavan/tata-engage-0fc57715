@@ -691,7 +691,7 @@ export function NumbersSection() {
   );
 
   return (
-    <section className="section-block" style={{ background: "#ffffff" }}>
+    <section className="section-block" style={{ background: "#ffffff", padding: "48px 48px" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
         <div className="section-header">
           <div>
