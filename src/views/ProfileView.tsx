@@ -603,7 +603,7 @@ export default function ProfileView() {
         <div style={col}><FieldLabel required>City</FieldLabel>{isEditing ? <TextInput value={ngoProfile.city} onChange={v => setN("city", v)} /> : <ReadOnly value={ngoProfile.city} />}</div>
         <div style={col}><FieldLabel required>State</FieldLabel>{isEditing ? <TextInput value={ngoProfile.state} onChange={v => setN("state", v)} /> : <ReadOnly value={ngoProfile.state} />}</div>
         <div style={col}><FieldLabel required>Country</FieldLabel>{isEditing ? <SelectInput value={ngoProfile.country} onChange={v => setN("country", v)} options={COUNTRIES} /> : <ReadOnly value={ngoProfile.country} />}</div>
-        <div style={col}><FieldLabel>PIN Code</FieldLabel>{isEditing ? <TextInput value={ngoProfile.pincode} onChange={v => setN("pincode", v)} placeholder="400001" /> : <ReadOnly value={ngoProfile.pincode} /></div>
+        <div style={col}><FieldLabel>PIN Code</FieldLabel>{isEditing ? <TextInput value={ngoProfile.pincode} onChange={v => setN("pincode", v)} placeholder="400001" /> : <ReadOnly value={ngoProfile.pincode} />}</div>
       </div>
     </div>
   );
@@ -679,7 +679,7 @@ export default function ProfileView() {
           {!IS_NGO && (
             <div style={{ display: "flex", gap: 12, background: "rgba(0,0,0,0.18)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "14px 14px 0 0", padding: "20px 24px", marginTop: 8 }}>
               {VOLUNTEER_STATS.map(s => (
-                <div key={s.label} style={{ flex: 1, textAlign: "center", borderRight: "1px solid rgba(255,255,255,0.1)", paddingRight: 16, marginRight: 4, lastChild: { borderRight: "none" } }}>
+                <div key={s.label} style={{ flex: 1, textAlign: "center", borderRight: "1px solid rgba(255,255,255,0.1)", paddingRight: 16, marginRight: 4 }}>
                   <div style={{ fontSize: 28, fontWeight: 900, color: "#7dd3fc", letterSpacing: -1 }}>{s.value}{(s as any).suffix}</div>
                   <div style={{ fontSize: 10.5, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.6px", marginTop: 3 }}>{s.label}</div>
                 </div>
