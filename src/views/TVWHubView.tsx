@@ -306,44 +306,6 @@ const TVWHubView = () => {
       {/* ═══ TICKER ═══ */}
       <TickerBar fixed />
 
-      {/* ═══ REGISTRATION MODAL ═══ */}
-      <AnimatePresence>
-        {isRegistering && selectedEvent && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center p-6">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsRegistering(false)}
-              className="absolute inset-0 bg-zinc-900/60 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-10 overflow-hidden"
-            >
-              <div className="absolute top-0 left-0 w-full h-[3px]" style={{ backgroundColor: COBALT }} />
-              <h3 className="text-2xl font-bold text-zinc-900 mb-4">Confirm Registration</h3>
-              <p className="text-slate-500 mb-8">
-                You are about to register for <span className="font-bold text-zinc-900">"{selectedEvent.title}"</span> on {selectedEvent.date}.
-              </p>
-              <div className="space-y-4 mb-10">
-                <div className="flex items-center gap-3 text-sm text-slate-600 bg-slate-50 p-4 rounded-xl">
-                  <MapPin size={18} style={{ color: COBALT }} /> {selectedEvent.location}
-                </div>
-                <div className="flex items-center gap-3 text-sm text-slate-600 bg-slate-50 p-4 rounded-xl">
-                  <Globe size={18} style={{ color: COBALT }} /> {selectedEvent.mode} Mode
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <button onClick={() => setIsRegistering(false)} className="flex-1 btn-outline py-4 cursor-pointer">Cancel</button>
-                <button onClick={confirmRegistration} className="flex-1 py-4 rounded-lg font-semibold text-white cursor-pointer hover:opacity-90 transition-all" style={{ backgroundColor: COBALT }}>Confirm</button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
