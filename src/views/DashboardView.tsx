@@ -1203,32 +1203,32 @@ export default function DashboardView() {
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14 }}>
                     {DIY_ACTIVITIES.map(a => (
                       <div key={a.id}
-                        style={{ ...card, padding: "20px", cursor: "pointer", transition: "transform 0.18s, box-shadow 0.18s", display: "flex", gap: 14, alignItems: "flex-start" }}
+                        style={{ ...card, padding: "20px", cursor: "pointer", transition: "transform 0.18s, box-shadow 0.18s", display: "flex", flexDirection: "column", gap: 0 }}
                         onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 6px 20px ${a.accentColor}18`; }}
                         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
                       >
-                        <div style={{ width: 44, height: 44, borderRadius: 10, background: a.pastel, border: `1px solid ${a.accentColor}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <div style={{ width: 8, height: 8, borderRadius: "50%", background: a.accentColor }} />
-                        </div>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 7 }}>
-                            <span style={{ background: a.pastel, color: a.accentColor, fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>{a.theme}</span>
-                            <span style={{ background: a.pastel, color: a.accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{a.org}</span>
+                        <div style={{ display: "flex", gap: 14, alignItems: "flex-start", marginBottom: 14 }}>
+                          <div style={{ width: 44, height: 44, borderRadius: 10, background: a.pastel, border: `1px solid ${a.accentColor}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <div style={{ width: 8, height: 8, borderRadius: "50%", background: a.accentColor }} />
                           </div>
-                          <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 6, lineHeight: 1.3 }}>{a.title}</div>
-                          <div style={{ fontSize: 12.5, color: "#555", lineHeight: 1.55 }}>{a.desc}</div>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 7 }}>
+                              <span style={{ background: a.pastel, color: a.accentColor, fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>{a.theme}</span>
+                              <span style={{ background: a.pastel, color: a.accentColor, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{a.org}</span>
+                            </div>
+                            <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 6, lineHeight: 1.3 }}>{a.title}</div>
+                            <div style={{ fontSize: 12.5, color: "#555", lineHeight: 1.55 }}>{a.desc}</div>
+                          </div>
                         </div>
+                        <button
+                          onClick={e => { e.stopPropagation(); ctxToast("Please contact your SPOC to sign up for this activity."); }}
+                          style={{ width: "100%", background: a.accentColor, color: "#fff", border: "none", borderRadius: 10, padding: "10px 0", fontSize: 12.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "opacity 0.18s" }}
+                          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.9"; }}
+                          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+                        >
+                          Contact SPOC
+                        </button>
                       </div>
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => ctxToast("Please contact your SPOC to sign up for a DIY activity.")}
-                    style={{ width: "100%", background: B_TEAL, color: "#fff", border: "none", borderRadius: 12, padding: "13px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "opacity 0.18s" }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.9"; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
-                  >
-                    Contact SPOC to Sign Up
-                  </button>
                 </div>
               )}
 
