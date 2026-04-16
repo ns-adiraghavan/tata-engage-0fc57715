@@ -297,19 +297,21 @@ export function ProgrammeSpotlight() {
                   justifyContent: "center",
                   transition: "background 0.5s ease",
                 }}>
-                  <h3 style={{
-                    fontSize: 24, fontWeight: 900, color: "#ffffff",
-                    letterSpacing: "-0.4px", lineHeight: 1.2, margin: "0 0 8px",
-                  }}>
-                    {p.title}
-                  </h3>
-                  <p style={{
-                    fontSize: 13, color: "rgba(255,255,255,0.8)",
-                    lineHeight: 1.5, margin: "0 0 20px",
-                  }}>
-                    {PROG_SUBS[idx]}
-                  </p>
-                  <div style={{ marginTop: "auto" }}>
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                    <h3 style={{
+                      fontSize: 28, fontWeight: 900, color: "#ffffff",
+                      letterSpacing: "-0.4px", lineHeight: 1.2, margin: "0 0 8px",
+                    }}>
+                      {p.title}
+                    </h3>
+                    <p style={{
+                      fontSize: 13, color: "rgba(255,255,255,0.8)",
+                      lineHeight: 1.5, margin: "0 0 0",
+                    }}>
+                      {PROG_SUBS[idx]}
+                    </p>
+                  </div>
+                  <div style={{ marginTop: 16 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff" }}>
                       Learn more <ArrowRight size={13} />
                     </div>
