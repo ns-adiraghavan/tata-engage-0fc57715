@@ -95,14 +95,14 @@ const TVW_OPPORTUNITIES = [
 ];
 
 const DIY_ACTIVITIES = [
-  { id: "d1", title: "Mentor a First-Generation College Student", desc: "1 hour/week for 4 weeks over video call. Set goals, share experience, open doors.", theme: "Education",   effort: "Low",    accentColor: C_TEAL2, pastel: CP_TEAL2 },
+  { id: "d1", title: "Mentor a First-Generation College Student", desc: "1 hour/week for 4 weeks over video call. Set goals, share experience, open doors.", theme: "Education",   effort: "Low",    accentColor: B_TEAL, pastel: P_TEAL },
   { id: "d2", title: "Teach Financial Literacy to Youth",         desc: "A 2-hour workshop at a local NGO or school. TSG DIY kit provides all materials.", theme: "Livelihoods", effort: "Medium", accentColor: B_BLUE,   pastel: P_BLUE   },
 ];
 
 const PE_OPPORTUNITIES = [
   { id: "p1", title: "Build a Fundraising Dashboard for Child Rights NGO",  ngo: "Butterflies India",     skillArea: "Finance / Data",   duration: "3 months", mode: "Online",          closes: "15 Jul 2025", applicants: 14, match: 94, accentColor: B_BLUE,   pastel: P_BLUE   },
   { id: "p2", title: "Marketing Strategy for Women's Skilling Programme",   ngo: "Stree Mukti Sanghatna", skillArea: "Marketing",        duration: "4 months", mode: "Hybrid · Mumbai", closes: "20 Jul 2025", applicants: 9,  match: 89, accentColor: "#65A30D", pastel: "#F7FEE7" },
-  { id: "p3", title: "Product Roadmap for Disability Employment Platform",  ngo: "Samarthanam Trust",     skillArea: "Product Strategy", duration: "6 months", mode: "Online",          closes: "30 Jul 2025", applicants: 6,  match: 97, accentColor: C_TEAL2, pastel: CP_TEAL2 },
+  { id: "p3", title: "Product Roadmap for Disability Employment Platform",  ngo: "Samarthanam Trust",     skillArea: "Product Strategy", duration: "6 months", mode: "Online",          closes: "30 Jul 2025", applicants: 6,  match: 97, accentColor: B_TEAL, pastel: P_TEAL },
 ];
 
 const HISTORY_APPLICATIONS = [
@@ -131,11 +131,11 @@ const BADGES = [
 ];
 
 const RESOURCES = [
-  { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: C_PINK,    pastel: CP_PINK,    photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&q=80" },
-  { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: C_GREEN,   pastel: CP_GREEN,   photo: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" },
+  { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: B_INDIGO, pastel: P_INDIGO, photo: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&q=80" },
+  { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: B_TEAL,   pastel: P_TEAL,   photo: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" },
   { id: "stories", label: "Stories",  desc: "Volunteer experiences and community impact narratives",   count: "94 stories",  accentColor: "#65A30D", pastel: "#F7FEE7",   photo: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80" },
-  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: C_PINKRED, pastel: CP_PINKRED, photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
-  { id: "emodule", label: "E-Module", desc: "ProEngage orientation, NGO readiness kit and dos & don'ts", count: "5 modules", accentColor: C_MIDBLUE, pastel: CP_MIDBLUE, photo: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" },
+  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: B_INDIGO, pastel: P_INDIGO, photo: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" },
+  { id: "emodule", label: "E-Module", desc: "ProEngage orientation, NGO readiness kit and dos & don'ts", count: "5 modules", accentColor: B_BLUE, pastel: P_BLUE, photo: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" },
 ];
 
 const STAT_TOOLTIPS: Record<string, string> = {
@@ -147,7 +147,8 @@ const STAT_TOOLTIPS: Record<string, string> = {
   "Badges Earned":      "Awarded for key milestones — completing a project, 100 hours, TVW participation and more.",
 };
 
-const BADGE_ICONS: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const BADGE_ICONS: Record<string, any> = {
   b1: Star, b2: Zap, b3: Award, b4: Users, b5: Shield, b6: RefreshCw, b7: Clock,
 };
 
@@ -1101,7 +1102,7 @@ export default function DashboardView() {
                 eyebrow={IS_PE_SEASON ? "ProEngage Edition 11 · Open · Closes 15 Jul 2025" : "Non-ProEngage season · Next edition opens Jan 2026"}
                 title="My Activities"
               />
-              <Slicers options={activitySlicers} active={activeActivity} onChange={setActiveActivity} accentColor={C_TEAL2} notifications={{ opportunities: NOTIFICATIONS.viewOpportunities, diy: NOTIFICATIONS.diyActivities, proengage: NOTIFICATIONS.proEngageProject, apply: NOTIFICATIONS.proEngageProject, early: NOTIFICATIONS.proEngageProject }} />
+              <Slicers options={activitySlicers} active={activeActivity} onChange={setActiveActivity} accentColor={B_TEAL} notifications={{ opportunities: NOTIFICATIONS.viewOpportunities, diy: NOTIFICATIONS.diyActivities, proengage: NOTIFICATIONS.proEngageProject, apply: NOTIFICATIONS.proEngageProject, early: NOTIFICATIONS.proEngageProject }} />
 
               {/* ── View Opportunities tab ─────────────────────────────── */}
               {activeActivity === "opportunities" && (
@@ -1159,10 +1160,10 @@ export default function DashboardView() {
               {/* ── My ProEngage Project tab (PE season, active match) ── */}
               {activeActivity === "proengage" && IS_PE_SEASON && hasActive && (
                 <div>
-                  <div style={{ background: CP_TEAL2, border: `1px solid ${C_TEAL2}33`, borderRadius: 12, padding: "16px 18px", marginBottom: 16, display: "flex", alignItems: "center", gap: 14 }}>
-                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: C_TEAL2, flexShrink: 0, boxShadow: `0 0 0 4px ${C_TEAL2}2a` }} />
+                  <div style={{ background: P_TEAL, border: `1px solid ${B_TEAL}33`, borderRadius: 12, padding: "16px 18px", marginBottom: 16, display: "flex", alignItems: "center", gap: 14 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: B_TEAL, flexShrink: 0, boxShadow: `0 0 0 4px ${B_TEAL}2a` }} />
                     <div>
-                      <div style={{ fontSize: 10.5, fontWeight: 700, color: C_TEAL2, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 2 }}>Matched · {VOLUNTEER.activeApplication!.edition}</div>
+                      <div style={{ fontSize: 10.5, fontWeight: 700, color: B_TEAL, textTransform: "uppercase", letterSpacing: "1px", marginBottom: 2 }}>Matched · {VOLUNTEER.activeApplication!.edition}</div>
                       <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY }}>{VOLUNTEER.activeApplication!.title}</div>
                       <div style={{ fontSize: 12.5, color: "#6b6b7a", marginTop: 2 }}>{VOLUNTEER.activeApplication!.ngo} · {VOLUNTEER.activeApplication!.mode} · {VOLUNTEER.activeApplication!.duration} · Matched {VOLUNTEER.activeApplication!.matchDate}</div>
                     </div>
