@@ -132,7 +132,7 @@ const TVWHubView = () => {
                 placeholder="Search events..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white border border-zinc-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#333399]/20"
+                className="w-full pl-12 pr-4 py-3 bg-white border border-zinc-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0047AB]/20"
               />
             </div>
             <div className="flex gap-2">
@@ -183,7 +183,7 @@ const TVWHubView = () => {
                       </div>
                       <div className="text-xs font-bold text-slate-400 uppercase">{event.company}</div>
                     </div>
-                    <h3 className="text-xl font-bold text-zinc-900 mb-2 group-hover:text-[#333399] transition-colors">{event.title}</h3>
+                    <h3 className="text-xl font-bold text-zinc-900 mb-2 group-hover:text-[#0047AB] transition-colors">{event.title}</h3>
                     <p className="text-sm text-slate-500 line-clamp-2 mb-6">{event.description}</p>
                     <div className="space-y-2 mb-6 text-sm text-slate-600">
                       <div className="flex items-center gap-3"><Calendar size={16} className="text-slate-400" /> {event.date}</div>
