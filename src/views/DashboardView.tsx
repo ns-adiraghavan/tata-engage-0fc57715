@@ -352,7 +352,7 @@ function ResourceCard({ r, onClick }: { r: typeof RESOURCES[0]; onClick?: () => 
 // ─── DrawerShell — centred modal ──────────────────────────────────────────────
 type AppRecord = typeof HISTORY_APPLICATIONS[0];
 
-function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: { open: boolean; onClose: () => void; title: string; subtitle?: string; accentTag?: string; children: React.ReactNode; }) {
+function DrawerShell({ open, onClose, title, subtitle, accentTag, accentColor, children }: { open: boolean; onClose: () => void; title: string; subtitle?: string; accentTag?: string; accentColor?: string; children: React.ReactNode; }) {
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", h);
