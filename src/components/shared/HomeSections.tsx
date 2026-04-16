@@ -698,7 +698,7 @@ export function NumbersSection() {
           {/* Tile 1 — "Did you know?" (dark) */}
           <div style={{
             borderRadius: 18, position: "relative", overflow: "hidden", minHeight: 280,
-            background: "#F2778A",
+            background: "#ffffff",
             boxShadow: "0 1px 4px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06)",
             alignSelf: "center",
           }}>
