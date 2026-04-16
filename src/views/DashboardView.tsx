@@ -23,7 +23,7 @@ const KPI_PROENGAGE  = "#3D9970";   // ProEngage green
 const KPI_TVW        = "#3E7EB0";   // TVW blue
 const KPI_CVP        = "#F5A623";   // CVP yellow (B_YELLOW)
 const KPI_PINK       = "#F2778A";   // Did you know pink
-const KPI_NUMBERS    = "#C8850A";   // In the numbers (darker mustard)
+const KPI_NUMBERS    = "#A8C94A";   // In the numbers (lime green)
 const KPI_TEAL       = "#00A896";   // Disaster Response teal
 const IS_NEW_VOLUNTEER = false;
 
