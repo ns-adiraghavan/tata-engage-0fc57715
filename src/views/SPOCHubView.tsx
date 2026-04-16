@@ -30,11 +30,70 @@ const SPOCHubView = () => {
   const navigate = useAppNavigate();
   const { triggerToast } = useAppContext();
 
+  const [activeSection, setActiveSection] = useState(0);
+  const [showLabel, setShowLabel] = useState(false);
+  const [inHero, setInHero] = useState(true);
+  const labelTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const obs: IntersectionObserver[] = [];
+    DOT_SECTIONS.forEach((s, idx) => {
+      const el = document.getElementById(s.id);
+      if (!el) return;
+      const o = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) {
+          setActiveSection(idx);
+          setShowLabel(true);
+          if (labelTimer.current) clearTimeout(labelTimer.current);
+          labelTimer.current = setTimeout(() => setShowLabel(false), 1800);
+        }
+      }, { threshold: 0.2 });
+      o.observe(el);
+      obs.push(o);
+    });
+    return () => { obs.forEach((o) => o.disconnect()); if (labelTimer.current) clearTimeout(labelTimer.current); };
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const heroEl = document.getElementById("hub-hero");
+      if (heroEl) setInHero(window.scrollY < heroEl.offsetHeight - 300);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white pb-12">
 
+      {/* Dot rail */}
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end gap-3">
+        {DOT_SECTIONS.map((s, i) => {
+          const active = activeSection === i;
+          return (
+            <button key={s.id} onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" })}
+              className="flex items-center justify-end gap-2">
+              {active && showLabel && (
+                <span className="whitespace-nowrap transition-all duration-300" style={{
+                  fontSize: 12, fontWeight: 600, padding: "4px 10px", borderRadius: 100,
+                  background: inHero ? "rgba(0,0,0,0.70)" : "white",
+                  border: `1px solid ${inHero ? "rgba(255,255,255,0.25)" : "#e2e8f0"}`,
+                  color: inHero ? "white" : "#334155",
+                }}>{s.label}</span>
+              )}
+              <span className="transition-all duration-300" style={{
+                width: active ? 10 : 7, height: active ? 10 : 7, borderRadius: "50%", display: "block", flexShrink: 0,
+                backgroundColor: active
+                  ? (inHero ? "white" : ACCENT)
+                  : (inHero ? "rgba(255,255,255,0.4)" : "#CBD5E1"),
+              }} />
+            </button>
+          );
+        })}
+      </div>
+
       {/* HERO — full-bleed edge-to-edge */}
-      <section className="relative w-full overflow-hidden" style={{ minHeight: "92vh" }}>
+      <section id="hub-hero" className="relative w-full overflow-hidden" style={{ minHeight: "92vh" }}>
 
         {/* Background image */}
         <img
@@ -90,11 +149,11 @@ const SPOCHubView = () => {
       </section>
 
       <SectionDivider />
-      <ProgrammeSpotlight />
+      <div id="programmes"><ProgrammeSpotlight /></div>
       <SectionDivider />
-      <JourneySection />
+      <div id="journey"><JourneySection /></div>
       <SectionDivider />
-      <NumbersSection />
+      <div id="numbers"><NumbersSection /></div>
 
       <TickerBar fixed />
 
