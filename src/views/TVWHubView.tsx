@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Users, Search, Globe, Calendar, MapPin, Filter, CalendarDays, List, Check, Download, FileText, Camera, BookOpen, ArrowRight } from "lucide-react";
+import { Users, Search, Calendar, MapPin, Filter, CalendarDays, List, Check, Download, FileText, Camera, BookOpen, ArrowRight } from "lucide-react";
 
 import { TVW_EVENTS } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
