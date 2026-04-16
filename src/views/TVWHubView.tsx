@@ -111,14 +111,14 @@ const TVWHubView = () => {
             <button
               onClick={() => setViewMode("list")}
               className="flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-bold transition-all"
-              style={viewMode === "list" ? { backgroundColor: B_INDIGO, color: "#fff" } : { color: "#64748b" }}
+              style={viewMode === "list" ? { backgroundColor: COBALT, color: "#fff" } : { color: "#64748b" }}
             >
               <List size={18} /> List
             </button>
             <button
               onClick={() => setViewMode("calendar")}
               className="flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-bold transition-all"
-              style={viewMode === "calendar" ? { backgroundColor: B_INDIGO, color: "#fff" } : { color: "#64748b" }}
+              style={viewMode === "calendar" ? { backgroundColor: COBALT, color: "#fff" } : { color: "#64748b" }}
             >
               <CalendarDays size={18} /> Calendar
             </button>
@@ -168,7 +168,7 @@ const TVWHubView = () => {
                   onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.08)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 1px 2px rgba(0,0,0,0.04)"; }}
                 >
-                  <div className="w-[3px] rounded-l-full flex-shrink-0" style={{ backgroundColor: B_INDIGO }} />
+                  <div className="w-[3px] rounded-l-full flex-shrink-0" style={{ backgroundColor: COBALT }} />
                   <div className="flex-1 p-8">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex items-center gap-2">
@@ -207,7 +207,7 @@ const TVWHubView = () => {
                             ? "bg-slate-100 text-slate-400 cursor-not-allowed"
                             : "text-white hover:opacity-90 shadow-lg shadow-black/10 cursor-pointer"
                       }`}
-                      style={!isRegistered && event.capacity !== "Full" ? { backgroundColor: B_INDIGO } : undefined}
+                      style={!isRegistered && event.capacity !== "Full" ? { backgroundColor: COBALT } : undefined}
                     >
                       {isRegistered ? (<><Check size={18} /> Registered</>) : event.capacity === "Full" ? "Full" : "Register Now"}
                     </button>
@@ -232,9 +232,9 @@ const TVWHubView = () => {
                       <div
                         onClick={() => handleRegisterClick(hasEvent)}
                         className="mt-2 p-2 rounded-lg cursor-pointer transition-all"
-                        style={{ backgroundColor: `${B_INDIGO}0d`, border: `1px solid ${B_INDIGO}1a` }}
+                        style={{ backgroundColor: `${COBALT}0d`, border: `1px solid ${COBALT}1a` }}
                       >
-                        <div className="text-xs font-bold line-clamp-2 leading-tight" style={{ color: B_INDIGO }}>{hasEvent.title}</div>
+                        <div className="text-xs font-bold line-clamp-2 leading-tight" style={{ color: COBALT }}>{hasEvent.title}</div>
                         <div className="text-[10px] text-slate-400 mt-1">{hasEvent.mode}</div>
                       </div>
                     )}
@@ -265,7 +265,7 @@ const TVWHubView = () => {
             {VIBE_STORIES.map((s, i) => (
               <div key={i} className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.15)" }}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full" style={{ backgroundColor: `${B_INDIGO}44`, color: "#a5b4fc" }}>
+                  <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full" style={{ backgroundColor: `${COBALT}44`, color: "#a5b4fc" }}>
                     {s.location}
                   </span>
                   <span className={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full ${s.status === "Published" ? "text-green-400 bg-green-400/10" : "text-amber-400 bg-amber-400/10"}`}>
@@ -297,11 +297,11 @@ const TVWHubView = () => {
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-2">
-                  <r.icon size={16} style={{ color: B_INDIGO }} />
+                  <r.icon size={16} style={{ color: COBALT }} />
                   <h3 className="font-bold text-zinc-900">{r.title}</h3>
                 </div>
                 <p className="text-sm text-slate-500 mb-4">{r.desc}</p>
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest" style={{ color: B_INDIGO }}>
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest" style={{ color: COBALT }}>
                   <Download size={14} /> Download
                 </span>
               </div>
@@ -330,22 +330,22 @@ const TVWHubView = () => {
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-10 overflow-hidden"
             >
-              <div className="absolute top-0 left-0 w-full h-[3px]" style={{ backgroundColor: B_INDIGO }} />
+              <div className="absolute top-0 left-0 w-full h-[3px]" style={{ backgroundColor: COBALT }} />
               <h3 className="text-2xl font-bold text-zinc-900 mb-4">Confirm Registration</h3>
               <p className="text-slate-500 mb-8">
                 You are about to register for <span className="font-bold text-zinc-900">"{selectedEvent.title}"</span> on {selectedEvent.date}.
               </p>
               <div className="space-y-4 mb-10">
                 <div className="flex items-center gap-3 text-sm text-slate-600 bg-slate-50 p-4 rounded-xl">
-                  <MapPin size={18} style={{ color: B_INDIGO }} /> {selectedEvent.location}
+                  <MapPin size={18} style={{ color: COBALT }} /> {selectedEvent.location}
                 </div>
                 <div className="flex items-center gap-3 text-sm text-slate-600 bg-slate-50 p-4 rounded-xl">
-                  <Globe size={18} style={{ color: B_INDIGO }} /> {selectedEvent.mode} Mode
+                  <Globe size={18} style={{ color: COBALT }} /> {selectedEvent.mode} Mode
                 </div>
               </div>
               <div className="flex gap-4">
                 <button onClick={() => setIsRegistering(false)} className="flex-1 btn-outline py-4 cursor-pointer">Cancel</button>
-                <button onClick={confirmRegistration} className="flex-1 py-4 rounded-lg font-semibold text-white cursor-pointer hover:opacity-90 transition-all" style={{ backgroundColor: B_INDIGO }}>Confirm</button>
+                <button onClick={confirmRegistration} className="flex-1 py-4 rounded-lg font-semibold text-white cursor-pointer hover:opacity-90 transition-all" style={{ backgroundColor: COBALT }}>Confirm</button>
               </div>
             </motion.div>
           </div>
