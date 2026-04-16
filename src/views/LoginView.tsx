@@ -18,7 +18,7 @@ const DEMO_BUTTONS = [
     icon: ShieldCheck,
     user: PRIYA_SHARMA,
     dest: "volunteer-hub" as const,
-    toast: "Login Successful! Welcome back, Priya.",
+    toast: "Login Successful! Welcome back, Shrirang.",
   },
   {
     label: "Login as SPOC",
