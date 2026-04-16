@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, ExternalLink, ChevronDown } from "lucide-react";
+import { ArrowRight, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
 import { Twitter, Instagram, Linkedin } from "lucide-react";
 import { useAppContext } from "@/context/AppContext";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
@@ -523,7 +523,7 @@ export function JourneySection() {
       backgroundSize: "cover",
       backgroundPosition: "center",
       position: "relative", overflow: "hidden",
-      padding: "56px 48px",
+      padding: "72px 48px",
     }}>
       {/* Dark overlay */}
       <div style={{
@@ -564,7 +564,7 @@ export function JourneySection() {
                     display: "flex", flexDirection: "column",
                     alignItems: "center", textAlign: "center",
                     visibility: isAbove ? "visible" : "hidden",
-                    minHeight: 80,
+                    minHeight: 100,
                     opacity: vis ? 1 : 0,
                     transform: vis ? "translateY(0)" : "translateY(-10px)",
                     transition: `opacity 0.45s ease ${i * 0.09}s, transform 0.45s ease ${i * 0.09}s`,
@@ -572,7 +572,7 @@ export function JourneySection() {
                 >
                   {/* Year — same column as title */}
                   <span style={{
-                    fontSize: 16, fontWeight: 900, color: m.colour,
+                    fontSize: 18, fontWeight: 900, color: m.colour,
                     background: `${m.colour}14`,
                     borderRadius: 5, padding: "2px 7px",
                     letterSpacing: "-0.3px", marginBottom: 5,
@@ -580,7 +580,7 @@ export function JourneySection() {
                   }}>
                     {m.year}
                   </span>
-                  <div style={{ fontSize: 11, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 8 }}>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3, marginBottom: 8 }}>
                     {m.title}
                   </div>
                   {/* Stem line down to track */}
@@ -595,27 +595,24 @@ export function JourneySection() {
             })}
           </div>
 
-          {/* TRACK — two parallel rails + cross-ties */}
+          {/* TRACK — railway-path style */}
           <div style={{ position: "relative", height: 26 }}>
             <svg width="100%" height="26" viewBox="0 0 1000 26" preserveAspectRatio="none"
               style={{ position: "absolute", top: 0, left: 0 }}>
-              {Array.from({ length: 20 }, (_, i) => (
-                <rect
-                  key={i}
-                  x={i * 50 + 10} y="6" width="22" height="14"
-                  rx="1.5"
-                  fill="rgba(255,255,255,0.08)"
-                  opacity={vis ? 1 : 0}
-                  style={{ transition: `opacity 0.35s ease ${i * 0.025}s` }}
-                />
-              ))}
-              <line x1="0" y1="9" x2="1000" y2="9" stroke="rgba(255,255,255,0.32)" strokeWidth="1.4" />
-              <line x1="0" y1="17" x2="1000" y2="17" stroke="rgba(255,255,255,0.32)" strokeWidth="1.4" />
+              {/* Outer rail 1 */}
+              <line x1="0" y1="5" x2="1000" y2="5" stroke="rgba(255,255,255,0.28)" strokeWidth="1.8" />
+              {/* Dashed centre line */}
+              <line x1="0" y1="13" x2="1000" y2="13"
+                stroke="rgba(255,255,255,0.18)" strokeWidth="1.2"
+                strokeDasharray="8 7" strokeLinecap="round" />
+              {/* Outer rail 2 */}
+              <line x1="0" y1="21" x2="1000" y2="21" stroke="rgba(255,255,255,0.28)" strokeWidth="1.8" />
+              {/* Milestone dots */}
               {milestones.map((m, i) => {
                 const cx = (i / (milestones.length - 1)) * 1000;
                 return (
-                  <circle key={i} cx={cx} cy="13" r="5"
-                    fill={m.colour} stroke="rgba(255,255,255,0.3)" strokeWidth="1.5"
+                  <circle key={i} cx={cx} cy="13" r="6"
+                    fill={m.colour} stroke="rgba(255,255,255,0.4)" strokeWidth="2"
                     opacity={vis ? 1 : 0}
                     style={{ transition: `opacity 0.35s ease ${i * 0.1 + 0.35}s` }}
                   />
@@ -636,7 +633,7 @@ export function JourneySection() {
                     display: "flex", flexDirection: "column",
                     alignItems: "center", textAlign: "center",
                     visibility: isBelow ? "visible" : "hidden",
-                    minHeight: 80,
+                    minHeight: 100,
                     opacity: vis ? 1 : 0,
                     transform: vis ? "translateY(0)" : "translateY(10px)",
                     transition: `opacity 0.45s ease ${i * 0.09}s, transform 0.45s ease ${i * 0.09}s`,
@@ -651,7 +648,7 @@ export function JourneySection() {
                   }} />
                   {/* Year — same column as title */}
                   <span style={{
-                    fontSize: 16, fontWeight: 900, color: m.colour,
+                    fontSize: 18, fontWeight: 900, color: m.colour,
                     background: `${m.colour}14`,
                     borderRadius: 5, padding: "2px 7px",
                     letterSpacing: "-0.3px", marginTop: 8, marginBottom: 4,
@@ -659,7 +656,7 @@ export function JourneySection() {
                   }}>
                     {m.year}
                   </span>
-                  <div style={{ fontSize: 11, fontWeight: 800, color: "white", lineHeight: 1.3 }}>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: "white", lineHeight: 1.3 }}>
                     {m.title}
                   </div>
                 </div>
