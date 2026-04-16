@@ -9,7 +9,7 @@ import RoleToggle from "@/components/shared/RoleToggle";
 import tataLogo from "@/assets/tata-logo.png";
 import tataEngageLogo from "@/assets/tata-engage-logo-nobg.png";
 import heroImg from "@/assets/Taj_Sats_1.jpeg";
-import { B_TICKER, B_YELLOW } from "@/data/homeSharedData";
+import { B_TICKER, B_YELLOW, ACCENT_NAVY } from "@/data/homeSharedData";
 import { ProgrammeSpotlight, JourneySection, NumbersSection, TickerBar, SectionDivider } from "@/components/shared/HomeSections";
 
 const DOT_SECTIONS = [
@@ -93,7 +93,7 @@ const VolunteerHubView = () => {
                       padding: "3px 9px",
                       borderRadius: 4,
                       backgroundColor: inHero ? "rgba(0,0,0,0.85)" : "rgba(13,27,62,0.92)",
-                      border: `1px solid ${inHero ? "rgba(255,255,255,0.25)" : ACCENT}`,
+                      border: `1px solid ${inHero ? "rgba(255,255,255,0.25)" : ACCENT_NAVY}`,
                       color: "#ffffff",
                     }}>
                     {s.label}
