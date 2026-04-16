@@ -1040,8 +1040,8 @@ export default function DashboardView() {
         {/* Greeting bar */}
         <div style={{ background: "linear-gradient(135deg, #065666 0%, #0B7285 60%, #0891b2 100%)", padding: "92px 40px 28px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 24, flexWrap: "wrap" }}>
           <div>
-            <div style={{ fontSize: 24, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>{VOLUNTEER.firstName}, this is your volunteering space—</div>
-            <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)", marginTop: 6, fontWeight: 300 }}>your story, your impact.</div>
+            <div style={{ fontSize: 24, fontWeight: 900, color: "#fff", letterSpacing: -0.5 }}>{VOLUNTEER.firstName}, this is your volunteering space.</div>
+            <div style={{ fontSize: 14, color: "rgba(255,255,255,0.65)", marginTop: 6, fontWeight: 300 }}>Your story, Your impact.</div>
           </div>
           {hasActive ? (
             <div style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.22)", borderRadius: 12, padding: "14px 20px", maxWidth: 360 }}>
