@@ -666,7 +666,7 @@ export default function ProfileView() {
           {!IS_NGO && (
             <div style={{ display: "flex", gap: 12, background: "rgba(0,0,0,0.18)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "14px 14px 0 0", padding: "20px 24px", marginTop: 8 }}>
               {VOLUNTEER_STATS.map(s => (
-                <div key={s.label} style={{ flex: 1, textAlign: "center", borderRight: "1px solid rgba(255,255,255,0.1)", paddingRight: 16, marginRight: 4, lastChild: { borderRight: "none" } }}>
+                <div key={s.label} style={{ flex: 1, textAlign: "center", borderRight: "1px solid rgba(255,255,255,0.1)", paddingRight: 16, marginRight: 4 }}>
                   <div style={{ fontSize: 28, fontWeight: 900, color: LIME, letterSpacing: -1 }}>{s.value}{(s as any).suffix}</div>
                   <div style={{ fontSize: 10.5, fontWeight: 600, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.6px", marginTop: 3 }}>{s.label}</div>
                 </div>
