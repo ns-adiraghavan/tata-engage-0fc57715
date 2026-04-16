@@ -183,14 +183,6 @@ export default function App() {
         )}
 
         <main>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={location.pathname}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
               <Routes location={location}>
                 <Route path="/" element={<HomeView />} />
                 <Route path="/login" element={<LoginView />} />
@@ -208,7 +200,6 @@ export default function App() {
                 <Route path="/tvw" element={<ProtectedRoute><TVWHubView /></ProtectedRoute>} />
                 <Route path="/proengage" element={<ProtectedRoute><ProEngageView /></ProtectedRoute>} />
                 <Route path="/disaster-response" element={<DisasterResponseView />} />
-                
                 <Route path="/disaster-response/availability" element={<ProtectedRoute><DRAvailabilityForm /></ProtectedRoute>} />
                 <Route path="/disaster-response/confirmation" element={<ProtectedRoute><DRConfirmationView /></ProtectedRoute>} />
                 <Route path="/spoc/dashboard" element={<ProtectedRoute><SPOCDashboardView /></ProtectedRoute>} />
@@ -224,8 +215,6 @@ export default function App() {
                 <Route path="/media" element={<MediaView />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </motion.div>
-          </AnimatePresence>
         </main>
 
         <Chatbot />
