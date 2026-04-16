@@ -101,9 +101,9 @@ const Navbar = ({
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${(scrolled || isLoggedIn) ? "bg-white border-b border-zinc-100 shadow-sm" : "bg-black/20 backdrop-blur-sm border-b border-transparent"}`}>
+      <div className={`h-16 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${scrolled ? "bg-white border-b border-zinc-100 shadow-sm" : "bg-black/20 backdrop-blur-sm border-b border-transparent"}`}>
 
-        {/* ── LEFT: TataEngage logo (public) OR TataEngage logo (logged-in) ── */}
+        {/* ── LEFT: TataEngage logo ── */}
         <div className="flex-shrink-0">
           <img
             src={tataEngageLogo}
@@ -210,10 +210,10 @@ const Navbar = ({
               {/* Bell */}
               <div className="relative" ref={notifRef}>
                 <button onClick={() => setNotifOpen((o) => !o)}
-                  className="p-2 hover:bg-zinc-100 rounded-full cursor-pointer relative">
-                  <Bell size={20} className="text-zinc-700" />
+                  className={`p-2 rounded-full cursor-pointer relative transition-colors duration-300 ${scrolled ? "hover:bg-zinc-100" : "hover:bg-white/10"}`}>
+                  <Bell size={20} className={`transition-colors duration-300 ${scrolled ? "text-zinc-700" : "text-white/90"}`} />
                   {unreadCount > 0 && (
-                    <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
+                    <span className={`absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 ${scrolled ? "border-white" : "border-transparent"}`} />
                   )}
                 </button>
 
@@ -261,7 +261,7 @@ const Navbar = ({
                   <div className="w-9 h-9 rounded-full bg-[#3E7EB0] text-white flex items-center justify-center text-sm font-bold">
                     {user?.firstName?.[0]}{user?.lastName?.[0]}
                   </div>
-                  <ChevronDown size={14} className="text-zinc-400 group-hover:text-zinc-600 transition-colors" />
+                  <ChevronDown size={14} className={`transition-colors duration-300 ${scrolled ? "text-zinc-400 group-hover:text-zinc-600" : "text-white/60 group-hover:text-white"}`} />
                 </button>
 
                 {dropdownOpen && (
@@ -293,7 +293,7 @@ const Navbar = ({
               </div>
 
               {/* Tata logo — right side when logged in */}
-              <img src={tataLogo} alt="Tata" className="h-8 w-8 object-contain hidden md:block" />
+              <img src={tataLogo} alt="Tata" className={`h-8 w-8 object-contain hidden md:block transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`} />
             </>
           ) : (
             /* ── Public right: Log In + Register + Tata logo ── */
