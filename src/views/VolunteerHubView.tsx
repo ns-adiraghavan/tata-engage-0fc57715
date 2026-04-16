@@ -158,10 +158,10 @@ const VolunteerHubView = () => {
               <p className="text-white/50 text-sm font-medium tracking-wide mb-1">
                 {"\n"}
               </p>
-              <p className="text-white/90 text-5xl font-sans font-light" style={{ letterSpacing: "-0.5px", lineHeight: 1.1 }}>
-                <span className="font-bold text-white">{greeting()}, {user?.firstName ?? "there"}!</span>
+              <p className="text-white text-5xl font-sans font-bold" style={{ letterSpacing: "-0.5px", lineHeight: 1.1 }}>
+                Welcome to TataEngage, {user?.firstName ?? "there"}.
               </p>
-              <p className="text-white/30 text-xs mt-2 font-medium">{user?.company} · {user?.designation}</p>
+              <p className="text-white/70 text-lg mt-3 font-light">Let's make today count.</p>
             </div>
 
             {/* Centre — quote */}
