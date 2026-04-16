@@ -773,9 +773,10 @@ export function NumbersSection() {
                       background: "rgba(255,255,255,0.35)",
                     }} />
                     {/* "In the numbers" eyebrow — inside the tile */}
-                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: "0 0 12px", color: "rgba(13,27,62,0.55)", alignSelf: "flex-start", textAlign: "left" }}>
+                    <p style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.4px", margin: 0, color: "rgba(13,27,62,0.55)", alignSelf: "flex-start", textAlign: "left" }}>
                       In the numbers
                     </p>
+                    <div style={{ flex: 1 }} />
                     <p style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "1.2px", margin: "0 0 8px", color: labelColour }}>
                       {s.label}
                     </p>
@@ -783,6 +784,7 @@ export function NumbersSection() {
                       {s.num}
                     </p>
                     <p style={{ fontSize: 12, margin: "8px 0 0", color: subColour }}>{s.sub}</p>
+                    <div style={{ flex: 1 }} />
                   </div>
                 );
               })}
