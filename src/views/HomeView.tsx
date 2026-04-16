@@ -124,6 +124,8 @@ const HomeView = () => {
   const { isLoggedIn }   = useAuth();
 
   const [activeSection,  setActiveSection]  = useState(0);
+  const [showLabel,      setShowLabel]      = useState(false);
+  const labelTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [heroSlide,      setHeroSlide]      = useState(0);
   const [subOpen,        setSubOpen]        = useState(false);
   const [subName,        setSubName]        = useState("");
@@ -136,10 +138,17 @@ const HomeView = () => {
     SECTION_IDS.forEach((id, idx) => {
       const el = document.getElementById(id);
       if (!el) return;
-      const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setActiveSection(idx); }, { threshold: 0.2 });
+      const o = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) {
+          setActiveSection(idx);
+          setShowLabel(true);
+          if (labelTimer.current) clearTimeout(labelTimer.current);
+          labelTimer.current = setTimeout(() => setShowLabel(false), 1800);
+        }
+      }, { threshold: 0.2 });
       o.observe(el); obs.push(o);
     });
-    return () => obs.forEach((o) => o.disconnect());
+    return () => { obs.forEach((o) => o.disconnect()); if (labelTimer.current) clearTimeout(labelTimer.current); };
   }, []);
 
   useEffect(() => { const t = setInterval(() => setHeroSlide((p) => (p + 1) % HERO_SLIDES.length), 6000); return () => clearInterval(t); }, []);
@@ -178,7 +187,7 @@ const HomeView = () => {
                 className="flex items-center justify-end"
                 style={{ marginBottom: 0 }}
               >
-                {active && (
+                {active && showLabel && (
                   <span
                     className="whitespace-nowrap shadow-sm transition-all duration-300 mr-2"
                     style={{

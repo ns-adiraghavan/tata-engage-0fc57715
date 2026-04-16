@@ -409,18 +409,18 @@ export function ProgrammeSpotlight() {
                 <div>
                   <span style={{
                     fontSize: 9, fontWeight: 800, textTransform: "uppercase",
-                    letterSpacing: "1px", color: "#9D174D80",
+                    letterSpacing: "1px", color: "rgba(255,255,255,0.5)",
                     display: "block", marginBottom: 8,
                   }}>
                     Employee's Own Initiative
                   </span>
                   <h3 style={{
-                    fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
+                    fontSize: 22, fontWeight: 900, color: "#ffffff",
                     lineHeight: 1.2, margin: "0 0 14px", letterSpacing: "-0.4px",
                   }}>
                     Dream Big with Personal Volunteering Efforts
                   </h3>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#9D174D", marginBottom: 14 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#ffffff", marginBottom: 14 }}>
                     Learn More <ArrowRight size={13} />
                   </div>
                 </div>
