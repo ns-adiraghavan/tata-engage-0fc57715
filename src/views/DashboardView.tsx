@@ -38,28 +38,28 @@ const NOTIFICATIONS: Record<string, boolean> = {
 const notifDot: React.CSSProperties = { position: "absolute", top: -3, right: -6, width: 8, height: 8, borderRadius: "50%", background: "#E8401C", boxShadow: "0 0 0 2px white" };
 
 const VOLUNTEER = {
-  firstName: "Priya",
-  lastName: "Sharma",
-  company: "Tata Consultancy Services",
-  designation: "Senior Product Manager",
+  firstName: "Shrirang",
+  lastName: "Dhavale",
+  company: "Tata Services",
+  designation: "General Manager",
   city: "Mumbai",
-  gender: "Female",
-  birthDate: "1990-06-15",
-  email: "priya.sharma@tata.com",
-  phone: "+91 98765 43210",
-  function: "Product Strategy",
-  educationQualification: "MBA — Indian Institute of Management, Ahmedabad",
-  totalWorkExperience: "12",
+  gender: "Male",
+  birthDate: "1974-09-29",
+  email: "sdhavale@tata.com",
+  phone: "+91 96195 51533",
+  function: "Other",
+  educationQualification: "Master's Degree (MA, MSc, MCom, MBA, MCA, M.Des, MTech, ME, MPharm, LLM, MArch, MD, etc.)",
+  totalWorkExperience: "25",
   languages: ["English", "Hindi", "Marathi"],
-  skills: ["Product Strategy", "Finance", "Data Analytics", "Leadership"],
-  interests: ["Education", "Women Empowerment", "Environment"],
+  skills: ["Coaching", "Training"],
+  interests: ["Education"],
   preferredMode: "Either" as "Remote" | "In-Person" | "Either",
-  disasterResponseInterest: true,
+  disasterResponseInterest: false,
   notifyProEngage: true,
   notifyTVW: true,
-  linkedinUrl: "https://linkedin.com/in/priyasharma",
+  linkedinUrl: "",
   stats: {
-    hoursVolunteered: IS_NEW_VOLUNTEER ? 0 : 347,
+    hoursVolunteered: IS_NEW_VOLUNTEER ? 0 : 120,
     projectsApplied:  IS_NEW_VOLUNTEER ? 0 : 6,
     projectsCompleted:IS_NEW_VOLUNTEER ? 0 : 4,
     projectsDropped:  IS_NEW_VOLUNTEER ? 0 : 1,
@@ -67,32 +67,32 @@ const VOLUNTEER = {
     badgesEarned:     IS_NEW_VOLUNTEER ? 0 : 7,
   },
   activeApplication: IS_NEW_VOLUNTEER ? null : {
-    title: "Digital Marketing Strategy for Livelihood NGO",
-    ngo: "Uday Foundation",
+    title: "Conduct Mock Interviews",
+    ngo: "Friends of Children",
     status: "Matched" as const,
-    matchDate: "12 Mar 2025",
-    edition: "ProEngage Edition 11",
-    skillArea: "Marketing",
-    startDate: "01 Feb 2025",
-    mode: "Online",
-    duration: "4 months",
-    hoursPerWeek: "3",
+    matchDate: "10 Dec 2025",
+    edition: "ProEngage 2025 | 02",
+    skillArea: "Coaching and Training",
+    startDate: "01 Dec 2025",
+    mode: "In-Person",
+    duration: "2 months",
+    hoursPerWeek: "2",
   },
 };
 
 const TESTIMONIAL = {
-  quote: "Priya brought exceptional clarity to our fundraising strategy. Within eight weeks she redesigned our donor communications and helped us raise 40% more than the previous quarter. Her analytical rigour, combined with genuine empathy for our mission, made her an invaluable part of our team.",
-  author: "Rekha Iyer",
-  role: "Executive Director, Uday Foundation",
-  project: "Digital Marketing Strategy for Livelihood NGO",
-  edition: "ProEngage Edition 11",
-  avatarBg: "#166534",   // dark green
-  avatarInitials: "RI",
+  quote: "We had a great experience while working with Shrirang. He was very professional. His expertise was very useful for the project. We would love to associate more with him again.",
+  author: "Manoj Kumar Sharma",
+  role: "Project Lead, Friends of Children",
+  project: "Mock Interviews - Students",
+  edition: "ProEngage 2025 | 01",
+  avatarBg: "#1A4731",
+  avatarInitials: "MK",
 };
 
 const TVW_OPPORTUNITIES = [
-  { id: "t1", title: "Tree Plantation Drive — Aarey Forest",         company: "Tata Motors",              date: "22 Sep 2025", mode: "In-person · Mumbai",  duration: "Half day", spotsLeft: 12, theme: "Environment",  accentColor: "#65A30D", pastel: "#F7FEE7" },
-  { id: "t2", title: "Digital Literacy Workshop for Senior Citizens", company: "Tata Consultancy Services", date: "28 Sep 2025", mode: "Online · Pan-India",  duration: "3 hours",  spotsLeft: 45, theme: "Education",    accentColor: B_BLUE,   pastel: P_BLUE   },
+  { id: "t1", title: "Tree Plantation Drive — Aarey Forest",         company: "Tata Motors",              date: "18 Apr 2026", mode: "In-person · Mumbai",  duration: "Half day", spotsLeft: 12, theme: "Environment",  accentColor: "#65A30D", pastel: "#F7FEE7" },
+  { id: "t2", title: "Digital Literacy Workshop for Senior Citizens", company: "Tata Consultancy Services", date: "25 Apr 2026", mode: "Online · Pan-India",  duration: "3 hours",  spotsLeft: 45, theme: "Education",    accentColor: B_BLUE,   pastel: P_BLUE   },
   { id: "t3", title: "Healthcare Camp — Blood Donation Drive",        company: "Tata Steel",               date: "4 Oct 2025",  mode: "In-person · Pune",    duration: "Half day", spotsLeft: 8,  theme: "Health",      accentColor: B_RED,    pastel: P_RED    },
 ];
 
@@ -126,52 +126,46 @@ const PE_OPPORTUNITIES = [
 ];
 
 const HISTORY_APPLICATIONS = [
-  // PE 23 (latest)
-  { id: "a0",  project: "AI Strategy for Rural Skilling NGO",                edition: "ProEngage 23", year: "2025", status: "Matched",   date: "10 Mar 2025", type: "ProEngage", ngo: "Pratham",             skillArea: "Product Strategy", timeline: [{ label: "Applied", date: "10 Mar 2025", done: true }, { label: "Under Review", date: "14 Mar 2025", done: true }, { label: "Shortlisted", date: "18 Mar 2025", done: true }, { label: "Matched", date: "22 Mar 2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
-  // PE 22
-  { id: "a00", project: "Communications Strategy for Climate NGO",            edition: "ProEngage 22", year: "2024", status: "Completed", date: "Sep 2024",    type: "ProEngage", ngo: "Asha Foundation",     skillArea: "Marketing",        timeline: [{ label: "Applied", date: "1 Sep 2024", done: true }, { label: "Under Review", date: "5 Sep 2024", done: true }, { label: "Shortlisted", date: "10 Sep 2024", done: true }, { label: "Matched", date: "16 Sep 2024", done: true }, { label: "Project Complete", date: "20 Dec 2024", done: true }] },
-  // PE 21
-  { id: "a01", project: "Impact Measurement Framework for Livelihood NGO",    edition: "ProEngage 21", year: "2024", status: "Completed", date: "Jun 2024",    type: "ProEngage", ngo: "Grameen Solutions",    skillArea: "Data Analytics",   timeline: [{ label: "Applied", date: "2 Jun 2024", done: true }, { label: "Under Review", date: "6 Jun 2024", done: true }, { label: "Matched", date: "14 Jun 2024", done: true }, { label: "Project Complete", date: "10 Sep 2024", done: true }] },
-  // PE 20
-  { id: "a02", project: "Fundraising Dashboard for Education Trust",          edition: "ProEngage 20", year: "2024", status: "Completed", date: "Mar 2024",    type: "ProEngage", ngo: "Teach For India",      skillArea: "Finance / Data",   timeline: [{ label: "Applied", date: "4 Mar 2024", done: true }, { label: "Under Review", date: "8 Mar 2024", done: true }, { label: "Matched", date: "15 Mar 2024", done: true }, { label: "Project Complete", date: "5 Jun 2024", done: true }] },
-  // PE 19
-  { id: "a03", project: "Leadership Training Design for Women's Cooperative",  edition: "ProEngage 19", year: "2024", status: "Completed", date: "Jan 2024",    type: "ProEngage", ngo: "SEWA",                skillArea: "Training / L&D",   timeline: [{ label: "Applied", date: "6 Jan 2024", done: true }, { label: "Under Review", date: "10 Jan 2024", done: true }, { label: "Matched", date: "18 Jan 2024", done: true }, { label: "Project Complete", date: "8 Apr 2024", done: true }] },
-  // TVW 22
-  { id: "a3",  project: "Aarey Tree Plantation Drive",                        edition: "TVW 22",       year: "2024", status: "Completed", date: "14 Sep 2024", type: "TVW",       ngo: "Tata Motors CSR",     skillArea: "Environment",      timeline: [{ label: "Registered", date: "10 Sep 2024", done: true }, { label: "Confirmed", date: "11 Sep 2024", done: true }, { label: "Participated", date: "14 Sep 2024", done: true }] },
-  // PE 18
-  { id: "a04", project: "Product Roadmap for Disability Tech Platform",       edition: "ProEngage 18", year: "2023", status: "Completed", date: "Oct 2023",    type: "ProEngage", ngo: "Samarthanam Trust",    skillArea: "Product Strategy", timeline: [{ label: "Applied", date: "2 Oct 2023", done: true }, { label: "Under Review", date: "7 Oct 2023", done: true }, { label: "Matched", date: "14 Oct 2023", done: true }, { label: "Project Complete", date: "10 Jan 2024", done: true }] },
-  // PE 17
-  { id: "a05", project: "Brand Identity for Tribal Art Collective",           edition: "ProEngage 17", year: "2023", status: "Completed", date: "Jul 2023",    type: "ProEngage", ngo: "Dastkar",              skillArea: "Marketing",        timeline: [{ label: "Applied", date: "4 Jul 2023", done: true }, { label: "Under Review", date: "8 Jul 2023", done: true }, { label: "Matched", date: "15 Jul 2023", done: true }, { label: "Project Complete", date: "5 Oct 2023", done: true }] },
-  // PE 16
-  { id: "a06", project: "Digital Strategy for Child Rights NGO",              edition: "ProEngage 16", year: "2023", status: "Completed", date: "Apr 2023",    type: "ProEngage", ngo: "Butterflies India",    skillArea: "Finance / Data",   timeline: [{ label: "Applied", date: "2 Apr 2023", done: true }, { label: "Under Review", date: "6 Apr 2023", done: true }, { label: "Matched", date: "14 Apr 2023", done: true }, { label: "Project Complete", date: "5 Jul 2023", done: true }] },
-  // TVW 21
-  { id: "a5",  project: "Blood Donation Drive — Tata Steel",                  edition: "TVW 21",       year: "2024", status: "Completed", date: "22 Mar 2024", type: "TVW",       ngo: "Tata Steel CSR",      skillArea: "Health",           timeline: [{ label: "Registered", date: "18 Mar 2024", done: true }, { label: "Confirmed", date: "19 Mar 2024", done: true }, { label: "Participated", date: "22 Mar 2024", done: true }] },
-  // PE 15
-  { id: "a07", project: "Finance Training for Rural Microfinance Group",      edition: "ProEngage 15", year: "2023", status: "Dropped",   date: "Jan 2023",    type: "ProEngage", ngo: "Grameen Solutions",    skillArea: "Finance",          timeline: [{ label: "Applied", date: "4 Jan 2023", done: true }, { label: "Under Review", date: "8 Jan 2023", done: true }, { label: "Matched", date: "16 Jan 2023", done: true }, { label: "Project Dropped", date: "15 Feb 2023", done: true }] },
-  // PE 14
-  { id: "a08", project: "Volunteer Management System Design",                 edition: "ProEngage 14", year: "2022", status: "Completed", date: "Oct 2022",    type: "ProEngage", ngo: "iVolunteer",           skillArea: "Product Strategy", timeline: [{ label: "Applied", date: "2 Oct 2022", done: true }, { label: "Under Review", date: "7 Oct 2022", done: true }, { label: "Matched", date: "15 Oct 2022", done: true }, { label: "Project Complete", date: "5 Jan 2023", done: true }] },
-  // PE 13
-  { id: "a09", project: "Marketing Plan for Organic Farmers Collective",      edition: "ProEngage 13", year: "2022", status: "Completed", date: "Jul 2022",    type: "ProEngage", ngo: "Navdanya",             skillArea: "Marketing",        timeline: [{ label: "Applied", date: "4 Jul 2022", done: true }, { label: "Under Review", date: "9 Jul 2022", done: true }, { label: "Matched", date: "18 Jul 2022", done: true }, { label: "Project Complete", date: "10 Oct 2022", done: true }] },
-  // PE 12
-  { id: "a10", project: "Analytics Dashboard for Women's Health NGO",         edition: "ProEngage 12", year: "2022", status: "Completed", date: "Apr 2022",    type: "ProEngage", ngo: "MAMTA",                skillArea: "Data Analytics",   timeline: [{ label: "Applied", date: "3 Apr 2022", done: true }, { label: "Under Review", date: "8 Apr 2022", done: true }, { label: "Matched", date: "16 Apr 2022", done: true }, { label: "Project Complete", date: "6 Jul 2022", done: true }] },
-  // PE 11
-  { id: "a1",  project: "Digital Marketing Strategy — Uday Foundation",       edition: "ProEngage 11", year: "2022", status: "Matched",   date: "10 Mar 2022", type: "ProEngage", ngo: "Uday Foundation",     skillArea: "Marketing",        timeline: [{ label: "Applied", date: "10 Mar 2022", done: true }, { label: "Under Review", date: "14 Mar 2022", done: true }, { label: "Shortlisted", date: "18 Mar 2022", done: true }, { label: "Matched", date: "22 Mar 2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  // PE 2025 | 02 (active)
+  { id: "a0",  project: "Conduct Mock Interviews",                                  edition: "ProEngage 2025 | 02", year: "2025", status: "Matched",                    date: "Dec 2025",    type: "ProEngage", ngo: "Friends of Children",                            skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "Dec 2025", done: true }, { label: "Under Review", date: "Dec 2025", done: true }, { label: "Matched", date: "10 Dec 2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  // PE 2025 | 01
+  { id: "a1",  project: "Mock Interviews - Students",                               edition: "ProEngage 2025 | 01", year: "2025", status: "Completed",                  date: "2025",        type: "ProEngage", ngo: "Friends of Children",                            skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2025", done: true }, { label: "Under Review", date: "2025", done: true }, { label: "Matched", date: "2025", done: true }, { label: "Project Complete", date: "2025", done: true }] },
+  { id: "a2",  project: "Mock Interviews",                                          edition: "ProEngage 2025 | 01", year: "2025", status: "Matched",                    date: "2025",        type: "ProEngage", ngo: "Tata STRIVE",                                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2025", done: true }, { label: "Under Review", date: "2025", done: true }, { label: "Matched", date: "2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  // PE 2024 | 02
+  { id: "a3",  project: "Mock Interviews",                                          edition: "ProEngage 2024 | 02", year: "2024", status: "Completed",                  date: "2024",        type: "ProEngage", ngo: "Tata STRIVE",                                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2024", done: true }, { label: "Under Review", date: "2024", done: true }, { label: "Matched", date: "2024", done: true }, { label: "Project Complete", date: "2024", done: true }] },
+  // PE 2024 | 01
+  { id: "a4",  project: "Interviewing Candidates",                                  edition: "ProEngage 2024 | 01", year: "2024", status: "Dropped",                    date: "2024",        type: "ProEngage", ngo: "Buddy4Study India Foundation",                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2024", done: true }, { label: "Under Review", date: "2024", done: true }, { label: "Matched", date: "2024", done: true }, { label: "Project Dropped", date: "2024", done: true }] },
+  // PE 2023 | 02
+  { id: "a5",  project: "Vernacular: Digital Learning",                             edition: "ProEngage 2023 | 02", year: "2023", status: "Completed",                  date: "2023",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Matched", date: "2023", done: true }, { label: "Project Complete", date: "2023", done: true }] },
+  { id: "a6",  project: "Annual report writing",                                    edition: "ProEngage 2023 | 02", year: "2023", status: "Completed",                  date: "2023",        type: "ProEngage", ngo: "Little Angel Foundation",                         skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Matched", date: "2023", done: true }, { label: "Project Complete", date: "2023", done: true }] },
+  // PE 2023 | 01
+  { id: "a7",  project: "Developing a Sexual Harassment Policy",                   edition: "ProEngage 2023 | 01", year: "2023", status: "Matched",                    date: "2023",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Matched", date: "2023", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  // PE 2022 | 02
+  { id: "a8",  project: "Translation of booklet from English, Marathi",            edition: "ProEngage 2022 | 02", year: "2022", status: "Matched",                    date: "2022",        type: "ProEngage", ngo: "Ekansh Trust",                                   skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Matched", date: "2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a9",  project: "Translations",                                             edition: "ProEngage 2022 | 02", year: "2022", status: "Matched",                    date: "2022",        type: "ProEngage", ngo: "The Vishwas And Anuradha Memorial (TVAM) Foundation", skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Matched", date: "2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  // PE 2022 | 01
+  { id: "a10", project: "Audio Book Recording",                                     edition: "ProEngage 2022 | 01", year: "2022", status: "Matched",                    date: "2022",        type: "ProEngage", ngo: "GiftAbled",                                      skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Matched", date: "2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a11", project: "Mock interview",                                           edition: "ProEngage 2022 | 01", year: "2022", status: "Not Selected",               date: "2022",        type: "ProEngage", ngo: "Bright Future",                                  skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Volunteer Selected by Other NGO", date: "2022", done: true }] },
+  // PE 2021 | 02
+  { id: "a12", project: "Audio Book Recording",                                     edition: "ProEngage 2021 | 02", year: "2021", status: "Matched",                    date: "2021",        type: "ProEngage", ngo: "GiftAbled",                                      skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2021", done: true }, { label: "Under Review", date: "2021", done: true }, { label: "Matched", date: "2021", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  // PE 2020 | 01
+  { id: "a13", project: "Write an annual report",                                   edition: "ProEngage 2020 | 01", year: "2020", status: "Matched",                    date: "2020",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2020", done: true }, { label: "Under Review", date: "2020", done: true }, { label: "Matched", date: "2020", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
 ];
 
 const HISTORY_PROJECTS = [
-  { id: "p0",  title: "AI Strategy for Rural Skilling",        ngo: "Pratham",             edition: "ProEngage 23", year: "2025", hours: 0,  outcome: "Project in progress. AI-powered curriculum design underway.",                                       skills: ["Product Strategy", "Data Analytics"], cert: false },
-  { id: "p00", title: "Communications for Climate NGO",        ngo: "Asha Foundation",     edition: "ProEngage 22", year: "2024", hours: 56, outcome: "Launched new donor comms strategy — 35% increase in recurring donor sign-ups.",                      skills: ["Marketing"], cert: true  },
-  { id: "p01", title: "Impact Measurement Framework",          ngo: "Grameen Solutions",   edition: "ProEngage 21", year: "2024", hours: 62, outcome: "Delivered M&E framework adopted across 3 state programmes, covering 12,000 beneficiaries.",           skills: ["Data Analytics", "Finance"], cert: true  },
-  { id: "p02", title: "Fundraising Dashboard",                 ngo: "Teach For India",     edition: "ProEngage 20", year: "2024", hours: 44, outcome: "Dashboard went live — 60% uplift in online donations within 8 weeks of go-live.",                    skills: ["Finance / Data"], cert: true  },
-  { id: "p03", title: "Leadership Training Design",            ngo: "SEWA",                edition: "ProEngage 19", year: "2024", hours: 52, outcome: "Trained 150 rural women entrepreneurs in bookkeeping and leadership fundamentals.",                   skills: ["Training / L&D", "Finance"], cert: true  },
-  { id: "p04", title: "Product Roadmap for Disability Tech",   ngo: "Samarthanam Trust",   edition: "ProEngage 18", year: "2023", hours: 60, outcome: "Roadmap adopted by tech team — v1 app released for 4,000 users with disabilities.",                  skills: ["Product Strategy"], cert: true  },
-  { id: "p05", title: "Brand Identity for Tribal Art",         ngo: "Dastkar",             edition: "ProEngage 17", year: "2023", hours: 48, outcome: "New brand identity increased artisan sales by 28% at annual craft mela.",                            skills: ["Marketing"], cert: true  },
-  { id: "p06", title: "Digital Strategy for Child Rights NGO", ngo: "Butterflies India",   edition: "ProEngage 16", year: "2023", hours: 40, outcome: "Social strategy delivered — Instagram reach grew 3× within 60 days of implementation.",              skills: ["Marketing", "Data Analytics"], cert: true  },
-  { id: "p07", title: "Finance Training — Microfinance Group", ngo: "Grameen Solutions",   edition: "ProEngage 15", year: "2023", hours: 12, outcome: "Project ended early due to NGO restructuring. Partial curriculum delivered.",                         skills: ["Finance"], cert: false },
-  { id: "p08", title: "Volunteer Management System Design",    ngo: "iVolunteer",          edition: "ProEngage 14", year: "2022", hours: 58, outcome: "System design spec delivered — implemented across 12 chapters, managing 2,400 volunteers.",           skills: ["Product Strategy"], cert: true  },
-  { id: "p09", title: "Marketing Plan for Organic Farmers",    ngo: "Navdanya",            edition: "ProEngage 13", year: "2022", hours: 46, outcome: "Marketing plan delivered — farmers' collective revenue grew 22% in next harvest season.",              skills: ["Marketing"], cert: true  },
-  { id: "p10", title: "Analytics Dashboard for Women's Health",ngo: "MAMTA",               edition: "ProEngage 12", year: "2022", hours: 50, outcome: "Dashboard deployed — programme team now tracks 8 health KPIs monthly across all 6 districts.",         skills: ["Data Analytics"], cert: true  },
-  { id: "p1",  title: "Digital Marketing Strategy",            ngo: "Uday Foundation",     edition: "ProEngage 11", year: "2022", hours: 48, outcome: "Launched new donation portal — 40% uplift in donor engagement within 8 weeks of go-live.",            skills: ["Marketing"], cert: true  },
+  { id: "p0",  title: "Conduct Mock Interviews",                 ngo: "Friends of Children",                            edition: "ProEngage 2025 | 02", year: "2025", hours: 16,  outcome: "Project in progress. Mock interview sessions underway with student cohort.",                                    skills: ["Coaching", "Training"], cert: false },
+  { id: "p1",  title: "Mock Interviews - Students",              ngo: "Friends of Children",                            edition: "ProEngage 2025 | 01", year: "2025", hours: 16,  outcome: "Completed 16 hours of mock interview coaching for students. Certificate received.",                            skills: ["Coaching", "Training"], cert: true  },
+  { id: "p2",  title: "Mock Interviews",                         ngo: "Tata STRIVE",                                    edition: "ProEngage 2025 | 01", year: "2025", hours: 8,   outcome: "Project requirement fulfilled. Conducted mock interview sessions for vocational trainees.",                      skills: ["Coaching", "Training"], cert: false },
+  { id: "p3",  title: "Mock Interviews",                         ngo: "Tata STRIVE",                                    edition: "ProEngage 2024 | 02", year: "2024", hours: 8,   outcome: "Completed 4 actual hours of mock interview coaching. Certificate received.",                                   skills: ["Coaching", "Training"], cert: true  },
+  { id: "p4",  title: "Interviewing Candidates",                 ngo: "Buddy4Study India Foundation",                   edition: "ProEngage 2024 | 01", year: "2024", hours: 48,  outcome: "Project ended early — drop out. Feedback submitted.",                                                            skills: ["Coaching", "Training"], cert: false },
+  { id: "p5",  title: "Vernacular: Digital Learning",            ngo: "Chezuba",                                        edition: "ProEngage 2023 | 02", year: "2023", hours: 72,  outcome: "Completed digital learning facilitation sessions. Feedback submitted.",                                           skills: ["Coaching", "Training"], cert: false },
+  { id: "p6",  title: "Annual report writing",                   ngo: "Little Angel Foundation",                        edition: "ProEngage 2023 | 02", year: "2023", hours: 48,  outcome: "Project requirement fulfilled. Contributed to annual report writing for the NGO.",                              skills: ["Coaching", "Training"], cert: false },
+  { id: "p7",  title: "Developing a Sexual Harassment Policy",   ngo: "Chezuba",                                        edition: "ProEngage 2023 | 01", year: "2023", hours: 24,  outcome: "Policy framework drafted and submitted to the organisation.",                                                    skills: ["Coaching", "Training"], cert: false },
+  { id: "p8",  title: "Translation of booklet from English, Marathi", ngo: "Ekansh Trust",                             edition: "ProEngage 2022 | 02", year: "2022", hours: 12,  outcome: "Translated educational booklet from English to Marathi for field distribution.",                               skills: ["Coaching", "Training"], cert: false },
+  { id: "p9",  title: "Translations",                            ngo: "The Vishwas And Anuradha Memorial (TVAM) Foundation", edition: "ProEngage 2022 | 02", year: "2022", hours: 48,  outcome: "Translation work completed for the foundation's outreach materials.",                                 skills: ["Coaching", "Training"], cert: false },
+  { id: "p10", title: "Audio Book Recording",                    ngo: "GiftAbled",                                      edition: "ProEngage 2022 | 01", year: "2022", hours: 12,  outcome: "Audio book recorded and delivered to GiftAbled for their accessibility library.",                              skills: ["Coaching", "Training"], cert: false },
+  { id: "p11", title: "Audio Book Recording",                    ngo: "GiftAbled",                                      edition: "ProEngage 2021 | 02", year: "2021", hours: 8,   outcome: "Audio book recording sessions completed for GiftAbled.",                                                         skills: ["Coaching", "Training"], cert: false },
+  { id: "p12", title: "Write an annual report",                  ngo: "Chezuba",                                        edition: "ProEngage 2020 | 01", year: "2020", hours: 24,  outcome: "Annual report drafted and submitted to Chezuba.",                                                               skills: ["Coaching", "Training"], cert: false },
 ];
 
 const BADGES = [
@@ -702,7 +696,7 @@ function GrievanceDrawer({ open, onClose }: { open: boolean; onClose: () => void
 type PEProject = typeof PE_OPPORTUNITIES[0];
 
 function ApplyDrawer({ project, onClose }: { project: PEProject | null; onClose: () => void }) {
-  const [designation, setDesignation] = useState("Senior Product Manager");
+  const [designation, setDesignation] = useState("Others");
   const [designationDetail, setDesignationDetail] = useState("");
   const [skills, setSkills] = useState<string[]>([]);
   const [attributes, setAttributes] = useState("");
@@ -999,9 +993,9 @@ export default function DashboardView() {
   const [feedbackExpanded, setFeedbackExpanded] = useState(false);
 
   const PE_ONLY_EDITIONS = [
-    "ProEngage 23","ProEngage 22","ProEngage 21","ProEngage 20","ProEngage 19",
-    "ProEngage 18","ProEngage 17","ProEngage 16","ProEngage 15","ProEngage 14",
-    "ProEngage 13","ProEngage 12","ProEngage 11",
+    "ProEngage 2025 | 02","ProEngage 2025 | 01","ProEngage 2024 | 02","ProEngage 2024 | 01",
+    "ProEngage 2023 | 02","ProEngage 2023 | 01","ProEngage 2022 | 02","ProEngage 2022 | 01",
+    "ProEngage 2021 | 02","ProEngage 2020 | 01",
   ];
 
   // Filter helpers — all keyed to same editionFilter
@@ -1159,7 +1153,7 @@ export default function DashboardView() {
             <div style={{ background: "#f0f1f8", borderRadius: 16, padding: "24px 22px", marginBottom: 52 }}>
             <section id="activities" style={{ scrollMarginTop: 108 }}>
               <SectionHeading
-                eyebrow={IS_PE_SEASON ? "ProEngage Edition 11 · Open · Closes 15 Jul 2025" : "Non-ProEngage season · Next edition opens Jan 2026"}
+                eyebrow={IS_PE_SEASON ? "ProEngage Edition 23 · Open" : "Non-ProEngage season · Next edition opens Jan 2026"}
                 title="My Activities"
               />
               <Slicers options={activitySlicers} active={activeActivity} onChange={setActiveActivity} accentColor={B_TEAL} notifications={{ opportunities: NOTIFICATIONS.viewOpportunities, diy: NOTIFICATIONS.diyActivities, proengage: NOTIFICATIONS.proEngageProject, apply: NOTIFICATIONS.proEngageProject, early: NOTIFICATIONS.proEngageProject }} />
@@ -1362,7 +1356,7 @@ export default function DashboardView() {
                   {["applications", "projects", "certificates", "feedback"].includes(activeHistory) && (
                     <div style={{ marginBottom: 16 }}>
                       <select value={editionFilter} onChange={e => { setEditionFilter(e.target.value); setProjectsExpanded(false); setAppsExpanded(false); setCertsExpanded(false); setFeedbackExpanded(false); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1.5px solid #dddde8", background: "#fff", fontSize: 13, color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif", cursor: "pointer", outline: "none" }}>
-                        <option value="">Latest Edition (PE 23)</option>
+                        <option value="">Latest Edition (PE 2025 | 02)</option>
                         {PE_ONLY_EDITIONS.map(e => <option key={e}>{e}</option>)}
                       </select>
                     </div>
