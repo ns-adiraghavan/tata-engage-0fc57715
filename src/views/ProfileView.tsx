@@ -603,7 +603,7 @@ export default function ProfileView() {
         <div style={col}><FieldLabel required>City</FieldLabel>{isEditing ? <TextInput value={ngoProfile.city} onChange={v => setN("city", v)} /> : <ReadOnly value={ngoProfile.city} />}</div>
         <div style={col}><FieldLabel required>State</FieldLabel>{isEditing ? <TextInput value={ngoProfile.state} onChange={v => setN("state", v)} /> : <ReadOnly value={ngoProfile.state} />}</div>
         <div style={col}><FieldLabel required>Country</FieldLabel>{isEditing ? <SelectInput value={ngoProfile.country} onChange={v => setN("country", v)} options={COUNTRIES} /> : <ReadOnly value={ngoProfile.country} />}</div>
-        <div style={col}><FieldLabel>PIN Code</FieldLabel>{isEditing ? <TextInput value={ngoProfile.pincode} onChange={v => setN("pincode", v)} placeholder="400001" /> : <ReadOnly value={ngoProfile.pincode} /></div>
+        <div style={col}><FieldLabel>PIN Code</FieldLabel>{isEditing ? <TextInput value={ngoProfile.pincode} onChange={v => setN("pincode", v)} placeholder="400001" /> : <ReadOnly value={ngoProfile.pincode} />}</div>
       </div>
     </div>
   );
