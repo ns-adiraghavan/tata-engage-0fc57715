@@ -198,18 +198,11 @@ const TVWHubView = () => {
                       </div>
                     </div>
                     <button
-                      disabled={event.capacity === "Full" || isRegistered}
-                      onClick={() => handleRegisterClick(event)}
-                      className={`w-full py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 text-sm ${
-                        isRegistered
-                          ? "bg-green-50 text-green-600 cursor-default"
-                          : event.capacity === "Full"
-                            ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                            : "text-white hover:opacity-90 shadow-lg shadow-black/10 cursor-pointer"
-                      }`}
-                      style={!isRegistered && event.capacity !== "Full" ? { backgroundColor: COBALT } : undefined}
+                      onClick={() => triggerToast("Please contact your SPOC to register for this event.")}
+                      className="w-full py-3.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 text-sm text-white hover:opacity-90 shadow-lg shadow-black/10 cursor-pointer"
+                      style={{ backgroundColor: COBALT }}
                     >
-                      {isRegistered ? (<><Check size={18} /> Registered</>) : event.capacity === "Full" ? "Full" : "Register Now"}
+                      Contact SPOC
                     </button>
                   </div>
                 </motion.div>
