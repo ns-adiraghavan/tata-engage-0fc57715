@@ -16,7 +16,8 @@ const ACCENT_NAVY = "#0D1B3E";
 const P_YELLOW    = "#FEF6E4";
 const P_RED       = "#FFF0EE";
 const P_TEAL      = "#E6F8F5";
-const P_TEAL_DARK = "#C8EDE9";   // darker teal pastel — testimonial text area
+const P_TEAL_DARK = "#E8F5D4";   // lime green pastel — testimonial bg
+const B_LIME_DARK = "#3D6B1E";   // dark green — testimonial text
 const P_BLUE      = "#EBF4FF";   // cobalt pastel — replaces P_BLUE everywhere
 
 // ─── KPI colours — bold solid backgrounds matching HomeSections tiles ─────────
