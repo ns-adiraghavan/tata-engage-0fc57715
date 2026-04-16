@@ -352,7 +352,7 @@ function ResourceCard({ r, onClick }: { r: typeof RESOURCES[0]; onClick?: () => 
 // ─── DrawerShell — centred modal ──────────────────────────────────────────────
 type AppRecord = typeof HISTORY_APPLICATIONS[0];
 
-function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: { open: boolean; onClose: () => void; title: string; subtitle?: string; accentTag?: string; children: React.ReactNode; }) {
+function DrawerShell({ open, onClose, title, subtitle, accentTag, accentColor, children }: { open: boolean; onClose: () => void; title: string; subtitle?: string; accentTag?: string; accentColor?: string; children: React.ReactNode; }) {
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", h);
@@ -362,11 +362,11 @@ function DrawerShell({ open, onClose, title, subtitle, accentTag, children }: { 
     <>
       <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(13,27,62,0.45)", zIndex: 200, opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", transition: "opacity 0.22s", backdropFilter: "blur(2px)" }} />
       <div style={{ position: "fixed", top: "50%", left: "50%", transform: open ? "translate(-50%, -50%) scale(1)" : "translate(-50%, -48%) scale(0.97)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.25s", opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none", width: 560, maxWidth: "calc(100vw - 40px)", maxHeight: "calc(100vh - 80px)", background: "#fff", borderRadius: 16, zIndex: 201, boxShadow: "0 24px 64px rgba(13,27,62,0.22)", display: "flex", flexDirection: "column", fontFamily: "'DM Sans', sans-serif", overflowY: "auto" }}>
-        <div style={{ background: "linear-gradient(135deg, #065666 0%, #0B7285 100%)", padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
-          <button onClick={onClose} style={{ background: "rgba(13,27,62,0.1)", border: "none", borderRadius: 7, color: "rgba(13,27,62,0.7)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>← Close</button>
-          {accentTag && <div style={{ display: "inline-block", background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
+        <div style={{ background: accentColor || "linear-gradient(135deg, #065666 0%, #0B7285 100%)", padding: "24px 28px", borderRadius: "16px 16px 0 0", flexShrink: 0 }}>
+          <button onClick={onClose} style={{ background: "rgba(255,255,255,0.18)", border: "none", borderRadius: 7, color: "rgba(255,255,255,0.95)", fontSize: 13, fontWeight: 500, padding: "5px 12px", cursor: "pointer", marginBottom: 16 }}>← Close</button>
+          {accentTag && <div style={{ display: "inline-block", background: "rgba(255,255,255,0.18)", border: "1px solid rgba(255,255,255,0.3)", borderRadius: 100, padding: "3px 10px", fontSize: 10.5, fontWeight: 700, color: "#fff", letterSpacing: "0.6px", textTransform: "uppercase", marginBottom: 10 }}>{accentTag}</div>}
           <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", lineHeight: 1.3 }}>{title}</div>
-          {subtitle && <div style={{ fontSize: 12.5, color: "rgba(13,27,62,0.5)", marginTop: 5 }}>{subtitle}</div>}
+          {subtitle && <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.7)", marginTop: 5 }}>{subtitle}</div>}
         </div>
         <div style={{ flex: 1, overflowY: "auto" }}>{children}</div>
       </div>
@@ -423,7 +423,7 @@ function ProjectUpdateDrawer({ open, onClose }: { open: boolean; onClose: () => 
   const [submitted, setSubmitted] = useState(false);
   const reset = () => { onClose(); setSubmitted(false); setText(""); };
   return (
-    <DrawerShell open={open} onClose={reset} title="Post Your Monthly Update" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Monthly Update">
+    <DrawerShell open={open} onClose={reset} title="Post Your Monthly Update" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Monthly Update" accentColor={KPI_PROENGAGE}>
       {submitted ? (
         <div style={{ padding: "40px 28px", textAlign: "center" }}>
           <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#F7FEE7", border: "2px solid #84CC16", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
@@ -503,7 +503,7 @@ function FeedbackDrawer({ open, onClose }: { open: boolean; onClose: () => void 
   ];
 
   return (
-    <DrawerShell open={open} onClose={reset} title="ProEngage Volunteer Feedback" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Project Feedback">
+    <DrawerShell open={open} onClose={reset} title="ProEngage Volunteer Feedback" subtitle={`${VOLUNTEER.activeApplication?.ngo} · ${VOLUNTEER.activeApplication?.edition}`} accentTag="Project Feedback" accentColor={KPI_CVP}>
       {submitted ? (
         <div style={{ padding: "40px 28px", textAlign: "center" }}>
           <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#F7FEE7", border: "2px solid #84CC16", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
@@ -650,7 +650,7 @@ function GrievanceDrawer({ open, onClose }: { open: boolean; onClose: () => void
   const categories = ["Communication issues with NGO", "Project scope changed unexpectedly", "Scheduling conflict", "Platform issue", "Other"];
   const canSubmit = category && text.trim().length > 10;
   return (
-    <DrawerShell open={open} onClose={reset} title="Raise a Grievance" subtitle="Your concern will be reviewed by the TSG Admin team" accentTag="Grievance">
+    <DrawerShell open={open} onClose={reset} title="Raise a Grievance" subtitle="Your concern will be reviewed by the TSG Admin team" accentTag="Grievance" accentColor={B_RED}>
       {submitted ? (
         <div style={{ padding: "40px 28px", textAlign: "center" }}>
           <div style={{ width: 56, height: 56, borderRadius: "50%", background: P_YELLOW, border: `2px solid ${B_YELLOW}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
@@ -908,7 +908,7 @@ function ReferralDrawer({ open, onClose }: { open: boolean; onClose: () => void 
   const refLink = "https://tataengage.com/join?ref=PS7842";
   const copy = () => { setCopied(true); setTimeout(() => setCopied(false), 2000); };
   return (
-    <DrawerShell open={open} onClose={onClose} title="Refer a Colleague or Family Member" subtitle="Share your unique referral link below" accentTag="Referral">
+    <DrawerShell open={open} onClose={onClose} title="Refer a Colleague or Family Member" subtitle="Share your unique referral link below" accentTag="Referral" accentColor={B_TEAL}>
       <div style={{ padding: "28px 28px" }}>
         <p style={{ fontSize: 13.5, color: "#6b6b7a", lineHeight: 1.6, marginBottom: 22 }}>When someone joins TataEngage using your referral link, your Referred count goes up and you're one step closer to earning the Connector badge.</p>
         <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 10, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
@@ -930,7 +930,7 @@ function ShareDrawer({ open, onClose }: { open: boolean; onClose: () => void }) 
   };
   const [active, setActive] = useState("linkedin");
   return (
-    <DrawerShell open={open} onClose={onClose} title="Share Your Story" subtitle="Let your network know about your volunteering journey" accentTag="Social Share">
+    <DrawerShell open={open} onClose={onClose} title="Share Your Story" subtitle="Let your network know about your volunteering journey" accentTag="Social Share" accentColor={B_BLUE}>
       <div style={{ padding: "28px 28px" }}>
         <div style={{ display: "flex", gap: 8, marginBottom: 18 }}>
           {[["linkedin", "LinkedIn"], ["twitter", "Twitter"], ["whatsapp", "WhatsApp"]].map(([id, lbl]) => (
@@ -1467,17 +1467,17 @@ export default function DashboardView() {
                       <div>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                           {shown.map(p => (
-                            <div key={p.id} style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 14, padding: "22px 20px" }}>
-                              <div style={{ fontSize: 10.5, fontWeight: 700, color: B_BLUE, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>Certificate of Completion</div>
-                              <div style={{ fontSize: 14.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 3 }}>{p.title}</div>
+                            <div key={p.id} style={{ background: "#fff", border: `1px solid ${B_TEAL}33`, borderRadius: 14, padding: "22px 20px" }}>
+                              <div style={{ fontSize: 10.5, fontWeight: 700, color: B_TEAL, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: 6 }}>Certificate of Completion</div>
+                              <div style={{ fontSize: 14.5, fontWeight: 700, color: B_BLUE, marginBottom: 3 }}>{p.title}</div>
                               <div style={{ fontSize: 12.5, color: "#8888a0", marginBottom: 14 }}>{p.ngo} · {p.edition}</div>
                               <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 14 }}>
-                                <span style={{ background: "#fff", color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_BLUE}22` }}>{p.edition}</span>
-                                <span style={{ background: "#fff", color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_BLUE}22` }}>{p.hours} hrs</span>
+                                <span style={{ background: "#fff", color: B_TEAL, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_TEAL}33` }}>{p.edition}</span>
+                                <span style={{ background: "#fff", color: B_TEAL, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100, border: `1px solid ${B_TEAL}33` }}>{p.hours} hrs</span>
                               </div>
                               <div style={{ display: "flex", gap: 8 }}>
-                                <button style={{ flex: 1, background: ACCENT_NAVY, color: "#fff", border: "none", borderRadius: 8, padding: "8px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Download PDF</button>
-                                <button style={{ background: "#0077b5", color: "#fff", border: "none", borderRadius: 8, padding: "8px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Share</button>
+                                <button style={{ flex: 1, background: B_BLUE, color: "#fff", border: "none", borderRadius: 8, padding: "8px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Download PDF</button>
+                                <button style={{ background: B_TEAL, color: "#fff", border: "none", borderRadius: 8, padding: "8px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>Share</button>
                               </div>
                             </div>
                           ))}
