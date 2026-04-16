@@ -1249,22 +1249,29 @@ export default function DashboardView() {
                   {/* 4 action tiles — white bg, coloured dot icon square */}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                     {[
-                      { label: "Post Your Monthly Update", desc: "Share progress with TSG and your NGO partner.", color: KPI_PROENGAGE, pastel: "#E6F4EE", action: () => setUpdateOpen(true),           disabled: false },
-                      { label: "Access E-Module",          desc: "Orientation, roles and responsibilities.",      color: KPI_TVW,       pastel: "#E8F3FB", action: () => setShowOrientationModal(true),  disabled: false },
-                      { label: "Submit Feedback",          desc: "Rate your experience and share learnings.",     color: KPI_CVP,       pastel: P_YELLOW,  action: () => setFeedbackOpen(true),          disabled: false },
-                      { label: "Download Certificate",     desc: "Available once both sides submit feedback.",    color: "#bbb",        pastel: "#f8f8fc", action: () => {},                             disabled: true  },
+                      { label: "Post Your Monthly Update", tags: ["Progress Report", "NGO Partner & TSG"],       color: KPI_PROENGAGE, pastel: "#E6F4EE", action: () => setUpdateOpen(true),           disabled: false },
+                      { label: "Access E-Module",          tags: ["Orientations", "Roles & Responsibilities"],   color: KPI_TVW,       pastel: "#E8F3FB", action: () => setShowOrientationModal(true),  disabled: false },
+                      { label: "Submit Feedback",          tags: ["Experience Rating", "Share Learnings"],        color: KPI_CVP,       pastel: P_YELLOW,  action: () => setFeedbackOpen(true),          disabled: false },
+                      { label: "Download Certificate",     tags: [] as string[],                                  color: "#bbb",        pastel: "#f8f8fc", action: () => {},                             disabled: true  },
                     ].map(a => (
                       <button key={a.label} disabled={a.disabled} onClick={a.action}
-                        style={{ background: a.disabled ? "#fafafa" : a.color, border: a.disabled ? "1px solid #e8e8f0" : "none", borderRadius: 14, padding: "18px 18px 16px", textAlign: "left", cursor: a.disabled ? "not-allowed" : "pointer", opacity: a.disabled ? 0.55 : 1, transition: "transform 0.18s, box-shadow 0.18s", fontFamily: "'DM Sans', sans-serif", boxShadow: a.disabled ? "none" : `0 4px 20px ${a.color}33` }}
-                        onMouseEnter={e => { if (!a.disabled) { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 28px ${a.color}44`; }}}
-                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = a.disabled ? "none" : `0 4px 20px ${a.color}33`; }}
+                        style={{ background: "#ffffff", border: `1px solid ${a.color}22`, borderRadius: 14, padding: "18px 18px 16px", textAlign: "left", cursor: a.disabled ? "not-allowed" : "pointer", opacity: a.disabled ? 0.55 : 1, transition: "transform 0.18s, box-shadow 0.18s", fontFamily: "'DM Sans', sans-serif", boxShadow: `0 2px 12px ${a.color}11` }}
+                        onMouseEnter={e => { if (!a.disabled) { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 28px ${a.color}22`; }}}
+                        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 2px 12px ${a.color}11`; }}
                       >
-                        <div style={{ width: 40, height: 40, borderRadius: 9, background: a.disabled ? "#f0f0f5" : "rgba(255,255,255,0.18)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
-                          <div style={{ width: 8, height: 8, borderRadius: "50%", background: a.disabled ? "#ccc" : "#ffffff" }} />
+                        <div style={{ width: 40, height: 40, borderRadius: 9, background: a.disabled ? "#f0f0f5" : a.pastel, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+                          <div style={{ width: 8, height: 8, borderRadius: "50%", background: a.disabled ? "#ccc" : a.color }} />
                         </div>
-                        <div style={{ fontSize: 13.5, fontWeight: 700, color: a.disabled ? "#aaa" : "#ffffff", marginBottom: 4 }}>{a.label}</div>
-                        <div style={{ fontSize: 12, color: a.disabled ? "#ccc" : "rgba(255,255,255,0.82)", lineHeight: 1.45 }}>{a.desc}</div>
-                        {a.disabled && <div style={{ fontSize: 11, color: "#ccc", marginTop: 6, fontStyle: "italic" }}>Awaiting feedback submission</div>}
+                        <div style={{ fontSize: 13.5, fontWeight: 700, color: a.disabled ? "#aaa" : ACCENT_NAVY, marginBottom: 8 }}>{a.label}</div>
+                        {a.tags.length > 0 ? (
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                            {a.tags.map(t => (
+                              <span key={t} style={{ background: a.color, color: "#ffffff", fontSize: 11, fontWeight: 600, padding: "3px 10px", borderRadius: 100 }}>{t}</span>
+                            ))}
+                          </div>
+                        ) : (
+                          <div style={{ fontSize: 11.5, color: "#ccc", fontStyle: "italic" }}>Awaiting feedback submission</div>
+                        )}
                       </button>
                     ))}
                   </div>
