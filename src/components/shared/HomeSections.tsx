@@ -372,7 +372,7 @@ export function ProgrammeSpotlight() {
                     fontSize: 22, fontWeight: 900, color: ACCENT_NAVY,
                     lineHeight: 1.2, margin: 0, letterSpacing: "-0.4px",
                   }}>
-                    Company Curated for You
+                    Company Curated Opportunities for You
                   </h3>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: 14 }}>
