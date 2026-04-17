@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { Award, Star, Compass, Zap, Shield } from "lucide-react";
+import badgeVeteran    from "@/assets/badges/veteran.svg";
+import badgeAmbassador from "@/assets/badges/ambassador.svg";
+import badgeNorthStar  from "@/assets/badges/northstar.svg";
+import badgeLead       from "@/assets/badges/lead.svg";
+import badgeChampion   from "@/assets/badges/champion.png";
 import { useAuth } from "@/context/AuthContext";
 import { useAppContext } from "@/context/AppContext";
 
@@ -735,16 +739,14 @@ export default function ProfileView() {
               <div style={{ marginTop: 28, background: "#fff", border: "1px solid #e8e8f0", borderRadius: 12, padding: "16px" }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: "#aaaabc", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>Badges</div>
                 {[
-                  { Icon: Award,   name: "ProEngage Veteran",     color: "#1A6B3C", bg: CP_GREEN   },
-                  { Icon: Star,    name: "ProEngage Ambassador",   color: "#1E6BB8", bg: CP_MIDBLUE },
-                  { Icon: Compass, name: "ProEngage North Star",   color: "#5b21b6", bg: "#f3f0ff"  },
-                  { Icon: Zap,     name: "ProEngage Pioneer",      color: "#D97706", bg: "#FFF4E5"  },
-                  { Icon: Shield,  name: "ProEngage 23 Champion",  color: "#BE185D", bg: "#FCE7F3"  },
+                  { image: badgeVeteran,    name: "ProEngage Veteran"    },
+                  { image: badgeAmbassador, name: "ProEngage Ambassador"  },
+                  { image: badgeNorthStar,  name: "ProEngage North Star"  },
+                  { image: badgeLead,       name: "ProEngage Pioneer"     },
+                  { image: badgeChampion,   name: "ProEngage 23 Champion" },
                 ].map(b => (
                   <div key={b.name} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: 8, background: b.bg, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <b.Icon size={16} color={b.color} />
-                    </div>
+                    <img src={b.image} alt={b.name} style={{ width: 32, height: 32, objectFit: "contain", flexShrink: 0 }} />
                     <div style={{ fontSize: 12, fontWeight: 600, color: ACCENT_NAVY }}>{b.name}</div>
                   </div>
                 ))}

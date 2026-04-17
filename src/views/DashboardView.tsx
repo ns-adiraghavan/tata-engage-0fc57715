@@ -1,12 +1,12 @@
-import imgPhotos  from "@/assets/tata-motors-2.jpg";
-import imgVideos  from "@/assets/Taj_Sats_1.jpeg";
-import imgStories from "@/assets/tata-communications-1.jpg";
-import imgEvents  from "@/assets/Tata_Motors_1.jpg";
-import imgEModule from "@/assets/dr_photo.jpg";
-import badgeVeteran    from "@/assets/badges/veteran.png";
-import badgeAmbassador from "@/assets/badges/ambassador.png";
-import badgeNorthStar  from "@/assets/badges/northstar.png";
-import badgeLead       from "@/assets/badges/lead.png";
+import imgPhotos  from "@/assets/tata-elxsi.jpg";
+import imgVideos  from "@/assets/tata_power.JPG";
+import imgStories from "@/assets/trent.jpg";
+import imgEvents  from "@/assets/IHCL.jpg";
+import imgEModule from "@/assets/air-india.jpg";
+import badgeVeteran    from "@/assets/badges/veteran.svg";
+import badgeAmbassador from "@/assets/badges/ambassador.svg";
+import badgeNorthStar  from "@/assets/badges/northstar.svg";
+import badgeLead       from "@/assets/badges/lead.svg";
 import badgeChampion   from "@/assets/badges/champion.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -137,29 +137,29 @@ const PE_OPPORTUNITIES = [
 
 const HISTORY_APPLICATIONS = [
   // PE 2025 | 02 (active)
-  { id: "a0",  project: "Conduct Mock Interviews",                                  edition: "ProEngage 2025 | 02", year: "2025", status: "Matched",                    date: "Dec 2025",    type: "ProEngage", ngo: "Friends of Children",                            skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "Dec 2025", done: true }, { label: "Under Review", date: "Dec 2025", done: true }, { label: "Matched", date: "10 Dec 2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a0",  project: "Conduct Mock Interviews",                                  edition: "ProEngage 2025 | 02", year: "2025", status: "Selected",                    date: "Dec 2025",    type: "ProEngage", ngo: "Friends of Children",                            skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "Dec 2025", done: true }, { label: "Under Review", date: "Dec 2025", done: true }, { label: "Selected", date: "10 Dec 2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
   // PE 2025 | 01
-  { id: "a1",  project: "Mock Interviews - Students",                               edition: "ProEngage 2025 | 01", year: "2025", status: "Completed",                  date: "2025",        type: "ProEngage", ngo: "Friends of Children",                            skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2025", done: true }, { label: "Under Review", date: "2025", done: true }, { label: "Matched", date: "2025", done: true }, { label: "Project Complete", date: "2025", done: true }] },
-  { id: "a2",  project: "Mock Interviews",                                          edition: "ProEngage 2025 | 01", year: "2025", status: "Matched",                    date: "2025",        type: "ProEngage", ngo: "Tata STRIVE",                                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2025", done: true }, { label: "Under Review", date: "2025", done: true }, { label: "Matched", date: "2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a1",  project: "Mock Interviews - Students",                               edition: "ProEngage 2025 | 01", year: "2025", status: "Completed",                  date: "2025",        type: "ProEngage", ngo: "Friends of Children",                            skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2025", done: true }, { label: "Under Review", date: "2025", done: true }, { label: "Selected", date: "2025", done: true }, { label: "Project Complete", date: "2025", done: true }] },
+  { id: "a2",  project: "Mock Interviews",                                          edition: "ProEngage 2025 | 01", year: "2025", status: "Selected",                    date: "2025",        type: "ProEngage", ngo: "Tata STRIVE",                                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2025", done: true }, { label: "Under Review", date: "2025", done: true }, { label: "Selected", date: "2025", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
   // PE 2024 | 02
-  { id: "a3",  project: "Mock Interviews",                                          edition: "ProEngage 2024 | 02", year: "2024", status: "Completed",                  date: "2024",        type: "ProEngage", ngo: "Tata STRIVE",                                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2024", done: true }, { label: "Under Review", date: "2024", done: true }, { label: "Matched", date: "2024", done: true }, { label: "Project Complete", date: "2024", done: true }] },
+  { id: "a3",  project: "Mock Interviews",                                          edition: "ProEngage 2024 | 02", year: "2024", status: "Completed",                  date: "2024",        type: "ProEngage", ngo: "Tata STRIVE",                                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2024", done: true }, { label: "Under Review", date: "2024", done: true }, { label: "Selected", date: "2024", done: true }, { label: "Project Complete", date: "2024", done: true }] },
   // PE 2024 | 01
-  { id: "a4",  project: "Interviewing Candidates",                                  edition: "ProEngage 2024 | 01", year: "2024", status: "Dropped",                    date: "2024",        type: "ProEngage", ngo: "Buddy4Study India Foundation",                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2024", done: true }, { label: "Under Review", date: "2024", done: true }, { label: "Matched", date: "2024", done: true }, { label: "Project Dropped", date: "2024", done: true }] },
+  { id: "a4",  project: "Interviewing Candidates",                                  edition: "ProEngage 2024 | 01", year: "2024", status: "Dropped Out",                 date: "2024",        type: "ProEngage", ngo: "Buddy4Study India Foundation",                    skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2024", done: true }, { label: "Under Review", date: "2024", done: true }, { label: "Selected", date: "2024", done: true }, { label: "Dropped Out", date: "2024", done: true }] },
   // PE 2023 | 02
-  { id: "a5",  project: "Vernacular: Digital Learning",                             edition: "ProEngage 2023 | 02", year: "2023", status: "Completed",                  date: "2023",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Matched", date: "2023", done: true }, { label: "Project Complete", date: "2023", done: true }] },
-  { id: "a6",  project: "Annual report writing",                                    edition: "ProEngage 2023 | 02", year: "2023", status: "Completed",                  date: "2023",        type: "ProEngage", ngo: "Little Angel Foundation",                         skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Matched", date: "2023", done: true }, { label: "Project Complete", date: "2023", done: true }] },
+  { id: "a5",  project: "Vernacular: Digital Learning",                             edition: "ProEngage 2023 | 02", year: "2023", status: "Selected",                    date: "2023",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Selected", date: "2023", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a6",  project: "Annual report writing",                                    edition: "ProEngage 2023 | 02", year: "2023", status: "Project requirement fulfilled", date: "2023",        type: "ProEngage", ngo: "Little Angel Foundation",                         skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Selected", date: "2023", done: true }, { label: "Requirement Fulfilled", date: "2023", done: true }] },
   // PE 2023 | 01
-  { id: "a7",  project: "Developing a Sexual Harassment Policy",                   edition: "ProEngage 2023 | 01", year: "2023", status: "Matched",                    date: "2023",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Matched", date: "2023", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a7",  project: "Developing a Sexual Harassment Policy",                   edition: "ProEngage 2023 | 01", year: "2023", status: "Selected",                    date: "2023",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2023", done: true }, { label: "Under Review", date: "2023", done: true }, { label: "Selected", date: "2023", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
   // PE 2022 | 02
-  { id: "a8",  project: "Translation of booklet from English, Marathi",            edition: "ProEngage 2022 | 02", year: "2022", status: "Matched",                    date: "2022",        type: "ProEngage", ngo: "Ekansh Trust",                                   skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Matched", date: "2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
-  { id: "a9",  project: "Translations",                                             edition: "ProEngage 2022 | 02", year: "2022", status: "Matched",                    date: "2022",        type: "ProEngage", ngo: "The Vishwas And Anuradha Memorial (TVAM) Foundation", skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Matched", date: "2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a8",  project: "Translation of booklet from English, Marathi",            edition: "ProEngage 2022 | 02", year: "2022", status: "Selected",                    date: "2022",        type: "ProEngage", ngo: "Ekansh Trust",                                   skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Selected", date: "2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a9",  project: "Translations",                                             edition: "ProEngage 2022 | 02", year: "2022", status: "Project requirement fulfilled", date: "2022",        type: "ProEngage", ngo: "The Vishwas And Anuradha Memorial (TVAM) Foundation", skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Selected", date: "2022", done: true }, { label: "Requirement Fulfilled", date: "2022", done: true }] },
   // PE 2022 | 01
-  { id: "a10", project: "Audio Book Recording",                                     edition: "ProEngage 2022 | 01", year: "2022", status: "Matched",                    date: "2022",        type: "ProEngage", ngo: "GiftAbled",                                      skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Matched", date: "2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
-  { id: "a11", project: "Mock interview",                                           edition: "ProEngage 2022 | 01", year: "2022", status: "Not Selected",               date: "2022",        type: "ProEngage", ngo: "Bright Future",                                  skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Volunteer Selected by Other NGO", date: "2022", done: true }] },
+  { id: "a10", project: "Audio Book Recording",                                     edition: "ProEngage 2022 | 01", year: "2022", status: "Selected",                    date: "2022",        type: "ProEngage", ngo: "GiftAbled",                                      skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Selected", date: "2022", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a11", project: "Mock interview",                                           edition: "ProEngage 2022 | 01", year: "2022", status: "Volunteer Selected by Other NGO", date: "2022",        type: "ProEngage", ngo: "Bright Future",                                  skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2022", done: true }, { label: "Under Review", date: "2022", done: true }, { label: "Volunteer Selected by Other NGO", date: "2022", done: true }] },
   // PE 2021 | 02
-  { id: "a12", project: "Audio Book Recording",                                     edition: "ProEngage 2021 | 02", year: "2021", status: "Matched",                    date: "2021",        type: "ProEngage", ngo: "GiftAbled",                                      skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2021", done: true }, { label: "Under Review", date: "2021", done: true }, { label: "Matched", date: "2021", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a12", project: "Audio Book Recording",                                     edition: "ProEngage 2021 | 02", year: "2021", status: "Selected",                    date: "2021",        type: "ProEngage", ngo: "GiftAbled",                                      skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2021", done: true }, { label: "Under Review", date: "2021", done: true }, { label: "Selected", date: "2021", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
   // PE 2020 | 01
-  { id: "a13", project: "Write an annual report",                                   edition: "ProEngage 2020 | 01", year: "2020", status: "Matched",                    date: "2020",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2020", done: true }, { label: "Under Review", date: "2020", done: true }, { label: "Matched", date: "2020", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
+  { id: "a13", project: "Write an annual report",                                   edition: "ProEngage 2020 | 01", year: "2020", status: "Selected",                    date: "2020",        type: "ProEngage", ngo: "Chezuba",                                        skillArea: "Coaching and Training", timeline: [{ label: "Applied", date: "2020", done: true }, { label: "Under Review", date: "2020", done: true }, { label: "Selected", date: "2020", done: true }, { label: "Project Complete", date: "Ongoing", done: false }] },
 ];
 
 const HISTORY_PROJECTS = [
@@ -328,9 +328,25 @@ function Slicers({ options, active, onChange, accentColor = B_BLUE, notification
 
 // ─── Status badge ─────────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: string }) {
-  const map: Record<string, [string, string]> = { Matched: ["#F7FEE7", "#65A30D"], Completed: [P_BLUE, B_BLUE], Dropped: [P_RED, B_RED], Applied: [P_BLUE, B_BLUE], Pending: [P_TEAL, B_TEAL] };
-  const [bg, color] = map[status] ?? ["#f0f0f0", "#555"];
-  return <span style={{ background: bg, color, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, letterSpacing: "0.3px", whiteSpace: "nowrap" }}>{status}</span>;
+  const map: Record<string, [string, string, string]> = {
+    "Matched":                         ["#F0FDF4", "#16A34A", "Selected"],
+    "Selected":                        ["#F0FDF4", "#16A34A", "Selected"],
+    "Completed":                       [P_BLUE,    B_BLUE,    "Completed"],
+    "Project requirement fulfilled":   ["#EFF6FF", "#2563EB", "Fulfilled"],
+    "Fulfilled":                       ["#EFF6FF", "#2563EB", "Fulfilled"],
+    "Dropped":                         [P_RED,     B_RED,     "Dropped Out"],
+    "Dropped Out":                     [P_RED,     B_RED,     "Dropped Out"],
+    "DROP OUT":                        [P_RED,     B_RED,     "Dropped Out"],
+    "Not Selected":                    ["#FFF7ED", "#C2410C", "Not Selected"],
+    "Rejected":                        [P_RED,     B_RED,     "Rejected"],
+    "Volunteer Selected by Other NGO": ["#FFF7ED", "#92400E", "Other NGO"],
+    "Selected by Other NGO":           ["#FFF7ED", "#92400E", "Other NGO"],
+    "Applied":                         [P_TEAL,    B_TEAL,    "Applied"],
+    "Pending":                         [P_TEAL,    B_TEAL,    "Pending"],
+    "Under Review":                    ["#F5F3FF", "#6D28D9",  "Under Review"],
+  };
+  const [bg, color, label] = map[status] ?? ["#f0f0f0", "#555", status];
+  return <span style={{ background: bg, color, fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, letterSpacing: "0.3px", whiteSpace: "nowrap" }}>{label}</span>;
 }
 
 // ─── Section heading ──────────────────────────────────────────────────────────
