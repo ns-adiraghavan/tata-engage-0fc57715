@@ -185,11 +185,11 @@ const HISTORY_FEEDBACK = [
 ];
 
 const BADGES = [
-  { id: "b1", name: "ProEngage Veteran",        image: badgeVeteran,    desc: "5+ editions of ProEngage participation", earned: "2026", color: "#8E2548" },
-  { id: "b2", name: "ProEngage Ambassador",     image: badgeAmbassador, desc: "Championed volunteering across teams",   earned: "2025", color: "#1E6BB8" },
-  { id: "b3", name: "ProEngage North Star",     image: badgeNorthStar,  desc: "Guided NGOs through complex projects",   earned: "2026", color: "#0D1B3E" },
-  { id: "b4", name: "Lead the Change",          image: badgeLead,       desc: "Led change with your professional skills", earned: "",   color: "#E91E80" },
-  { id: "b5", name: "ProEngage 23 Champion",    image: badgeChampion,   desc: "Outstanding contribution in PE 2023",    earned: "",     color: "#E8551C" },
+  { id: "b1", name: "ProEngage Veteran",     image: badgeVeteran,    desc: "Successfully completed 5+ PE projects logging over 100 hours",         earned: "2026", color: "#8E2548" },
+  { id: "b2", name: "ProEngage Ambassador",  image: badgeAmbassador, desc: "Successfully shared a testimonial on LinkedIn",                         earned: "2025", color: "#1E6BB8" },
+  { id: "b3", name: "ProEngage North Star",  image: badgeNorthStar,  desc: "Successfully signed up at least 3 family members who completed PE project", earned: "2026", color: "#0D1B3E" },
+  { id: "b4", name: "ProEngage 23 Champion", image: badgeChampion,   desc: "Successfully completed 23rd Edition of PE",                              earned: "2026", color: "#E8551C" },
+  { id: "b5", name: "ProEngage Pioneer",     image: badgeLead,       desc: "Successfully completed the very first PE project",                      earned: "2020", color: "#E91E80" },
 ];
 
 const RESOURCES = [
