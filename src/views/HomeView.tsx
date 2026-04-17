@@ -10,6 +10,7 @@ import tataAIG from "@/assets/Tata_AIG_2.jpg";
 import tataMotors1 from "@/assets/Tata_Motors_1.jpg";
 import voltasImg from "@/assets/Voltas.JPG";
 import tajSats from "@/assets/Taj_Sats.jpeg";
+import drHeroPhoto from "@/assets/dr_photo.jpg";
 import {
   B_INDIGO, B_YELLOW, B_TEAL, B_BLUE, B_TICKER, ACCENT_NAVY,
 } from "@/data/homeSharedData";
@@ -86,7 +87,7 @@ const HERO_SLIDES = [
     },
   },
   {
-    photo: tajSats,
+    photo: drHeroPhoto,
     accent: B_BLUE, tag: "Disaster Response", cta: "video" as const,
     headline: "Volunteers on-ground within 48 hours of the Kerala floods",
     sub: "Organised, rapid, human — Tata's fastest ever humanitarian response.",
