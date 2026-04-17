@@ -469,7 +469,7 @@ export function JourneySection() {
       {/* Dark overlay */}
       <div style={{
         position: "absolute", inset: 0,
-        background: "linear-gradient(135deg, rgba(5,5,20,0.70) 0%, rgba(5,5,20,0.64) 100%)",
+        background: "linear-gradient(135deg, rgba(5,5,20,0.60) 0%, rgba(5,5,20,0.54) 100%)",
         pointerEvents: "none",
       }} />
 
