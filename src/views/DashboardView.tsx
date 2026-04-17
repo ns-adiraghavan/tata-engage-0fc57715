@@ -7,7 +7,7 @@ import badgeVeteran    from "@/assets/badges/veteran.svg";
 import badgeAmbassador from "@/assets/badges/ambassador.svg";
 import badgeNorthStar  from "@/assets/badges/northstar.svg";
 import badgeLead       from "@/assets/badges/lead.svg";
-import badgeChampion   from "@/assets/badges/champion.png";
+import badgeChampion   from "@/assets/badges/lead.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 // (badge icons replaced with image assets)
