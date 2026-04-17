@@ -443,9 +443,9 @@ function ResourceCard({ r, onClick }: { r: typeof RESOURCES[0]; onClick?: () => 
     <div onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, overflow: "hidden", cursor: "pointer", transform: hov ? "translateY(-3px)" : "translateY(0)", boxShadow: hov ? `0 8px 24px ${r.accentColor}18` : "none", transition: "transform 0.18s, box-shadow 0.18s" }}
     >
-      <div style={{ height: 150, background: `url(${r.photo}) center/cover no-repeat` }} />
-      <div style={{ background: r.accentColor, padding: "12px 14px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ fontSize: 14.5, fontWeight: 900, color: "#fff", textAlign: "center", lineHeight: 1.3 }}>{r.label}</div>
+      <div style={{ height: 188, background: `url(${r.photo}) center/cover no-repeat` }} />
+      <div style={{ background: r.accentColor, padding: "15px 16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", textAlign: "center", lineHeight: 1.3 }}>{r.label}</div>
       </div>
     </div>
   );
