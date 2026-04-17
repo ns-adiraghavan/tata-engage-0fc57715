@@ -10,7 +10,7 @@ import badgeLead       from "@/assets/badges/lead.png";
 import badgeChampion   from "@/assets/badges/champion.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Star, Zap, Award, Shield, Compass } from "lucide-react";
+// (badge icons replaced with image assets)
 import { IS_PE_SEASON } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 
@@ -209,10 +209,6 @@ const STAT_TOOLTIPS: Record<string, string> = {
   "Badges Earned":      "Awarded for key milestones — completing a project, 100 hours, TVW participation and more.",
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BADGE_ICONS: Record<string, any> = {
-  b1: Award, b2: Star, b3: Compass, b4: Zap, b5: Shield,
-};
 
 // Activity tab config by season state
 const hasActive = !!VOLUNTEER.activeApplication;
