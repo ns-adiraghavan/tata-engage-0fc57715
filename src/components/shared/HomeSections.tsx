@@ -459,7 +459,7 @@ export function JourneySection() {
   const milestones = JOURNEY_MILESTONES;
 
   return (
-    <section ref={ref} className="section-block" style={{
+    <section ref={ref} className="section-block opacity-75" style={{
       backgroundImage: `url(${titanImg})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
