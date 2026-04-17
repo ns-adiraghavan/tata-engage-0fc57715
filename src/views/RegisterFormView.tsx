@@ -370,7 +370,7 @@ const RegisterFormView = () => {
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
       {/* ── FORM BODY ──────────────────────────────────────────────────────── */}
-      <div style={{ flex: 1, backgroundColor: "#f5f5fa", position: "relative", display: "flex", justifyContent: "center", padding: "80px 32px 48px", overflow: "hidden" }}>
+      <div style={{ flex: 1, backgroundColor: "#f5f5fa", position: "relative", display: "flex", justifyContent: "center", padding: "80px 22px 48px", overflow: "hidden" }}>
 
         {/* Doodles — left */}
         <img src={doodleCluster1} alt="" style={{ position: "absolute", left: -48, top: "40%", transform: "translateY(-50%)", width: 240, opacity: 0.09, pointerEvents: "none", userSelect: "none", rotate: "-8deg" }} />
@@ -380,7 +380,7 @@ const RegisterFormView = () => {
         <img src={doodleCluster2} alt="" style={{ position: "absolute", right: -36, top: "35%", transform: "translateY(-50%)", width: 220, opacity: 0.09, pointerEvents: "none", userSelect: "none", rotate: "12deg" }} />
         <img src={doodleCluster3} alt="" style={{ position: "absolute", right: 64, bottom: 28, width: 150, opacity: 0.07, pointerEvents: "none", userSelect: "none", rotate: "-6deg" }} />
 
-        <div style={{ width: "100%", maxWidth: 680, position: "relative", zIndex: 1 }}>
+        <div style={{ width: "90%", maxWidth: 1400, position: "relative", zIndex: 1 }}>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
 
             {/* Section heading */}
