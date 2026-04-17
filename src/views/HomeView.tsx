@@ -10,7 +10,7 @@ import tataAIG from "@/assets/Tata_AIG_2.jpg";
 import tataMotors1 from "@/assets/Tata_Motors_1.jpg";
 import voltasImg from "@/assets/Voltas.JPG";
 import tajSats from "@/assets/Taj_Sats.jpeg";
-import drHeroPhoto from "@/assets/dr_photo.jpg";
+import drHeroPhoto from "@/assets/dr_photo_2.jpg";
 import {
   B_INDIGO, B_YELLOW, B_TEAL, B_BLUE, B_TICKER, ACCENT_NAVY,
 } from "@/data/homeSharedData";
