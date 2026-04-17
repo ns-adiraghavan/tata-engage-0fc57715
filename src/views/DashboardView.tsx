@@ -1042,6 +1042,7 @@ export default function DashboardView() {
   // Section tracking
   const statsRef = useRef<HTMLDivElement>(null);
   const [statsStarted, setStatsStarted] = useState(false);
+  const [showAllBadges, setShowAllBadges] = useState(false);
   const [activeSection, setActiveSection] = useState("snapshot");
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
