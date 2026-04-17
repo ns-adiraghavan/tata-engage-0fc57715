@@ -3,9 +3,14 @@ import imgVideos  from "@/assets/Taj_Sats_1.jpeg";
 import imgStories from "@/assets/tata-communications-1.jpg";
 import imgEvents  from "@/assets/Tata_Motors_1.jpg";
 import imgEModule from "@/assets/dr_photo.jpg";
+import badgeVeteran    from "@/assets/badges/veteran.png";
+import badgeAmbassador from "@/assets/badges/ambassador.png";
+import badgeNorthStar  from "@/assets/badges/northstar.png";
+import badgeLead       from "@/assets/badges/lead.png";
+import badgeChampion   from "@/assets/badges/champion.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Star, Zap, Award, Shield, Compass } from "lucide-react";
+// (badge icons replaced with image assets)
 import { IS_PE_SEASON } from "@/data/mockData";
 import { useAppContext } from "@/context/AppContext";
 
@@ -180,10 +185,11 @@ const HISTORY_FEEDBACK = [
 ];
 
 const BADGES = [
-  { id: "b2", name: "ProEngage Ambassador", icon: Star,        desc: "Championed volunteering across teams",   earned: "2024", color: "#1E6BB8" },
-  { id: "b3", name: "ProEngage North Star", icon: Compass,     desc: "Guided NGOs through complex projects",  earned: "2024", color: "#5b21b6" },
-  { id: "b4", name: "ProEngage Pioneer",    icon: Zap,         desc: "Early adopter of ProEngage programme",  earned: "",     color: "#D97706" },
-  { id: "b5", name: "ProEngage 23 Champion",icon: Shield,      desc: "Outstanding contribution in PE 2023",   earned: "",     color: "#BE185D" },
+  { id: "b1", name: "ProEngage Veteran",        image: badgeVeteran,    desc: "5+ editions of ProEngage participation", earned: "2026", color: "#8E2548" },
+  { id: "b2", name: "ProEngage Ambassador",     image: badgeAmbassador, desc: "Championed volunteering across teams",   earned: "2025", color: "#1E6BB8" },
+  { id: "b3", name: "ProEngage North Star",     image: badgeNorthStar,  desc: "Guided NGOs through complex projects",   earned: "2026", color: "#0D1B3E" },
+  { id: "b4", name: "Lead the Change",          image: badgeLead,       desc: "Led change with your professional skills", earned: "",   color: "#E91E80" },
+  { id: "b5", name: "ProEngage 23 Champion",    image: badgeChampion,   desc: "Outstanding contribution in PE 2023",    earned: "",     color: "#E8551C" },
 ];
 
 const RESOURCES = [
@@ -203,10 +209,6 @@ const STAT_TOOLTIPS: Record<string, string> = {
   "Badges Earned":      "Awarded for key milestones — completing a project, 100 hours, TVW participation and more.",
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BADGE_ICONS: Record<string, any> = {
-  b1: Award, b2: Star, b3: Compass, b4: Zap, b5: Shield,
-};
 
 // Activity tab config by season state
 const hasActive = !!VOLUNTEER.activeApplication;
@@ -1182,22 +1184,17 @@ export default function DashboardView() {
               {!IS_NEW_VOLUNTEER && (
                 <div style={{ ...card, marginBottom: 10 }}>
                   <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 14 }}>Badges Earned</div>
-                  <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                    {BADGES.map(b => {
-                      const Icon = BADGE_ICONS[b.id];
-                      return (
-                        <div key={b.id} title={`${b.name} — ${b.desc} (${b.earned})`}
-                          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, cursor: "default", transition: "transform 0.15s" }}
-                          onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
-                          onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
-                        >
-                          <div style={{ width: 42, height: 42, borderRadius: "50%", background: b.color, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            {Icon && <Icon size={18} color="#fff" />}
-                          </div>
-                          <span style={{ fontSize: 10, fontWeight: 600, color: "#6b6b7a", textAlign: "center", lineHeight: 1.2, maxWidth: 52 }}>{b.name}</span>
-                        </div>
-                      );
-                    })}
+                  <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                    {BADGES.map(b => (
+                      <div key={b.id} title={`${b.name} — ${b.desc}${b.earned ? ` (${b.earned})` : ""}`}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, cursor: "default", transition: "transform 0.15s", opacity: b.earned ? 1 : 0.45, filter: b.earned ? "none" : "grayscale(0.6)" }}
+                        onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
+                        onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+                      >
+                        <img src={b.image} alt={b.name} style={{ width: 56, height: 56, objectFit: "contain", display: "block" }} />
+                        <span style={{ fontSize: 10, fontWeight: 600, color: "#6b6b7a", textAlign: "center", lineHeight: 1.2, maxWidth: 64 }}>{b.name}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
