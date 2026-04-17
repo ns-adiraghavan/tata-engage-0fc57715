@@ -183,6 +183,8 @@ const HISTORY_FEEDBACK = [
     supportRatings: [4, 4, 4], attrRatings: [2, 3, 2, 2, 4],
     suggestions: "" },
 ];
+
+const BADGES = [
   { id: "b1", name: "ProEngage Veteran",    icon: Award,       desc: "Completed multiple ProEngage editions", earned: "2024", color: "#1A6B3C" },
   { id: "b2", name: "ProEngage Ambassador", icon: Star,        desc: "Championed volunteering across teams",   earned: "2024", color: "#1E6BB8" },
   { id: "b3", name: "ProEngage North Star", icon: Compass,     desc: "Guided NGOs through complex projects",  earned: "2024", color: "#5b21b6" },
