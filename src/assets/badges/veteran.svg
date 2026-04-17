@@ -1,30 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240">
   <defs>
     <radialGradient id="outerGrad_veteran" cx="50%" cy="40%" r="55%">
-      <stop offset="0%" stop-color="#F5D060"/>
-      <stop offset="45%" stop-color="#D4A017"/>
-      <stop offset="100%" stop-color="#A07800"/>
+      <stop offset="0%" stop-color="#4CAF7D"/>
+      <stop offset="50%" stop-color="#2E8A55"/>
+      <stop offset="100%" stop-color="#1A6B3C"/>
     </radialGradient>
     <radialGradient id="innerGrad_veteran" cx="50%" cy="35%" r="55%">
-      <stop offset="0%" stop-color="#FFF8DC"/>
-      <stop offset="55%" stop-color="#F0E060"/>
-      <stop offset="100%" stop-color="#D4A017"/>
+      <stop offset="0%" stop-color="#E8F5EE"/>
+      <stop offset="55%" stop-color="#A8D9BC"/>
+      <stop offset="100%" stop-color="#2E8A55"/>
     </radialGradient>
     <radialGradient id="centerGrad_veteran" cx="50%" cy="35%" r="60%">
       <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="65%" stop-color="#F5F2EE"/>
-      <stop offset="100%" stop-color="#E8E2D8"/>
+      <stop offset="65%" stop-color="#F8F6F2"/>
+      <stop offset="100%" stop-color="#EEEAE2"/>
     </radialGradient>
     <linearGradient id="ribbonGrad_veteran" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#b12e5a"/>
-      <stop offset="100%" stop-color="#5c182e"/>
+      <stop offset="0%" stop-color="#218b4e"/>
+      <stop offset="100%" stop-color="#0f4024"/>
     </linearGradient>
   </defs>
 
   <!-- Ribbons -->
   <polygon points="85,185 100,195 115,185 110,240 100,230 90,240" fill="url(#ribbonGrad_veteran)"/>
-  <polygon points="80,182 70,185 65,240 80,230 85,185" fill="#5c182e"/>
-  <polygon points="120,182 130,185 135,240 120,230 115,185" fill="#5c182e"/>
+  <polygon points="80,182 70,185 65,240 80,230 85,185" fill="#0f4024"/>
+  <polygon points="120,182 130,185 135,240 120,230 115,185" fill="#0f4024"/>
 
   <!-- Scallop ring -->
   <circle cx="100.0" cy="20.0" r="12" fill="url(#outerGrad_veteran)"/>
@@ -48,37 +48,37 @@
   <circle cx="100" cy="100" r="72" fill="url(#outerGrad_veteran)"/>
   <circle cx="100" cy="100" r="68" fill="url(#innerGrad_veteran)"/>
 
-  <!-- Rim lines -->
-  <circle cx="100" cy="100" r="62" fill="none" stroke="#E8E0D0" stroke-width="3.5"/>
-  <circle cx="100" cy="100" r="59" fill="none" stroke="#D4A017" stroke-width="1" opacity="0.6"/>
+  <!-- Rim -->
+  <circle cx="100" cy="100" r="62" fill="none" stroke="#E8E2D8" stroke-width="3.5"/>
+  <circle cx="100" cy="100" r="59" fill="none" stroke="#2E8A55" stroke-width="1" opacity="0.5"/>
 
   <!-- White centre -->
   <circle cx="100" cy="100" r="52" fill="url(#centerGrad_veteran)"/>
 
   <!-- Laurel left -->
-  <g transform="translate(100,100)" fill="#C89A00" opacity="0.9">
+  <g transform="translate(100,100)" fill="#1A6B3C" opacity="0.85">
     <ellipse cx="-30" cy="8"   rx="7" ry="4" transform="rotate(-30,-30,8)"/>
     <ellipse cx="-35" cy="-2"  rx="7" ry="4" transform="rotate(-15,-35,-2)"/>
     <ellipse cx="-36" cy="-13" rx="7" ry="4" transform="rotate(0,-36,-13)"/>
     <ellipse cx="-32" cy="-23" rx="7" ry="4" transform="rotate(15,-32,-23)"/>
     <ellipse cx="-24" cy="-30" rx="7" ry="4" transform="rotate(30,-24,-30)"/>
-    <line x1="-14" y1="14" x2="-38" y2="-32" stroke="#C89A00" stroke-width="1.5"/>
+    <line x1="-14" y1="14" x2="-38" y2="-32" stroke="#1A6B3C" stroke-width="1.5"/>
   </g>
   <!-- Laurel right -->
-  <g transform="translate(100,100)" fill="#C89A00" opacity="0.9">
+  <g transform="translate(100,100)" fill="#1A6B3C" opacity="0.85">
     <ellipse cx="30"  cy="8"   rx="7" ry="4" transform="rotate(30,30,8)"/>
     <ellipse cx="35"  cy="-2"  rx="7" ry="4" transform="rotate(15,35,-2)"/>
     <ellipse cx="36"  cy="-13" rx="7" ry="4" transform="rotate(0,36,-13)"/>
     <ellipse cx="32"  cy="-23" rx="7" ry="4" transform="rotate(-15,32,-23)"/>
     <ellipse cx="24"  cy="-30" rx="7" ry="4" transform="rotate(-30,24,-30)"/>
-    <line x1="14" y1="14" x2="38" y2="-32" stroke="#C89A00" stroke-width="1.5"/>
+    <line x1="14" y1="14" x2="38" y2="-32" stroke="#1A6B3C" stroke-width="1.5"/>
   </g>
 
   <!-- Bottom diamond -->
-  <polygon points="100,122 106,128 100,134 94,128" fill="#C89A00" opacity="0.85"/>
+  <polygon points="100,122 106,128 100,134 94,128" fill="#1A6B3C" opacity="0.8"/>
 
   <!-- Top stars -->
-  <g fill="#C89A00" opacity="0.75">
+  <g fill="#1A6B3C" opacity="0.7">
     <circle cx="88"  cy="60" r="2"/>
     <circle cx="95"  cy="57" r="2"/>
     <circle cx="100" cy="56" r="2.5"/>
@@ -89,5 +89,5 @@
   <!-- Centre symbol -->
   <text x="100" y="108" text-anchor="middle" dominant-baseline="middle"
         font-family="Georgia, serif" font-size="28" font-weight="700"
-        fill="#A07800" opacity="0.95">5+</text>
+        fill="#1A6B3C" opacity="0.95">5+</text>
 </svg>
