@@ -1445,7 +1445,7 @@ export default function DashboardView() {
                 </div>
               ) : (
                 <>
-                  <Slicers options={HISTORY_SLICERS} active={activeHistory} onChange={id => { setActiveHistory(id); setEditionFilter(""); setYearFilter(""); setProjectsExpanded(false); setAppsExpanded(false); setCertsExpanded(false); setFeedbackExpanded(false); }} accentColor={"#1E6BB8"} />
+                  <Slicers options={HISTORY_SLICERS} active={activeHistory} onChange={id => { setActiveHistory(id); setEditionFilter("ProEngage 2025 | 02"); setYearFilter(""); setProjectsExpanded(false); setAppsExpanded(false); setCertsExpanded(false); setFeedbackExpanded(false); }} accentColor={"#1E6BB8"} />
 
                   {["applications", "projects", "certificates", "feedback"].includes(activeHistory) && (
                     <div style={{ marginBottom: 16 }}>
