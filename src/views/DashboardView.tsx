@@ -1202,7 +1202,7 @@ export default function DashboardView() {
                 <div style={{ ...card, marginBottom: 10 }}>
                   <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "#aaaabc", marginBottom: 14 }}>Badges Earned</div>
                   <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                    {(showAllBadges ? BADGES : BADGES.slice(0, 3)).map(b => (
+                    {BADGES.map(b => (
                       <div key={b.id} title={`${b.name} — ${b.desc}${b.earned ? ` (${b.earned})` : ""}`}
                         style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, cursor: "default", transition: "transform 0.15s" }}
                         onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.08)")}
@@ -1213,15 +1213,6 @@ export default function DashboardView() {
                       </div>
                     ))}
                   </div>
-                  {BADGES.length > 3 && (
-                    <button
-                      type="button"
-                      onClick={() => setShowAllBadges(v => !v)}
-                      style={{ marginTop: 12, background: "transparent", border: "none", padding: 0, color: B_BLUE, fontSize: 12, fontWeight: 700, cursor: "pointer", letterSpacing: "0.3px" }}
-                    >
-                      {showAllBadges ? "Show less" : `See more (+${BADGES.length - 3})`}
-                    </button>
-                  )}
                 </div>
               )}
               {IS_NEW_VOLUNTEER && (
