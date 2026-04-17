@@ -158,19 +158,14 @@ const HISTORY_APPLICATIONS = [
 ];
 
 const HISTORY_PROJECTS = [
-  { id: "p0",  title: "Conduct Mock Interviews",                 ngo: "Friends of Children",                            edition: "ProEngage 2025 | 02", year: "2025", hours: 16,  outcome: "Project in progress. Mock interview sessions underway with student cohort.",                                    skills: ["Coaching", "Training"], cert: false, projectStatus: "Matched"    },
-  { id: "p1",  title: "Mock Interviews - Students",              ngo: "Friends of Children",                            edition: "ProEngage 2025 | 01", year: "2025", hours: 16,  outcome: "Completed 16 hours of mock interview coaching for students. Certificate received.",                            skills: ["Coaching", "Training"], cert: true,  projectStatus: "Completed"  },
-  { id: "p2",  title: "Mock Interviews",                         ngo: "Tata STRIVE",                                    edition: "ProEngage 2025 | 01", year: "2025", hours: 8,   outcome: "Project requirement fulfilled. Conducted mock interview sessions for vocational trainees.",                      skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed"  },
-  { id: "p3",  title: "Mock Interviews",                         ngo: "Tata STRIVE",                                    edition: "ProEngage 2024 | 02", year: "2024", hours: 8,   outcome: "Completed 4 actual hours of mock interview coaching. Certificate received.",                                   skills: ["Coaching", "Training"], cert: true,  projectStatus: "Completed"  },
-  { id: "p4",  title: "Interviewing Candidates",                 ngo: "Buddy4Study India Foundation",                   edition: "ProEngage 2024 | 01", year: "2024", hours: 48,  outcome: "Project ended early — drop out. Feedback submitted.",                                                            skills: ["Coaching", "Training"], cert: false, projectStatus: "Dropped"    },
-  { id: "p5",  title: "Vernacular: Digital Learning",            ngo: "Chezuba",                                        edition: "ProEngage 2023 | 02", year: "2023", hours: 72,  outcome: "Completed digital learning facilitation sessions. Feedback submitted.",                                           skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed"  },
-  { id: "p6",  title: "Annual report writing",                   ngo: "Little Angel Foundation",                        edition: "ProEngage 2023 | 02", year: "2023", hours: 48,  outcome: "Project requirement fulfilled. Contributed to annual report writing for the NGO.",                              skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed"  },
-  { id: "p7",  title: "Developing a Sexual Harassment Policy",   ngo: "Chezuba",                                        edition: "ProEngage 2023 | 01", year: "2023", hours: 24,  outcome: "Policy framework drafted and submitted to the organisation.",                                                    skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed"  },
-  { id: "p8",  title: "Translation of booklet from English, Marathi", ngo: "Ekansh Trust",                             edition: "ProEngage 2022 | 02", year: "2022", hours: 12,  outcome: "Translated educational booklet from English to Marathi for field distribution.",                               skills: ["Coaching", "Training"], cert: false, projectStatus: "Matched"    },
-  { id: "p9",  title: "Translations",                            ngo: "The Vishwas And Anuradha Memorial (TVAM) Foundation", edition: "ProEngage 2022 | 02", year: "2022", hours: 48,  outcome: "Translation work completed for the foundation's outreach materials.",                                 skills: ["Coaching", "Training"], cert: false, projectStatus: "Matched"    },
-  { id: "p10", title: "Audio Book Recording",                    ngo: "GiftAbled",                                      edition: "ProEngage 2022 | 01", year: "2022", hours: 12,  outcome: "Audio book recorded and delivered to GiftAbled for their accessibility library.",                              skills: ["Coaching", "Training"], cert: false, projectStatus: "Matched"    },
-  { id: "p11", title: "Audio Book Recording",                    ngo: "GiftAbled",                                      edition: "ProEngage 2021 | 02", year: "2021", hours: 8,   outcome: "Audio book recording sessions completed for GiftAbled.",                                                         skills: ["Coaching", "Training"], cert: false, projectStatus: "Matched"    },
-  { id: "p12", title: "Write an annual report",                  ngo: "Chezuba",                                        edition: "ProEngage 2020 | 01", year: "2020", hours: 24,  outcome: "Annual report drafted and submitted to Chezuba.",                                                               skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed"  },
+  { id: "p0",  title: "Conduct Mock Interviews",                      ngo: "Friends of Children",  edition: "ProEngage 2025 | 02", year: "2025", hours: 16,  outcome: "Project in progress. Mock interview sessions underway with student cohort.",                          skills: ["Coaching", "Training"], cert: false, projectStatus: "Matched"   },
+  { id: "p1",  title: "Mock Interviews - Students",                   ngo: "Friends of Children",  edition: "ProEngage 2025 | 01", year: "2025", hours: 16,  outcome: "Completed 16 hours of mock interview coaching for students. Certificate received.",                  skills: ["Coaching", "Training"], cert: true,  projectStatus: "Completed" },
+  { id: "p3",  title: "Mock Interviews",                              ngo: "Tata STRIVE",          edition: "ProEngage 2024 | 02", year: "2024", hours: 8,   outcome: "Completed 4 actual hours of mock interview coaching. Certificate received.",                         skills: ["Coaching", "Training"], cert: true,  projectStatus: "Completed" },
+  { id: "p7",  title: "Developing a Sexual Harassment Policy",        ngo: "Chezuba",              edition: "ProEngage 2023 | 01", year: "2023", hours: 24,  outcome: "Policy framework drafted and submitted to the organisation.",                                         skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed" },
+  { id: "p8",  title: "Translation of booklet from English, Marathi", ngo: "Ekansh Trust",        edition: "ProEngage 2022 | 02", year: "2022", hours: 12,  outcome: "Translated educational booklet from English to Marathi for field distribution.",                      skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed" },
+  { id: "p10", title: "Audio Book Recording",                         ngo: "GiftAbled",            edition: "ProEngage 2022 | 01", year: "2022", hours: 12,  outcome: "Audio book recorded and delivered to GiftAbled for their accessibility library.",                     skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed" },
+  { id: "p11", title: "Audio Book Recording",                         ngo: "GiftAbled",            edition: "ProEngage 2021 | 02", year: "2021", hours: 8,   outcome: "Audio book recording sessions completed for GiftAbled.",                                              skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed" },
+  { id: "p12", title: "Write an annual report",                       ngo: "Chezuba",              edition: "ProEngage 2020 | 01", year: "2020", hours: 24,  outcome: "Annual report drafted and submitted to Chezuba.",                                                     skills: ["Coaching", "Training"], cert: false, projectStatus: "Completed" },
 ];
 
 const HISTORY_FEEDBACK = [
@@ -185,7 +180,6 @@ const HISTORY_FEEDBACK = [
 ];
 
 const BADGES = [
-  { id: "b1", name: "ProEngage Veteran",    icon: Award,       desc: "Completed multiple ProEngage editions", earned: "2024", color: "#1A6B3C" },
   { id: "b2", name: "ProEngage Ambassador", icon: Star,        desc: "Championed volunteering across teams",   earned: "2024", color: "#1E6BB8" },
   { id: "b3", name: "ProEngage North Star", icon: Compass,     desc: "Guided NGOs through complex projects",  earned: "2024", color: "#5b21b6" },
   { id: "b4", name: "ProEngage Pioneer",    icon: Zap,         desc: "Early adopter of ProEngage programme",  earned: "",     color: "#D97706" },
@@ -193,11 +187,11 @@ const BADGES = [
 ];
 
 const RESOURCES = [
-  { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: B_BLUE, pastel: P_BLUE, photo: imgPhotos  },
-  { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: B_TEAL,   pastel: P_TEAL,   photo: imgVideos  },
-  { id: "stories", label: "Stories",  desc: "Volunteer experiences and community impact narratives",   count: "94 stories",  accentColor: "#65A30D", pastel: "#F7FEE7",   photo: imgStories },
-  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: B_BLUE, pastel: P_BLUE, photo: imgEvents  },
-  { id: "emodule", label: "E-Module", desc: "ProEngage orientation, NGO readiness kit and dos & don'ts", count: "5 modules", accentColor: B_BLUE, pastel: P_BLUE, photo: imgEModule },
+  { id: "photos",  label: "Photos",   desc: "Gallery from TVW22, VolCon 2024 and ProEngage projects", count: "247 items",   accentColor: B_BLUE,     pastel: P_BLUE,     photo: imgPhotos  },
+  { id: "videos",  label: "Videos",   desc: "Volunteer stories, impact films and event highlights",    count: "38 videos",   accentColor: B_TEAL,     pastel: P_TEAL,     photo: imgVideos  },
+  { id: "stories", label: "Stories",  desc: "Volunteer experiences and community impact narratives",   count: "94 stories",  accentColor: "#65A30D",  pastel: "#F7FEE7",  photo: imgStories },
+  { id: "events",  label: "Events",   desc: "VolCon, Volympics and upcoming community gatherings",     count: "12 upcoming", accentColor: "#1A6B3C",  pastel: "#E6F5EE",  photo: imgEvents  },
+  { id: "emodule", label: "E-Module", desc: "ProEngage orientation, NGO readiness kit and dos & don'ts", count: "5 modules", accentColor: "#C8850A",  pastel: "#FEF6E4",  photo: imgEModule },
 ];
 
 const STAT_TOOLTIPS: Record<string, string> = {
@@ -347,6 +341,82 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   );
 }
 
+
+// ─── Feedback card (collapsible) ─────────────────────────────────────────────
+type FeedbackEntry = typeof HISTORY_FEEDBACK[0];
+function FeedbackCard({ f, supportLabels, attrLabels }: { f: FeedbackEntry; supportLabels: string[]; attrLabels: string[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ background: "#fff", border: "1px solid #e8e8f0", borderRadius: 14, overflow: "hidden" }}>
+      {/* Collapsed header — always visible */}
+      <div onClick={() => setOpen(x => !x)} style={{ display: "flex", alignItems: "center", gap: 12, padding: "16px 18px", cursor: "pointer", userSelect: "none" }}>
+        <div style={{ width: 36, height: 36, borderRadius: 8, background: P_BLUE, border: `1px solid ${B_BLUE}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: 7, height: 7, borderRadius: "50%", background: B_BLUE }} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 4 }}>{f.title}</div>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{f.ngo}</span>
+            <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{f.edition}</span>
+            <span style={{ background: "#F7FEE7", color: "#65A30D", fontSize: 11, fontWeight: 700, padding: "2px 9px", borderRadius: 100 }}>Submitted</span>
+          </div>
+        </div>
+        <span style={{ fontSize: 18, color: "#dddde8", transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", flexShrink: 0 }}>›</span>
+      </div>
+      {/* Expanded detail */}
+      {open && (
+        <div style={{ padding: "0 18px 18px" }}>
+          <div style={{ borderTop: "1px solid #e8e8f0", paddingTop: 14 }}>
+            {/* Quick stats */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 14 }}>
+              {[
+                { label: "Completion", value: f.completed ? "Yes" : "No" },
+                { label: "Duration",   value: `${f.months} month${f.months > 1 ? "s" : ""}` },
+                { label: "Hrs / week", value: `${f.hoursWeek} hr${f.hoursWeek > 1 ? "s" : ""}` },
+              ].map(stat => (
+                <div key={stat.label} style={{ background: "#f5f5fa", borderRadius: 8, padding: "8px 10px", textAlign: "center" }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", color: "#aaaabc", marginBottom: 3 }}>{stat.label}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: ACCENT_NAVY }}>{stat.value}</div>
+                </div>
+              ))}
+            </div>
+            {/* Support ratings */}
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", color: "#aaaabc", marginBottom: 8 }}>ProEngage Support (out of 5)</div>
+              {supportLabels.map((lbl, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                  <div style={{ fontSize: 12, color: "#6b6b7a", flex: 1, lineHeight: 1.3 }}>{lbl}</div>
+                  <div style={{ display: "flex", gap: 2 }}>
+                    {[1,2,3,4,5].map(s => <div key={s} style={{ width: 12, height: 12, borderRadius: "50%", background: s <= f.supportRatings[i] ? B_BLUE : "#e0e0e8" }} />)}
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: B_BLUE, width: 16, textAlign: "right" }}>{f.supportRatings[i]}</div>
+                </div>
+              ))}
+            </div>
+            {/* Attribute ratings */}
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", color: "#aaaabc", marginBottom: 8 }}>Attributes Improved (out of 5)</div>
+              {attrLabels.map((lbl, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                  <div style={{ fontSize: 12, color: "#6b6b7a", flex: 1, lineHeight: 1.3 }}>{lbl}</div>
+                  <div style={{ display: "flex", gap: 2 }}>
+                    {[1,2,3,4,5].map(s => <div key={s} style={{ width: 12, height: 12, borderRadius: "50%", background: s <= f.attrRatings[i] ? KPI_PROENGAGE : "#e0e0e8" }} />)}
+                  </div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: KPI_PROENGAGE, width: 16, textAlign: "right" }}>{f.attrRatings[i]}</div>
+                </div>
+              ))}
+            </div>
+            {/* NPS */}
+            <div style={{ background: P_BLUE, borderRadius: 8, padding: "8px 12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <span style={{ fontSize: 12, color: B_BLUE, fontWeight: 600 }}>Likelihood to recommend</span>
+              <span style={{ fontSize: 15, fontWeight: 900, color: B_BLUE }}>{f.nps} / 10</span>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 // ─── Resource card ────────────────────────────────────────────────────────────
 function ResourceCard({ r, onClick }: { r: typeof RESOURCES[0]; onClick?: () => void }) {
@@ -997,7 +1067,7 @@ export default function DashboardView() {
 
   // History state
   const [activeHistory, setActiveHistory] = useState("projects");
-  const [editionFilter, setEditionFilter] = useState("");
+  const [editionFilter, setEditionFilter] = useState("ProEngage 2025 | 02");
   const [yearFilter, setYearFilter] = useState("");
   const [projectsExpanded, setProjectsExpanded] = useState(false);
   const [appsExpanded, setAppsExpanded]         = useState(false);
@@ -1012,15 +1082,14 @@ export default function DashboardView() {
 
   // Filter helpers — all keyed to same editionFilter
   const filteredApplications = HISTORY_APPLICATIONS.filter(a => {
-    if (a.type === "TVW") return false;                           // no TVW in PE history
-    if (["Matched", "Completed", "Dropped"].includes(a.status)) return false; // selected → go to My Projects
+    if (a.type === "TVW") return false;
     if (editionFilter && a.edition !== editionFilter) return false;
     if (yearFilter && a.year !== yearFilter) return false;
     return true;
   });
 
   const filteredProjects = HISTORY_PROJECTS.filter(p => {
-    if (!["Matched", "Completed", "Dropped"].includes(p.projectStatus)) return false;
+    if (!["Matched", "Completed"].includes(p.projectStatus)) return false;
     if (editionFilter && p.edition !== editionFilter) return false;
     if (yearFilter && p.year !== yearFilter) return false;
     return true;
@@ -1374,8 +1443,9 @@ export default function DashboardView() {
                   {["applications", "projects", "certificates", "feedback"].includes(activeHistory) && (
                     <div style={{ marginBottom: 16 }}>
                       <select value={editionFilter} onChange={e => { setEditionFilter(e.target.value); setProjectsExpanded(false); setAppsExpanded(false); setCertsExpanded(false); setFeedbackExpanded(false); }} style={{ padding: "6px 12px", borderRadius: 8, border: "1.5px solid #dddde8", background: "#fff", fontSize: 13, color: ACCENT_NAVY, fontFamily: "'DM Sans', sans-serif", cursor: "pointer", outline: "none" }}>
+                        <option value="ProEngage 2025 | 02">ProEngage 2025 | 02 (Latest)</option>
                         <option value="">All Editions</option>
-                        {PE_ONLY_EDITIONS.map(e => <option key={e} value={e}>{e}</option>)}
+                        {PE_ONLY_EDITIONS.filter(e => e !== "ProEngage 2025 | 02").map(e => <option key={e} value={e}>{e}</option>)}
                       </select>
                     </div>
                   )}
@@ -1528,72 +1598,9 @@ export default function DashboardView() {
                     const attrLabels    = ["Critical thinking & adaptability", "Communication & networking", "Understanding NGO sector", "Leadership & ambiguity management", "Empathy & innovation"];
                     const shown = feedbackExpanded ? filteredFeedback : filteredFeedback.slice(0, COLLAPSE);
                     return (
-                      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                         {shown.map(f => (
-                          <div key={f.id} style={{ ...card, padding: "20px 22px" }}>
-                            {/* Header */}
-                            <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 16 }}>
-                              <div style={{ width: 44, height: 44, borderRadius: 10, background: P_BLUE, border: `1px solid ${B_BLUE}22`, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                <div style={{ width: 8, height: 8, borderRadius: "50%", background: B_BLUE }} />
-                              </div>
-                              <div style={{ flex: 1 }}>
-                                <div style={{ fontSize: 14, fontWeight: 700, color: ACCENT_NAVY, marginBottom: 5 }}>{f.title}</div>
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                                  <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{f.ngo}</span>
-                                  <span style={{ background: P_BLUE, color: B_BLUE, fontSize: 11, fontWeight: 600, padding: "2px 9px", borderRadius: 100 }}>{f.edition}</span>
-                                </div>
-                              </div>
-                              <span style={{ background: "#F7FEE7", color: "#65A30D", fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100, whiteSpace: "nowrap", flexShrink: 0 }}>Submitted</span>
-                            </div>
-                            {/* Quick stats */}
-                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 14 }}>
-                              {[
-                                { label: "Completion", value: f.completed ? "Yes" : "No" },
-                                { label: "Duration", value: `${f.months} month${f.months > 1 ? "s" : ""}` },
-                                { label: "Hrs / week", value: `${f.hoursWeek} hr${f.hoursWeek > 1 ? "s" : ""}` },
-                              ].map(stat => (
-                                <div key={stat.label} style={{ background: "#f5f5fa", borderRadius: 8, padding: "8px 10px", textAlign: "center" }}>
-                                  <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", color: "#aaaabc", marginBottom: 3 }}>{stat.label}</div>
-                                  <div style={{ fontSize: 13.5, fontWeight: 700, color: ACCENT_NAVY }}>{stat.value}</div>
-                                </div>
-                              ))}
-                            </div>
-                            {/* ProEngage Support ratings */}
-                            <div style={{ marginBottom: 12 }}>
-                              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", color: "#aaaabc", marginBottom: 8 }}>ProEngage Support (out of 5)</div>
-                              {supportLabels.map((lbl, i) => (
-                                <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                                  <div style={{ fontSize: 12, color: "#6b6b7a", flex: 1, lineHeight: 1.3 }}>{lbl}</div>
-                                  <div style={{ display: "flex", gap: 2 }}>
-                                    {[1,2,3,4,5].map(s => (
-                                      <div key={s} style={{ width: 12, height: 12, borderRadius: "50%", background: s <= f.supportRatings[i] ? B_BLUE : "#e0e0e8" }} />
-                                    ))}
-                                  </div>
-                                  <div style={{ fontSize: 12, fontWeight: 700, color: B_BLUE, width: 16, textAlign: "right" }}>{f.supportRatings[i]}</div>
-                                </div>
-                              ))}
-                            </div>
-                            {/* Attribute ratings */}
-                            <div style={{ marginBottom: 12 }}>
-                              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.8px", color: "#aaaabc", marginBottom: 8 }}>Attributes Improved (out of 5)</div>
-                              {attrLabels.map((lbl, i) => (
-                                <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                                  <div style={{ fontSize: 12, color: "#6b6b7a", flex: 1, lineHeight: 1.3 }}>{lbl}</div>
-                                  <div style={{ display: "flex", gap: 2 }}>
-                                    {[1,2,3,4,5].map(s => (
-                                      <div key={s} style={{ width: 12, height: 12, borderRadius: "50%", background: s <= f.attrRatings[i] ? KPI_PROENGAGE : "#e0e0e8" }} />
-                                    ))}
-                                  </div>
-                                  <div style={{ fontSize: 12, fontWeight: 700, color: KPI_PROENGAGE, width: 16, textAlign: "right" }}>{f.attrRatings[i]}</div>
-                                </div>
-                              ))}
-                            </div>
-                            {/* NPS */}
-                            <div style={{ background: P_BLUE, borderRadius: 8, padding: "8px 12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                              <span style={{ fontSize: 12, color: B_BLUE, fontWeight: 600 }}>Likelihood to recommend</span>
-                              <span style={{ fontSize: 15, fontWeight: 900, color: B_BLUE }}>{f.nps} / 10</span>
-                            </div>
-                          </div>
+                          <FeedbackCard key={f.id} f={f} supportLabels={supportLabels} attrLabels={attrLabels} />
                         ))}
                         {hasActive && (
                           <div style={{ background: P_BLUE, border: `1px solid ${B_BLUE}22`, borderRadius: 12, padding: "16px 18px" }}>
